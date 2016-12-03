@@ -1,13 +1,23 @@
-@import './reset';
+@import 'bootstrap';
+@import 'fonts/Fira/fira';
+@import 'reset';
+@import 'variables';
 
-body,
-html {
-  font-family: 'Fira Sans' !important;
+html,
+body {
+  color: $black;
+  font-family: 'Fira Sans';
   height: 100%;
+  line-height: 24px;
   margin: 0;
   overflow: hidden;
 }
 
+
+//
+// scrolling
+
+// use this on all components
 .pubsweet-component {
   bottom: 0;
   left: 0;
@@ -16,250 +26,18 @@ html {
   top: 95px; //menu height
 }
 
+// use this when you want the component to scroll
+// it will otherwise take up the remainder of the height
 .pubsweet-component-scroll {
   overflow-y: auto;
   padding-bottom: 50px; // white space when component ends
 }
 
-.bootstrap {
-  @import 'variables';
 
-  .modal {
-    @import './modal';
-  }
+//
+// helpers
 
-  @import '~bootstrap-sass/assets/stylesheets/_bootstrap-sprockets';
-  @import '~bootstrap-sass/assets/stylesheets/_bootstrap';
-
-  a {
-    color: $dark-grey;//pink
-    text-decoration: underline;
-  }
-
-  h1,
-  h2,
-  h3 {
-    color: $dark-grey !important;
-    font-family: 'Fira Sans';
-    margin-bottom: 5px;
-    margin-top: 5px;
-    padding-bottom: 0;
-    padding-top: 0;
-  }
-
-  h2 {
-    font-size: 25px;
-    font-weight: bold;
-  }
-
-  h3 {
-    color: lighten($dark-grey, 10%) !important;
-    font-size: 20px;
-  }
-
-  .alert.alert-warning {
-    background-color: #F2F2F2;
-    border: 0;
-    color: black;
-    margin-top: 50px;
-  }
-
-  //form
-  legend {
-    color: $dark-grey;//teal
-    border: 0;
-    font-weight: bold;
-  }
-
-  label {
-    color: $dark-grey;
-    font-weight: lighter;
-  }
-
-  input[type='text'],
-  input[type='text'].form-control,
-  input[type='password'].form-control {
-    border: 0;
-    border-color: #BAB8B8;
-    border-style: solid;
-    border-width: 2px;
-
-    &.error {
-      border-right: 4px solid $main-grey;
-
-    }
-
-    &.success {
-      border-right: 4px solid $brand-primary;
-    }
-  }
-
-  .form-group {
-    margin-bottom: 15px;
-    margin-top: 15px;
-  }
-
-  .btn-primary {
-    background-color: $brand-primary;
-    border-color: transparent;
-  }
-
-  @media (min-width: 768px) {
-    .navbar-nav {
-      margin: 10px;
-    }
-
-    .navbar-nav > li > a {
-      padding-bottom: 20px;
-      padding-top: 20px;
-    }
-  }
-
-  .navbar-default {
-    background-color: transparent;
-    border: 0;
-    font-weight: bold;
-
-    .container-fluid {
-      border-bottom: 4px $dark-grey solid;
-      margin-left: 15px;
-      margin-right: 15px;
-      padding-right: 65px;
-    }
-
-    .navbar-brand {
-      color: $dark-grey !important;
-      margin-top: 15px !important;
-      text-decoration: none;
-
-      img {
-        height: 100%;
-      }
-    }
-
-    .navbar-header {
-      font-style: italic;
-    }
-
-    .navbar-nav {
-      > .active {
-        > a {
-          background-color: transparent;
-          color: #000;
-          font-weight: bold;
-          text-decoration: none;
-
-          &:focus {
-            background-color: transparent;
-          }
-
-          &:hover {
-            background-color: transparent;
-          }
-        }
-      }
-
-      > li {
-        > a {
-          color: $brand-primary;
-          font-style: italic;
-          text-decoration: none;
-        }
-      }
-
-      .logout a {
-        color: $dark-grey;
-      }
-    }
-  }
-
-  .table{
-    margin-bottom: 10px;
-
-    > thead {
-      > tr {
-        > th {
-          background-color: transparent;
-          border: 0;
-          color: $brand-primary;
-          text-align: left;
-        }
-      }
-    }
-
-    > tbody {
-      > tr:first-child {
-        > td {
-          border: 0;
-        }
-      }
-
-      > tr {
-        > td {
-          border: 0;
-          border-top: 1px $brand-primary solid;
-          padding-bottom: 20px;
-          padding-top: 20px;
-        }
-      }
-    }
-
-    td.index,
-    th.index {
-      width: 5%;
-    }
-
-    td.main,
-    th.main {
-      width: 50%;
-    }
-
-    .btn-primary {
-      background-color: $teal;
-      border: 0;
-      margin-left: 5px;
-
-      i {
-        margin-left: -2px;
-        margin-top: 2px;
-      }
-    }
-
-    .btn-success {
-      background-color: #4B8AC9;
-      border: 0;
-      margin-left: 5px;
-    }
-
-    .btn-danger {
-      background-color: #D13689;
-      border: 0;
-      margin-left: 5px;
-
-      i {
-        margin-left: -1px;
-      }
-    }
-
-    .btn-warning {
-      border: 0;
-      margin-left: 5px;
-    }
-  }
-
-  //custom elements
-
-  .btn-wide {
-    font-family: 'Fira Sans';
-    font-size: 21px;
-    padding: 5px 50px;
-  }
-
-  .published .fa-circle {
-    color: $teal;
-  }
-
-  .unpublished .fa-circle {
-    color: $pink;
-  }
+.separator {
+  clear: both;
+  height: 1px;
 }

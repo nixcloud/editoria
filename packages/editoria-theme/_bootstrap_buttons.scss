@@ -1,0 +1,15 @@
+@import 'variables';
+
+.btn {
+  background-color: $dark-grey;
+}
+
+.btn-primary {
+  border-color: transparent;
+}
+
+.btn-wide {
+  font-family: 'Fira Sans';
+  font-size: 21px;
+  padding: 5px 50px;
+}

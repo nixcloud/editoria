@@ -1,15 +1,7 @@
-//overwrite bootstrap variables
-$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
-$font-family-default: 'Fira Sans', Helvetica, Arial, sans-serif;
-$font-family-base: $font-family-default;
-$border-radius-base: 0 !default;
-$brand-primary: #404040;// dark grey
-$link-color: $brand-primary;
+$black: rgba(0, 0, 0, .75);
 
-//custom variables
-$pink: #E50C79;
-$teal: #51C2BD;
-
-$main-grey: #D8D8D8;
 $dark-grey: #404040;
-$light-grey: #CDCDCD;
+$light-grey: #cdcdcd;
+$main-grey: #d8d8d8;
+$medium-light-gray: #bab8b8;
+$very-light-grey: #f2f2f2;
