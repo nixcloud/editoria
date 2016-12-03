@@ -1,0 +1,78 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "pubsweet-component-pepper-theme@^0.0.2",
+        "scope": null,
+        "escapedName": "pubsweet-component-pepper-theme",
+        "name": "pubsweet-component-pepper-theme",
+        "rawSpec": "^0.0.2",
+        "spec": ">=0.0.2 <0.0.3",
+        "type": "range"
+      },
+      "/home/chris/workspace/editoria_new"
+    ]
+  ],
+  "_from": "pubsweet-component-pepper-theme@>=0.0.2 <0.0.3",
+  "_id": "pubsweet-component-pepper-theme@0.0.2",
+  "_inCache": true,
+  "_location": "/pubsweet-component-pepper-theme",
+  "_nodeVersion": "6.2.0",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/pubsweet-component-pepper-theme-0.0.2.tgz_1475554902208_0.6223903938662261"
+  },
+  "_npmUser": {
+    "name": "blahah",
+    "email": "rds45@cam.ac.uk"
+  },
+  "_npmVersion": "3.8.9",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "pubsweet-component-pepper-theme@^0.0.2",
+    "scope": null,
+    "escapedName": "pubsweet-component-pepper-theme",
+    "name": "pubsweet-component-pepper-theme",
+    "rawSpec": "^0.0.2",
+    "spec": ">=0.0.2 <0.0.3",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/pubsweet-component-pepper-theme/-/pubsweet-component-pepper-theme-0.0.2.tgz",
+  "_shasum": "39f226d47f072fc63f5fe07d9c13dd0149aa7e95",
+  "_shrinkwrap": null,
+  "_spec": "pubsweet-component-pepper-theme@^0.0.2",
+  "_where": "/home/chris/workspace/editoria_new",
+  "author": {
+    "name": "Collaborative Knowledge Foundation"
+  },
+  "dependencies": {},
+  "description": "Pepper's theme for PubSweet",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "39f226d47f072fc63f5fe07d9c13dd0149aa7e95",
+    "tarball": "https://registry.npmjs.org/pubsweet-component-pepper-theme/-/pubsweet-component-pepper-theme-0.0.2.tgz"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "blahah",
+      "email": "rds45@cam.ac.uk"
+    },
+    {
+      "name": "jure",
+      "email": "juretriglav@gmail.com"
+    }
+  ],
+  "name": "pubsweet-component-pepper-theme",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.2"
+}
