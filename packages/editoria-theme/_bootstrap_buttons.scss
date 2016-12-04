@@ -2,6 +2,11 @@
 
 .btn {
   background-color: $dark-grey;
+
+  &:hover,
+  &:focus {
+    background-color: $black !important;
+  }
 }
 
 .btn-primary {
