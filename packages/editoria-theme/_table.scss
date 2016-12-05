@@ -1,4 +1,6 @@
-.table{
+@import 'variables';
+
+.table {
   margin-bottom: 10px;
 
   > thead {
@@ -57,7 +59,8 @@
   }
 
   .btn-danger {
-    background-color: #D13689;
+    background-color: $brown;
+
     border: 0;
     margin-left: 5px;
 
@@ -69,5 +72,27 @@
   .btn-warning {
     border: 0;
     margin-left: 5px;
+  }
+
+  .Select-value {
+    background-color: $main-grey;
+    border: 1px solid transparent;
+    color: $dark-grey;
+
+    .Select-value-icon {
+      border-right: 1px solid $dark-grey;
+
+      &:hover {
+        background-color: $medium-light-gray;
+        color: $white;
+      }
+    }
+
+  }
+
+  .Select-clear-zone {
+    &:hover {
+      color: $brown
+    }
   }
 }
