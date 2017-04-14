@@ -2,11 +2,7 @@
 
 @font-face {
   font-family: 'Fira Mono';
-  // src: url('../fonts/Fira/eot/FiraMono-Regular.eot');
   src: local('Fira Mono'),
-      //  url('../fonts/Fira/eot/FiraMono-Regular.eot') format('embedded-opentype'),
-      //  url('../fonts/Fira/woff/FiraMono-Regular.woff') format('woff'),
-      //  url('../fonts/Fira/ttf/FiraMono-Regular.ttf') format('truetype');
        url('../fonts/Fira/woff/FiraMono-Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
@@ -14,11 +10,7 @@
 
 @font-face {
   font-family: 'Fira Mono';
-  // src: url('../fonts/Fira/eot/FiraMono-Bold.eot');
   src: local('Fira Mono Bold'),
-      //  url('../fonts/Fira/eot/FiraMono-Bold.eot') format('embedded-opentype'),
-      //  url('../fonts/Fira/woff/FiraMono-Bold.woff') format('woff'),
-      //  url('../fonts/Fira/ttf/FiraMono-Bold.ttf') format('truetype');
        url('../fonts/Fira/woff/FiraMono-Bold.woff') format('woff');
   font-weight: 600;
   font-style: normal;
