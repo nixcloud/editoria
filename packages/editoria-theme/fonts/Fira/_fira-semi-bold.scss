@@ -1,0 +1,17 @@
+// Fira Sans Book
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: local('☺'),
+       url('../fonts/Fira/woff/FiraSans-SemiBold.woff') format('woff');
+  font-style: normal;
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: local('☺'),
+       url('../fonts/Fira/woff/FiraSans-SemiBoldItalic.woff') format('woff');
+  font-style: italic;
+  font-weight: 600;
+}
