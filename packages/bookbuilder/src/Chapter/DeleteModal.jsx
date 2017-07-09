@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Modal from '../../utils/Modal'
+import Modal from 'editoria-common/src/Modal'
 
 class DeleteModal extends React.Component {
   constructor (props) {
