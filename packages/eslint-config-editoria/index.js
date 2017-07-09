@@ -5,14 +5,5 @@ module.exports = {
     "airbnb",
     "standard",
     "standard-react"
-  ],
-  "react/sort-comp": [1, {
-    "order": [
-      "constructor",
-      "lifecycle",
-      "everything-else",
-      "render"
-    ]
-  }],
+  ]
 };
-
