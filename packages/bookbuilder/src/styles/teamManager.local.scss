@@ -1,0 +1,182 @@
+$dark-grey: #404040;
+$light-grey: #cdcdcd;
+$main-grey: #d8d8d8;
+
+$black: #000;
+$blue: #00f;
+$green: #008000;
+$purple: #800080;
+$red: #a52a2a;
+$white: #fff;
+$yellow: #ff0;
+
+.teamManager {
+  .separator {
+    clear: both;
+    height: .1px;
+  }
+
+  .groupHeader {
+    border-bottom: 4px solid $dark-grey;
+    padding-top: 1%;
+
+    .groupTitle {
+      background-color: $main-grey;
+      float: left;
+      padding: 0 80px 10px 10px;
+
+      h1 {
+        color: $black !important;
+        font-size: 22px;
+        line-height: 25px;
+        margin: 0 !important;
+        position: relative;
+        top: 10px;
+      }
+    }
+
+    .groupBtn {
+      background-color: $dark-grey;
+      border: 1px solid $white;
+      color: $white;
+      cursor: pointer;
+      float: right;
+      font-size: 16px;
+      margin-top: 7px;
+      padding: 0 30px;
+      text-align: center;
+      transition: border .5s ease-out 0.2s;
+
+      &:hover {
+        border: 1px solid $dark-grey;
+        transition: .25s ease-in-out 0s;
+      }
+
+      a {
+        color: $white;
+        text-decoration: none;
+
+        &:hover {
+          cursor: pointer;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .userInputContainer {
+    height: 30px;
+    margin-top: 25px;
+
+    .usernameInput {
+      border-color: $black;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      float: left;
+      outline: none;
+      width: 100% !important;
+    }
+
+    .closeUsernameBtn {
+      background-color: $white;
+      border: 1px solid $dark-grey;
+      color: $dark-grey;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0 30px;
+      position: absolute;
+      right: 0;
+      margin-top: 0;
+      text-decoration: none;
+
+      &:hover {
+        background-color: $dark-grey;
+        border: 1px solid $white;
+        color: $white;
+        transition: .25s ease-in-out 0s;
+      }
+    }
+
+    .addUsernameBtn {
+      background-color: $dark-grey;
+      border: 1px solid $white;
+      color: $white;
+      cursor: pointer;
+      float: right;
+      font-size: 16px;
+      margin-top: 0;
+      padding: 0 30px;
+      position: absolute;
+      right: 80px;
+      text-align: center;
+      text-decoration: none;
+      transition: border .5s ease-out .2s;
+
+      &:hover {
+        border: 1px solid $dark-grey;
+        transition: .25s ease-in-out 0s;
+      }
+
+      a {
+        color: $white;
+        text-decoration: none;
+
+        &:hover {
+          cursor: pointer;
+          text-decoration: none;
+        }
+      }
+    }
+
+    .successGroup {
+      color: $green;
+    }
+
+    .failureGroup {
+      color: $red;
+    }
+  }
+
+
+  .teamMembersContainer {
+    li {
+      border-bottom: 1px solid;
+      height: 50px;
+
+      span {
+        font-size: 18px;
+        left: 0;
+        margin-top: 24px;
+        position: absolute;
+      }
+
+      a {
+        color: $main-grey;
+        cursor: pointer;
+        float: right;
+        margin-top: 24px;
+        position: absolute;
+        right: 0;
+        text-decoration: none;
+      }
+    }
+
+    .blue {
+      border-color: $blue;
+    }
+
+    .purple {
+      border-color: $purple !important;
+    }
+
+    .yellow {
+      border-color: $yellow !important;
+    }
+  }
+
+  .groupSeperator {
+    clear: both;
+    height: 20px;
+  }
+}
