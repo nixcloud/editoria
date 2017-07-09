@@ -1,7 +1,8 @@
 {
   "name": "eslint-config-editoria",
   "version": "0.0.3",
-  "description": "",
+  "description": "A meta package to be used for the different parts of the editoria project",
+  "repository": "https://gitlab.coko.foundation/editoria/eslint-config-editoria",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,18 +10,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "eslint": "^4.2.0",
+    "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.2",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-react": "^5.0.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-node": "^5.1.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^7.1.0",
     "eslint-plugin-standard": "^3.0.1"
   },
-  "devDependencies": {
-    "eslint-plugin-jsx-a11y": "^6.0.2"
-  }
+  "devDependencies": {}
 }
