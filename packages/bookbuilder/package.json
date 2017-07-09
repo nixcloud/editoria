@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "editoria-common": "git+https://gitlab.coko.foundation:editoria/editoria-common.git",
+    "editoria-common": "0.0.1",
     "font-awesome": "4.7.0",
     "lodash": "4.17.4",
     "pubsweet-client": "0.9.1",
