@@ -6,7 +6,6 @@ module.exports = {
     "standard",
     "standard-react"
   ],
-  "parser": "babel-eslint",
   "react/sort-comp": [1, {
     "order": [
       "constructor",
@@ -15,9 +14,5 @@ module.exports = {
       "render"
     ]
   }],
-  "env": {
-    "es6": true,
-    "browser": true
-  }
 };
 
