@@ -5,7 +5,7 @@ import { DragSource, DropTarget } from 'react-dnd'
 import FirstRow from './Chapter/FirstRow'
 import SecondRow from './Chapter/SecondRow'
 import styles from './styles/bookBuilder.local.scss'
-import { chapterSource, chapterTarget, collectDrag, collectDrop, itemTypes } from '../utils/DnD'
+import { chapterSource, chapterTarget, collectDrag, collectDrop, itemTypes } from './dnd'
 
 export class Chapter extends React.Component {
   constructor (props) {

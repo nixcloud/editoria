@@ -8,8 +8,7 @@ import React from 'react'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 import { findDOMNode } from 'react-dom'
 
-import TextInput from '../../utils/TextInput'
-import { chapter as config } from '../../utils/config'
+import TextInput from 'editoria-common/src/TextInput'
 
 import styles from '../styles/bookBuilder.local.scss'
 
@@ -76,7 +75,7 @@ class DropdownTitle extends React.Component {
     const { chapter } = this.props
     const division = chapter.division
 
-    return config.dropdownValues[division]
+    return CONFIG.bookBuilder.chapter.dropdownValues[division]
   }
 
   getMenuItems () {

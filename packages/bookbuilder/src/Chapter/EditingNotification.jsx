@@ -1,7 +1,6 @@
 import { includes } from 'lodash'
 import React from 'react'
 
-import noop from '../../utils/noop'
 import styles from '../styles/bookBuilder.local.scss'
 import UnlockModal from './UnlockModal'
 
@@ -115,5 +114,7 @@ EditingNotification.propTypes = {
   roles: React.PropTypes.array.isRequired,
   update: React.PropTypes.func.isRequired
 }
+
+const noop = () => {}
 
 export default EditingNotification

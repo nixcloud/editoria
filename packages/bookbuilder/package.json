@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "editoria-common": "git+https://gitlab.coko.foundation:editoria/editoria-common.git",
     "font-awesome": "4.7.0",
     "lodash": "4.17.4",
     "pubsweet-client": "0.9.1",
@@ -25,7 +26,7 @@
   "devDependencies": {
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",
-    "eslint-config-editoria": "0.0.1",
+    "eslint-config-editoria": "0.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^20.0.4",
     "react-addons-test-utils": "^15.6.0",

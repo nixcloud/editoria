@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AbstractModal from '../../common/AbstractModal'
+import AbstractModal from 'editoria-common/src/AbstractModal'
 
 class UploadWarningModal extends React.Component {
   renderBody () {

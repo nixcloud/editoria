@@ -1,6 +1,6 @@
 import React from 'react'
 
-import AbstractModal from '../../common/AbstractModal'
+import AbstractModal from 'editoria-common/src/AbstractModal'
 import TeamManager from './TeamManager'
 
 class TeamManagerModal extends React.Component {

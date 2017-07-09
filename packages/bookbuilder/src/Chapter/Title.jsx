@@ -1,6 +1,6 @@
 import React from 'react'
 
-import TextInput from '../../utils/TextInput'
+import TextInput from 'editoria-common/src/TextInput'
 
 class Title extends React.Component {
 
