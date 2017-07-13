@@ -1,0 +1,35 @@
+{
+  "name": "pubsweeet-component-editoria-dashboard",
+  "version": "0.0.1",
+  "description": "The application dashboard for the Editoria project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.coko.foundation/editoria/editoria-dashboard"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "editoria-common": "0.0.2",
+    "lodash": "^4.17.4",
+    "pubsweet-client": "^0.10.1",
+    "react": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "enzyme": "^2.9.1",
+    "enzyme-to-json": "^1.5.1",
+    "eslint-config-editoria": "0.0.4",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^20.0.4",
+    "react-addons-test-utils": "^15.6.0",
+    "react-test-renderer": "^15.6.1",
+    "sinon": "^2.3.8",
+    "sinon-as-promised": "^4.0.3"
+  }
+}

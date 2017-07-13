@@ -1,0 +1,108 @@
+$primary-color: #515253;
+
+$black: #000;
+$dark-grey: #fff;
+$grey: #808080;
+$maroon: #502424;
+$medium-grey: #838587;
+
+.bookList {
+  .bookTitle {
+    border-bottom: .1em solid;
+    position: relative;
+  }
+
+  h1,
+  .h1 {
+    font-size: 48px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 56px;
+    margin: 0;
+  }
+
+  h2,
+  .h2 {
+    color: $primary-color;
+    font-size: 32px;
+    font-style: italic;
+    font-weight: normal;
+    margin: 0 0 1px;
+    padding-bottom: 0;
+  }
+
+  .addBookBtn {
+    background-color: $grey;
+    border: 1px solid $grey;
+    color: $dark-grey;
+    cursor: pointer;
+    float: right;
+    font-size: 16px;
+    height: 30px;
+    margin-top: 18px;
+    padding: 0 10px;
+    text-align: center;
+
+    &:hover {
+      border: 1px solid $black;
+    }
+
+    a {
+      bottom: 14px;
+      color: $dark-grey;
+      position: relative;
+      text-decoration: none;
+
+      &:hover {
+        cursor: pointer;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .bookContainer {
+    border-bottom: 1px solid $medium-grey;
+    margin-top: 3em;
+    padding-bottom: 0;
+    padding-left: 1em;
+    padding-top: 0;
+    position: relative;
+  }
+
+  .bookActions {
+    bottom: 0;
+    position: absolute;
+    right: 13px;
+  }
+
+  .editBook {
+    color: $medium-grey;
+    display: inline-block;
+    font-style: italic;
+    font-weight: 500;
+    margin-left: 13px;
+    text-decoration: none;
+
+    &:hover {
+      color: $maroon;
+      text-decoration: none;
+    }
+
+    &:link {
+      color: $medium-grey;
+      text-decoration: none;
+    }
+  }
+
+  .booklist-empty {
+    padding-top: 15px;
+  }
+
+  .add-book-input {
+    width: 400px;
+
+    &:placeholder-shown {
+      font-size: 13px;
+    }
+  }
+}
