@@ -14,12 +14,12 @@
   "license": "ISC",
   "dependencies": {
     "editoria-common": "0.0.2",
-    "lodash": "^4.17.4",
-    "pubsweet-client": "^0.10.1",
-    "react": "^15.6.1",
-    "react-redux": "^5.0.5",
-    "react-router": "^4.1.1",
-    "redux": "^3.7.2"
+    "lodash": "4.17.4",
+    "pubsweet-client": "0.9.1",
+    "react": "15.5.4",
+    "react-redux": "5.0.4",
+    "react-router": "2.8.1",
+    "redux": "3.6.0"
   },
   "devDependencies": {
     "enzyme": "^2.9.1",

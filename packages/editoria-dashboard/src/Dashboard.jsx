@@ -151,7 +151,7 @@ export class Dashboard extends React.Component {
   createTeamsForBook (book) {
     const { createTeam } = this.props.actions
 
-    each(CONFIG.teamTypes, (teamType) => {
+    each(CONFIG.dashboard.teamTypes, (teamType) => {
       // TODO -- Review the idea that the name needs to be plural for some teams
       const name = (teamType.name === 'Production Editor')
       ? teamType.name
