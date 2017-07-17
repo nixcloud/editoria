@@ -1,12 +1,15 @@
 {
   "name": "pubsweet-component-editoria-dashboard",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The application dashboard for the Editoria project.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["pubsweet-component", "pubsweet-client"],
+  "keywords": [
+    "pubsweet-component",
+    "pubsweet-client"
+  ],
   "repository": {
     "type": "git",
     "url": "https://gitlab.coko.foundation/editoria/editoria-dashboard"
