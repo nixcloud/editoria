@@ -1,6 +1,6 @@
 {
   "name": "pubsweet-component-editoria-dashboard",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The application dashboard for the Editoria project.",
   "main": "index.js",
   "scripts": {
