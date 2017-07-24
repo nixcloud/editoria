@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 
 // TODO -- clean up this import
 import Actions from 'pubsweet-client/src/actions'
+
 import Division from './Division'
+import FileUploader from './FileUploader/FileUploader'
 import TeamManagerModal from './TeamManager/TeamManagerModal'
 
 import styles from './styles/bookBuilder.local.scss'
@@ -204,6 +206,8 @@ export class BookBuilder extends React.Component {
     const productionEditor = _.get(book, 'productionEditor.username') || 'unassigned'
     const teamManagerModal = this.renderTeamManagerModal()
 
+    // console.log('render bb')
+
     return (
       <div className='bootstrap modal pubsweet-component pubsweet-component-scroll'>
         <div className={styles.bookBuilder}>
@@ -215,6 +219,11 @@ export class BookBuilder extends React.Component {
 
             <div className={styles.productionEditorContainer}>
               <span>Production Editor: &nbsp; { productionEditor } </span>
+              <FileUploader
+                book={book}
+                convert={ink}
+                create={createFragment}
+              />
               {teamManagerButton}
               <div className={styles.separator} />
             </div>
