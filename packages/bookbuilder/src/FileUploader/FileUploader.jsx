@@ -20,7 +20,7 @@ class FileUploader extends React.Component {
 
   onChange (event) {
     event.preventDefault()
-    const { book, convert, create } = this.props
+    const { book, convert, create, update } = this.props
     const files = event.target.files
 
     const divisionMapper = {
@@ -47,8 +47,6 @@ class FileUploader extends React.Component {
           subCategory = 'chapter'
         }
       }
-
-      // console.log(convert)
 
       // let index
       // if (isNumber(this.state.counter[division])) {
@@ -87,22 +85,24 @@ class FileUploader extends React.Component {
         trackChanges: false
       }
 
-      // what's the id???
       // create(book, fragment)
 
       setTimeout(() => {
-        create(book, fragment)
+        create(book, fragment).then((res) => {
+          const fragmentId = res.fragment.id
+
+          convert(file).then((response) => {
+            const patch = {
+              id: fragmentId,
+              source: response.converted
+            }
+
+            update(book, patch)
+          }).catch((error) => {
+            console.log(error)
+          })
+        })
       }, i * 100)
-
-      // convert(file).then((response) => {
-        // create(book, fragment)
-        // const patch = {
-
-        // }
-        // update(book)
-      // }).catch((error) => {
-      //   console.log(error)
-      // })
     })
   }
 
@@ -129,7 +129,8 @@ class FileUploader extends React.Component {
 FileUploader.propTypes = {
   book: React.PropTypes.object.isRequired,
   convert: React.PropTypes.func.isRequired,
-  create: React.PropTypes.func.isRequired
+  create: React.PropTypes.func.isRequired,
+  update: React.PropTypes.func.isRequired
 }
 
 export default FileUploader
