@@ -21,8 +21,6 @@ class FileUploader extends React.Component {
   onChange (event) {
     event.preventDefault()
     const { book, convert, create } = this.props
-    console.log(book)
-
     const files = event.target.files
 
     const divisionMapper = {
@@ -33,9 +31,7 @@ class FileUploader extends React.Component {
 
     each(files, (file) => {
       const name = file.name
-      // console.log(name)
       const nameSpecifier = name.slice(0, 1)
-      console.log(nameSpecifier)
 
       const division = divisionMapper[nameSpecifier]
       let subCategory
@@ -43,63 +39,64 @@ class FileUploader extends React.Component {
       if (division !== 'body') {
         subCategory = 'component'
       } else {
-        console.log(name.split(5, 10))
-        if (name.split(5, 9) === 'Part') {
+        if (name.slice(5, 9) === 'Part') {
           subCategory = 'part'
         } else {
           subCategory = 'chapter'
         }
       }
 
-      console.log(convert)
+      // console.log(convert)
 
-      convert(file).then((response) => {
-        // TODO -- refactor this with onAddClick in Division
-        // move them to bookbuilder and pass down to both as prop
+      // let index
+      // if (isNumber(this.state.counter[division])) {
+      //   index = this.state.counter[division] + 1
+      //   this.setState({
+      //     counter[division]: this.state.counter[division] + 1
+      //   })
+      // } else {
+      //   index = 0
+      // }
 
-        console.log(response)
+      const fragment = {
+        book: book.id,
+        subCategory,
+        division,
+        alignment: {
+          left: false,
+          right: false
+        },
+        progress: {
+          style: 0,
+          edit: 0,
+          review: 0,
+          clean: 0
+        },
+        lock: null,
 
-        const fragment = {
-          book: book.id,
-          subCategory,
-          division,
-          alignment: {
-            left: false,
-            right: false
-          },
-          progress: {
-            style: 0,
-            edit: 0,
-            review: 0,
-            clean: 0
-          },
-          lock: null,
+        // index,
+        kind: 'chapter',
+        title: name,
 
-          // index: isNumber(this.state.division) ? ,
-          kind: 'chapter',
-          title: name,
+        status: 'unpublished',
+        author: '',
+        source: '',
+        comments: {},
+        trackChanges: false
+      }
 
-          status: 'unpublished',
-          author: '',
-          source: response.converted,
-          comments: {},
-          trackChanges: false
-        }
+      // what's the id???
+      create(book, fragment)
 
-        let index
-        if (isNumber(this.state.counter[division])) {
-          index = this.state.counter[division] + 1
-        } else {
-          index = 0
-        }
+      // convert(file).then((response) => {
+        // create(book, fragment)
+        // const patch = {
 
-        fragment.index = index
-
-        create(book, fragment)
-
-      }).catch((error) => {
-        console.log(error)
-      })
+        // }
+        // update(book)
+      // }).catch((error) => {
+      //   console.log(error)
+      // })
     })
   }
 
@@ -111,7 +108,7 @@ class FileUploader extends React.Component {
         <a>
           Upload files
           <input
-            accept='.docx'
+            accept='.doc,.docx'
             multiple
             name='fileUploader'
             onChange={this.onChange}

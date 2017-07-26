@@ -223,6 +223,7 @@ export class BookBuilder extends React.Component {
                 book={book}
                 convert={ink}
                 create={createFragment}
+                update={updateFragment}
               />
               {teamManagerButton}
               <div className={styles.separator} />

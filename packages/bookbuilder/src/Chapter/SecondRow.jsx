@@ -17,7 +17,7 @@ class ChapterSecondRow extends React.Component {
 
         <div className={styles.noPadding + ' col-lg-2 col-md-12 col-sm-12 col-xs-12'}>
           <UploadButton
-            accept='.docx'
+            accept='.doc,.docx'
             chapter={chapter}
             convertFile={convertFile}
             modalContainer={outerContainer}
