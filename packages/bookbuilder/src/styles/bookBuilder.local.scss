@@ -7,7 +7,7 @@ $white: #fff;
 .bookBuilder {
   @import 'animate';
 
-  counter-reset: chapter;
+  // counter-reset: chapter;
   font-family: 'Fira Sans';
 
   h1 {
@@ -266,10 +266,10 @@ $white: #fff;
     .isChapter {
       padding-left: 3%!important;
 
-      h3::before {
-        counter-increment: chapter;
-        content: "" counter(chapter) ". ";
-      }
+      // h3::before {
+      //   counter-increment: chapter;
+      //   content: "" counter(chapter) ". ";
+      // }
     }
 
     .isPart {
