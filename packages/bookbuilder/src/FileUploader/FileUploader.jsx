@@ -152,20 +152,39 @@ class FileUploader extends React.Component {
   }
 
   render () {
+    const containerStyles = {
+      padding: '0'
+    }
+
+    const inputStyles = {
+      display: 'none'
+    }
+
+    const labelStyles = {
+      color: '#fff',
+      cursor: 'pointer',
+      fontWeight: '500',
+      // marginBottom: 0,
+      margin: 'auto 0',
+      width: '170px'
+    }
+
     return (
-      <div
+      <div style={containerStyles}
         className={styles.teamManagerBtn}
       >
-        <a>
-          Upload files
-          <input
-            accept='.doc,.docx'
-            multiple
-            name='fileUploader'
-            onChange={this.onChange}
-            type='file'
-          />
-        </a>
+        <label htmlFor='file-uploader' style={labelStyles}>
+          upload files
+        </label>
+        <input
+          accept='.doc,.docx'
+          id='file-uploader'
+          multiple
+          name='file-uploader'
+          onChange={this.onChange}
+          style={inputStyles}
+          type='file'
+        />
       </div>
     )
   }
