@@ -29,7 +29,9 @@ class FileUploader extends React.Component {
       c: 'back'
     }
 
-    each(files, (file) => {
+    each(files, (file, i) => {
+      // console.log('here', i)
+
       const name = file.name.replace(/\.[^/.]+$/, '')
       const nameSpecifier = name.slice(0, 1)
 
@@ -86,7 +88,11 @@ class FileUploader extends React.Component {
       }
 
       // what's the id???
-      create(book, fragment)
+      // create(book, fragment)
+
+      setTimeout(() => {
+        create(book, fragment)
+      }, i * 100)
 
       // convert(file).then((response) => {
         // create(book, fragment)
