@@ -133,6 +133,7 @@ class ChapterTitle extends React.Component {
 
         { hasContent }
         { title }
+        {/* { this.props.chapter.index } */}
         { uploadIndicator }
         { renameEmptyError }
 

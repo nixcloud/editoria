@@ -1,5 +1,5 @@
 import React from 'react'
-import { each, isNumber } from 'lodash'
+import { each, get, keys } from 'lodash'
 
 import styles from '../styles/bookBuilder.local.scss'
 
@@ -29,20 +29,41 @@ class FileUploader extends React.Component {
 
   onChange (event) {
     event.preventDefault()
-    const { book, convert, create, update, updateUploadStatus } = this.props
+    const { backChapters, bodyChapters, book, convert, create, frontChapters, update, updateUploadStatus } = this.props
     const files = event.target.files
 
     const divisionMapper = {
-      a: 'front',
-      b: 'body',
-      c: 'back'
+      a: {
+        chapterList: frontChapters,
+        division: 'front'
+      },
+      b: {
+        chapterList: bodyChapters,
+        division: 'body'
+      },
+      c: {
+        chapterList: backChapters,
+        division: 'back'
+      }
     }
+
+    each(keys(divisionMapper), (key) => {
+      const division = divisionMapper[key]
+      // console.log(division)
+      const { counter } = this.state
+
+      const baseCounter = get(division, 'chapterList.length') || 0
+      counter[division.division] = baseCounter
+
+      this.setState(counter)
+    })
 
     each(files, (file, i) => {
       const name = file.name.replace(/\.[^/.]+$/, '')
       const nameSpecifier = name.slice(0, 1)
 
-      const division = divisionMapper[nameSpecifier]
+      const division = divisionMapper[nameSpecifier].division
+      // const chapterList = divisionMapper[nameSpecifier].chapterList
       let subCategory
 
       if (division !== 'body') {
@@ -55,7 +76,15 @@ class FileUploader extends React.Component {
         }
       }
 
-      // let index
+      // console.log(this.state.counter)
+      const index = this.state.counter[division]
+      const nextIndex = index + 1
+      const { counter } = this.state
+      counter[division] = nextIndex
+      this.setState({ counter })
+
+      // console.log('index', index)
+
       // if (isNumber(this.state.counter[division])) {
       //   index = this.state.counter[division] + 1
       //   this.setState({
@@ -81,7 +110,7 @@ class FileUploader extends React.Component {
         },
         lock: null,
 
-        // index,
+        index,
         kind: 'chapter',
         title: name,
 
@@ -143,9 +172,12 @@ class FileUploader extends React.Component {
 }
 
 FileUploader.propTypes = {
+  backChapters: React.PropTypes.array.isRequired,
+  bodyChapters: React.PropTypes.array.isRequired,
   book: React.PropTypes.object.isRequired,
   convert: React.PropTypes.func.isRequired,
   create: React.PropTypes.func.isRequired,
+  frontChapters: React.PropTypes.array.isRequired,
   update: React.PropTypes.func.isRequired,
   updateUploadStatus: React.PropTypes.func.isRequired
 }

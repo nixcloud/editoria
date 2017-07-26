@@ -228,9 +228,12 @@ export class BookBuilder extends React.Component {
             <div className={styles.productionEditorContainer}>
               <span>Production Editor: &nbsp; { productionEditor } </span>
               <FileUploader
+                backChapters={backChapters}
+                bodyChapters={bodyChapters}
                 book={book}
                 convert={ink}
                 create={createFragment}
+                frontChapters={frontChapters}
                 update={updateFragment}
                 updateUploadStatus={this.updateUploadStatus}
               />
