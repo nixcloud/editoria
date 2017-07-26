@@ -130,12 +130,17 @@ export class Division extends React.Component {
   }
 
   render () {
-    const { book, chapters, ink, outerContainer, roles, title, type, update } = this.props
+    const { book, chapters, ink, outerContainer, roles, title, type, update, uploadStatus } = this.props
     const { _onAddClick, _onRemove, _onMove } = this
+
+    // console.log('div upl', uploadStatus)
 
     const chapterType = (type === 'body') ? 'chapter' : 'component'
 
     const chapterInstances = _.map(chapters, function (c, i) {
+      // console.log('c id', c.id)
+      // console.log(uploadStatus[c.id])
+      // console.log('')
       return (
         <Chapter
           book={book}
@@ -151,6 +156,7 @@ export class Division extends React.Component {
           title={c.title}
           type={c.subCategory}
           update={update}
+          uploading={uploadStatus[c.id]}
         />
       )
     })
@@ -222,7 +228,8 @@ Division.propTypes = {
   roles: React.PropTypes.array,
   title: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired
+  update: React.PropTypes.func.isRequired,
+  uploadStatus: React.PropTypes.object
 }
 
 export default DragDropContext(HTML5Backend)(Division)

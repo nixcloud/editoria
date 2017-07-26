@@ -67,6 +67,7 @@ class ChapterTitle extends React.Component {
 
   renderUploadIndicator () {
     const { isUploadInProgress } = this.props
+    // console.log('is uploading', isUploadInProgress)
 
     if (!isUploadInProgress) return null
 

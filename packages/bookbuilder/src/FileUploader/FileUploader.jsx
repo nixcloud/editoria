@@ -14,13 +14,22 @@ class FileUploader extends React.Component {
         front: null,
         body: null,
         back: null
-      }
+      },
+      uploading: {}
     }
+  }
+
+  handleUploadStatusChange (fragmentId, bool) {
+    const { uploading } = this.state
+    uploading[fragmentId] = bool
+    this.setState({
+      uploading
+    })
   }
 
   onChange (event) {
     event.preventDefault()
-    const { book, convert, create, update } = this.props
+    const { book, convert, create, update, updateUploadStatus } = this.props
     const files = event.target.files
 
     const divisionMapper = {
@@ -30,8 +39,6 @@ class FileUploader extends React.Component {
     }
 
     each(files, (file, i) => {
-      // console.log('here', i)
-
       const name = file.name.replace(/\.[^/.]+$/, '')
       const nameSpecifier = name.slice(0, 1)
 
@@ -85,11 +92,14 @@ class FileUploader extends React.Component {
         trackChanges: false
       }
 
-      // create(book, fragment)
-
       setTimeout(() => {
         create(book, fragment).then((res) => {
           const fragmentId = res.fragment.id
+
+          // console.log('one')
+          this.handleUploadStatusChange(fragmentId, true)
+          updateUploadStatus(this.state.uploading)
+          // console.log('two')
 
           convert(file).then((response) => {
             const patch = {
@@ -98,8 +108,14 @@ class FileUploader extends React.Component {
             }
 
             update(book, patch)
+
+            this.handleUploadStatusChange(fragmentId, false)
+            updateUploadStatus(this.state.uploading)
           }).catch((error) => {
             console.log(error)
+
+            this.handleUploadStatusChange(fragmentId, false)
+            updateUploadStatus(this.state.uploading)
           })
         })
       }, i * 100)
@@ -130,7 +146,8 @@ FileUploader.propTypes = {
   book: React.PropTypes.object.isRequired,
   convert: React.PropTypes.func.isRequired,
   create: React.PropTypes.func.isRequired,
-  update: React.PropTypes.func.isRequired
+  update: React.PropTypes.func.isRequired,
+  updateUploadStatus: React.PropTypes.func.isRequired
 }
 
 export default FileUploader

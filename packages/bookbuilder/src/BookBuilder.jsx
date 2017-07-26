@@ -24,10 +24,12 @@ export class BookBuilder extends React.Component {
     this._getRoles = this._getRoles.bind(this)
     this._isProductionEditor = this._isProductionEditor.bind(this)
     this.setProductionEditor = this.setProductionEditor.bind(this)
+    this.updateUploadStatus = this.updateUploadStatus.bind(this)
 
     this.state = {
       outerContainer: {},
-      showTeamManager: false
+      showTeamManager: false,
+      uploading: {}
     }
   }
 
@@ -168,6 +170,10 @@ export class BookBuilder extends React.Component {
     )
   }
 
+  updateUploadStatus (status) {
+    this.setState({ uploading: status })
+  }
+
   render () {
     const { book, chapters } = this.props
     const { createFragment, deleteFragment, ink, updateFragment } = this.props.actions
@@ -196,8 +202,10 @@ export class BookBuilder extends React.Component {
     let teamManagerButton = ''
     if (isProductionEditor) {
       teamManagerButton = (
-        <div className={styles.teamManagerBtn}
-          onClick={this._toggleTeamManager}>
+        <div
+          className={styles.teamManagerBtn}
+          onClick={this._toggleTeamManager}
+        >
           <a>team manager</a>
         </div>
       )
@@ -224,6 +232,7 @@ export class BookBuilder extends React.Component {
                 convert={ink}
                 create={createFragment}
                 update={updateFragment}
+                updateUploadStatus={this.updateUploadStatus}
               />
               {teamManagerButton}
               <div className={styles.separator} />
@@ -240,6 +249,7 @@ export class BookBuilder extends React.Component {
               title='Front Matter'
               type='front'
               update={updateFragment}
+              uploadStatus={this.state.uploading}
             />
 
             <div className={styles.sectionDivider} />
@@ -255,6 +265,7 @@ export class BookBuilder extends React.Component {
               title='Body'
               type='body'
               update={updateFragment}
+              uploadStatus={this.state.uploading}
             />
 
             <div className={styles.sectionDivider} />
@@ -270,6 +281,7 @@ export class BookBuilder extends React.Component {
               title='Back Matter'
               type='back'
               update={updateFragment}
+              uploadStatus={this.state.uploading}
             />
 
           </div>

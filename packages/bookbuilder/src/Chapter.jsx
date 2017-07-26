@@ -75,8 +75,11 @@ export class Chapter extends React.Component {
       remove,
       roles,
       title,
-      type
+      type,
+      uploading
     } = this.props
+
+    // console.log('ch upl', this.props.uploading)
 
     const { isUploadInProgress } = this.state
 
@@ -103,7 +106,7 @@ export class Chapter extends React.Component {
           <FirstRow
             book={book}
             chapter={chapter}
-            isUploadInProgress={isUploadInProgress}
+            isUploadInProgress={isUploadInProgress || uploading}
             outerContainer={outerContainer}
             remove={remove}
             roles={roles}
@@ -143,7 +146,8 @@ Chapter.propTypes = {
   roles: React.PropTypes.array,
   title: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired
+  update: React.PropTypes.func.isRequired,
+  uploading: React.PropTypes.bool
 }
 
 // combine them, as each chapter can be both a source and a target
