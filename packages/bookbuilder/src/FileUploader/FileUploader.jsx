@@ -30,7 +30,7 @@ class FileUploader extends React.Component {
     }
 
     each(files, (file) => {
-      const name = file.name
+      const name = file.name.replace(/\.[^/.]+$/, '')
       const nameSpecifier = name.slice(0, 1)
 
       const division = divisionMapper[nameSpecifier]
