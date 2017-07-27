@@ -1,5 +1,5 @@
 import React from 'react'
-import { each, get, keys } from 'lodash'
+import { each, get, keys, pickBy } from 'lodash'
 
 import styles from '../styles/bookBuilder.local.scss'
 
@@ -164,17 +164,34 @@ class FileUploader extends React.Component {
       color: '#fff',
       cursor: 'pointer',
       fontWeight: '500',
-      // marginBottom: 0,
       margin: 'auto 0',
-      width: '170px'
+      padding: ' 0 30px'
+      // width: '170px'
+    }
+
+    const { uploading } = this.state
+    const uploadingOnly = pickBy(uploading, (value, key) => {
+      return (value === true)
+    })
+    const currentlyUploading = keys(uploadingOnly).length
+
+    let labelText
+    if (currentlyUploading > 0) {
+      labelText = `converting ${currentlyUploading} files`
+    } else {
+      labelText = 'upload files'
     }
 
     return (
-      <div style={containerStyles}
+      <div
         className={styles.teamManagerBtn}
+        style={containerStyles}
       >
-        <label htmlFor='file-uploader' style={labelStyles}>
-          upload files
+        <label
+          htmlFor='file-uploader'
+          style={labelStyles}
+        >
+          { labelText }
         </label>
         <input
           accept='.doc,.docx'
