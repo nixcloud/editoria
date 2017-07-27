@@ -62,10 +62,15 @@ class FileUploader extends React.Component {
       const name = file.name.replace(/\.[^/.]+$/, '')
       const nameSpecifier = name.slice(0, 1)
 
-      const division = divisionMapper[nameSpecifier].division
-      // const chapterList = divisionMapper[nameSpecifier].chapterList
-      let subCategory
+      // default to body
+      let division
+      if (!divisionMapper[nameSpecifier]) {
+        division = 'body'
+      } else {
+        division = divisionMapper[nameSpecifier].division
+      }
 
+      let subCategory
       if (division !== 'body') {
         subCategory = 'component'
       } else {
