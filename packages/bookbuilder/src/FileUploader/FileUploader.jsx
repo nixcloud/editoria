@@ -1,5 +1,5 @@
 import React from 'react'
-import { each, get, keys, pickBy } from 'lodash'
+import { each, get, keys, pickBy, sortBy } from 'lodash'
 
 import styles from '../styles/bookBuilder.local.scss'
 
@@ -29,8 +29,17 @@ class FileUploader extends React.Component {
 
   onChange (event) {
     event.preventDefault()
-    const { backChapters, bodyChapters, book, convert, create, frontChapters, update, updateUploadStatus } = this.props
-    const files = event.target.files
+
+    const {
+      backChapters,
+      bodyChapters,
+      book,
+      convert,
+      create,
+      frontChapters,
+      update,
+      updateUploadStatus
+    } = this.props
 
     const divisionMapper = {
       a: {
@@ -47,9 +56,11 @@ class FileUploader extends React.Component {
       }
     }
 
+    const originalFiles = event.target.files
+    const files = sortBy(originalFiles, 'name')  // ensure order
+
     each(keys(divisionMapper), (key) => {
       const division = divisionMapper[key]
-      // console.log(division)
       const { counter } = this.state
 
       const baseCounter = get(division, 'chapterList.length') || 0
@@ -59,8 +70,12 @@ class FileUploader extends React.Component {
     })
 
     each(files, (file, i) => {
-      const name = file.name.replace(/\.[^/.]+$/, '')
-      const nameSpecifier = name.slice(0, 1)
+      const name = file.name.replace(/\.[^/.]+$/, '')  // remove file extension
+      const nameSpecifier = name.slice(0, 1)  // get division from name
+
+      // mark last file
+      let last
+      if ((i + 1) === files.length) last = true
 
       // default to body
       let division
@@ -81,23 +96,11 @@ class FileUploader extends React.Component {
         }
       }
 
-      // console.log(this.state.counter)
       const index = this.state.counter[division]
       const nextIndex = index + 1
       const { counter } = this.state
       counter[division] = nextIndex
       this.setState({ counter })
-
-      // console.log('index', index)
-
-      // if (isNumber(this.state.counter[division])) {
-      //   index = this.state.counter[division] + 1
-      //   this.setState({
-      //     counter[division]: this.state.counter[division] + 1
-      //   })
-      // } else {
-      //   index = 0
-      // }
 
       const fragment = {
         book: book.id,
@@ -126,33 +129,35 @@ class FileUploader extends React.Component {
         trackChanges: false
       }
 
-      setTimeout(() => {
-        create(book, fragment).then((res) => {
-          const fragmentId = res.fragment.id
+      // setTimeout(() => {
 
-          // console.log('one')
-          this.handleUploadStatusChange(fragmentId, true)
+      create(book, fragment).then((res) => {
+        const fragmentId = res.fragment.id
+
+        if (last) this.input.value = ''  // reset input
+
+        this.handleUploadStatusChange(fragmentId, true)
+        updateUploadStatus(this.state.uploading)
+
+        convert(file).then((response) => {
+          const patch = {
+            id: fragmentId,
+            source: response.converted
+          }
+
+          update(book, patch)
+
+          this.handleUploadStatusChange(fragmentId, false)
           updateUploadStatus(this.state.uploading)
-          // console.log('two')
+        }).catch((error) => {
+          console.log(error)
 
-          convert(file).then((response) => {
-            const patch = {
-              id: fragmentId,
-              source: response.converted
-            }
-
-            update(book, patch)
-
-            this.handleUploadStatusChange(fragmentId, false)
-            updateUploadStatus(this.state.uploading)
-          }).catch((error) => {
-            console.log(error)
-
-            this.handleUploadStatusChange(fragmentId, false)
-            updateUploadStatus(this.state.uploading)
-          })
+          this.handleUploadStatusChange(fragmentId, false)
+          updateUploadStatus(this.state.uploading)
         })
-      }, i * 100)
+      })
+
+      // }, i * 200)
     })
   }
 
@@ -171,7 +176,6 @@ class FileUploader extends React.Component {
       fontWeight: '500',
       margin: 'auto 0',
       padding: ' 0 30px'
-      // width: '170px'
     }
 
     const { uploading } = this.state
@@ -204,6 +208,7 @@ class FileUploader extends React.Component {
           multiple
           name='file-uploader'
           onChange={this.onChange}
+          ref={(c) => { this.input = c }}
           style={inputStyles}
           type='file'
         />

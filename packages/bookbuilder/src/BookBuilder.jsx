@@ -312,9 +312,13 @@ function mapStateToProps (state, ownProps) {
     return c.id === ownProps.params.id
   })
 
+  // console.log(state.fragments)
+
   let chapters = _.sortBy(_.filter(state.fragments, function (f) {
     return f.book === book.id && f.id && !f.deleted
   }), 'index')
+
+  // console.log(chapters)
 
   let teams = state.teams
   let users = state.users.users
