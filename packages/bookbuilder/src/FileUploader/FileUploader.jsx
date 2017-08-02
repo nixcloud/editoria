@@ -155,9 +155,11 @@ class FileUploader extends React.Component {
           this.handleUploadStatusChange(fragmentId, false)
           updateUploadStatus(this.state.uploading)
         })
+      }).catch((error) => {
+        console.log('create fragment error', error)
       })
 
-      // }, i * 200)
+      // }, i * 50)
     })
   }
 

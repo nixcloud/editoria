@@ -221,7 +221,8 @@ export class BookBuilder extends React.Component {
         <div className={styles.bookBuilder}>
           <div
             className='col-lg-offset-2 col-lg-8 col-md-8 col-sm-12 col-xs-12'
-            ref='outerContainer'>
+            ref='outerContainer'
+          >
 
             <h1>{this.props.book.title}</h1>
 
@@ -308,30 +309,28 @@ BookBuilder.propTypes = {
 }
 
 function mapStateToProps (state, ownProps) {
-  let book = _.find(state.collections, function (c) {
+  const book = _.find(state.collections, (c) => {
     return c.id === ownProps.params.id
   })
 
-  // console.log(state.fragments)
-
-  let chapters = _.sortBy(_.filter(state.fragments, function (f) {
+  const chapters = _.sortBy(_.filter(state.fragments, (f) => {
     return f.book === book.id && f.id && !f.deleted
   }), 'index')
 
   // console.log(chapters)
 
-  let teams = state.teams
-  let users = state.users.users
-  let user = state.currentUser.user
+  const teams = state.teams
+  const users = state.users.users
+  const user = state.currentUser.user
 
-  let error = state.error
+  const error = state.error
 
   return {
     book: book || {},
-    chapters: chapters,
-    teams: teams,
-    users: users,
-    user: user,
+    chapters,
+    teams,
+    users,
+    user,
     // userRoles: state.auth.roles,
     errorMessage: error
   }
