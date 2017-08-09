@@ -115,8 +115,6 @@ export class Chapter extends React.Component {
             update={this.update}
           />
 
-          <div className={styles.chapterBottomLine} />
-
           <SecondRow
             chapter={chapter}
             convertFile={ink}

@@ -121,7 +121,7 @@ $white: #fff;
 
   .separator {
     clear: both;
-    height: .1px;
+    height: 1px;
   }
 
   .noPadding {
@@ -281,6 +281,16 @@ $white: #fff;
         border: 0 !important;
       }
     }
+    .dashedLine {
+      border-top: 1px dashed #000;
+      float: left;
+      position: relative;
+      top: 16px;
+      width: 100%;
+    }
+    .FirstRow {
+      display: flex;
+    }
 
     .chapterTitle {
       h3 {
@@ -298,11 +308,14 @@ $white: #fff;
     }
 
     .chapterActions {
+      position: absolute;
+      padding-left: 5px;
+      right: 0;
+      background-color: #fff;
+      bottom: 17px;
       a {
-        bottom: 24px;
         color: $light-grey;
         font-weight: 500;
-        position: relative;
         text-decoration: none;
 
         &:hover {
@@ -334,10 +347,6 @@ $white: #fff;
         right:5px;
         margin-left:0.3em;
       }
-    }
-    .chapterBottomLine {
-      border-bottom:2px solid;
-      border-color:$light-grey;;
     }
 
     .secondLineContainer {

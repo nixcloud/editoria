@@ -2,6 +2,7 @@ import React from 'react'
 
 import ChapterButtons from './ChapterButtons'
 import ChapterTitle from './ChapterTitle'
+import styles from '../styles/bookBuilder.local.scss'
 
 class ChapterFirstRow extends React.Component {
   constructor (props) {
@@ -56,7 +57,7 @@ class ChapterFirstRow extends React.Component {
     const { isRenameEmpty, isRenamingTitle } = this.state
 
     return (
-      <span>
+      <div className={styles.FirstRow}>
         <ChapterTitle
           chapter={chapter}
           isRenaming={isRenamingTitle}
@@ -69,20 +70,23 @@ class ChapterFirstRow extends React.Component {
           update={update}
         />
 
-        <ChapterButtons
-          bookId={book.id}
-          chapter={chapter}
-          isRenaming={isRenamingTitle}
-          isUploadInProgress={isUploadInProgress}
-          modalContainer={outerContainer}
-          onClickRename={this.onClickRename}
-          onClickSave={this.onClickSave}
-          remove={remove}
-          roles={roles}
-          type={type}
-          update={update}
-        />
-      </span>
+        <div className={styles.dashedLine}>
+          <ChapterButtons
+            bookId={book.id}
+            chapter={chapter}
+            isRenaming={isRenamingTitle}
+            isUploadInProgress={isUploadInProgress}
+            modalContainer={outerContainer}
+            onClickRename={this.onClickRename}
+            onClickSave={this.onClickSave}
+            remove={remove}
+            roles={roles}
+            type={type}
+            update={update}
+          />
+        </div>
+      </div>
+
     )
   }
 }
