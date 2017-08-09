@@ -62,12 +62,21 @@ export class UploadButton extends React.Component {
     const { accept, title, type } = this.props
 
     return (
-      <input
-        accept={accept}
-        onChange={this.handleFileUpload}
-        title={title}
-        type={type}
-      />
+      <span>
+        <label
+          htmlFor='file-uploader'
+          className={styles.uploadLabel}
+        >
+          Upload Word
+          </label>
+        <input
+          accept={accept}
+          onChange={this.handleFileUpload}
+          title={title}
+          type={type}
+        />
+    </span>
+
     )
   }
 
@@ -107,7 +116,6 @@ export class UploadButton extends React.Component {
         onClick={this.onClick}
         style={buttonStyle}
       >
-        Upload Word
         { input }
         { modal }
       </div>

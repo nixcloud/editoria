@@ -2,6 +2,7 @@ $dark-grey: #404040;
 $light-grey: #cdcdcd;
 $main-grey: #d8d8d8;
 $white: #fff;
+$black: #000;
 
 
 .bookBuilder {
@@ -308,11 +309,11 @@ $white: #fff;
     }
 
     .chapterActions {
-      position: absolute;
-      padding-left: 5px;
-      right: 0;
-      background-color: #fff;
+      background-color: $white;
       bottom: 17px;
+      padding-left: 5px;
+      position: absolute;
+      right: 0;
       a {
         color: $light-grey;
         font-weight: 500;
@@ -352,36 +353,16 @@ $white: #fff;
     .secondLineContainer {
       padding-top:1%;
 
-      .btnFile {
-        background-color: $light-grey;
-        color: #fff;
-        cursor: pointer;
-        overflow: hidden;
-        position: relative;
-        text-align: center;
-        top: 3px;
-        width: 75%;
-      }
-
       .btnFile input[type=file] {
-        border: none !important;
-        color: #fff;
-        cursor: pointer;
-        display: block;
-        filter: alpha(opacity=0);
-        left: 0;
-        min-height: 100%;
-        min-width: 100%;
-        opacity: 0;
-        outline: none;
-        padding: 10px;
-        position: absolute;
-        right: 0;
-        top: 0;
+        display: none !important;
       }
-
-      .btnFile:hover input[type=file] {
-        font-size: 260px;
+      .uploadLabel {
+        background-color: $light-grey;
+        color: $white;
+        cursor: pointer;
+        font-weight: 500;
+        text-align: center;
+        width: 75%;
       }
 
       .secondActions {
