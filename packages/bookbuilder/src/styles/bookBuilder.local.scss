@@ -3,7 +3,7 @@ $light-grey: #cdcdcd;
 $main-grey: #d8d8d8;
 $white: #fff;
 $black: #000;
-
+$blue: #0d78f2;
 
 .bookBuilder {
   @import 'animate';
@@ -130,16 +130,15 @@ $black: #000;
   }
 
   .sectionHeader {
-    border-bottom: 4px solid $dark-grey;
     padding-top: 1%;
 
     .sectionTitle {
-      background-color: $main-grey;
+      // background-color: $main-grey;
       float: left;
       padding: 10px 110px 10px 10px;
 
       h1 {
-        color: #000 !important;
+        color: $blue !important;
         font-family: 'Fira Sans';
         font-size: 25px;
         font-style: italic;
@@ -278,12 +277,9 @@ $black: #000;
         font-size: 20px !important;
       }
 
-      .leftBorderBody {
-        border: 0 !important;
-      }
     }
     .dashedLine {
-      border-top: 1px dashed #000;
+      border-top: 1px dashed $black;
       float: left;
       position: relative;
       top: 16px;
@@ -315,14 +311,14 @@ $black: #000;
       position: absolute;
       right: 0;
       a {
-        color: $light-grey;
+        color: $blue;
         font-weight: 500;
         text-decoration: none;
 
         &:hover {
-          color: $dark-grey;
           cursor: pointer;
-          transition: .25s ease-in-out 0s;
+          border-bottom: 2px solid #0D78F2;
+          // transition: .25s ease-in-out 0s;
         }
       }
 
@@ -366,16 +362,16 @@ $black: #000;
       }
 
       .secondActions {
-       float:left;
+       float: left;
         padding-left: 2%;
-        position:relative;
-        top:4px;
+        position: relative;
+        top: 4px;
         li {
-          float:left;
-          padding-right:2%;
+          float: left;
+          padding-right: 2%;
         }
         li:hover {
-          cursor:pointer;
+          cursor: pointer;
           color: $dark-grey;
           transition: .25s ease-in-out 0s;
         }
@@ -433,24 +429,6 @@ $black: #000;
     }
   }
 
-  .leftBorderComponent {
-    border-left: 2px solid $light-grey;
-    width: 2px;
-    height: 68px;
-    position: relative;
-    top: 30px;
-    left: 6px;
-  }
-
-  .leftBorderBody {
-    border-left: 2px solid $light-grey;
-    width:2px;
-    height: 57px;
-    position: relative;
-    top: 25px;
-    left: 6px;
-  }
-
   @media all and (max-width: 768px) {
     .pagePosition {
       float:left!important;
@@ -462,9 +440,7 @@ $black: #000;
     .chapterMainContent{
       width:90%!important;
     }
-    .leftBorderBody,.leftBorderComponent {
-      display:none!important;
-    }
+
     .secondLineContainer {
       padding-top:0!important;
     }
