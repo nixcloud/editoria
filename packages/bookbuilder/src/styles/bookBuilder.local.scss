@@ -189,12 +189,12 @@ $blue: #0d78f2;
       border-top-left-radius: 110px;
       border-top-right-radius: 110px;
       cursor: move;
-      float: left;
       height: 20px;
       position: relative;
-      top: 22px;
+      top: 42px;
+      left: -35px;
       transform: rotate(270deg);
-      width: 3%;
+      width: 33px;
     }
 
     .hasContent {
@@ -213,7 +213,7 @@ $blue: #0d78f2;
       margin: 0 auto;
       position: relative;
       top: -33%;
-      width: 134%;
+      width: 45px;
     }
 
     .tooltip {
@@ -313,6 +313,7 @@ $blue: #0d78f2;
         float: left;
         font-size: 18px;
         font-style: italic;
+        white-space: nowrap;
         margin: 0;
         max-width: 80%;
         padding-bottom: 0;
@@ -379,10 +380,10 @@ $blue: #0d78f2;
       }
 
       .secondActions {
-       float: left;
-        padding-left: 2%;
-        position: relative;
-        top: 4px;
+      //  float: left;
+      //   padding-left: 2%;
+      //   position: relative;
+      //   top: 4px;
         li {
           float: left;
           padding-right: 2%;
