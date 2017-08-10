@@ -191,9 +191,8 @@ $blue: #0d78f2;
       cursor: move;
       height: 20px;
       position: relative;
-      float: left;
+      float: right;
       top: 20px;
-      left: 0px;
       right: 0;
       transform: rotate(270deg);
       width: 33px;
@@ -278,8 +277,8 @@ $blue: #0d78f2;
     }
 
     .chapterMainContent {
-      float: left;
-      width: 97%;
+      margin: 0;
+      padding: 0;
     }
 
     .isChapter {
@@ -458,7 +457,7 @@ $blue: #0d78f2;
       width:10%!important;
     }
     .chapterMainContent{
-      width:90%!important;
+      // width:90%!important;
     }
 
     .secondLineContainer {

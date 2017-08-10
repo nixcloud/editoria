@@ -102,14 +102,15 @@ export class Chapter extends React.Component {
         style={listItemStyle}
       >
 
-        <div className={styles.grabIcon + ' ' + (hasContent === true ? styles.hasContent : '')}>
-          {/* <i className='fa fa-circle' /> */}
-          <div className={styles.tooltip}>
-            Grab to sort
+        <div className='col-lg-1'>
+          <div className={ styles.grabIcon + ' ' + (hasContent === true ? styles.hasContent : '')}>
+            <div className={styles.tooltip}>
+              Grab to sort
+            </div>
           </div>
         </div>
 
-        <div className={styles.chapterMainContent}>
+        <div className={'col-lg-11 ' + styles.chapterMainContent}>
           <FirstRow
             book={book}
             chapter={chapter}
