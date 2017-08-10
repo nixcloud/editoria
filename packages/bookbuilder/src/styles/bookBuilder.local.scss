@@ -184,20 +184,26 @@ $blue: #0d78f2;
     }
 
     .grabIcon {
-      bottom: 0;
+      background-color: $light-grey;
+      border-bottom: 0;
+      border-top-left-radius: 110px;
+      border-top-right-radius: 110px;
       color: $light-grey;
       cursor: move;
       float: left;
+      height: 20px;
       position: relative;
+      top: 22px;
+      transform: rotate(270deg);
       width: 3%;
     }
 
     .grabIconPart {
-      position: relative;
-      bottom: 5px;
-      top: 0;
-      font-size: 20px;
-      padding-bottom: 3px;
+      // position: relative;
+      // bottom: 5px;
+      // top: 0;
+      // font-size: 20px;
+      // padding-bottom: 3px;
     }
 
     .tooltip {
@@ -205,13 +211,13 @@ $blue: #0d78f2;
       display: none;
     }
     .grabIcon:hover .tooltip {
-      background: #fff;
-      bottom: 100%;
+      background: $white;
+      top: -105px;
       color: $dark-grey;
       font-size:16px;
       display: block;
-      left: -140px;
-      margin-bottom: -43px;
+      left: -50px;
+      // margin-bottom: -3px;
       opacity: 0;
       padding: 20px;
       pointer-events: none;
@@ -256,6 +262,7 @@ $blue: #0d78f2;
       -ms-animation: fadein .3s; /* Internet Explorer */
       -o-animation: fadein .3s; /* Opera < 12.1 */
       animation: fadein .3s;
+      transform: rotate(90deg);
     }
 
     .chapterMainContent {

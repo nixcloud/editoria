@@ -96,7 +96,7 @@ export class Chapter extends React.Component {
       >
 
         <div className={styles.grabIcon + ' ' + (chapter.subCategory === 'part' ? styles.grabIconPart : '')}>
-          <i className='fa fa-circle' />
+          {/* <i className='fa fa-circle' /> */}
           <div className={styles.tooltip}>
             Grab to sort
           </div>
