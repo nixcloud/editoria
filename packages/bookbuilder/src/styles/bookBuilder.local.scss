@@ -188,7 +188,6 @@ $blue: #0d78f2;
       border-bottom: 0;
       border-top-left-radius: 110px;
       border-top-right-radius: 110px;
-      color: $light-grey;
       cursor: move;
       float: left;
       height: 20px;
@@ -198,12 +197,23 @@ $blue: #0d78f2;
       width: 3%;
     }
 
-    .grabIconPart {
-      // position: relative;
-      // bottom: 5px;
-      // top: 0;
-      // font-size: 20px;
-      // padding-bottom: 3px;
+    .hasContent {
+      background-color: $blue;
+    }
+
+    .hasContent::before {
+      border: 2px solid $blue;
+      border-bottom: 0;
+      border-top-left-radius: 110px;
+      border-top-right-radius: 110px;
+      content: '';
+      display: block;
+      height: 25px;
+      left: -6px;
+      margin: 0 auto;
+      position: relative;
+      top: -33%;
+      width: 134%;
     }
 
     .tooltip {
@@ -211,7 +221,7 @@ $blue: #0d78f2;
       display: none;
     }
     .grabIcon:hover .tooltip {
-      background: $white;
+      background: transparent;
       top: -105px;
       color: $dark-grey;
       font-size:16px;

@@ -123,7 +123,7 @@ class ChapterTitle extends React.Component {
   }
 
   render () {
-    const hasContent = this.renderHasContent()
+    // const hasContent = this.renderHasContent()
     const title = this.renderTitle()
     const uploadIndicator = this.renderUploadIndicator()
     const renameEmptyError = this.renderError()
@@ -131,7 +131,7 @@ class ChapterTitle extends React.Component {
     return (
       <div className={styles.chapterTitle}>
 
-        { hasContent }
+        {/* { hasContent } */}
         { title }
         {/* { this.props.chapter.index } */}
         { uploadIndicator }

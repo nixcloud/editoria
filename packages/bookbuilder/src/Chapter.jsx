@@ -32,6 +32,13 @@ export class Chapter extends React.Component {
     // if (!this.state.isUploadInProgress) this.removeUploadState()
   }
 
+  renderHasContent () {
+    const { chapter } = this.props
+    const source = chapter.source || ''
+    const hasContent = source.trim().length > 0
+    return hasContent
+  }
+
   // getLocalStorageKey () {
   //   const { chapter } = this.props
   //   return 'chapter:upload:' + chapter.id
@@ -80,7 +87,7 @@ export class Chapter extends React.Component {
     } = this.props
 
     // console.log('ch upl', this.props.uploading)
-
+    const hasContent = this.renderHasContent()
     const { isUploadInProgress } = this.state
 
     const listItemStyle = {
@@ -95,7 +102,7 @@ export class Chapter extends React.Component {
         style={listItemStyle}
       >
 
-        <div className={styles.grabIcon + ' ' + (chapter.subCategory === 'part' ? styles.grabIconPart : '')}>
+        <div className={styles.grabIcon + ' ' + (hasContent === true ? styles.hasContent : '')}>
           {/* <i className='fa fa-circle' /> */}
           <div className={styles.tooltip}>
             Grab to sort
