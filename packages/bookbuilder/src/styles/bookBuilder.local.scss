@@ -135,7 +135,7 @@ $blue: #0d78f2;
     .sectionTitle {
       // background-color: $main-grey;
       float: left;
-      padding: 10px 110px 10px 10px;
+      padding: 10px 50px 10px 10px;
 
       h1 {
         color: $blue !important;
@@ -148,26 +148,23 @@ $blue: #0d78f2;
     }
 
     .sectionBtn {
-      float: right;
-      margin-top: 28px;
-      background-color: $dark-grey;
-      border: 1px solid $white;
+      color: $black;
       cursor: pointer;
+      float: left;
+      padding-right: 20px;
       font-size: 16px;
       font-style: italic;
       font-weight: 500;
-      padding: 0 30px;
-      text-align: center;
-      transition:border .5s ease-out 0.2s;
-      color: $white;
+      margin-top: 20px;
 
       &:hover {
-        border: 1px solid $dark-grey;
-        transition: .25s ease-in-out 0s;
+        // border: 1px solid $dark-grey;
+        // transition: .25s ease-in-out 0s;
       }
       a {
-        color: $white;
+        color: $black;
         text-decoration: none;
+        text-transform: uppercase;
         &:hover {
           text-decoration: none;
           cursor:pointer;
@@ -318,7 +315,7 @@ $blue: #0d78f2;
         margin: 0;
         max-width: 80%;
         padding-bottom: 0;
-        padding-right: 1%;
+        padding-right: 10px;
 
       }
     }
