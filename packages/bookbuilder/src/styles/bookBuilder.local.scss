@@ -9,7 +9,7 @@ $blue: #0d78f2;
   @import 'animate';
 
   // counter-reset: chapter;
-  font-family: 'Fira Sans';
+  font-family: 'Vollkorn'!important;
 
   h1 {
     font-style: italic;
@@ -139,7 +139,7 @@ $blue: #0d78f2;
 
       h1 {
         color: $blue !important;
-        font-family: 'Fira Sans';
+        font-family: 'Vollkorn'!important;
         font-size: 25px;
         font-style: italic;
         line-height: 36px;
@@ -413,7 +413,7 @@ $blue: #0d78f2;
         top: 4px;
         float:right;
         li {
-          color:$light-grey;
+          color: $blue;
           float:left;
         }
         .leftRightBox {
