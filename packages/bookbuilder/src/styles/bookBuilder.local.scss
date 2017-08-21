@@ -210,7 +210,7 @@ $blue: #0d78f2;
       left: -6px;
       margin: 0 auto;
       position: relative;
-      top: -33%;
+      top: -31%;
       width: 45px;
     }
 
@@ -260,16 +260,16 @@ $blue: #0d78f2;
     .grabIcon:hover .tooltip {
       opacity: 1;
       pointer-events: auto;
-      -webkit-transform: translateY(0px);
-      -moz-transform: translateY(0px);
-      -ms-transform: translateY(0px);
-      -o-transform: translateY(0px);
-      transform: translateY(0px);
-      -webkit-animation: fadein .3s; /* Safari, Chrome and Opera > 12.1 */
-      -moz-animation: fadein .3s; /* Firefox < 16 */
-      -ms-animation: fadein .3s; /* Internet Explorer */
-      -o-animation: fadein .3s; /* Opera < 12.1 */
-      animation: fadein .3s;
+      // -webkit-transform: translateY(0px);
+      // -moz-transform: translateY(0px);
+      // -ms-transform: translateY(0px);
+      // -o-transform: translateY(0px);
+      // transform: translateY(0px);
+      // -webkit-animation: fadein .3s; /* Safari, Chrome and Opera > 12.1 */
+      // -moz-animation: fadein .3s; /* Firefox < 16 */
+      // -ms-animation: fadein .3s; /* Internet Explorer */
+      // -o-animation: fadein .3s; /* Opera < 12.1 */
+      // animation: fadein .3s;
       transform: rotate(90deg);
     }
 
