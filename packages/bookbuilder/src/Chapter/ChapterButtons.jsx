@@ -87,10 +87,12 @@ class ChapterButtons extends React.Component {
       }
 
       return (
-        <a id='bb-rename'
+        <div className={styles.actionContainer}>
+          <a id='bb-rename'
           onClick={renameButtonFunction}>
           { renameButtonText }
         </a>
+      </div>
       )
     }
 
@@ -104,7 +106,9 @@ class ChapterButtons extends React.Component {
 
     return (
       <LinkContainer id='bb-edit' to={url} >
-        <a> { text } </a>
+        <div className={styles.actionContainer}>
+          <a> { text }</a>
+        </div>
       </LinkContainer>
     )
   }

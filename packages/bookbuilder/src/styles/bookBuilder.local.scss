@@ -311,11 +311,11 @@ $blue: #0d78f2;
         float: left;
         font-size: 18px;
         font-style: italic;
-        white-space: nowrap;
         margin: 0;
         max-width: 80%;
         padding-bottom: 0;
         padding-right: 10px;
+        white-space: nowrap;
 
       }
     }
@@ -326,11 +326,16 @@ $blue: #0d78f2;
       padding-left: 5px;
       position: absolute;
       right: 0;
+      .actionContainer {
+        float: left;
+        padding-right: 10px;
+        margin-right: 10px;
+        border-right: 1px solid $black;
+      }
       a {
         color: $blue;
         font-weight: 500;
         text-decoration: none;
-
         &:hover {
           cursor: pointer;
           border-bottom: 2px solid #0D78F2;
