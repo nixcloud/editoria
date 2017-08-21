@@ -71,7 +71,7 @@ export class UploadButton extends React.Component {
           <label
             htmlFor='file-uploader'
             className={styles.uploadText}
-          > Upload Word
+          > UPLOAD WORD
             </label>
         <input
           accept={accept}

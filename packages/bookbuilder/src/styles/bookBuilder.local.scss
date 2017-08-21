@@ -368,7 +368,7 @@ $blue: #0d78f2;
     }
 
     .secondLineContainer {
-      padding-top:1%;
+      padding-top:0.5%;
 
       .btnFile input[type=file] {
         display: none !important;
@@ -410,7 +410,7 @@ $blue: #0d78f2;
       }
       .pagePosition {
         position: relative;
-        bottom: 6px;
+        top: 4px;
         float:right;
         li {
           color:$light-grey;
