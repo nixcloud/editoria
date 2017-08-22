@@ -1,9 +1,9 @@
 import React from 'react'
 
 import TextInput from 'editoria-common/src/TextInput'
+import styles from '../styles/bookBuilder.local.scss'
 
 class Title extends React.Component {
-
   save () {
     this.refs.chapterInput._save()
   }
@@ -21,9 +21,11 @@ class Title extends React.Component {
     )
 
     const plainTitle = (
-      <h3 onDoubleClick={goToEditor}>
+      <div className={styles.bodyTitle}>
+        <h3 onDoubleClick={goToEditor}>
         { title }
       </h3>
+    </div>
     )
 
     if (isRenaming) return input
