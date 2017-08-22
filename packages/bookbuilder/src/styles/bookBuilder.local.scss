@@ -77,22 +77,17 @@ $blue: #0d78f2;
     background-color: $white !important;
     border: 0;
     border-color: transparent;
-    -webkit-box-shadow: none !important;
-    float: left;
     font-size: 28px;
     font-weight: 500;
     padding: 0;
-    position: absolute;;
+    text-align: left;
+    top: 13px;
     z-index: 999;
+    -webkit-box-shadow: none !important;
+    white-space: pre-wrap;
 
     &:hover, &:active, &:focus {
       background: $white !important;
-    }
-
-    button {
-      float: left;
-      position: relative;
-      z-index: -90;
     }
 
     span:first-child {
@@ -302,7 +297,10 @@ $blue: #0d78f2;
 
     .chapterTitle {
       border-bottom: 1px dashed $black;
-      width: 85.6%;
+      width: 89.6%;
+      .bodyTitle {
+        width: 96%;
+      }
       h3 {
         background-color: $white;
         color: #333 !important;
