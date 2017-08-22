@@ -77,18 +77,19 @@ $blue: #0d78f2;
   }
 
   .dropDown {
-    background-color: transparent !important;
+    background-color: $white !important;
     border: 0;
     border-color: transparent;
     -webkit-box-shadow: none !important;
     float: left;
-    font-size: 18px;
+    font-size: 28px;
     font-weight: 500;
     padding: 0;
     position: relative;
+    z-index: 999;
 
     &:hover, &:active, &:focus {
-      background: transparent !important;
+      background: $white !important;
     }
 
     button {
@@ -287,17 +288,11 @@ $blue: #0d78f2;
       // }
     }
 
-    .isPart {
-      h3 {
-        font-size: 20px !important;
-      }
-
-    }
     .dashedLine {
       border-top: 1px dashed $black;
       float: left;
-      position: relative;
-      top: 16px;
+      position: absolute;
+      top: 25px;
       width: 100%;
     }
     .FirstRow {
@@ -305,11 +300,13 @@ $blue: #0d78f2;
     }
 
     .chapterTitle {
+      background-color: $white;
+      z-index: 9999;
       h3 {
         color: #333 !important;
         cursor: pointer;
         float: left;
-        font-size: 18px;
+        font-size: 28px;
         font-style: italic;
         margin: 0;
         max-width: 80%;
@@ -322,7 +319,7 @@ $blue: #0d78f2;
 
     .chapterActions {
       background-color: $white;
-      bottom: 17px;
+      bottom: -8px;
       padding-left: 5px;
       position: absolute;
       right: 0;
@@ -334,7 +331,9 @@ $blue: #0d78f2;
       }
       a {
         color: $blue;
-        font-weight: 500;
+        font-family: 'Fira Sans Condensed';
+        font-style: normal;
+        font-weight: normal;
         text-decoration: none;
         &:hover {
           cursor: pointer;
@@ -368,14 +367,17 @@ $blue: #0d78f2;
     }
 
     .secondLineContainer {
-      padding-top:0.5%;
+      padding-top: .5%;
 
       .btnFile input[type=file] {
         display: none !important;
       }
       .uploadText {
-        bottom: 10px;
+        bottom: 12px;
         cursor: pointer;
+        font-family: 'Fira Sans Condensed';
+        font-size: 16px;
+        font-style: normal;
         left: 10px;
         position: relative;
       }
@@ -399,6 +401,9 @@ $blue: #0d78f2;
       //   position: relative;
       //   top: 4px;
         li {
+          font-family: 'Fira Sans Condensed';
+          font-size: 16px;
+          font-style: italic;
           float: left;
           padding-right: 2%;
         }
@@ -413,6 +418,9 @@ $blue: #0d78f2;
         top: 4px;
         float:right;
         li {
+          font-family: 'Fira Sans Condensed';
+          font-size: 16px;
+          font-style: normal;
           color: $blue;
           float:left;
         }
