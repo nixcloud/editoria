@@ -187,13 +187,13 @@ $blue: #0d78f2;
       border-top-left-radius: 110px;
       border-top-right-radius: 110px;
       cursor: move;
-      height: 20px;
+      height: 28px;
       position: relative;
       float: right;
-      top: 20px;
+      top: 25px;
       right: 0;
       transform: rotate(270deg);
-      width: 33px;
+      width: 42px;
     }
 
     .hasContent {
@@ -207,12 +207,12 @@ $blue: #0d78f2;
       border-top-right-radius: 110px;
       content: '';
       display: block;
-      height: 25px;
+      height: 35px;
       left: -6px;
       margin: 0 auto;
       position: relative;
-      top: -31%;
-      width: 45px;
+      top: -28%;
+      width: 54px;
     }
 
     .tooltip {
