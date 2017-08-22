@@ -177,8 +177,15 @@ $blue: #0d78f2;
   .sectionChapters {
 
     .chapterContainer {
+      display: table;
       font-style: italic;
+      height: 100%;
       margin-top: 2%;
+      padding: 0;
+    }
+
+    .grabContainer {
+      height: 100%;
       padding: 0;
     }
 
@@ -189,9 +196,9 @@ $blue: #0d78f2;
       border-top-right-radius: 110px;
       cursor: move;
       height: 20px;
-      position: relative;
+      position: absolute;
       float: right;
-      top: 25px;
+      bottom: 39px;
       right: 0;
       transform: rotate(270deg);
       width: 42px;
@@ -289,43 +296,31 @@ $blue: #0d78f2;
       // }
     }
 
-    .dashedLine {
-      border-top: 1px dashed $black;
-      float: left;
-      position: absolute;
-      top: 25px;
-      width: 100%;
-    }
     .FirstRow {
       display: flex;
     }
 
     .chapterTitle {
-      .bodyTitle {
-        background-color: $white;
-        height: 38px;
-        position: relative;
-        width: 100%;
-        z-index: 999;
-      }
-
+      border-bottom: 1px dashed $black;
+      width: 85.6%;
       h3 {
+        background-color: $white;
         color: #333 !important;
         cursor: pointer;
-        float: left;
         font-size: 28px;
         font-style: italic;
         margin: 0;
-        max-width: 80%;
+        display: inline;
         padding-bottom: 0;
         padding-right: 10px;
-        white-space: nowrap;
+        position: relative;
+        top: 11px;
       }
     }
 
     .chapterActions {
       background-color: $white;
-      bottom: -8px;
+      bottom: 54px;
       padding-left: 5px;
       position: absolute;
       right: 0;
@@ -373,7 +368,7 @@ $blue: #0d78f2;
     }
 
     .secondLineContainer {
-      padding-top: .5%;
+      padding-top: 1.8%;
 
       .btnFile input[type=file] {
         display: none !important;
@@ -480,6 +475,7 @@ $blue: #0d78f2;
       float:left!important;
       padding-top:20px!important;
     }
+
     .grabIcon {
       width:10%!important;
     }

@@ -70,21 +70,19 @@ class ChapterFirstRow extends React.Component {
           update={update}
         />
 
-        <div className={styles.dashedLine}>
-          <ChapterButtons
-            bookId={book.id}
-            chapter={chapter}
-            isRenaming={isRenamingTitle}
-            isUploadInProgress={isUploadInProgress}
-            modalContainer={outerContainer}
-            onClickRename={this.onClickRename}
-            onClickSave={this.onClickSave}
-            remove={remove}
-            roles={roles}
-            type={type}
-            update={update}
-          />
-        </div>
+        <ChapterButtons
+          bookId={book.id}
+          chapter={chapter}
+          isRenaming={isRenamingTitle}
+          isUploadInProgress={isUploadInProgress}
+          modalContainer={outerContainer}
+          onClickRename={this.onClickRename}
+          onClickSave={this.onClickSave}
+          remove={remove}
+          roles={roles}
+          type={type}
+          update={update}
+        />
       </div>
 
     )

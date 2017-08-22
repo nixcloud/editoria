@@ -21,11 +21,9 @@ class Title extends React.Component {
     )
 
     const plainTitle = (
-      <div className={styles.bodyTitle}>
         <h3 onDoubleClick={goToEditor}>
         { title }
       </h3>
-    </div>
     )
 
     if (isRenaming) return input
