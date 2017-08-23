@@ -297,22 +297,29 @@ $blue: #0d78f2;
 
     .chapterTitle {
       border-bottom: 1px dashed $black;
-      width: 89.6%;
+      width: 92%;
       .bodyTitle {
-        width: 96%;
+        width: 94%;
       }
       h3 {
         background-color: $white;
         color: #333 !important;
         cursor: pointer;
+        display: inline;
         font-size: 28px;
         font-style: italic;
+        line-height: 36px;
         margin: 0;
-        display: inline;
         padding-bottom: 0;
         padding-right: 10px;
         position: relative;
         top: 11px;
+      }
+      input {
+        border: 0;
+        outline: 0;
+        width: 90%;
+
       }
     }
 
