@@ -299,7 +299,7 @@ $blue: #0d78f2;
       border-bottom: 1px dashed $black;
       width: 92%;
       .bodyTitle {
-        width: 94%;
+        width: 90%;
       }
       h3 {
         background-color: $white;
@@ -319,7 +319,14 @@ $blue: #0d78f2;
         border: 0;
         outline: 0;
         width: 90%;
-
+      }
+      span {
+        bottom: 50px;
+        float: left;
+        height: 0;
+        left: 0;
+        position: absolute;
+        top: -26px;
       }
     }
 
