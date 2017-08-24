@@ -21,9 +21,10 @@ export default class AddButton extends React.Component {
       <div className={styles.sectionBtn}
         style={{ 'marginRight': margin }}
         onClick={this._addGroup}>
-        <a>
-          { 'add ' + group }
-        </a>
+        <div className={styles.addBtnIcon}> </div>
+          <a>
+            { 'add ' + group }
+          </a>
       </div>
     )
   }

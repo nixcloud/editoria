@@ -1,6 +1,6 @@
 $dark-grey: #404040;
-$light-grey: #cdcdcd;
-$main-grey: #666666;
+$light-grey: #b3b3b3;
+$main-grey: #666;
 $white: #fff;
 $black: #000;
 $blue: #0d78f2;
@@ -167,6 +167,17 @@ $blue: #0d78f2;
           cursor:pointer;
         }
       }
+      .addBtnIcon {
+        -webkit-mask: url('./images/icon_add.svg') no-repeat 100% 100%;
+        mask: url('./images/icon_add.svg') no-repeat 100% 100%;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+        background-color: $main-grey;
+        width: 24px;
+        height: 24px;
+        float: left;
+        margin-right: 10px;
+      }
     }
   }
   .sectionChapters {
@@ -320,7 +331,7 @@ $blue: #0d78f2;
         outline: 0;
         width: 90%;
       }
-      span {
+      .emptyTitle {
         bottom: 50px;
         float: left;
         height: 0;
