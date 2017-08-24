@@ -1,5 +1,5 @@
 import React from 'react'
-import { each, get, keys, pickBy, sortBy } from 'lodash'
+import { each, get, keys, pickBy, reduce, sortBy } from 'lodash'
 
 import styles from '../styles/bookBuilder.local.scss'
 
@@ -69,98 +69,232 @@ class FileUploader extends React.Component {
       this.setState(counter)
     })
 
-    each(files, (file, i) => {
-      const name = file.name.replace(/\.[^/.]+$/, '')  // remove file extension
-      const nameSpecifier = name.slice(0, 1)  // get division from name
+    const self = this
 
-      // mark last file
-      let last
-      if ((i + 1) === files.length) last = true
+    function makeFragments (fileList) {
+      return fileList.reduce((promise, file, i) => {
+        return promise
+          .then((result) => {
+            // console.log(`file ${file}`)
 
-      // default to body
-      let division
-      if (!divisionMapper[nameSpecifier]) {
-        division = 'body'
-      } else {
-        division = divisionMapper[nameSpecifier].division
-      }
+            const name = file.name.replace(/\.[^/.]+$/, '')  // remove file extension
+            const nameSpecifier = name.slice(0, 1)  // get division from name
 
-      let subCategory
-      if (division !== 'body') {
-        subCategory = 'component'
-      } else {
-        if (name.slice(5, 9) === 'Part') {
-          subCategory = 'part'
-        } else {
-          subCategory = 'chapter'
-        }
-      }
+            // console.log(name, nameSpecifier)
 
-      const index = this.state.counter[division]
-      const nextIndex = index + 1
-      const { counter } = this.state
-      counter[division] = nextIndex
-      this.setState({ counter })
+            // mark last file
+            let last
+            if ((i + 1) === files.length) last = true
 
-      const fragment = {
-        book: book.id,
-        subCategory,
-        division,
-        alignment: {
-          left: false,
-          right: false
-        },
-        progress: {
-          style: 0,
-          edit: 0,
-          review: 0,
-          clean: 0
-        },
-        lock: null,
 
-        index,
-        kind: 'chapter',
-        title: name,
+            // // default to body
+            let division
+            if (!divisionMapper[nameSpecifier]) {
+              division = 'body'
+            } else {
+              division = divisionMapper[nameSpecifier].division
+            }
 
-        status: 'unpublished',
-        author: '',
-        source: '',
-        comments: {},
-        trackChanges: false
-      }
+            let subCategory
+            if (division !== 'body') {
+              subCategory = 'component'
+            } else {
+              if (name.slice(5, 9) === 'Part') {
+                subCategory = 'part'
+              } else {
+                subCategory = 'chapter'
+              }
+            }
+            // console.log(subCategory)
 
-      // setTimeout(() => {
+            const index = self.state.counter[division]
+            const nextIndex = index + 1
+            const { counter } = self.state
+            counter[division] = nextIndex
+            self.setState({ counter })
 
-      create(book, fragment).then((res) => {
-        const fragmentId = res.fragment.id
+            const fragment = {
+              book: book.id,
+              subCategory,
+              division,
+              alignment: {
+                left: false,
+                right: false
+              },
+              progress: {
+                style: 0,
+                edit: 0,
+                review: 0,
+                clean: 0
+              },
+              lock: null,
 
-        if (last) this.input.value = ''  // reset input
+              index,
+              kind: 'chapter',
+              title: name,
 
-        this.handleUploadStatusChange(fragmentId, true)
-        updateUploadStatus(this.state.uploading)
+              status: 'unpublished',
+              author: '',
+              source: '',
+              comments: {},
+              trackChanges: false
+            }
 
-        convert(file).then((response) => {
-          const patch = {
-            id: fragmentId,
-            source: response.converted
-          }
+            // return asyncFunc(item).then(result => final.push(result));
+            return create(book, fragment)
+              .then((response) => {
+                const fragmentId = response.fragment.id
 
-          update(book, patch)
+                if (last) self.input.value = ''  // reset input
 
-          this.handleUploadStatusChange(fragmentId, false)
-          updateUploadStatus(this.state.uploading)
-        }).catch((error) => {
-          console.log(error)
+                self.handleUploadStatusChange(fragmentId, true)
+                updateUploadStatus(self.state.uploading)
 
-          this.handleUploadStatusChange(fragmentId, false)
-          updateUploadStatus(this.state.uploading)
-        })
-      }).catch((error) => {
-        console.log('create fragment error', error)
-      })
+                convert(file)
+                  .then((res) => {
+                    const patch = {
+                      id: fragmentId,
+                      source: res.converted
+                    }
 
-      // }, i * 50)
-    })
+                    update(book, patch)
+
+                    self.handleUploadStatusChange(fragmentId, false)
+                    updateUploadStatus(self.state.uploading)
+                  })
+                  .catch((err) => {
+                    console.log(err)
+
+                    self.handleUploadStatusChange(fragmentId, false)
+                    updateUploadStatus(self.state.uploading)
+                  })
+              })
+              .catch((error) => {
+                console.log(error)
+              })
+            // .then((res) => {
+              // const fragmentId = res.fragment.id
+
+              // if (last) self.input.value = ''  // reset input
+
+              // self.handleUploadStatusChange(fragmentId, true)
+              // updateUploadStatus(self.state.uploading)
+
+              // convert(file).then((response) => {
+              //   const patch = {
+              //     id: fragmentId,
+              //     source: response.converted
+              //   }
+
+              //   update(book, patch)
+
+              //   self.handleUploadStatusChange(fragmentId, false)
+              //   updateUploadStatus(self.state.uploading)
+              // }).catch((error) => {
+              //   console.log(error)
+
+              //   self.handleUploadStatusChange(fragmentId, false)
+              //   updateUploadStatus(self.state.uploading)
+              // })
+          })
+          .catch(console.error)
+      }, Promise.resolve())
+    }
+
+    makeFragments(files)
+
+    // each(files, (file, i) => {
+    //   const name = file.name.replace(/\.[^/.]+$/, '')  // remove file extension
+    //   const nameSpecifier = name.slice(0, 1)  // get division from name
+
+    //   // mark last file
+    //   let last
+    //   if ((i + 1) === files.length) last = true
+
+    //   // default to body
+    //   let division
+    //   if (!divisionMapper[nameSpecifier]) {
+    //     division = 'body'
+    //   } else {
+    //     division = divisionMapper[nameSpecifier].division
+    //   }
+
+    //   let subCategory
+    //   if (division !== 'body') {
+    //     subCategory = 'component'
+    //   } else {
+    //     if (name.slice(5, 9) === 'Part') {
+    //       subCategory = 'part'
+    //     } else {
+    //       subCategory = 'chapter'
+    //     }
+    //   }
+
+    //   const index = this.state.counter[division]
+    //   const nextIndex = index + 1
+    //   const { counter } = this.state
+    //   counter[division] = nextIndex
+    //   this.setState({ counter })
+
+    //   const fragment = {
+    //     book: book.id,
+    //     subCategory,
+    //     division,
+    //     alignment: {
+    //       left: false,
+    //       right: false
+    //     },
+    //     progress: {
+    //       style: 0,
+    //       edit: 0,
+    //       review: 0,
+    //       clean: 0
+    //     },
+    //     lock: null,
+
+    //     index,
+    //     kind: 'chapter',
+    //     title: name,
+
+    //     status: 'unpublished',
+    //     author: '',
+    //     source: '',
+    //     comments: {},
+    //     trackChanges: false
+    //   }
+
+    //   // setTimeout(() => {
+
+    //   create(book, fragment).then((res) => {
+    //     const fragmentId = res.fragment.id
+
+    //     if (last) this.input.value = ''  // reset input
+
+    //     this.handleUploadStatusChange(fragmentId, true)
+    //     updateUploadStatus(this.state.uploading)
+
+    //     convert(file).then((response) => {
+    //       const patch = {
+    //         id: fragmentId,
+    //         source: response.converted
+    //       }
+
+    //       update(book, patch)
+
+    //       this.handleUploadStatusChange(fragmentId, false)
+    //       updateUploadStatus(this.state.uploading)
+    //     }).catch((error) => {
+    //       console.log(error)
+
+    //       this.handleUploadStatusChange(fragmentId, false)
+    //       updateUploadStatus(this.state.uploading)
+    //     })
+    //   }).catch((error) => {
+    //     console.log('create fragment error', error)
+    //   })
+
+    //   // }, i * 50)
+    // })
   }
 
   render () {
