@@ -25,46 +25,6 @@ class ChapterTitle extends React.Component {
     browserHistory.push(url)
   }
 
-  renderHasContent () {
-    const { chapter, type } = this.props
-    const source = chapter.source || ''
-    const hasContent = source.trim().length > 0
-
-    if (!hasContent) return null
-
-    // TODO -- move styles to classes (after css refactor)
-    let marginTop
-    switch (type) {
-      case 'part':
-        marginTop = '4px'
-        break
-      case 'chapter':
-        marginTop = '2px'
-        break
-      default:
-        marginTop = '5px'
-        break
-    }
-
-    const elementStyles = {
-      color: '#3e644b',
-      float: 'left',
-      fontSize: '14px',
-      marginRight: '7px',
-      marginTop
-    }
-
-    const hoverTitle = `This ${type} has content`
-
-    return (
-      <i
-        className='fa fa-check-circle'
-        style={elementStyles}
-        title={hoverTitle}
-      />
-    )
-  }
-
   renderUploadIndicator () {
     const { isUploadInProgress } = this.props
     // console.log('is uploading', isUploadInProgress)
@@ -123,7 +83,6 @@ class ChapterTitle extends React.Component {
   }
 
   render () {
-    // const hasContent = this.renderHasContent()
     const title = this.renderTitle()
     const uploadIndicator = this.renderUploadIndicator()
     const renameEmptyError = this.renderError()
@@ -131,7 +90,6 @@ class ChapterTitle extends React.Component {
     return (
       <div className={styles.chapterTitle}>
 
-        {/* { hasContent } */}
         { title }
         {/* { this.props.chapter.index } */}
         { uploadIndicator }

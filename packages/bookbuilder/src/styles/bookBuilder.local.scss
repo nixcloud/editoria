@@ -493,30 +493,33 @@ $blue: #0d78f2;
     }
   }
 
-  @media all and (max-width: 768px) {
+  @media (min-width:215px) and (max-width:1200px) {
     .pagePosition {
       float:left!important;
       padding-top:20px!important;
     }
 
-    .grabIcon {
-      width:10%!important;
+    .chapterActions {
+      bottom: 118px!important;
+    }
+    .grabContainer {
+      display: none!important;
     }
     .chapterMainContent{
       // width:90%!important;
     }
 
     .secondLineContainer {
-      padding-top:0!important;
+      padding-top:10!important;
     }
     .sectionHeader {
       .sectionTitle {
-        background-color: $main-grey;
+        // background-color: $main-grey;
         padding: 10px 30px 10px 10px;
       }
     }
     .sectionChapters {
-      padding-top:7%!important;
+      // padding-top:7%!important;
     }
 
   }

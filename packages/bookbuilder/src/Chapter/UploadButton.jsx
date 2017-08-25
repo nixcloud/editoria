@@ -23,8 +23,7 @@ export class UploadButton extends React.Component {
     const { chapter, convertFile, toggleUpload, update } = this.props
 
     toggleUpload()
-
-    convertFile(file).then(response => {
+    convertFile(file).then((response) => {
       const patch = {
         id: chapter.id,
         source: response.converted
@@ -59,28 +58,29 @@ export class UploadButton extends React.Component {
   renderInput () {
     if (this.isLocked()) return null
 
-    const { accept, title, type } = this.props
+    const { accept, title, type, chapter } = this.props
 
     return (
       <span>
         <label
-          htmlFor='file-uploader'
+          htmlFor={'single-file-uploader' + chapter.id}
           className={styles.uploadIcon}
+        />
+        <label
+          htmlFor={'single-file-uploader' + chapter.id}
+          className={styles.uploadText}
         >
-          </label>
-          <label
-            htmlFor='file-uploader'
-            className={styles.uploadText}
-          > UPLOAD WORD
-            </label>
+          UPLOAD WORD
+        </label>
         <input
+          id={'single-file-uploader' + chapter.id}
           accept={accept}
           onChange={this.handleFileUpload}
           title={title}
+          name='single-file-uploader'
           type={type}
         />
-    </span>
-
+      </span>
     )
   }
 
