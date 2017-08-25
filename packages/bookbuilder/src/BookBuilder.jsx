@@ -202,12 +202,12 @@ export class BookBuilder extends React.Component {
     let teamManagerButton = ''
     if (isProductionEditor) {
       teamManagerButton = (
-        <div
-          className={styles.teamManagerBtn}
-          onClick={this._toggleTeamManager}
-        >
-          <a>team manager</a>
-        </div>
+        <span onClick={this._toggleTeamManager}>
+          <div className={styles.teamManagerIcon} />
+          <div className={styles.teamManagerBtn}>
+            <a>team manager</a>
+          </div>
+        </span>
       )
     }
 
@@ -223,11 +223,14 @@ export class BookBuilder extends React.Component {
             className='col-lg-offset-2 col-lg-8 col-md-8 col-sm-12 col-xs-12'
             ref='outerContainer'
           >
+            <div className={styles.productionEditorContainer}>
+              <span>Production Editor: &nbsp; { productionEditor } </span>
+              {teamManagerButton}
+              <div className={styles.separator} />
+            </div>
 
             <h1>{this.props.book.title}</h1>
 
-            <div className={styles.productionEditorContainer}>
-              <span>Production Editor: &nbsp; { productionEditor } </span>
               <FileUploader
                 backChapters={backChapters}
                 bodyChapters={bodyChapters}
@@ -238,9 +241,6 @@ export class BookBuilder extends React.Component {
                 update={updateFragment}
                 updateUploadStatus={this.updateUploadStatus}
               />
-              {teamManagerButton}
-              <div className={styles.separator} />
-            </div>
 
             <Division
               add={createFragment}

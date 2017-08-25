@@ -16,35 +16,49 @@ $blue: #0d78f2;
     padding-bottom: 30px;
     padding-top: 10px;
 
+    .teamManagerIcon {
+      -webkit-mask: url('./images/person.svg') no-repeat 100% 100%;
+      mask: url('./images/person.svg') no-repeat 100% 100%;
+      -webkit-mask-size: cover;
+      mask-size: cover;
+      background-color: $main-grey;
+      width: 24px;
+      height: 24px;
+      float: left;
+      margin: 0 10px 0 20px;
+      cursor: pointer;
+    }
+
     span {
       color: $dark-grey;
       float: left;
+      font-family: 'Fira Sans Condensed';
       font-size: 26px;
-      font-style: italic;
+      font-style: normal;
     }
 
     .teamManagerBtn {
-      background-color: $dark-grey;
-      border: 1px solid $white;
-      color: $white;
       cursor: pointer;
-      float: right;
+      float: left;
       font-size: 16px;
       font-style: italic;
       font-weight: 500;
-      margin-top: 12px;
-      padding: 0 30px;
+      // padding: 0 30px;
       text-align: center;
       transition: border .5s ease-out .2s;
 
       &:hover {
-        border: 1px solid $dark-grey;
-        transition: .25s ease-in-out 0s;
+        // border: 1px solid $dark-grey;
+        // transition: .25s ease-in-out 0s;
       }
 
+
+
       a {
-        color: $white;
+        font-family: 'Fira Sans Condensed';
+        color: $black;
         text-decoration: none;
+        text-transform: uppercase;
 
         &:hover {
           cursor: pointer;
@@ -145,7 +159,7 @@ $blue: #0d78f2;
     }
 
     .sectionBtn {
-      color: $black;
+      // color: $main-grey;
       cursor: pointer;
       float: left;
       padding-right: 20px;
@@ -159,6 +173,7 @@ $blue: #0d78f2;
         // transition: .25s ease-in-out 0s;
       }
       a {
+        font-family: 'Fira Sans Condensed';
         color: $black;
         text-decoration: none;
         text-transform: uppercase;
@@ -207,7 +222,7 @@ $blue: #0d78f2;
       height: 20px;
       position: absolute;
       float: right;
-      bottom: 37%;
+      bottom: 43%;
       right: 0;
       transform: rotate(270deg);
       width: 42px;
@@ -311,10 +326,12 @@ $blue: #0d78f2;
 
     .chapterTitle {
       border-bottom: 1px dashed $black;
-      width: 92%;
+      width: 91%;
+
       .bodyTitle {
         width: 90%;
       }
+
       h3 {
         background-color: $white;
         color: #333 !important;
