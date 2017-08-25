@@ -654,9 +654,9 @@ $line-grey: #969696;
 
   @media(min-width: 1900px) {
     .lineUploading {
-      width: 79.4%;
+      width: 79.4%!important;
     }
     .MultipleUploadContainer {
-      width: 20%;
+      width: 20%!important;
     }
   }
