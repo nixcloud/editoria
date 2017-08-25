@@ -230,8 +230,7 @@ export class BookBuilder extends React.Component {
             </div>
 
             <h1 className={styles.bookTitle}>{this.props.book.title}</h1>
-            <div className={styles.separator} />
-            <div className={styles.lineUploading + ' col-lg-9 col-sm-8 col-sm-8 col-xs-8'} />
+
               <FileUploader
                 backChapters={backChapters}
                 bodyChapters={bodyChapters}

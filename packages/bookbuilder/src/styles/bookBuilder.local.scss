@@ -69,14 +69,14 @@ $line-grey: #969696;
 
   .lineUploading {
     border-bottom: 2px solid $line-grey;
+    width: 80.4%;
    }
 
    .MultipleUploadContainer {
      bottom: 15px;
      left: 10px;
-     margin: 0;
-     padding: 0;
      position: relative;
+     width: 19.6%;
 
      .uploadIcon {
        -webkit-mask: url('./images/upload_word.svg') no-repeat 100% 100%;
@@ -538,6 +538,8 @@ $line-grey: #969696;
       }
     }
   }
+
+
 
   @media (min-width:215px) and (max-width:1200px) {
     .pagePosition {

@@ -199,8 +199,10 @@ class FileUploader extends React.Component {
     }
 
     return (
+      <span>
+        <div className={styles.lineUploading + ' col-lg-9 col-md-5 col-sm-6 col-xs-6'} />
       <div
-        className={styles.MultipleUploadContainer + ' col-lg-3'}
+        className={styles.MultipleUploadContainer + ' col-lg-3 col-md-7 col-sm-6 col-xs-6'}
       >
         <label
           htmlFor='file-uploader'
@@ -224,6 +226,7 @@ class FileUploader extends React.Component {
           type='file'
         />
       </div>
+    </span>
     )
   }
 }
