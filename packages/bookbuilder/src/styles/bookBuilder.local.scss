@@ -183,16 +183,19 @@ $blue: #0d78f2;
   .sectionChapters {
 
     .chapterContainer {
-      display: table;
+      display: flex;
+      width: 100%;
+    //  display: table;
       font-style: italic;
       height: 100%;
-      margin-top: 2%;
+      // margin-top: 2%;
       padding: 0;
     }
 
     .grabContainer {
-      height: 100%;
-      padding: 0;
+      flex: 1;
+      // height: 100%;
+      padding: 0
     }
 
     .grabIcon {
@@ -204,7 +207,7 @@ $blue: #0d78f2;
       height: 20px;
       position: absolute;
       float: right;
-      bottom: 39px;
+      bottom: 37%;
       right: 0;
       transform: rotate(270deg);
       width: 42px;
@@ -327,6 +330,7 @@ $blue: #0d78f2;
         top: 11px;
       }
       input {
+        font-size: 28px;
         border: 0;
         outline: 0;
         width: 90%;
