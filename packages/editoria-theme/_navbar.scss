@@ -12,10 +12,10 @@
 .navbar-default {
   background-color: transparent;
   border: 0;
-  font-weight: bold;
+  font-family: 'Fira Sans';
+  font-weight: normal;
 
   .container-fluid {
-    border-bottom: 4px $dark-grey solid;
     margin-left: 15px;
     margin-right: 15px;
     padding-right: 65px;
@@ -23,6 +23,8 @@
 
   .navbar-brand {
     color: $dark-grey;
+    font-size: 16px;
+    font-weight: bold;
     margin-top: 15px;
     text-decoration: none;
 
