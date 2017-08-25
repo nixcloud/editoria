@@ -25,17 +25,6 @@ class ChapterTitle extends React.Component {
     browserHistory.push(url)
   }
 
-  renderUploadIndicator () {
-    const { isUploadInProgress } = this.props
-    // console.log('is uploading', isUploadInProgress)
-
-    if (!isUploadInProgress) return null
-
-    return (
-      <i className={`${styles['animate-flicker']} fa fa-upload`} />
-    )
-  }
-
   renderTitle () {
     const {
       chapter,
@@ -84,7 +73,6 @@ class ChapterTitle extends React.Component {
 
   render () {
     const title = this.renderTitle()
-    const uploadIndicator = this.renderUploadIndicator()
     const renameEmptyError = this.renderError()
 
     return (
@@ -92,7 +80,6 @@ class ChapterTitle extends React.Component {
 
         { title }
         {/* { this.props.chapter.index } */}
-        { uploadIndicator }
         { renameEmptyError }
 
         <div className={styles.separator} />
@@ -106,7 +93,6 @@ ChapterTitle.propTypes = {
   chapter: React.PropTypes.object.isRequired,
   isRenaming: React.PropTypes.bool.isRequired,
   isRenameEmpty: React.PropTypes.bool.isRequired,
-  isUploadInProgress: React.PropTypes.bool.isRequired,
   onSaveRename: React.PropTypes.func.isRequired,
   title: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,

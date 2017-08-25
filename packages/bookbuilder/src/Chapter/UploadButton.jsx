@@ -16,6 +16,13 @@ export class UploadButton extends React.Component {
     }
   }
 
+  renderUploadIndicator () {
+    const { isUploadInProgress } = this.props
+    if (isUploadInProgress) return true
+
+    return false
+  }
+
   handleFileUpload (event) {
     event.preventDefault()
 
@@ -56,6 +63,16 @@ export class UploadButton extends React.Component {
   }
 
   renderInput () {
+    let uploadClass = ''
+    let text = 'upload word'
+    let disabled = ''
+    const uploadIndicator = this.renderUploadIndicator()
+    if (uploadIndicator) {
+      uploadClass = styles['animate-flicker']
+      text = 'uploading...'
+      disabled = styles['no-actions']
+    }
+
     if (this.isLocked()) return null
 
     const { accept, title, type, chapter } = this.props
@@ -64,13 +81,13 @@ export class UploadButton extends React.Component {
       <span>
         <label
           htmlFor={'single-file-uploader' + chapter.id}
-          className={styles.uploadIcon}
+          className={styles.uploadIcon + ' ' + uploadClass + ' ' + disabled}
         />
         <label
           htmlFor={'single-file-uploader' + chapter.id}
-          className={styles.uploadText}
+          className={styles.uploadText + ' ' + disabled}
         >
-          UPLOAD WORD
+          {text}
         </label>
         <input
           id={'single-file-uploader' + chapter.id}
@@ -132,6 +149,7 @@ UploadButton.propTypes = {
   chapter: React.PropTypes.object.isRequired,
   convertFile: React.PropTypes.func.isRequired,
   modalContainer: React.PropTypes.object.isRequired,
+  isUploadInProgress: React.PropTypes.bool.isRequired,
   title: React.PropTypes.string.isRequired,
   toggleUpload: React.PropTypes.func.isRequired,
   type: React.PropTypes.string.isRequired,

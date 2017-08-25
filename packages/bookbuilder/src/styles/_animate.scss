@@ -28,3 +28,8 @@
    -o-animation: flickerAnimation 2s infinite;
     animation: flickerAnimation 2s infinite;
 }
+
+.no-actions {
+  opacity: 0.3;
+  pointer-events: none;
+}

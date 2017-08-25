@@ -125,6 +125,7 @@ export class Chapter extends React.Component {
 
           <SecondRow
             chapter={chapter}
+            isUploadInProgress={isUploadInProgress || uploading}
             convertFile={ink}
             outerContainer={outerContainer}
             roles={roles}
