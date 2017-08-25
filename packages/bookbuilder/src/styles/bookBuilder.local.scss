@@ -4,6 +4,7 @@ $main-grey: #666;
 $white: #fff;
 $black: #000;
 $blue: #0d78f2;
+$line-grey: #969696;
 
 .bookBuilder {
   @import 'animate';
@@ -11,10 +12,9 @@ $blue: #0d78f2;
   // counter-reset: chapter;
   font-family: 'Vollkorn'!important;
 
-
   .productionEditorContainer {
-    padding-bottom: 30px;
-    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-top: 20px;
 
     .teamManagerIcon {
       -webkit-mask: url('./images/person.svg') no-repeat 100% 100%;
@@ -43,16 +43,8 @@ $blue: #0d78f2;
       font-size: 16px;
       font-style: italic;
       font-weight: 500;
-      // padding: 0 30px;
       text-align: center;
       transition: border .5s ease-out .2s;
-
-      &:hover {
-        // border: 1px solid $dark-grey;
-        // transition: .25s ease-in-out 0s;
-      }
-
-
 
       a {
         font-family: 'Fira Sans Condensed';
@@ -68,6 +60,55 @@ $blue: #0d78f2;
     }
 
   }
+
+  .bookTitle {
+    font-family: 'Vollkorn';
+    font-size: 36px;
+    font-style: italic;
+  }
+
+  .lineUploading {
+    border-bottom: 2px solid $line-grey;
+   }
+
+   .MultipleUploadContainer {
+     bottom: 15px;
+     left: 10px;
+     margin: 0;
+     padding: 0;
+     position: relative;
+
+     .uploadIcon {
+       -webkit-mask: url('./images/upload_word.svg') no-repeat 100% 100%;
+       mask: url('./images/upload_word.svg') no-repeat 100% 100%;
+       -webkit-mask-size: cover;
+       mask-size: cover;
+       background-color: $light-grey;
+       color: $black;
+       cursor: pointer;
+       font-weight: 500;
+       text-align: center;
+       width: 24px;
+       height: 24px;
+     }
+
+     .uploadMultipleText {
+       bottom: 10px;
+       color: $main-grey;
+       cursor: pointer;
+       font-family: 'Fira Sans Condensed';
+       font-size: 16px;
+       font-style: normal;
+       left: 10px;
+       position: relative;
+       text-transform: uppercase;
+     }
+
+     input[type=file] {
+       display: none !important;
+     }
+   }
+
 
   .menuItemContainer {
     float: left !important;
@@ -105,7 +146,6 @@ $blue: #0d78f2;
     }
 
     span:first-child {
-      // margin: 0 0 5px 30px;
       margin: 0 10px 0 5px;
     }
   }
@@ -141,13 +181,12 @@ $blue: #0d78f2;
     padding-top: 1%;
 
     .sectionTitle {
-      // background-color: $main-grey;
       float: left;
       padding: 10px 50px 10px 10px;
 
       h1 {
         color: $blue;
-        font-family: 'Vollkorn'!important;
+        font-family: 'Vollkorn' !important;
         font-size: 30px;
         font-style: normal;
         font-weight: normal;
@@ -159,19 +198,14 @@ $blue: #0d78f2;
     }
 
     .sectionBtn {
-      // color: $main-grey;
       cursor: pointer;
       float: left;
-      padding-right: 20px;
       font-size: 16px;
       font-style: italic;
       font-weight: 500;
       margin-top: 20px;
+      padding-right: 20px;
 
-      &:hover {
-        // border: 1px solid $dark-grey;
-        // transition: .25s ease-in-out 0s;
-      }
       a {
         font-family: 'Fira Sans Condensed';
         color: $black;
@@ -200,16 +234,13 @@ $blue: #0d78f2;
     .chapterContainer {
       display: flex;
       width: 100%;
-    //  display: table;
       font-style: italic;
       height: 100%;
-      // margin-top: 2%;
       padding: 0;
     }
 
     .grabContainer {
       flex: 1;
-      // height: 100%;
       padding: 0
     }
 
@@ -218,11 +249,11 @@ $blue: #0d78f2;
       border-bottom: 0;
       border-top-left-radius: 110px;
       border-top-right-radius: 110px;
+      bottom: 43%;
       cursor: move;
+      float: right;
       height: 20px;
       position: absolute;
-      float: right;
-      bottom: 43%;
       right: 0;
       transform: rotate(270deg);
       width: 42px;
@@ -248,21 +279,21 @@ $blue: #0d78f2;
     }
 
     .tooltip {
-      left: 0;
       display: none;
+      left: 0;
     }
+
     .grabIcon:hover .tooltip {
       background: transparent;
-      top: -105px;
       color: $dark-grey;
-      font-size:16px;
       display: block;
+      font-size: 16px;
       left: -50px;
-      // margin-bottom: -3px;
       opacity: 0;
       padding: 20px;
       pointer-events: none;
       position: absolute;
+      top: -105px;
       width: 140px;
       -webkit-transform: translateY(10px);
       -moz-transform: translateY(10px);
@@ -293,16 +324,6 @@ $blue: #0d78f2;
     .grabIcon:hover .tooltip {
       opacity: 1;
       pointer-events: auto;
-      // -webkit-transform: translateY(0px);
-      // -moz-transform: translateY(0px);
-      // -ms-transform: translateY(0px);
-      // -o-transform: translateY(0px);
-      // transform: translateY(0px);
-      // -webkit-animation: fadein .3s; /* Safari, Chrome and Opera > 12.1 */
-      // -moz-animation: fadein .3s; /* Firefox < 16 */
-      // -ms-animation: fadein .3s; /* Internet Explorer */
-      // -o-animation: fadein .3s; /* Opera < 12.1 */
-      // animation: fadein .3s;
       transform: rotate(90deg);
     }
 
@@ -352,6 +373,7 @@ $blue: #0d78f2;
         outline: 0;
         width: 90%;
       }
+
       .emptyTitle {
         bottom: 50px;
         float: left;
@@ -368,12 +390,14 @@ $blue: #0d78f2;
       padding-left: 5px;
       position: absolute;
       right: 0;
+
       .actionContainer {
         border-right: 1px solid $black;
         float: left;
         margin-right: 10px;
         padding-right: 10px;
       }
+
       a {
         color: $blue;
         font-family: 'Fira Sans Condensed';
@@ -427,6 +451,7 @@ $blue: #0d78f2;
         position: relative;
         text-transform: uppercase;
       }
+
       .uploadIcon  {
         -webkit-mask: url('./images/upload_word.svg') no-repeat 100% 100%;
         mask: url('./images/upload_word.svg') no-repeat 100% 100%;
@@ -442,10 +467,6 @@ $blue: #0d78f2;
       }
 
       .secondActions {
-      //  float: left;
-      //   padding-left: 2%;
-      //   position: relative;
-      //   top: 4px;
         li {
           font-family: 'Fira Sans Condensed';
           font-size: 16px;
@@ -453,33 +474,36 @@ $blue: #0d78f2;
           float: left;
           padding-right: 2%;
         }
+
         li:hover {
-          cursor: pointer;
           color: $dark-grey;
+          cursor: pointer;
           transition: .25s ease-in-out 0s;
         }
       }
       .pagePosition {
+        float: right;
         position: relative;
         top: 4px;
-        float:right;
         li {
+          color: $blue;
+          float: left;
           font-family: 'Fira Sans Condensed';
           font-size: 16px;
           font-style: normal;
-          color: $blue;
-          float:left;
         }
         .leftRightBox {
-          border:1px solid #000;
-          height:22px;
-          width:22px;
-          float:left;
+          border: 1px solid $black;
+          float: left;
+          height: 22px;
           text-align: center;
+          width: 22px;
         }
+
         .leftBox {
           border-right: 0;
         }
+
         .rightBox {
           border-left: 0;
         }
@@ -500,7 +524,7 @@ $blue: #0d78f2;
           width: 16px;
         }
         .boxInactiveHover {
-          background-color: #fff;
+          background-color: $white;
           cursor: pointer;
           height: 16px;
           margin: 2px 0 0 2px;
@@ -525,26 +549,20 @@ $blue: #0d78f2;
       bottom: 118px!important;
     }
     .grabContainer {
-      display: none!important;
-    }
-    .chapterMainContent{
-      // width:90%!important;
+      display: none !important;
     }
 
     .secondLineContainer {
-      padding-top:10!important;
+      padding-top:10 !important;
     }
     .sectionHeader {
       .sectionTitle {
-        // background-color: $main-grey;
         padding: 10px 30px 10px 10px;
       }
     }
-    .sectionChapters {
-      // padding-top:7%!important;
-    }
 
   }
+
 .noWritesError {
   position:fixed;
   top: 0px;

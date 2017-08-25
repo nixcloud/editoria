@@ -185,22 +185,6 @@ class FileUploader extends React.Component {
   }
 
   render () {
-    const containerStyles = {
-      padding: '0'
-    }
-
-    const inputStyles = {
-      display: 'none'
-    }
-
-    const labelStyles = {
-      color: '#fff',
-      cursor: 'pointer',
-      fontWeight: '500',
-      margin: 'auto 0',
-      padding: ' 0 30px'
-    }
-
     const { uploading } = this.state
     const uploadingOnly = pickBy(uploading, (value, key) => {
       return (value === true)
@@ -211,20 +195,25 @@ class FileUploader extends React.Component {
     if (currentlyUploading > 0) {
       labelText = `converting ${currentlyUploading} files`
     } else {
-      labelText = 'upload files'
+      labelText = 'upload multiple word files'
     }
 
     return (
       <div
-        className={styles.teamManagerBtn}
-        style={containerStyles}
+        className={styles.MultipleUploadContainer + ' col-lg-3'}
       >
         <label
           htmlFor='file-uploader'
-          style={labelStyles}
+          className={styles.uploadIcon}
+        />
+
+        <label
+          htmlFor='file-uploader'
+          className={styles.uploadMultipleText}
         >
           { labelText }
         </label>
+
         <input
           accept='.doc,.docx'
           id='file-uploader'
@@ -232,7 +221,6 @@ class FileUploader extends React.Component {
           name='file-uploader'
           onChange={this.onChange}
           ref={(c) => { this.input = c }}
-          style={inputStyles}
           type='file'
         />
       </div>
