@@ -1,9 +1,10 @@
 $primary-color: #515253;
 
 $black: #000;
-$dark-grey: #fff;
+$white: #fff;
+// $dark-grey: #fff;
 $grey: #808080;
-$maroon: #502424;
+// $maroon: #502424;
 $medium-grey: #838587;
 $blue: #0d78f2;
 $main-grey: #666;
@@ -76,18 +77,41 @@ $main-grey: #666;
   }
 
   .bookContainer {
-    border-bottom: 1px solid $medium-grey;
-    margin-top: 3em;
-    padding-bottom: 0;
-    padding-left: 1em;
-    padding-top: 0;
+    display: flex;
+    margin: 2% 0 0 4%;
     position: relative;
+
+    .bookTitleBorder {
+      border-bottom: 1px dashed $black;
+      width: 91%;
+    }
+
+    .bookTitleWidth {
+      width: 90%;
+    }
+
+    h3 {
+      background-color: $white;
+      color: #333 !important;
+      cursor: pointer;
+      display: inline;
+      font-size: 28px;
+      font-style: italic;
+      line-height: 36px;
+      margin: 0;
+      padding-bottom: 0;
+      padding-right: 10px;
+      position: relative;
+      top: 11px;
+    }
   }
 
   .bookActions {
-    bottom: 0;
+    background-color: $white;
+    bottom: -6px;
+    // padding-left: 5px;
     position: absolute;
-    right: 13px;
+    right: 0;
   }
 
   .editBook {
@@ -99,7 +123,7 @@ $main-grey: #666;
     text-decoration: none;
 
     &:hover {
-      color: $maroon;
+      // color: $maroon;
       text-decoration: none;
     }
 

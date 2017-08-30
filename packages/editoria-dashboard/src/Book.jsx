@@ -100,9 +100,13 @@ class Book extends React.Component {
     }
 
     return (
-      <h2 onDoubleClick={this.goToBookBuilder} >
-        { book.title }
-      </h2>
+      <div className={styles.bookTitleBorder}>
+        <div className={styles.bookTitleWidth}>
+          <h3 onDoubleClick={this.onClickRename} >
+            { book.title }
+          </h3>
+        </div>
+      </div>
     )
   }
 
