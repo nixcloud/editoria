@@ -29,8 +29,8 @@ class DashboardHeader extends React.Component {
       <div className='col-lg-12'>
         <h1 className={styles.bookTitle}>
           Books
-          { addButton }
         </h1>
+        { addButton }
       </div>
     )
   }
