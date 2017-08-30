@@ -17,6 +17,7 @@ class DashboardHeader extends React.Component {
         className={styles.addBookBtn}
         onClick={toggle}
       >
+        <div className={styles.addBookIcon} />
         <a>add book</a>
       </div>
     )

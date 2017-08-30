@@ -6,6 +6,7 @@ $grey: #808080;
 $maroon: #502424;
 $medium-grey: #838587;
 $blue: #0d78f2;
+$main-grey: #666;
 
 .bookList {
   .bookTitle {
@@ -23,6 +24,7 @@ $blue: #0d78f2;
     line-height: 36px;
     letter-spacing: 5px;
     margin: 0 !important;
+    padding: 10px 50px 10px 10px;
     text-transform: uppercase;
   }
 
@@ -46,7 +48,7 @@ $blue: #0d78f2;
     font-size: 16px;
     font-style: italic;
     font-weight: 500;
-    // margin-top: 20px;
+    margin-top: 11px;
     padding-right: 20px;
 
     a {
@@ -59,7 +61,18 @@ $blue: #0d78f2;
         cursor: pointer;
         text-decoration: none;
       }
-        }
+    }
+    .addBookIcon {
+      -webkit-mask: url('./images/icon_add.svg') no-repeat 100% 100%;
+      mask: url('./images/icon_add.svg') no-repeat 100% 100%;
+      -webkit-mask-size: cover;
+      mask-size: cover;
+      background-color: $main-grey;
+      width: 24px;
+      height: 24px;
+      float: left;
+      margin-right: 10px;
+    }
   }
 
   .bookContainer {
