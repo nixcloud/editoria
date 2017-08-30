@@ -132,6 +132,7 @@ class Book extends React.Component {
 
     if (isRenaming) {
       return (
+      <div className={styles.actionContainer}>
         <a
           className={styles.editBook}
           href='#'
@@ -139,17 +140,20 @@ class Book extends React.Component {
         >
           Save
         </a>
+      </div>
       )
     }
 
     return (
-      <a
-        className={styles.editBook}
-        href='#'
-        onClick={this.onClickRename}
-      >
-        Rename
-      </a>
+      <div className={styles.actionContainer}>
+        <a
+          className={styles.editBook}
+          href='#'
+          onClick={this.onClickRename}
+        >
+          Rename
+        </a>
+      </div>
     )
   }
 
@@ -158,6 +162,7 @@ class Book extends React.Component {
     if (!canRemove) return null
 
     return (
+      <div className={styles.actionContainer}>
       <a
         className={styles.editBook}
         href='#'
@@ -165,6 +170,7 @@ class Book extends React.Component {
       >
         Remove
       </a>
+    </div>
     )
   }
 
