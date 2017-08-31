@@ -1,6 +1,7 @@
 import { includes, some } from 'lodash'
 import React from 'react'
 import { Link } from 'react-router'
+import { browserHistory } from 'react-router'
 
 import RemoveBookModal from './RemoveBookModal'
 import styles from './dashboard.local.scss'
@@ -10,6 +11,7 @@ class Book extends React.Component {
   constructor (props) {
     super(props)
 
+    this.goToBookBuilder = this.goToBookBuilder.bind(this)
     this.handleKeyOnInput = this.handleKeyOnInput.bind(this)
     this.onClickRename = this.onClickRename.bind(this)
     this.onClickSave = this.onClickSave.bind(this)
@@ -71,6 +73,12 @@ class Book extends React.Component {
     return pass
   }
 
+  goToBookBuilder () {
+    const { book } = this.props
+    const url = `/books/${book.id}/book-builder`
+    browserHistory.push(url)
+  }
+
   removeBook () {
     const { book, remove } = this.props
     remove(book)
@@ -92,7 +100,7 @@ class Book extends React.Component {
     }
 
     return (
-      <h2 onDoubleClick={this.onClickRename} >
+      <h2 onDoubleClick={this.goToBookBuilder} >
         { book.title }
       </h2>
     )
@@ -163,8 +171,8 @@ class Book extends React.Component {
 
     return (
       <div className={styles.bookActions}>
-        { rename }
         { edit }
+        { rename }
         { remove }
       </div>
     )

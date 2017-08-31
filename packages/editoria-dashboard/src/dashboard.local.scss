@@ -24,11 +24,16 @@ $medium-grey: #838587;
   h2,
   .h2 {
     color: $primary-color;
+    cursor: pointer;
     font-size: 32px;
     font-style: italic;
     font-weight: normal;
     margin: 0 0 1px;
     padding-bottom: 0;
+    -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
   }
 
   .addBookBtn {
