@@ -250,7 +250,7 @@ export class BookBuilder extends React.Component {
               outerContainer={outerContainer}
               remove={deleteFragment}
               roles={roles}
-              title='Front Matter'
+              title='Frontmatter'
               type='front'
               update={updateFragment}
               uploadStatus={this.state.uploading}
@@ -282,7 +282,7 @@ export class BookBuilder extends React.Component {
               outerContainer={outerContainer}
               remove={deleteFragment}
               roles={roles}
-              title='Back Matter'
+              title='Backmatter'
               type='back'
               update={updateFragment}
               uploadStatus={this.state.uploading}
