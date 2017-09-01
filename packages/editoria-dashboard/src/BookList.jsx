@@ -1,4 +1,4 @@
-import { isEmpty, map, reverse, sortBy } from 'lodash'
+import { isEmpty, map, sortBy } from 'lodash'
 import React from 'react'
 
 import Book from './Book'
