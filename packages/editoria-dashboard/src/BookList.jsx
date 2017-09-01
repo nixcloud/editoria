@@ -17,7 +17,7 @@ class BookList extends React.Component {
       )
     }
 
-    const items = reverse(sortBy(books, 'title'))
+    const items = sortBy(books, 'title')
 
     const bookComponents = map(items, (book) => {
       return (
