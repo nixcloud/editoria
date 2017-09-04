@@ -336,7 +336,7 @@ $upload-multiple: #b1b1b1;
 
       &:after {
         position: absolute;
-        right: -6px;
+        right: -5px;
         top: 30%;
         content: '';
         width: 0;
@@ -537,7 +537,7 @@ $upload-multiple: #b1b1b1;
         }
 
         .boxActive {
-          background-color: $dark-grey;
+          background-color: $main-grey;
           cursor: pointer;
           height: 20px;
           width: 12px;
