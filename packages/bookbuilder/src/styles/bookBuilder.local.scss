@@ -513,10 +513,12 @@ $upload-multiple: #b1b1b1;
         .leftRightBox {
           border: 1px solid $main-grey;
           float: left;
-          height: 22px;
+          height: 26px;
+          padding: 2px 0 0 1.8px;
           text-align: center;
-          width: 22px;
+          width: 17.5px;
         }
+
 
         .leftBox {
           border-right: 0;
@@ -529,24 +531,22 @@ $upload-multiple: #b1b1b1;
         .boxDiver {
           border-right: 1px solid $dark-grey;
           bottom: 5px;
-          height: 31px;
+          height: 35px;
           position: relative;
-          right: 23px;
+          right: 17.9px;
         }
 
         .boxActive {
           background-color: $dark-grey;
           cursor: pointer;
-          height: 16px;
-          margin: 2px 0 0 2px;
-          width: 16px;
+          height: 20px;
+          width: 12px;
         }
         .boxInactiveHover {
           background-color: $white;
           cursor: pointer;
-          height: 16px;
-          margin: 2px 0 0 2px;
-          width: 16px;
+          height: 20px;
+          width: 12px;
 
           &:hover {
             background-color: $light-grey;
