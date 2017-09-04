@@ -6,6 +6,8 @@ $black: #000;
 $blue: #0d78f2;
 $line-grey: #969696;
 
+$upload-multiple: #b1b1b1;
+
 .bookBuilder {
   @import 'animate';
 
@@ -33,7 +35,7 @@ $line-grey: #969696;
       color: $dark-grey;
       float: left;
       font-family: 'Fira Sans Condensed';
-      font-size: 26px;
+      font-size: 20px;
       font-style: normal;
     }
 
@@ -41,14 +43,14 @@ $line-grey: #969696;
       cursor: pointer;
       float: left;
       font-size: 16px;
-      font-style: italic;
-      font-weight: 500;
+      font-style: normal;
+      font-weight: normal;
       text-align: center;
       transition: border .5s ease-out .2s;
 
       a {
         font-family: 'Fira Sans Condensed';
-        color: $black;
+        color: $main-grey;
         text-decoration: none;
         text-transform: uppercase;
 
@@ -94,7 +96,7 @@ $line-grey: #969696;
 
      .uploadMultipleText {
        bottom: 10px;
-       color: $main-grey;
+       color: $upload-multiple;
        cursor: pointer;
        font-family: 'Fira Sans Condensed';
        font-size: 16px;
@@ -158,7 +160,7 @@ $line-grey: #969696;
       border-left: 0;
       border-right: 0;
       border-top: 0;
-      border-bottom: 1px dashed $black!important;
+      border-bottom: 1px dotted $main-grey!important;
       font-size: 20px!important;
       outline: none;
       width: 100%!important;
@@ -203,14 +205,14 @@ $line-grey: #969696;
       cursor: pointer;
       float: left;
       font-size: 16px;
-      font-style: italic;
-      font-weight: 500;
+      font-style: normal;
+      font-weight: normal;
       margin-top: 20px;
       padding-right: 20px;
 
       a {
         font-family: 'Fira Sans Condensed';
-        color: $black;
+        color: $main-grey;
         text-decoration: none;
         text-transform: uppercase;
         &:hover {
@@ -348,7 +350,7 @@ $line-grey: #969696;
     }
 
     .chapterTitle {
-      border-bottom: 1px dashed $black;
+      border-bottom: 1px dotted $main-grey;
       width: 91%;
 
       .bodyTitle {
@@ -403,7 +405,7 @@ $line-grey: #969696;
       a {
         color: $blue;
         font-family: 'Fira Sans Condensed';
-        font-style: normal;
+        font-style: italic;
         font-weight: normal;
         text-decoration: none;
         &:hover {
@@ -441,12 +443,13 @@ $line-grey: #969696;
         display: none !important;
       }
       .uploadText {
-        bottom: 12px;
+        bottom: 10px;
+        color: $main-grey;
         cursor: pointer;
         font-family: 'Fira Sans Condensed';
         font-size: 16px;
         font-style: normal;
-        left: 10px;
+        left: 4px;
         position: relative;
         text-transform: uppercase;
       }
@@ -489,10 +492,10 @@ $line-grey: #969696;
           float: left;
           font-family: 'Fira Sans Condensed';
           font-size: 16px;
-          font-style: normal;
+          font-style: italic;
         }
         .leftRightBox {
-          border: 1px solid $black;
+          border: 1px solid $main-grey;
           float: left;
           height: 22px;
           text-align: center;
@@ -562,6 +565,10 @@ $line-grey: #969696;
       }
     }
 
+  }
+
+  .noChapters {
+    padding-left: 1%;
   }
 
 .noWritesError {
