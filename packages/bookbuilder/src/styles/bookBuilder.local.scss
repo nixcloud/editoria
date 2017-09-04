@@ -367,10 +367,10 @@ $upload-multiple: #b1b1b1;
 
     .chapterTitle {
       border-bottom: 1px dotted $main-grey;
-      width: 91%;
+      width: 92%;
 
       .bodyTitle {
-        width: 90%;
+        width: 92%;
       }
 
       h3 {
@@ -582,6 +582,27 @@ $upload-multiple: #b1b1b1;
     }
 
   }
+
+
+  @media (min-width:1215px) and (max-width:1510px) {
+    .chapterActions {
+      bottom: 49.5px!important;
+    }
+  }
+
+
+  @media (min-width:1511px) and (max-width:1560px) {
+    .chapterActions {
+      bottom: 50px!important;
+    }
+  }
+
+  @media (min-width:1561px) and (max-width:1750px) {
+    .chapterActions {
+      bottom: 51px!important;
+    }
+  }
+
 
   .noChapters {
     padding-left: 1%;
