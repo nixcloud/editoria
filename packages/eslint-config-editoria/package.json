@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-editoria",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A meta package to be used for the different parts of the editoria project",
   "repository": "https://gitlab.coko.foundation/editoria/eslint-config-editoria",
   "main": "index.js",
