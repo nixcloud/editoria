@@ -288,17 +288,20 @@ $upload-multiple: #b1b1b1;
     }
 
     .grabIcon:hover .tooltip {
-      background: transparent;
-      color: $dark-grey;
+      background: $dark-grey;
+      color: $white;
       display: block;
-      font-size: 16px;
-      left: -50px;
+      font-family: 'Fira Sans Condensed';
+      font-size: 11.5px;
+      font-style: italic;
+      left: -10px;
       opacity: 0;
-      padding: 20px;
+      padding: 0;
+      text-align: center;
       pointer-events: none;
       position: absolute;
-      top: -105px;
-      width: 140px;
+      top: -65px;
+      width: 70px;
       -webkit-transform: translateY(10px);
       -moz-transform: translateY(10px);
       -ms-transform: translateY(10px);
@@ -310,6 +313,7 @@ $upload-multiple: #b1b1b1;
       -o-transition: all .25s ease-out;
       transition: all .25s ease-out;
     }
+
 
     .grabIcon:active .tooltip {
       display:none;
@@ -329,6 +333,18 @@ $upload-multiple: #b1b1b1;
       opacity: 1;
       pointer-events: auto;
       transform: rotate(90deg);
+
+      &:after {
+        position: absolute;
+        right: -6px;
+        top: 30%;
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 5px 0 5px 6px;
+        border-color: transparent transparent transparent $dark-grey;
+      }
     }
 
     .chapterMainContent {
