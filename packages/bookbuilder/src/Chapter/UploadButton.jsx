@@ -63,6 +63,7 @@ export class UploadButton extends React.Component {
   }
 
   renderInput () {
+    let noAction = false
     let uploadClass = ''
     let text = 'upload word'
     let disabled = ''
@@ -72,8 +73,7 @@ export class UploadButton extends React.Component {
       text = 'uploading...'
       disabled = styles['no-actions']
     }
-
-    if (this.isLocked()) return null
+    if (this.isLocked()) noAction = true
 
     const { accept, title, type, chapter } = this.props
 
@@ -82,10 +82,12 @@ export class UploadButton extends React.Component {
         <label
           htmlFor={'single-file-uploader' + chapter.id}
           className={styles.uploadIcon + ' ' + uploadClass + ' ' + disabled}
+          disabled={noAction}
         />
         <label
           htmlFor={'single-file-uploader' + chapter.id}
           className={styles.uploadText + ' ' + disabled}
+          disabled={noAction}
         >
           {text}
         </label>
@@ -96,6 +98,7 @@ export class UploadButton extends React.Component {
           title={title}
           name='single-file-uploader'
           type={type}
+          disabled={noAction}  
         />
       </span>
     )

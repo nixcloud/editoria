@@ -432,11 +432,13 @@ $upload-multiple: #b1b1b1;
       }
 
       .lEditing {
-        background: $dark-grey;
+        background: $main-grey;
+        bottom: 3px;
         color: $white;
         font-style: italic;
         font-weight: 200;
         padding: 5px;
+        position: relative;
         text-decoration: none;
         &:hover {
           border-bottom: 0;
