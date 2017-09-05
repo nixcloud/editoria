@@ -3,30 +3,32 @@ $light-grey: #cdcdcd;
 $main-grey: #d8d8d8;
 
 $black: #000;
-$blue: #00f;
 $green: #008000;
 $purple: #800080;
 $red: #a52a2a;
 $white: #fff;
 $yellow: #ff0;
 
+$blue: #0d78f2;
+
 .teamManager {
+  font-family: 'Vollkorn'!important;
   .separator {
     clear: both;
     height: .1px;
   }
 
   .groupHeader {
-    border-bottom: 4px solid $dark-grey;
     padding-top: 1%;
 
     .groupTitle {
-      background-color: $main-grey;
       float: left;
-      padding: 0 80px 10px 10px;
+      letter-spacing: 5px;
+      padding: 0 30px 10px 10px;
+      text-transform: uppercase;
 
       h1 {
-        color: $black !important;
+        color: $blue !important;
         font-size: 22px;
         line-height: 25px;
         margin: 0 !important;
