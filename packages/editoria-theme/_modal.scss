@@ -4,6 +4,9 @@ $button-text: #000;
 $grey: #808080;
 $white: #fff;
 
+$btn-idle-color: #595959;
+$hover-button-bg-color: #4990e2;
+
 .modal-content {
   border: 2px solid $grey;
   border-radius: 0;
@@ -39,21 +42,25 @@ $white: #fff;
 }
 
 .modal-button {
-  background-color: $button-background;
-  border: 3px solid transparent;
-  border-radius: 3px;
-  color: $button-text;
+  background-color: $white;
+  border: 1px solid $btn-idle-color;
+  border-radius: 4px;
+  color: $btn-idle-color;
+  cursor: pointer;
   display: inline-block;
+  font-family: 'Fira Sans Condensed';
+  font-style: italic;
+  font-size: 18px;
   margin-bottom: .5em;
-  padding: 4px 40px;
+  padding: 8px 44px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
 
   &:hover {
-    background-color: $grey;
+    background-color: $hover-button-bg-color;
+    border: 1px solid $hover-button-bg-color;
     color: $white;
-    cursor: pointer;
     text-decoration: none;
   }
 }
@@ -63,6 +70,8 @@ $white: #fff;
   margin-right: 20px;
 
   &:hover {
-    color: $brown;
+    background-color: $brown;
+    border: 1px solid $brown;
+    color: $white;
   }
 }
