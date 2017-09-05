@@ -253,7 +253,7 @@ $upload-multiple: #b1b1b1;
       border-bottom: 0;
       border-top-left-radius: 110px;
       border-top-right-radius: 110px;
-      bottom: 43%;
+      bottom: 42%;
       cursor: move;
       float: right;
       height: 20px;
@@ -366,14 +366,12 @@ $upload-multiple: #b1b1b1;
     }
 
     .chapterTitle {
-      background-image: linear-gradient(to right, #666 50%, rgba(255, 255, 255, 0) 0%);
+      background-image: linear-gradient(to right, $main-grey 50%, rgba(255, 255, 255, 0) 0%);
       background-position: bottom;
       background-repeat: repeat-x;
       background-size: 6px 1px;
       position: relative;
       width: 92%;
-      // top: 19px;
-
 
       .bodyTitle {
         width: 92%;
@@ -463,6 +461,11 @@ $upload-multiple: #b1b1b1;
 
     .secondLineContainer {
       padding-top: 1.8%;
+
+      .btnFile {
+        position: relative;
+        bottom: 3px;
+      }
 
       .btnFile input[type=file] {
         display: none !important;
