@@ -20,7 +20,9 @@ export class Member extends React.Component {
     const { user, color, remove } = this.props
 
     let removeButton = ''
+    let Noline = { 'background-image': 'none' }
     if (remove === true) {
+      Noline = { 'cursor': 'default' }
       removeButton = (
         <a onClick={this._remove}>
           Remove
@@ -30,7 +32,9 @@ export class Member extends React.Component {
 
     return (
       <li>
-        <div className={styles.personContainer}>
+        <div className={styles.personContainer}
+            style={Noline}
+          >
           <div><span>{user.username}</span></div>
         </div>
         <div className={styles.actionsContainer}>

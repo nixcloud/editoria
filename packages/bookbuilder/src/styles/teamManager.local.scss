@@ -10,6 +10,8 @@ $white: #fff;
 $yellow: #ff0;
 
 $blue: #0d78f2;
+$btn-idle-color: #595959;
+$hover-button-bg-color: #4990e2;
 
 .teamManager {
   font-family: 'Vollkorn'!important;
@@ -73,10 +75,11 @@ $blue: #0d78f2;
 
   .userInputContainer {
     height: 30px;
-    margin-top: 25px;
+    margin: 25px 30px 10px 30px;
+    position: relative;
 
     .usernameInput {
-      border-color: $black;
+      border-color: $dark-grey;
       border-top: none;
       border-left: none;
       border-right: none;
@@ -87,43 +90,32 @@ $blue: #0d78f2;
 
     .closeUsernameBtn {
       background-color: $white;
-      border: 1px solid $dark-grey;
       color: $dark-grey;
       cursor: pointer;
-      font-size: 16px;
-      padding: 0 30px;
-      position: absolute;
-      right: 0;
-      margin-top: 0;
+      font-family: 'Fira Sans Condensed';
+      font-size: 18px;
+      font-style: italic;
+      padding: 2px 0;
+      text-align: center;
       text-decoration: none;
-
-      &:hover {
-        background-color: $dark-grey;
-        border: 1px solid $white;
-        color: $white;
-        transition: .25s ease-in-out 0s;
-      }
+      position: absolute;
+      right: 0px;
+      bottom: 5px;
     }
 
     .addUsernameBtn {
-      background-color: $dark-grey;
-      border: 1px solid $white;
-      color: $white;
+      background-color: $white;
+      color: $dark-grey;
       cursor: pointer;
-      float: right;
-      font-size: 16px;
-      margin-top: 0;
-      padding: 0 30px;
-      position: absolute;
-      right: 80px;
+      font-family: 'Fira Sans Condensed';
+      font-size: 18px;
+      font-style: italic;
+      padding: 2px 0;
       text-align: center;
       text-decoration: none;
-      transition: border .5s ease-out .2s;
-
-      &:hover {
-        border: 1px solid $dark-grey;
-        transition: .25s ease-in-out 0s;
-      }
+      position: absolute;
+      right: 55px;
+      bottom: 5px;
 
       a {
         color: $white;

@@ -98,7 +98,7 @@ export class AddMember extends React.Component {
 
         <a className={styles.closeUsernameBtn}
           onClick={this._hide}>
-          X
+          close
         </a>
 
         <span className={styles[this.state.message.classname]}>
