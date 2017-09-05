@@ -139,7 +139,7 @@ $upload-multiple: #b1b1b1;
     font-weight: 500;
     padding: 0;
     text-align: left;
-    top: 13px;
+    top: -3px;
     z-index: 999;
     -webkit-box-shadow: none !important;
     white-space: pre-wrap;
@@ -366,8 +366,14 @@ $upload-multiple: #b1b1b1;
     }
 
     .chapterTitle {
-      border-bottom: 1px dotted $main-grey;
+      background-image: linear-gradient(to right, #666 50%, rgba(255, 255, 255, 0) 0%);
+      background-position: right;
+      background-repeat: repeat-x;
+      background-size: 6px 1px;
+      position: relative;
       width: 92%;
+      top: 19px;
+
 
       .bodyTitle {
         width: 92%;
@@ -386,7 +392,7 @@ $upload-multiple: #b1b1b1;
         padding-bottom: 0;
         padding-right: 10px;
         position: relative;
-        top: 11px;
+        top: -5px;
       }
       input {
         font-size: 28px;
