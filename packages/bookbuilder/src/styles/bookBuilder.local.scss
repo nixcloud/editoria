@@ -375,10 +375,11 @@ $upload-multiple: #b1b1b1;
 
       h3 {
         background-color: $white;
-        color: #333 !important;
+        color: $dark-grey !important;
         cursor: pointer;
         display: inline;
         font-size: 28px;
+        font-family: 'Vollkorn';
         font-style: italic;
         line-height: 36px;
         margin: 0;
