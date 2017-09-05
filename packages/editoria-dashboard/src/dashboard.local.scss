@@ -4,6 +4,7 @@ $blue: #0d78f2;
 $main-grey: #666;
 $title-color: #333;
 $white: #fff;
+$dark-grey: #404040;
 
 .bookList {
   h1 {
@@ -24,14 +25,14 @@ $white: #fff;
     cursor: pointer;
     float: left;
     font-size: 16px;
-    font-style: italic;
+    font-style: normal;
     font-weight: 500;
-    margin-top: 11px;
+    margin-top: 16px;
     padding-right: 20px;
 
     a {
       font-family: 'Fira Sans Condensed';
-      color: $black;
+      color: $main-grey;
       text-decoration: none;
       text-transform: uppercase;
 
@@ -59,7 +60,11 @@ $white: #fff;
     position: relative;
 
     .bookTitleBorder {
-      border-bottom: 1px dashed $black;
+      background-image: linear-gradient(to right, $main-grey 50%, rgba(255, 255, 255, 0) 0%);
+      background-position: bottom;
+      background-repeat: repeat-x;
+      background-size: 6px 1px;
+      position: relative;
       width: 85%;
     }
 
@@ -69,11 +74,12 @@ $white: #fff;
 
     h3 {
       background-color: $white;
-      color: $title-color !important;
+      color: $dark-grey !important;
       cursor: pointer;
       display: inline;
       font-size: 28px;
       font-style: italic;
+      font-family: 'Vollkorn';
       line-height: 36px;
       margin: 0;
       padding-bottom: 0;
@@ -96,6 +102,7 @@ $white: #fff;
   .bookActions {
     background-color: $white;
     bottom: -6px;
+      font-style: italic;
     // padding-left: 5px;
     position: absolute;
     right: 0;
@@ -111,7 +118,6 @@ $white: #fff;
   .editBook {
     color: $blue;
     font-family: 'Fira Sans Condensed';
-    font-style: normal;
     font-weight: normal;
     text-decoration: none;
 
