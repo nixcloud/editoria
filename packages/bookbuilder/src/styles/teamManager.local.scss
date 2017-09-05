@@ -1,6 +1,6 @@
 $dark-grey: #404040;
 $light-grey: #cdcdcd;
-$main-grey: #d8d8d8;
+$main-grey: #666;
 
 $black: #000;
 $green: #008000;
@@ -30,6 +30,8 @@ $blue: #0d78f2;
       h1 {
         color: $blue !important;
         font-size: 22px;
+        font-style: normal;
+        font-weight: normal;
         line-height: 25px;
         margin: 0 !important;
         position: relative;
@@ -38,25 +40,28 @@ $blue: #0d78f2;
     }
 
     .groupBtn {
-      background-color: $dark-grey;
-      border: 1px solid $white;
-      color: $white;
       cursor: pointer;
-      float: right;
       font-size: 16px;
       margin-top: 7px;
-      padding: 0 30px;
-      text-align: center;
-      transition: border .5s ease-out 0.2s;
 
-      &:hover {
-        border: 1px solid $dark-grey;
-        transition: .25s ease-in-out 0s;
+      .addIcon {
+        -webkit-mask: url('./images/icon_add.svg') no-repeat 100% 100%;
+        mask: url('./images/icon_add.svg') no-repeat 100% 100%;
+        -webkit-mask-size: cover;
+        mask-size: cover;
+        background-color: $main-grey;
+        width: 24px;
+        height: 24px;
+        float: left;
+        margin-right: 10px;
       }
 
       a {
-        color: $white;
+        color: $main-grey;
+        font-family: 'Fira Sans Condensed';
+        font-style: normal;
         text-decoration: none;
+        text-transform: uppercase;
 
         &:hover {
           cursor: pointer;
@@ -143,25 +148,54 @@ $blue: #0d78f2;
 
   .teamMembersContainer {
     li {
-      border-bottom: 1px solid;
-      height: 50px;
+      margin-left: 30px;
+      .personContainer {
+        background-image: linear-gradient(to right, $main-grey 50%, rgba(255, 255, 255, 0) 0%);
+        background-position: bottom;
+        background-repeat: repeat-x;
+        background-size: 6px 1px;
+        position: relative;
+        width: 91.2%;
+      }
 
       span {
-        font-size: 18px;
-        left: 0;
-        margin-top: 24px;
-        position: absolute;
+        background-color: $white;
+        color: #404040 !important;
+        display: inline;
+        font-size: 17px;
+        font-family: 'Vollkorn';
+        font-style: italic;
+        line-height: 36px;
+        margin: 0;
+        padding-bottom: 0;
+        padding-right: 10px;
+        position: relative;
+        top: 13px;
       }
 
-      a {
-        color: $main-grey;
-        cursor: pointer;
-        float: right;
-        margin-top: 24px;
-        position: absolute;
+      .actionsContainer {
+        background-color: $white;
+        // bottom: -6px;
+        font-style: italic;
+        position: relative;
         right: 0;
-        text-decoration: none;
+
+        .actionContainer {
+          background-color: $white;
+          bottom: -8px;
+          position: absolute;
+          right: 20px;
+          a {
+          color: $blue;
+          cursor: pointer;
+          text-decoration: none;
+            &:hover {
+              border-bottom: 2px solid $blue;
+            }
+          }
+        }
       }
+
     }
 
     .blue {

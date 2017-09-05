@@ -10,7 +10,8 @@ export class GroupHeader extends React.Component {
     const button = title !== 'Production Editor'
     ? (
       <div className={styles.groupBtn} onClick={showInput}>
-        <a>{ 'add ' + title.toLowerCase() }</a>
+        <div className={styles.addIcon} />
+        <a>{ 'add ' + title }</a>
       </div>
     )
     : ''

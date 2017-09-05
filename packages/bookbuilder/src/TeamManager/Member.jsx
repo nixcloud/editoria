@@ -29,16 +29,29 @@ export class Member extends React.Component {
     }
 
     return (
-      <li className={styles[color]}>
-
-        <span>
-          {user.username}
-        </span>
-
-        { removeButton }
-
+      <li>
+        <div className={styles.personContainer}>
+          <div><span>{user.username}</span></div>
+        </div>
+        <div className={styles.actionsContainer}>
+          <div className={styles.actionContainer}>
+            { removeButton }
+          </div>
+          </div>
       </li>
     )
+
+    // return (
+    //   <li className={styles[color]}>
+    //
+    //     <span>
+    //       {user.username}
+    //     </span>
+    //
+    //     { removeButton }
+    //
+    //   </li>
+    // )
   }
 }
 
