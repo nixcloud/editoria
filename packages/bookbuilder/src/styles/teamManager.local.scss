@@ -11,9 +11,9 @@ $yellow: #ff0;
 
 $blue: #0d78f2;
 
-
 .teamManager {
-  font-family: 'Vollkorn'!important;
+  font-family: 'Fira Sans Condensed';
+
   .separator {
     clear: both;
     height: .1px;
@@ -79,10 +79,12 @@ $blue: #0d78f2;
     position: relative;
 
     .usernameInput {
-      border-color: $dark-grey;
-      border-top: none;
-      border-left: none;
-      border-right: none;
+      background-image: linear-gradient(to right, $dark-grey 50%, rgba(255, 255, 255, 0) 0%);
+      background-position: bottom;
+      background-repeat: repeat-x;
+      background-size: 6px 1px;
+      border: 0;
+
       float: left;
       outline: none;
       width: 100% !important;
@@ -90,10 +92,10 @@ $blue: #0d78f2;
 
     .closeUsernameBtn {
       background-color: $white;
-      color: $dark-grey;
+      color: $red;
       cursor: pointer;
       font-family: 'Fira Sans Condensed';
-      font-size: 18px;
+      // font-size: 18px;
       font-style: italic;
       padding: 2px 0;
       text-align: center;
@@ -105,16 +107,16 @@ $blue: #0d78f2;
 
     .addUsernameBtn {
       background-color: $white;
-      color: $dark-grey;
+      color: $blue;
       cursor: pointer;
       font-family: 'Fira Sans Condensed';
-      font-size: 18px;
+      // font-size: 18px;
       font-style: italic;
       padding: 2px 0;
       text-align: center;
       text-decoration: none;
       position: absolute;
-      right: 55px;
+      right: 25px;
       bottom: 5px;
 
       a {
@@ -137,7 +139,6 @@ $blue: #0d78f2;
     }
   }
 
-
   .teamMembersContainer {
     li {
       margin-left: 30px;
@@ -154,7 +155,7 @@ $blue: #0d78f2;
         background-color: $white;
         color: #404040 !important;
         display: inline;
-        font-size: 17px;
+        font-size: 22px;
         font-family: 'Vollkorn';
         font-style: italic;
         line-height: 36px;
@@ -177,10 +178,13 @@ $blue: #0d78f2;
           bottom: -8px;
           position: absolute;
           right: 20px;
+
           a {
-          color: $blue;
-          cursor: pointer;
-          text-decoration: none;
+            color: $blue;
+            cursor: pointer;
+            margin-left: 5px;
+            text-decoration: none;
+
             &:hover {
               border-bottom: 2px solid $blue;
             }
