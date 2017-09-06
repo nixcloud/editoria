@@ -20,8 +20,12 @@ $hover-button-bg-color: #4990e2;
 }
 
 .modal-title {
-  font-size: 24px;
+  font-family: 'Fira Sans Condensed';
+  font-size: 23px;
+  font-style: normal;
+  font-weight: normal;
   line-height: 32px;
+  text-transform: uppercase;
 }
 
 .modal-body {
