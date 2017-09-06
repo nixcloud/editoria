@@ -14,10 +14,15 @@ label {
 input[type='text'],
 input[type='text'].form-control,
 input[type='password'].form-control {
+  background-image: linear-gradient(to right, #666 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: bottom;
+  background-repeat: repeat-x;
+  background-size: 6px 1px;
   border: 0;
-  border-color: $medium-light-gray;
-  border-style: solid;
-  border-width: 2px;
+  font-size: 22px;
+  outline: none;
+  padding-top: 5px;
+  width: 100%;
 
   &.error {
     border-right: 4px solid $main-grey;
