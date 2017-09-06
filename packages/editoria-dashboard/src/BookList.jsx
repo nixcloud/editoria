@@ -17,7 +17,7 @@ class BookList extends React.Component {
       )
     }
 
-    const items = sortBy(books, 'title')
+    const items = sortBy(books, [book => book.title.toLowerCase()])
 
     const bookComponents = map(items, (book) => {
       return (

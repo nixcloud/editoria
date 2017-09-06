@@ -41,6 +41,7 @@ $dark-grey: #404040;
         text-decoration: none;
       }
     }
+
     .addBookIcon {
       -webkit-mask: url('./images/icon_add.svg') no-repeat 100% 100%;
       mask: url('./images/icon_add.svg') no-repeat 100% 100%;
@@ -86,7 +87,13 @@ $dark-grey: #404040;
       padding-right: 10px;
       position: relative;
       top: 11px;
+
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
+
     input {
       border: 0;
       border-bottom: 1px dashed $black;
@@ -101,11 +108,20 @@ $dark-grey: #404040;
 
   .bookActions {
     background-color: $white;
-    bottom: -6px;
+    bottom: -7px;
       font-style: italic;
     // padding-left: 5px;
     position: absolute;
     right: 0;
+
+    div:first-child {
+      padding-left: 8px;
+    }
+
+    div:last-child {
+      border-right: 0;
+      padding-right: 0;
+    }
   }
 
   .actionContainer {

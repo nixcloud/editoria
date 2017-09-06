@@ -102,7 +102,7 @@ class Book extends React.Component {
     return (
       <div className={styles.bookTitleBorder}>
         <div className={styles.bookTitleWidth}>
-          <h3 onDoubleClick={this.onClickRename} >
+          <h3 onDoubleClick={this.goToBookBuilder} >
             { book.title }
           </h3>
         </div>
@@ -115,12 +115,14 @@ class Book extends React.Component {
     const { book } = this.props
 
     return (
-      <Link
-        className={styles.editBook}
-        to={`/books/${book.id}/book-builder`}
-      >
-        Edit
-      </Link>
+      <div className={styles.actionContainer} >
+        <Link
+          className={styles.editBook}
+          to={`/books/${book.id}/book-builder`}
+        >
+          Edit
+        </Link>
+      </div>
     )
   }
 
@@ -163,20 +165,20 @@ class Book extends React.Component {
 
     return (
       <div className={styles.actionContainer}>
-      <a
-        className={styles.editBook}
-        href='#'
-        onClick={this.toggleModal}
-      >
-        Remove
-      </a>
-    </div>
+        <a
+          className={styles.editBook}
+          href='#'
+          onClick={this.toggleModal}
+        >
+          Delete
+        </a>
+      </div>
     )
   }
 
   renderButtons () {
-    const rename = this.renderRename()
     const edit = this.renderEdit()
+    const rename = this.renderRename()
     const remove = this.renderRemove()
 
     return (
