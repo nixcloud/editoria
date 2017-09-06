@@ -20,7 +20,7 @@ input[type='password'].form-control {
   background-size: 6px 1px;
   border: 0;
   font-size: 22px;
-  outline: none;
+  // outline: none;
   padding-top: 5px;
   width: 100%;
 
@@ -31,6 +31,17 @@ input[type='password'].form-control {
   &.success {
     border-right: 4px solid $dark-grey;
   }
+}
+
+input[type='text'].form-control,
+input[type='password'].form-control {
+  background: none;
+  border: 2px solid #b0b0b0;
+  border-right: 4px solid #484848;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 14px;
 }
 
 .form-group {
