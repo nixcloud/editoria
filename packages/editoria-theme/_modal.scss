@@ -10,7 +10,7 @@ $hover-button-bg-color: #4990e2;
 .modal-content {
   border: 2px solid $grey;
   border-radius: 0;
-  font-style: italic;
+  font-family: 'Fira Sans Condensed';
   font-weight: 500;
   padding: 1em;
 }
@@ -20,9 +20,7 @@ $hover-button-bg-color: #4990e2;
 }
 
 .modal-title {
-  font-family: 'Fira Sans Condensed';
   font-size: 23px;
-  font-style: normal;
   font-weight: normal;
   line-height: 32px;
   text-transform: uppercase;
@@ -30,12 +28,12 @@ $hover-button-bg-color: #4990e2;
 
 .modal-body {
   border: 0;
+  font-size: 17px;
   padding: 20px 0;
 }
 
 .modal-footer {
   border: 0;
-  font-style: normal;
   font-weight: normal;
   padding-right: 0;
   text-align: center;
