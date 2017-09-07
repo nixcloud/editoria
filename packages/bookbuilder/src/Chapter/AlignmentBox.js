@@ -1,7 +1,7 @@
 import { includes } from 'lodash'
 import React from 'react'
 
-import styles from '../styles/bookBuilder.local.scss'
+import styles from './AlignmentBox.local.scss'
 
 class AlignmentBox extends React.Component {
   constructor (props) {

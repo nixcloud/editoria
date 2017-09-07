@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -28,14 +30,25 @@
     "redux": "3.6.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",
     "eslint-config-editoria": "0.0.4",
+    "file-loader": "^0.11.2",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^20.0.4",
+    "node-sass": "^4.5.3",
     "react-addons-test-utils": "^15.6.0",
+    "react-styleguidist": "^6.0.24",
     "react-test-renderer": "^15.6.1",
+    "sass-loader": "^6.0.6",
     "sinon": "^2.3.6",
-    "sinon-as-promised": "^4.0.3"
+    "sinon-as-promised": "^4.0.3",
+    "webpack": "^3.5.6",
+    "webpack-node-externals": "^1.6.0"
   }
 }
