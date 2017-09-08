@@ -1,0 +1,25 @@
+$blue: #0d78f2;
+
+.alignmentBoxWithLabel {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+
+  .label {
+    color: $blue;
+    font-family: 'Fira Sans Condensed';
+    font-size: 16px;
+    font-style: italic;
+    margin-right: 10px;
+  }
+
+  &.reverseOrder {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+
+    .label {
+      margin-left: 10px;
+    }
+  }
+
+}
