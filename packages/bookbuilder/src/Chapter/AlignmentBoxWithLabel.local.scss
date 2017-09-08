@@ -15,7 +15,7 @@ $blue: #0d78f2;
 
   &.reverseOrder {
 
-    span:nth-child(1) {
+    .label {
       margin-left: 10px;
       margin-right: 0;
       order: 2;
