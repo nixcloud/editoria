@@ -1,39 +1,19 @@
 $light-grey: #b3b3b3;
 $main-grey: #666;
-$white: #fff;
+$white-rgba: rgba(255, 255, 255, 1);
 
-.leftRightBox {
+.alignmentBox {
   border: 1px solid $main-grey;
-  float: left;
+  box-shadow: inset 0 0 0 2px $white-rgba;
+  cursor: pointer;
   height: 26px;
-  padding: 2px 0 0 1.8px;
-  text-align: center;
-  width: 17.5px;
-}
-
-.leftBox {
-  border-right: 0;
-}
-
-.rightBox {
-  border-left: 0;
-}
-
-.boxActive {
-  background-color: $main-grey;
-  cursor: pointer;
-  height: 20px;
-  width: 12px;
-}
-
-.boxInactiveHover {
-  background-color: $white;
-  cursor: pointer;
-  height: 20px;
-  width: 12px;
+  width: 17px;
 
   &:hover {
     background-color: $light-grey;
-    transition: .25s ease-in-out 0s;
+  }
+
+  &.active {
+    background-color: $main-grey;
   }
 }
