@@ -1,52 +1,28 @@
 import { includes } from 'lodash'
 import React from 'react'
 
+import classNames from 'classnames'
 import styles from './AlignmentBox.local.scss'
 
-// class AlignmentBox extends React.Component {
-//   constructor (props) {
-//     super(props)
-//     this.onClick = this.onClick.bind(this)
-//   }
-//
-//   onClick () {
-//     const { chapter, position, update } = this.props
-//
-//     if (!includes(['left', 'right'], position)) return
-//
-//     const patch = {
-//       alignment: chapter.alignment,
-//       id: chapter.id
-//     }
-//
-//     patch.alignment[position] = !chapter.alignment[position]
-//
-//     update(patch)
-//   }
-//
-//   render () {
-//     const { chapter, position } = this.props
-//     const selected = chapter.alignment[position]
-//
-//     // TODO -- fix classes here
-//     const outerClass = styles.leftRightBox + ' ' + styles[position + 'Box']
-//     const innerClass = selected ? styles.boxActive : styles.boxInactiveHover
-//
-//     return (
-//       <li onClick={this.onClick}>
-//         <div className={outerClass}>
-//           <div className={innerClass} />
-//         </div>
-//       </li>
-//     )
-//   }
-// }
-// const innerClass = selected ? styles.boxActive : styles.boxInactiveHover
-// const borderLess = { top: true, right: true, bottom: true, left: true }
+const AlignmentBox = ({ chapter, position, update }) => {
+  const borderLess = { top: false, right: true, bottom: false, left: false }
 
-const AlignmentBox = ({ active, id, udpate }) => (
-  <div className={styles.alignmentBox + ' ' + styles.active}></div>
- )
+  const boxStyles = classNames(
+    styles.alignmentBox,
+    {
+      [styles.borderTop]: borderLess.top,
+      [styles.borderRight]: borderLess.right,
+      [styles.borderBottom]: borderLess.bottom,
+      [styles.borderLeft]: borderLess.left
+    })
+
+  return (
+    <div
+      role='presentation'
+      className={boxStyles}
+    />
+  )
+}
 
 AlignmentBox.defaultProps = {
   active: false,

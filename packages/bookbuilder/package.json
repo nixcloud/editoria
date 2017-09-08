@@ -30,6 +30,7 @@
     "redux": "3.6.0"
   },
   "devDependencies": {
+    "classnames": "^2.2.5",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
