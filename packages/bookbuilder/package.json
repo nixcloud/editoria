@@ -19,6 +19,7 @@
     "editoria-common": "0.0.1",
     "font-awesome": "4.7.0",
     "lodash": "4.17.4",
+    "prop-types": "^15.5.10",
     "pubsweet-client": "0.9.1",
     "react": "15.5.4",
     "react-bootstrap": "0.30.10",

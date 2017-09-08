@@ -1,33 +1,52 @@
-import { includes } from 'lodash'
+import classNames from 'classnames'
+import PropTypes from 'prop-types'
 import React from 'react'
 
-import classNames from 'classnames'
-import styles from './AlignmentBox.local.scss'
+import classes from './AlignmentBox.local.scss'
 
-const AlignmentBox = ({ chapter, position, update }) => {
-  const borderLess = { top: false, right: true, bottom: false, left: false }
-
-  const boxStyles = classNames(
-    styles.alignmentBox,
+const AlignmentBox = ({ active, id, noBorder, onClick }) => {
+  const styles = classNames(
+    classes.alignmentBox,
     {
-      [styles.borderTop]: borderLess.top,
-      [styles.borderRight]: borderLess.right,
-      [styles.borderBottom]: borderLess.bottom,
-      [styles.borderLeft]: borderLess.left
-    })
+      [classes.active]: active,
+      [classes.borderTop]: noBorder.top,
+      [classes.borderRight]: noBorder.right,
+      [classes.borderBottom]: noBorder.bottom,
+      [classes.borderLeft]: noBorder.left
+    }
+  )
 
   return (
     <div
+      className={styles}
+      id={id}
+      onClick={onClick}
       role='presentation'
-      className={boxStyles}
     />
   )
 }
 
+AlignmentBox.propTypes = {
+  active: PropTypes.bool.isRequired,
+  id: PropTypes.string.isRequired,
+  noBorder: PropTypes.shape({
+    top: PropTypes.bool,
+    bottom: PropTypes.bool,
+    right: PropTypes.bool,
+    left: PropTypes.bool
+  }),
+  onClick: PropTypes.func
+}
+
 AlignmentBox.defaultProps = {
   active: false,
-  id: '',
-  update: () => null
+  noBorder: {
+    top: false,
+    bottom: false,
+    right: false,
+    left: false
+  },
+  onClick: () => null
 }
 
 export default AlignmentBox
