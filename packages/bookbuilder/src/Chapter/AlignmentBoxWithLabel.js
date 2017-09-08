@@ -53,8 +53,7 @@ AlignmentBoxWithLabel.defaultProps = {
     right: false,
     left: false
   },
-  onClick: () => null,
-  reverse: false
+  onClick: () => null
 }
 
 export default AlignmentBoxWithLabel
