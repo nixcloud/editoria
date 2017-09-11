@@ -11,7 +11,7 @@ class ChapterSecondRow extends React.Component {
     const { chapter, convertFile, outerContainer, roles, toggleUpload, update, isUploadInProgress } = this.props
 
     // TODO -- surrounding divs should go inside the components
-
+    const labelOptions = { labelTextLeft: 'left', labelTextRight: 'right' }
     return (
       <div className={styles.secondLineContainer}>
 
@@ -40,6 +40,7 @@ class ChapterSecondRow extends React.Component {
           <AlignmentTool
             chapter={chapter}
             update={update}
+            labelOptions={labelOptions}
           />
         </div>
 

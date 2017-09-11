@@ -1,0 +1,11 @@
+$main-grey: #666;
+
+.alignmentTool {
+  display: flex;
+
+  .middleLine {
+    background-color: $main-grey;
+    height: 36px;
+    width: 1px;
+  }
+}
