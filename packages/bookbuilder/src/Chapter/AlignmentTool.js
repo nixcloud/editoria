@@ -34,39 +34,21 @@ const AlignmentTool = ({ chapter, labelOptions, update }) => {
   )
 }
 
-AlignmentBoxWithLabel.propTypes = {
-  active: PropTypes.bool.isRequired,
-  id: PropTypes.string.isRequired,
-  labelPositionRight: PropTypes.bool,
-  labelText: PropTypes.string.isRequired,
+AlignmentTool.propTypes = {
+  chapter: PropTypes.obj.isRequired,
   labelOptions: PropTypes.shape({
     labelTextLeft: PropTypes.string,
     labelTextRight: PropTypes.string
   }),
-  noBorder: PropTypes.shape({
-    top: PropTypes.bool,
-    bottom: PropTypes.bool,
-    right: PropTypes.bool,
-    left: PropTypes.bool
-  }),
-  onClick: PropTypes.func,
   update: PropTypes.func.isRequired
 }
 
-AlignmentBoxWithLabel.defaultProps = {
-  active: false,
+AlignmentTool.defaultProps = {
   labelPositionRight: false,
   labelOptions: {
     labelTextLeft: 'left',
     labelTextRight: 'rgiht'
   },
-  noBorder: {
-    top: false,
-    bottom: false,
-    right: false,
-    left: false
-  },
-  onClick: () => null,
   update: () => null
 }
 

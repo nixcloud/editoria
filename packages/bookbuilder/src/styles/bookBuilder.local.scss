@@ -514,65 +514,27 @@ $upload-multiple: #b1b1b1;
           transition: .25s ease-in-out 0s;
         }
       }
-      // .pagePosition {
-      //   float: right;
-      //   position: relative;
-      //   top: 4px;
-      //   li {
-      //     color: $blue;
-      //     float: left;
-      //     font-family: 'Fira Sans Condensed';
-      //     font-size: 16px;
-      //     font-style: italic;
-      //   }
-      //   // .leftRightBox {
-      //   //   border: 1px solid $main-grey;
-      //   //   float: left;
-      //   //   height: 26px;
-      //   //   padding: 2px 0 0 1.8px;
-      //   //   text-align: center;
-      //   //   width: 17.5px;
-      //   // }
-      //
-      //
-      //   // .leftBox {
-      //   //   border-right: 0;
-      //   // }
-      //
-      //   // .rightBox {
-      //   //   border-left: 0;
-      //   // }
-      //
-      //   .boxDiver {
-      //     border-right: 1px solid $dark-grey;
-      //     bottom: 5px;
-      //     height: 35px;
-      //     position: relative;
-      //     right: 17.9px;
-      //   }
-      //
-      //   // .boxActive {
-      //   //   background-color: $main-grey;
-      //   //   cursor: pointer;
-      //   //   height: 20px;
-      //   //   width: 12px;
-      //   // }
-      //   // .boxInactiveHover {
-      //   //   background-color: $white;
-      //   //   cursor: pointer;
-      //   //   height: 20px;
-      //   //   width: 12px;
-      //
-      //   //   &:hover {
-      //   //     background-color: $light-grey;
-      //   //     transition: .25s ease-in-out 0s;
-      //   //   }
-      //   // }
-      // }
     }
   }
 
+  .noChapters {
+    padding-left: 1%;
+  }
 
+  .noWritesError {
+    position:fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index:9999;
+    border-radius:0px;
+    text-align: center;
+  }
+}
+
+
+
+// TO DELETE AND MAKE NEW ONES FOR RESPONSIVE LAYOUT
 
   @media (min-width:215px) and (max-width:1200px) {
     .pagePosition {
@@ -612,58 +574,13 @@ $upload-multiple: #b1b1b1;
     }
   }
 
+
+
   @media (min-width:1561px) and (max-width:1750px) {
     .chapterActions {
       bottom: 51px!important;
     }
   }
-
-
-  .noChapters {
-    padding-left: 1%;
-  }
-
-.noWritesError {
-  position:fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  z-index:9999;
-  border-radius:0px;
-  text-align: center;
-}
-}
-
-@keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Firefox < 16 */
-@-moz-keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Safari, Chrome and Opera > 12.1 */
-@-webkit-keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Internet Explorer */
-@-ms-keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Opera < 12.1 */
-@-o-keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-// line
 
 @media(min-width: 1100px) and (max-width: 1403px) {
   .lineUploading {
