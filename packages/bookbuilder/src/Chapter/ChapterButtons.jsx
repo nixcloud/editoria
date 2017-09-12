@@ -181,7 +181,7 @@ ChapterButtons.propTypes = {
   bookId: React.PropTypes.string.isRequired,
   chapter: React.PropTypes.object.isRequired,
   isRenaming: React.PropTypes.bool.isRequired,
-  isUploadInProgress: React.PropTypes.bool.isRequired,
+  isUploadInProgress: React.PropTypes.bool,
   modalContainer: React.PropTypes.object.isRequired,
   onClickRename: React.PropTypes.func.isRequired,
   onClickSave: React.PropTypes.func.isRequired,

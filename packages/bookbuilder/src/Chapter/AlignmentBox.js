@@ -6,7 +6,7 @@ import classes from './AlignmentBox.local.scss'
 
 const AlignmentBox = ({ active, id, noBorder, onClick }) => {
   const styles = classNames(
-    classes.alignmentBox,
+    classes.root,
     {
       [classes.active]: active,
       [classes.borderTop]: noBorder.top,

@@ -1,10 +1,23 @@
-AligmentBox with Label on the left
+AligmentTool with left box active
 
 ```js
+const data = [
+  {
+    active: true,
+    id: 'left',
+    label: 'left'
+  },
+  {
+    active: false,
+    id: 'right',
+    label: 'right'
+  }
+];
 
-  const labelOptions = { labelTextLeft: 'left', labelTextRight: 'right' };
+const onClickAlignmentBox = () => null;
 
 <AlignmentTool
-  labelOptions={labelOptions}
+  data={data}
+  onClickAlignmentBox={onClickAlignmentBox}
 />
 ```

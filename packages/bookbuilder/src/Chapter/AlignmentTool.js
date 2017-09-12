@@ -4,31 +4,24 @@ import PropTypes from 'prop-types'
 import AlignmentBoxWithLabel from './AlignmentBoxWithLabel'
 import classes from './AlignmentTool.local.scss'
 
-const AlignmentTool = ({ chapter, labelOptions, onClickAllign }) => {
-  const onClick = (e) => {
-    const boxId = e.currentTarget.id
-
-    const patch = {
-      alignment: chapter.alignment,
-      id: chapter.id
-    }
-
-    patch.alignment[boxId] = !chapter.alignment[boxId]
-    onClickAllign(patch)
+const AlignmentTool = ({ data, onClickAlignmentBox }) => {
+  const onClick = (event) => {
+    const id = event.currentTarget.id
+    onClickAlignmentBox(id)
   }
+
+  const leftData = data[0]
+  const rightData = data[1]
 
   const noBorderRight = { right: true }
   const noBorderLeft = { left: true }
 
-  const leftActive = (chapter.alignment.left)
-  const rightActive = (chapter.alignment.right)
-
   return (
-    <div className={classes.alignmentTool}>
+    <div className={classes.root}>
       <AlignmentBoxWithLabel
-        active={leftActive}
-        id={'left'}
-        labelText={labelOptions.labelTextLeft}
+        active={leftData.active}
+        id={leftData.id}
+        labelText={leftData.label}
         noBorder={noBorderRight}
         onClick={onClick}
       />
@@ -36,9 +29,9 @@ const AlignmentTool = ({ chapter, labelOptions, onClickAllign }) => {
       <div className={classes.middleLine} />
 
       <AlignmentBoxWithLabel
-        active={rightActive}
-        id={'right'}
-        labelText={labelOptions.labelTextRight}
+        active={rightData.active}
+        id={rightData.id}
+        labelText={rightData.label}
         labelPositionRight
         noBorder={noBorderLeft}
         onClick={onClick}
@@ -48,32 +41,12 @@ const AlignmentTool = ({ chapter, labelOptions, onClickAllign }) => {
 }
 
 AlignmentTool.propTypes = {
-  chapter: PropTypes.shape({
-    alignment: {
-      left: PropTypes.bool,
-      right: PropTypes.bool
-    }
-  }),
-  labelOptions: PropTypes.shape({
-    labelTextLeft: PropTypes.string,
-    labelTextRight: PropTypes.string
-  }),
-  onClickAllign: PropTypes.func.isRequired
-}
-
-AlignmentTool.defaultProps = {
-  chapter: {
-    alignment: {
-      left: true,
-      right: true
-    }
-  },
-  labelPositionRight: false,
-  labelOptions: {
-    labelTextLeft: 'left',
-    labelTextRight: 'rgiht'
-  },
-  onClickAllign: () => null
+  data: PropTypes.arrayOf(PropTypes.shape({
+    active: PropTypes.bool.isRequired,
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired
+  })).isRequired,
+  onClickAlignmentBox: PropTypes.func.isRequired
 }
 
 export default AlignmentTool

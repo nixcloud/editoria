@@ -9,8 +9,8 @@ const onClick = () => { return null };
 
 <AlignmentBox
   active={active}
+  id={id}
   noBorder={noBorder}
-  id = {id}
   onClick={onClick}
 />
 ```
@@ -26,8 +26,8 @@ const onClick = () => { return null };
 
 <AlignmentBox
   active={active}
+  id={id}
   noBorder={noBorder}
-  id = {id}
   onClick={onClick}
 />
 ```
@@ -43,8 +43,8 @@ const onClick = () => { return null };
 
 <AlignmentBox
   active={active}
+  id={id}
   noBorder={noBorder}
-  id = {id}
   onClick={onClick}
 />
 ```

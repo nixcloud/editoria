@@ -4,35 +4,36 @@ AligmentBox with Label on the left
 
 const active = true;
 const id = 'eyedee';
+const labelText = 'left';
 const noBorder = {};
 const onClick = () => { return null };
-const labelText = 'left';
 
 <AlignmentBoxWithLabel
   active={active}
-  noBorder={noBorder}
-  id = {id}
-  onClick={onClick}
+  id={id}
   labelText={labelText}
+  noBorder={noBorder}
+  onClick={onClick}
 />
 ```
+
 Inactive AligmentBox with Label on the right
 
 ```js
 
 const active = false;
 const id = 'eyedee';
-const noBorder = {};
-const onClick = () => { return null };
 const labelPositionRight = true;
 const labelText = 'right';
+const noBorder = {};
+const onClick = () => { return null };
 
 <AlignmentBoxWithLabel
   active={active}
-  noBorder={noBorder}
-  id = {id}
-  onClick={onClick}
+  id={id}
   labelPositionRight={labelPositionRight}
   labelText={labelText}
+  noBorder={noBorder}
+  onClick={onClick}
 />
 ```

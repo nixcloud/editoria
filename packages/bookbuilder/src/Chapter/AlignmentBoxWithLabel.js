@@ -2,18 +2,20 @@ import classNames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 
+import AlignmentBox from './AlignmentBox'
 import classes from './AlignmentBoxWithLabel.local.scss'
 
-import AlignmentBox from './AlignmentBox'
-
-const AlignmentBoxWithLabel = ({ active, id, noBorder,
-  onClick, labelPositionRight, labelText }) => {
-  const styles = classNames(
-    classes.alignmentBoxWithLabel,
-    {
-      [classes.reverseOrder]: labelPositionRight
-    }
-  )
+const AlignmentBoxWithLabel = ({
+  active,
+  id,
+  labelPositionRight,
+  labelText,
+  noBorder,
+  onClick
+}) => {
+  const styles = classNames(classes.root, {
+    [classes.reverseOrder]: labelPositionRight
+  })
 
   return (
     <div className={styles}>
@@ -22,8 +24,8 @@ const AlignmentBoxWithLabel = ({ active, id, noBorder,
       </span>
       <AlignmentBox
         active={active}
-        noBorder={noBorder}
         id={id}
+        noBorder={noBorder}
         onClick={onClick}
       />
     </div>
@@ -34,14 +36,14 @@ AlignmentBoxWithLabel.propTypes = {
   active: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   labelPositionRight: PropTypes.bool,
+  labelText: PropTypes.string.isRequired,
   noBorder: PropTypes.shape({
     top: PropTypes.bool,
     bottom: PropTypes.bool,
     right: PropTypes.bool,
     left: PropTypes.bool
   }),
-  onClick: PropTypes.func,
-  labelText: PropTypes.string.isRequired
+  onClick: PropTypes.func
 }
 
 AlignmentBoxWithLabel.defaultProps = {

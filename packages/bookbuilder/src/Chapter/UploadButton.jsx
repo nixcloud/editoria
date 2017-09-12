@@ -98,7 +98,7 @@ export class UploadButton extends React.Component {
           title={title}
           name='single-file-uploader'
           type={type}
-          disabled={noAction}  
+          disabled={noAction}
         />
       </span>
     )
@@ -152,7 +152,7 @@ UploadButton.propTypes = {
   chapter: React.PropTypes.object.isRequired,
   convertFile: React.PropTypes.func.isRequired,
   modalContainer: React.PropTypes.object.isRequired,
-  isUploadInProgress: React.PropTypes.bool.isRequired,
+  isUploadInProgress: React.PropTypes.bool,
   title: React.PropTypes.string.isRequired,
   toggleUpload: React.PropTypes.func.isRequired,
   type: React.PropTypes.string.isRequired,

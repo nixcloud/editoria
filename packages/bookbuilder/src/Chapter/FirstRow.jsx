@@ -92,7 +92,7 @@ class ChapterFirstRow extends React.Component {
 ChapterFirstRow.propTypes = {
   book: React.PropTypes.object.isRequired,
   chapter: React.PropTypes.object.isRequired,
-  isUploadInProgress: React.PropTypes.bool.isRequired,
+  isUploadInProgress: React.PropTypes.bool,
   outerContainer: React.PropTypes.object.isRequired,
   remove: React.PropTypes.func.isRequired,
   roles: React.PropTypes.array,

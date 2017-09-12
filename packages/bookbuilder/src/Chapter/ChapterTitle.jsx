@@ -93,7 +93,7 @@ ChapterTitle.propTypes = {
   chapter: React.PropTypes.object.isRequired,
   isRenaming: React.PropTypes.bool.isRequired,
   isRenameEmpty: React.PropTypes.bool.isRequired,
-  isUploadInProgress: React.PropTypes.bool.isRequired,
+  isUploadInProgress: React.PropTypes.bool,
   onSaveRename: React.PropTypes.func.isRequired,
   title: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
