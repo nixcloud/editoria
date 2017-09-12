@@ -8,7 +8,7 @@ class ProgressList extends React.Component {
     const { chapter, roles, modalContainer, update } = this.props
 
     return (
-      <ul className={styles.secondActions + ' col-lg-7 col-md-12 col-sm-12 col-xs-12'}>
+      <ul className={styles.proggressListContainer}>
         <ProgressItem
           chapter={chapter}
           hasIcon

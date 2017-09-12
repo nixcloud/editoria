@@ -7,6 +7,17 @@ import UploadButton from './UploadButton'
 import styles from '../styles/bookBuilder.local.scss'
 
 class ChapterSecondRow extends React.Component {
+  constructor (props) {
+    super(props)
+
+    this.onClickAllign = this.onClickAllign.bind(this)
+  }
+
+  onClickAllign (data) {
+    const { update } = this.props
+    update(data)
+  }
+
   render () {
     const { chapter, convertFile, outerContainer, roles, toggleUpload, update, isUploadInProgress } = this.props
 
@@ -14,8 +25,6 @@ class ChapterSecondRow extends React.Component {
     const labelOptions = { labelTextLeft: 'left', labelTextRight: 'right' }
     return (
       <div className={styles.secondLineContainer}>
-
-        <div className={styles.noPadding + ' col-lg-2 col-md-12 col-sm-12 col-xs-12'}>
           <UploadButton
             accept='.doc,.docx'
             chapter={chapter}
@@ -27,7 +36,6 @@ class ChapterSecondRow extends React.Component {
             type='file'
             update={update}
           />
-        </div>
 
         <ProgressList
           chapter={chapter}
@@ -36,13 +44,12 @@ class ChapterSecondRow extends React.Component {
           update={update}
         />
 
-        <div className={styles.noPadding + ' col-lg-3 col-md-12 col-sm-12 col-xs-12'}>
           <AlignmentTool
             chapter={chapter}
             update={update}
             labelOptions={labelOptions}
+            onClickAllign={this.onClickAllign}
           />
-        </div>
 
         <div className={styles.separator} />
       </div>

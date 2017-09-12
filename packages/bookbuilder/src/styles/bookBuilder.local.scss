@@ -463,6 +463,7 @@ $upload-multiple: #b1b1b1;
     }
 
     .secondLineContainer {
+      display: flex;
       padding-top: 1.8%;
 
       .btnFile {
@@ -499,7 +500,9 @@ $upload-multiple: #b1b1b1;
         height: 24px;
       }
 
-      .secondActions {
+      .proggressListContainer {
+        margin-left: 3%;
+        width: 40%;
         li {
           font-family: 'Fira Sans Condensed';
           font-size: 16px;
