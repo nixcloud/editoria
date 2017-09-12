@@ -82,7 +82,7 @@ class ChapterTitle extends React.Component {
         {/* { this.props.chapter.index } */}
         { renameEmptyError }
 
-        <div className={styles.separator} />
+        {/* <div className={styles.separator} /> */}
 
       </div>
     )

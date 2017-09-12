@@ -48,7 +48,12 @@ const AlignmentTool = ({ chapter, labelOptions, onClickAllign }) => {
 }
 
 AlignmentTool.propTypes = {
-  chapter: PropTypes.object,
+  chapter: PropTypes.shape({
+    alignment: {
+      left: PropTypes.bool,
+      right: PropTypes.bool
+    }
+  }),
   labelOptions: PropTypes.shape({
     labelTextLeft: PropTypes.string,
     labelTextRight: PropTypes.string
@@ -57,6 +62,12 @@ AlignmentTool.propTypes = {
 }
 
 AlignmentTool.defaultProps = {
+  chapter: {
+    alignment: {
+      left: true,
+      right: true
+    }
+  },
   labelPositionRight: false,
   labelOptions: {
     labelTextLeft: 'left',
