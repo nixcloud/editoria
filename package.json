@@ -7,10 +7,10 @@
   },
   "license": "MIT",
   "scripts": {
-    "bootstrap": "./node_modules/bin/lerna bootstrap",
-    "clean": "./node_modules/bin/lerna clean",
-    "publish": "./node_modules/bin/lerna publish",
-    "updated": "./node_modules/bin/lerna updated",
+    "bootstrap": "./node_modules/.bin/lerna bootstrap",
+    "clean": "./node_modules/.bin/lerna clean",
+    "publish": "./node_modules/.bin/lerna publish",
+    "updated": "./node_modules/.bin/lerna updated",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "version": "0.0.0"
