@@ -6,6 +6,7 @@
     "lerna": "^2.1.2"
   },
   "license": "MIT",
+  "name": "editoria",
   "scripts": {
     "bootstrap": "./node_modules/.bin/lerna bootstrap",
     "clean": "./node_modules/.bin/lerna clean",
