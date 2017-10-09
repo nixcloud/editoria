@@ -36,6 +36,7 @@ export class Division extends React.Component {
       },
       lock: null,
 
+      number: group === 'chapter' ? (chapters.filter(item => item.subCategory === 'chapter').length + 1) : undefined,
       index: chapters.length || 0,
       kind: 'chapter',
       title: (type === 'body') ? 'Untitled' : 'Choose Component',
@@ -77,6 +78,7 @@ export class Division extends React.Component {
 
     const { book, chapters, update } = this.props
     const dragChapter = chapters[dragIndex]
+    const hoverChapter = chapters[hoverIndex]
 
     let toUpdate = []
 
@@ -88,10 +90,12 @@ export class Division extends React.Component {
       })
 
       // build the patches for the chapters' updates
-      const patches = _.map(toModify, chapter => {
+      const patches = _.map(toModify, (chapter) => {
+        const number = (chapter.number ? chapter.number + 1 : undefined)
         return {
           id: chapter.id,
-          index: (chapter.index + 1)
+          index: (chapter.index + 1),
+          number: (dragChapter.subCategory === 'part') ? undefined : number
         }
       })
 
@@ -106,10 +110,12 @@ export class Division extends React.Component {
         return c.index <= hoverIndex && c.index > dragIndex
       })
 
-      const patches = _.map(toModify, chapter => {
+      const patches = _.map(toModify, (chapter) => {
+        const number = (chapter.number ? chapter.number - 1 : undefined)
         return {
           id: chapter.id,
-          index: (chapter.index - 1)
+          index: (chapter.index - 1),
+          number: (dragChapter.subCategory === 'part') ? undefined : number
         }
       })
 
@@ -119,7 +125,8 @@ export class Division extends React.Component {
     // add the dragged chapter to the list of patches that are needed
     const draggedPatch = {
       id: dragChapter.id,
-      index: hoverIndex
+      index: hoverIndex,
+      number: (hoverChapter.number ? hoverChapter.number : undefined)
     }
     toUpdate.push(draggedPatch)
 

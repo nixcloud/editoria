@@ -24,7 +24,7 @@ import Dashboard from 'pubsweet-component-editoria-dashboard/src/Dashboard'
 
 // Pass configuration to editor
 const Editor = WithConfig(Wax, {
-  layout: 'default',
+  layout: 'editoria',
   lockWhenEditing: true
 })
 
