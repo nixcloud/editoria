@@ -45,11 +45,7 @@ module.exports = {
           'Preface 9',
           'Preface 10'
         ],
-        back: [
-          'Appendix A',
-          'Appendix B',
-          'Appendix C'
-        ]
+        back: ['Appendix A', 'Appendix B', 'Appendix C']
       }
     },
     teamTypes: teams
@@ -69,7 +65,10 @@ module.exports = {
       'pubsweet-component-ink-frontend',
       'pubsweet-component-login',
       'pubsweet-component-signup',
-      'pubsweet-component-wax'
+      'pubsweet-component-wax',
+      'pubsweet-component-epub',
+      'pubsweet-component-epub-frontend',
+      'pubsweet-component-vivliostyle-viewer'
     ]
   },
   pubsweetClient: {
@@ -89,7 +88,9 @@ module.exports = {
     fragment: {
       alignment: Joi.object(),
       author: Joi.string().allow(''),
-      book: Joi.string().guid().required(),
+      book: Joi.string()
+        .guid()
+        .required(),
       comments: Joi.object(),
       division: Joi.string(),
       index: Joi.number(),
