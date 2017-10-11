@@ -23,7 +23,7 @@ class Title extends React.Component {
     const plainTitle = (
       <div className={styles.bodyTitle}>
         <h3 onDoubleClick={goToEditor}>
-          { title }
+          { title ? title : 'Untitled'}
         </h3>
       </div>
     )

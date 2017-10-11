@@ -144,8 +144,8 @@ class ChapterButtons extends React.Component {
     const { isUploadInProgress } = this.props
 
     if (this.isLocked()) return this.renderEditingNotification()
-
-    const renameButton = this.renderRenameButton()
+    // close Rename of Title
+    // const renameButton = this.renderRenameButton()
     const editButton = this.renderEditButton()
     const deleteButton = this.renderDeleteButton()
 
@@ -160,7 +160,7 @@ class ChapterButtons extends React.Component {
     return (
       <div style={buttonsStyle}>
         { editButton }
-        { renameButton }
+        {/* renameButton */}
         { deleteButton }
       </div>
     )
