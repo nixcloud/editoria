@@ -1,0 +1,35 @@
+$light-grey: #b3b3b3;
+$line-grey: #969696;
+$upload-multiple: #b1b1b1;
+$black: #000;
+
+.exportBookContainer {
+  bottom: 15px;
+  left: -50px;
+  position: relative;
+}
+.exportToBookIcon {
+  -webkit-mask: url('../styles/images/book.svg') no-repeat 100% 100%;
+  mask: url('../styles/images/book.svg') no-repeat 100% 100%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  background-color: $light-grey;
+  color: $black;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+  width: 24px;
+  height: 24px;
+}
+
+.vivliostyleExportText {
+  bottom: 10px;
+  color: $upload-multiple;
+  cursor: pointer;
+  font-family: 'Fira Sans Condensed';
+  font-size: 16px;
+  font-style: normal;
+  left: 10px;
+  position: relative;
+  text-transform: uppercase;
+}

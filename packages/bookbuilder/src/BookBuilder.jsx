@@ -8,6 +8,7 @@ import Actions from 'pubsweet-client/src/actions'
 
 import Division from './Division'
 import FileUploader from './FileUploader/FileUploader'
+import VivliostyleExporter from './ExportToVivliostyle/VivliostyleExporter'
 import TeamManagerModal from './TeamManager/TeamManagerModal'
 
 import styles from './styles/bookBuilder.local.scss'
@@ -25,7 +26,6 @@ export class BookBuilder extends React.Component {
     this._isProductionEditor = this._isProductionEditor.bind(this)
     this.setProductionEditor = this.setProductionEditor.bind(this)
     this.updateUploadStatus = this.updateUploadStatus.bind(this)
-    this.handleHTMLToEpub = this.handleHTMLToEpub.bind(this)
 
     this.state = {
       outerContainer: {},
@@ -162,22 +162,9 @@ export class BookBuilder extends React.Component {
     this.setState({ uploading: status })
   }
 
-  handleHTMLToEpub (bookId) {
-    const { book } = this.props
-    const { htmlToEpub } = this.props.actions
-
-    htmlToEpub(book.id).then((res) => {
-      const path = res.extractedEpubPath
-      const url = `
-        /vivliostyle/viewer/vivliostyle-viewer.html#b=/uploads/${path}
-      `
-      window.open(url, '_blank')
-    })
-  }
-
   render () {
     const { book, chapters } = this.props
-    const { createFragment, deleteFragment, ink, updateFragment } = this.props.actions
+    const { createFragment, deleteFragment, htmlToEpub, ink, updateFragment } = this.props.actions
     const { outerContainer } = this.state
     const roles = this._getRoles()
 
@@ -220,7 +207,6 @@ export class BookBuilder extends React.Component {
     return (
       <div className='bootstrap modal pubsweet-component pubsweet-component-scroll'>
         <div className={styles.bookBuilder}>
-          <button onClick={this.handleHTMLToEpub}> Do it </button>
           <div
             className='col-lg-offset-2 col-lg-8 col-md-8 col-sm-12 col-xs-12'
             ref='outerContainer'
@@ -232,7 +218,7 @@ export class BookBuilder extends React.Component {
             </div>
 
             <h1 className={styles.bookTitle}>{this.props.book.title}</h1>
-
+            <div className={`${styles.lineUploading} col-lg-6 col-md-2 col-sm-3 col-xs-3`} />
             <FileUploader
               backChapters={backChapters}
               bodyChapters={bodyChapters}
@@ -243,6 +229,7 @@ export class BookBuilder extends React.Component {
               update={updateFragment}
               updateUploadStatus={this.updateUploadStatus}
             />
+            <VivliostyleExporter book={book} htmlToEpub={htmlToEpub} />
 
             <Division
               add={createFragment}
