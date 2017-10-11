@@ -40,6 +40,7 @@ class ChapterTitle extends React.Component {
         <Title
           isRenaming={isRenaming}
           goToEditor={this.goToEditor}
+          number={chapter.number}
           onSaveRename={onSaveRename}
           ref='title'
           title={title}
