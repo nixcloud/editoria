@@ -91,11 +91,11 @@ export class Division extends React.Component {
 
       // build the patches for the chapters' updates
       const patches = _.map(toModify, (chapter) => {
-        const number = (chapter.number ? chapter.number + 1 : undefined)
+        const number = (chapter.number && dragChapter.subCategory === 'part') ? chapter.number : chapter.number + 1
         return {
           id: chapter.id,
           index: (chapter.index + 1),
-          number: (dragChapter.subCategory === 'part') ? undefined : number
+          number: number || undefined
         }
       })
 
@@ -111,22 +111,30 @@ export class Division extends React.Component {
       })
 
       const patches = _.map(toModify, (chapter) => {
-        const number = (chapter.number ? chapter.number - 1 : undefined)
+        const number = (chapter.number && dragChapter.subCategory === 'part') ? chapter.number : chapter.number - 1
         return {
           id: chapter.id,
           index: (chapter.index - 1),
-          number: (dragChapter.subCategory === 'part') ? undefined : number
+          number: number || undefined
         }
       })
 
       toUpdate = _.union(toUpdate, patches)
     }
 
+    let lastChapter = { number: 0 }
+    for (let i = 0; i < chapters.length; i++) {
+      if (hoverChapter.index > chapters[i].index && chapters[i].number && chapters[i].index !== dragChapter.index) {
+        lastChapter = chapters[i]
+      }
+    }
+
+    const number = hoverChapter.number ? hoverChapter.number : lastChapter.number + 1
     // add the dragged chapter to the list of patches that are needed
     const draggedPatch = {
       id: dragChapter.id,
       index: hoverIndex,
-      number: (hoverChapter.number ? hoverChapter.number : undefined)
+      number: (dragChapter.subCategory === 'part') ? undefined : number
     }
     toUpdate.push(draggedPatch)
 
