@@ -9,7 +9,7 @@ class Title extends React.Component {
   }
 
   render () {
-    const { isRenaming, goToEditor, number, onSaveRename, title } = this.props
+    const { isRenaming, goToEditor, onSaveRename, title } = this.props
 
     const input = (
       <TextInput
@@ -23,9 +23,9 @@ class Title extends React.Component {
     const plainTitle = (
       <div className={styles.bodyTitle}>
         <h3 onDoubleClick={goToEditor}>
-        { title + ' ' + number }
-      </h3>
-    </div>
+          { title }
+        </h3>
+      </div>
     )
 
     if (isRenaming) return input

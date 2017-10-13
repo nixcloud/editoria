@@ -19,7 +19,7 @@ export class Division extends React.Component {
   _onAddClick (group) {
     const { type, chapters, add, book } = this.props
 
-    let newChapter = {
+    const newChapter = {
       book: book.id,
 
       subCategory: (type === 'body') ? group : 'component',
@@ -36,8 +36,8 @@ export class Division extends React.Component {
       },
       lock: null,
 
-      number: group === 'chapter' ? (chapters.filter(item => item.subCategory === 'chapter').length + 1) : undefined,
       index: chapters.length || 0,
+      number: undefined,
       kind: 'chapter',
       title: (type === 'body') ? 'Untitled' : 'Choose Component',
 
@@ -46,6 +46,15 @@ export class Division extends React.Component {
       source: '',
       comments: {},
       trackChanges: false
+    }
+
+    if (group === 'chapter') {
+      const chapterGroup = chapters.filter((item) => {
+        const isInChapterGroup = (item.subCategory === 'chapter')
+        return isInChapterGroup
+      })
+
+      newChapter.number = chapterGroup.length + 1
     }
 
     add(book, newChapter)
@@ -57,11 +66,11 @@ export class Division extends React.Component {
 
     remove(book, chapter)
 
-    const chaptersToModify = _.filter(chapters, function (c) {
+    const chaptersToModify = _.filter(chapters, (c) => {
       return c.index > deletedIndex
     })
 
-    _.forEach(chaptersToModify, function (c) {
+    _.forEach(chaptersToModify, (c) => {
       const patch = {
         id: c.id,
         index: (c.index - 1)
@@ -91,7 +100,10 @@ export class Division extends React.Component {
 
       // build the patches for the chapters' updates
       const patches = _.map(toModify, (chapter) => {
-        const number = (chapter.number && dragChapter.subCategory === 'part') ? chapter.number : chapter.number + 1
+        const number = (chapter.number && dragChapter.subCategory === 'part')
+          ? chapter.number
+          : chapter.number + 1
+
         return {
           id: chapter.id,
           index: (chapter.index + 1),
@@ -106,12 +118,15 @@ export class Division extends React.Component {
     if (dragIndex < hoverIndex) {
       // TODO -- refactor?
       // do the same as above
-      const toModify = _.filter(chapters, function (c) {
+      const toModify = _.filter(chapters, (c) => {
         return c.index <= hoverIndex && c.index > dragIndex
       })
 
       const patches = _.map(toModify, (chapter) => {
-        const number = (chapter.number && dragChapter.subCategory === 'part') ? chapter.number : chapter.number - 1
+        const number = (chapter.number && dragChapter.subCategory === 'part')
+          ? chapter.number
+          : chapter.number - 1
+
         return {
           id: chapter.id,
           index: (chapter.index - 1),
@@ -124,13 +139,20 @@ export class Division extends React.Component {
 
     let lastChapter = { number: 0 }
     for (let i = 0; i < chapters.length; i++) {
-      if (hoverChapter.index > chapters[i].index && chapters[i].number && chapters[i].index !== dragChapter.index) {
+      if (
+        hoverChapter.index > chapters[i].index &&
+        chapters[i].number &&
+        chapters[i].index !== dragChapter.index
+      ) {
         lastChapter = chapters[i]
       }
     }
 
-    const number = hoverChapter.number ? hoverChapter.number : lastChapter.number + 1
-    // add the dragged chapter to the list of patches that are needed
+    const number = hoverChapter.number
+      ? hoverChapter.number
+      : lastChapter.number + 1
+
+      // add the dragged chapter to the list of patches that are needed
     const draggedPatch = {
       id: dragChapter.id,
       index: hoverIndex,
@@ -139,23 +161,27 @@ export class Division extends React.Component {
     toUpdate.push(draggedPatch)
 
     // perform all the updates
-    _.forEach(toUpdate, patch => {
-      update(book, patch)
-    })
+    _.forEach(toUpdate, patch => update(book, patch))
   }
 
   render () {
-    const { book, chapters, ink, outerContainer, roles, title, type, update, uploadStatus } = this.props
-    const { _onAddClick, _onRemove, _onMove } = this
+    const {
+      book,
+      chapters,
+      ink,
+      outerContainer,
+      roles,
+      title,
+      type,
+      update,
+      uploadStatus
+    } = this.props
 
-    // console.log('div upl', uploadStatus)
+    const { _onAddClick, _onRemove, _onMove } = this
 
     const chapterType = (type === 'body') ? 'chapter' : 'component'
 
-    const chapterInstances = _.map(chapters, function (c, i) {
-      // console.log('c id', c.id)
-      // console.log(uploadStatus[c.id])
-      // console.log('')
+    const chapterInstances = _.map(chapters, (c, i) => {
       return (
         <Chapter
           book={book}
