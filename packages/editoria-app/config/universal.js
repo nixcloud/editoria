@@ -95,6 +95,7 @@ module.exports = {
       index: Joi.number(),
       kind: Joi.string(),
       lock: Joi.object().allow(null),
+      number: Joi.number(),
       progress: Joi.object(),
       source: Joi.string().allow(''),
       status: Joi.string(),
