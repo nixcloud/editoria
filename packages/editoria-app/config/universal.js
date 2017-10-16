@@ -61,14 +61,14 @@ module.exports = {
   },
   pubsweet: {
     components: [
+      'pubsweet-component-epub',
+      'pubsweet-component-epub-frontend',
       'pubsweet-component-ink-backend',
       'pubsweet-component-ink-frontend',
       'pubsweet-component-login',
       'pubsweet-component-signup',
-      'pubsweet-component-wax',
-      'pubsweet-component-epub',
-      'pubsweet-component-epub-frontend',
-      'pubsweet-component-vivliostyle-viewer'
+      'pubsweet-component-vivliostyle-viewer',
+      'pubsweet-component-wax'
     ]
   },
   pubsweetClient: {

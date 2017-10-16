@@ -4,7 +4,7 @@ import { each, get, keys, pickBy, sortBy } from 'lodash'
 import styles from '../styles/bookBuilder.local.scss'
 
 class FileUploader extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.onChange = this.onChange.bind(this)
@@ -34,7 +34,7 @@ class FileUploader extends React.Component {
     }
   }
 
-  handleUploadStatusChange (fragmentId, bool) {
+  handleUploadStatusChange(fragmentId, bool) {
     const { uploading } = this.state
     uploading[fragmentId] = bool
     this.setState({
@@ -42,7 +42,7 @@ class FileUploader extends React.Component {
     })
   }
 
-  setCounters () {
+  setCounters() {
     each(keys(this.divisionMapper), (key) => {
       const division = this.divisionMapper[key]
       const { counter } = this.state
@@ -54,7 +54,7 @@ class FileUploader extends React.Component {
     })
   }
 
-  onChange (event) {
+  onChange(event) {
     event.preventDefault()
 
     const { book, convert, create, update, updateUploadStatus } = this.props
@@ -67,7 +67,7 @@ class FileUploader extends React.Component {
     const self = this
     const frags = []
 
-    function makeFragments (fileList) {
+    function makeFragments(fileList) {
       return fileList.reduce(
         (promise, file, i) =>
           promise
@@ -178,7 +178,7 @@ class FileUploader extends React.Component {
       })
   }
 
-  render () {
+  render() {
     const { uploading } = this.state
     const uploadingOnly = pickBy(uploading, (value, key) => value === true)
     const currentlyUploading = keys(uploadingOnly).length
@@ -191,7 +191,7 @@ class FileUploader extends React.Component {
     }
 
     return (
-      <div className={`${styles.MultipleUploadContainer} col-lg-4 col-md-8 col-sm-7 col-xs-7`}>
+      <div className={`${styles.multipleUploadContainer} col-lg-4 col-md-8 col-sm-7 col-xs-7`}>
         <label htmlFor='file-uploader' className={styles.uploadIcon} />
 
         <label htmlFor='file-uploader' className={styles.uploadMultipleText}>
