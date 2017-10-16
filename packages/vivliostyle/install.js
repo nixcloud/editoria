@@ -6,20 +6,21 @@ const execP = Promise.promisify(require('child_process').exec)
 const vivliostyleVersion = 'vivliostyle-js-2017.6'
 const vivliostyleZip = 'vivliostyle.zip'
 const vivliostylePath = 'vivliostyle-viewer'
+const viliostyleHost = 'https://vivliostyle.github.io/vivliostyle.js'
+const downloadLink = `${viliostyleHost}/downloads/${vivliostyleVersion}.zip`
 
-const commands = [`unzip ${vivliostyleZip}`, `mv ${vivliostyleVersion} ${vivliostylePath}`, `rm ${vivliostyleZip}`]
+const commands = [
+  `unzip ${vivliostyleZip}`,
+  `mv ${vivliostyleVersion} ${vivliostylePath}`,
+  `rm ${vivliostyleZip}`
+]
+
 if (!fs.existsSync(vivliostyleZip) && !fs.existsSync(vivliostylePath)) {
-  request(
-    `https://vivliostyle.github.io/vivliostyle.js/downloads/${vivliostyleVersion}.zip`
-  )
+  request(downloadLink)
     .pipe(fs.createWriteStream('vivliostyle.zip'))
     .on('finish', () => {
-      Promise.mapSeries(commands, (command) => {
-        return execP(command)
-      }).then((done) => {
-        return done
-      }, (err) => {
-        console.err(err)
-      })
+      Promise.mapSeries(commands, command => execP(command))
+        .then(done => done,
+        (err) => { console.error(err) })
     })
 }
