@@ -1,16 +1,41 @@
 import React from 'react'
 import classes from './VivliostyleExporter.local.scss'
+import ErrorModal from './ErrorModal'
 
-const VivliostyleExporter = ({ book, htmlToEpub }) => {
+const VivliostyleExporter = ({ book, htmlToEpub, showModal, showModalToggle, outerContainer }) => {
+  let modal
   const handleHTMLToEpub = () => {
-    htmlToEpub(book.id).then((res) => {
+    const queryParams = {
+      destination: 'folder',
+      converter: 'wax',
+      style: 'haha.css'
+    }
+
+    htmlToEpub(book.id, queryParams)
+    .then((res) => {
       const path = res.extractedEpubPath
-      const url = `
-          /vivliostyle/viewer/vivliostyle-viewer.html#b=/uploads/${path}
-        `
+      const viliostylePath = '/vivliostyle/viewer/vivliostyle-viewer.html'
+      const url = `${viliostylePath}#b=/uploads/${path}`
       window.open(url, '_blank')
     })
+    .catch((error) => {
+      showModalToggle()
+    })
   }
+
+  const toggleModal = () => {
+    showModalToggle()
+  }
+  if (showModal) {
+    modal = (
+      <ErrorModal
+        container={outerContainer}
+        show={showModal}
+        toggle={toggleModal}
+      />
+    )
+  }
+
   return (
     <div
       onClick={handleHTMLToEpub}
@@ -18,6 +43,7 @@ const VivliostyleExporter = ({ book, htmlToEpub }) => {
     >
       <label className={classes.exportToBookIcon} />
       <span className={classes.vivliostyleExportText}>Export Book</span>
+      { modal }
     </div>
   )
 }

@@ -26,10 +26,12 @@ export class BookBuilder extends React.Component {
     this._isProductionEditor = this._isProductionEditor.bind(this)
     this.setProductionEditor = this.setProductionEditor.bind(this)
     this.updateUploadStatus = this.updateUploadStatus.bind(this)
+    this.toggleModal = this.toggleModal.bind(this)
 
     this.state = {
       outerContainer: {},
       showTeamManager: false,
+      showModal: false,
       uploading: {}
     }
   }
@@ -93,6 +95,12 @@ export class BookBuilder extends React.Component {
     }
 
     updateCollection(patch)
+  }
+
+  toggleModal () {
+    this.setState({
+      showModal: !this.state.showModal
+    })
   }
 
   _toggleTeamManager () {
@@ -229,7 +237,7 @@ export class BookBuilder extends React.Component {
               update={updateFragment}
               updateUploadStatus={this.updateUploadStatus}
             />
-            <VivliostyleExporter book={book} htmlToEpub={htmlToEpub} />
+            <VivliostyleExporter book={book} htmlToEpub={htmlToEpub} showModal={this.state.showModal} showModalToggle={this.toggleModal} outerContainer={outerContainer} />
 
             <Division
               add={createFragment}
