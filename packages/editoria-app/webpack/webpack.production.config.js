@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-
+const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
@@ -32,7 +32,9 @@ module.exports = [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production')
       }),
-      universal.plugins.provide,
+      // new webpack.ProvidePlugin({
+      //   CONFIG: path.resolve(__dirname, '..', 'config', 'production.js')
+      // }),
       new ExtractTextPlugin('styles/main.css'),
       universal.plugins.copy,
       universal.plugins.aggressiveMerging,

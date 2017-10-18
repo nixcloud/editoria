@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-
+const path = require('path')
 const universal = require('./universal')
 
 module.exports = [
@@ -32,7 +32,9 @@ module.exports = [
           REDUXLOG_OFF: process.env.REDUXLOG_OFF
         }
       }),
-      universal.plugins.provide,
+      // new webpack.ProvidePlugin({
+      //   CONFIG: path.resolve(__dirname, '..', 'config', 'development.js')
+      // }),
       universal.plugins.copy,
       universal.plugins.aggressiveMerging,
       universal.plugins.occurrenceOrder,

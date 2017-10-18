@@ -19,7 +19,7 @@
   "dependencies": {
     "editoria-common": "0.0.2",
     "lodash": "4.17.4",
-    "pubsweet-client": "0.9.1",
+    "pubsweet-client": "1.0.0-beta.6",
     "react": "15.5.4",
     "react-redux": "5.0.4",
     "react-router": "2.8.1",

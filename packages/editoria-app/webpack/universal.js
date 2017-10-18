@@ -8,7 +8,7 @@ const ThemePlugin = require('pubsweet-theme-plugin')
 const commonRules = require('./common-rules')
 const config = require('../config/universal')
 
-const environment = process.env.NODE_ENV
+// const environment = process.env.NODE_ENV
 
 module.exports = {
   context: path.join(__dirname, '..', 'app'),
@@ -36,10 +36,7 @@ module.exports = {
     copy: new CopyWebpackPlugin([
       { from: '../static' }
     ]),
-    occurrenceOrder: new webpack.optimize.OccurrenceOrderPlugin(),
-    provide: new webpack.ProvidePlugin({
-      CONFIG: path.resolve(__dirname, '..', 'config', `${environment}.js`)
-    })
+    occurrenceOrder: new webpack.optimize.OccurrenceOrderPlugin()
   },
   resolve: {
     // alias: {

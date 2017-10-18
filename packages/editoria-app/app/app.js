@@ -1,15 +1,15 @@
+import 'regenerator-runtime/runtime'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import configureStore from 'pubsweet-client/src/store/configureStore'
-import Root from 'pubsweet-client/src/components/Root'
+import { configureStore, Root } from 'pubsweet-client'
 
 import { AppContainer } from 'react-hot-loader'
-import { browserHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory'
 
-let store = configureStore(browserHistory, {})
-let history = syncHistoryWithStore(browserHistory, store)
+const history = createHistory()
+const store = configureStore(history, {})
 
 const rootEl = document.getElementById('root')
 
