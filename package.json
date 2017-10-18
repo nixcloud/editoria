@@ -6,13 +6,18 @@
     "lerna": "^2.1.2"
   },
   "license": "MIT",
-  "name": "editoria",
+  "name": "editoria-monorepo",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.coko.foundation:editoria/editoria.git"
+  },
   "scripts": {
-    "bootstrap": "./node_modules/.bin/lerna bootstrap",
-    "clean": "./node_modules/.bin/lerna clean",
-    "publish": "./node_modules/.bin/lerna publish",
-    "updated": "./node_modules/.bin/lerna updated",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bootstrap": "lerna bootstrap",
+    "clean": "lerna clean",
+    "publish": "lerna publish",
+    "updated": "lerna updated",
+    "test": "lerna run test"
   },
   "version": "0.0.0"
 }
