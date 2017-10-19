@@ -8,7 +8,7 @@ const VivliostyleExporter = ({ book, htmlToEpub, showModal, showModalToggle, out
     const queryParams = {
       destination: 'folder',
       converter: 'wax',
-      style: 'haha.css'
+      style: 'epub.css'
     }
 
     htmlToEpub(book.id, queryParams)
