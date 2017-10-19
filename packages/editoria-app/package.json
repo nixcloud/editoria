@@ -92,6 +92,7 @@
   "scripts": {
     "setupdb": "pubsweet setupdb ./",
     "start": "pubsweet run",
+    "clean": "pubsweet setupdb --clobber ./",
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watch",
     "test:cover": "NODE_ENV=test jest --coverage"
