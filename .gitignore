@@ -6,8 +6,6 @@ npm-debug.log
 packages/editoria-app/_build/*
 packages/editoria-app/api/db/*
 packages/editoria-app/logs/*
-packages/editoria-app/public/assets/*
-packages/editoria-app/public/uploads/*
 packages/editoria-app/pubsweet.log
 packages/editoria-app/tmp/
 packages/editoria-app/uploads/*
