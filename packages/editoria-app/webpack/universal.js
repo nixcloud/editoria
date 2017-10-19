@@ -39,9 +39,10 @@ module.exports = {
     occurrenceOrder: new webpack.optimize.OccurrenceOrderPlugin()
   },
   resolve: {
-    // alias: {
-    //   joi: 'joi-browser'
-    // },
+    alias: {
+       joi: 'joi-browser',
+       config: path.resolve(__dirname, '..', 'config', 'client-development')
+    },
     extensions: ['.js', '.jsx', '.json', '.scss'],
     modules: [
       path.resolve(__dirname, '..'),

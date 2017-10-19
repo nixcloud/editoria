@@ -58,9 +58,9 @@ module.exports = {
     teamTypes: teams
   },
   inkBackend: {
-    inkEndpoint: inkEndpoint || 'http://ink-api.coko.foundation',
-    email: inkUsername,
-    password: inkPassword,
+    inkEndpoint: 'http://ink-api.coko.foundation',
+    email: 'editoria@coko.foundation',
+    password: 'editoria',
     maxRetries: 60
   },
   pubsweet: {
