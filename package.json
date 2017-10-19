@@ -2,7 +2,7 @@
   "author": "Yannis Barlas",
   "description": "Monorepo grouping all the different parts of the Editoria project",
   "devDependencies": {
-    "eslint-config-editoria": "^0.0.6",
+    "eslint-config-pubsweet": "^0.0.1",
     "lerna": "^2.1.2"
   },
   "license": "MIT",
