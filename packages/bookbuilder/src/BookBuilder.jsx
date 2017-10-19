@@ -226,7 +226,7 @@ export class BookBuilder extends React.Component {
             </div>
 
             <h1 className={styles.bookTitle}>{this.props.book.title}</h1>
-            <div className={`${styles.lineUploading} col-lg-6 col-md-2 col-sm-3 col-xs-3`} />
+            <div className={`${styles.lineUploading} col-lg-7 col-md-2 col-sm-3 col-xs-3`} />
             <FileUploader
               backChapters={backChapters}
               bodyChapters={bodyChapters}
@@ -237,7 +237,14 @@ export class BookBuilder extends React.Component {
               update={updateFragment}
               updateUploadStatus={this.updateUploadStatus}
             />
-            <VivliostyleExporter book={book} htmlToEpub={htmlToEpub} showModal={this.state.showModal} showModalToggle={this.toggleModal} outerContainer={outerContainer} />
+
+            <VivliostyleExporter
+              book={book}
+              htmlToEpub={htmlToEpub}
+              outerContainer={outerContainer}
+              showModal={this.state.showModal}
+              showModalToggle={this.toggleModal}
+            />
 
             <Division
               add={createFragment}

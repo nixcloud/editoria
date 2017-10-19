@@ -4,6 +4,7 @@ import ErrorModal from './ErrorModal'
 
 const VivliostyleExporter = ({ book, htmlToEpub, showModal, showModalToggle, outerContainer }) => {
   let modal
+
   const handleHTMLToEpub = () => {
     const queryParams = {
       destination: 'folder',
@@ -41,8 +42,10 @@ const VivliostyleExporter = ({ book, htmlToEpub, showModal, showModalToggle, out
       onClick={handleHTMLToEpub}
       className={`${classes.exportBookContainer} col-lg-2 col-md-6 col-sm-5 col-xs-5`}
     >
-      <label className={classes.exportToBookIcon} />
-      <span className={classes.vivliostyleExportText}>Export Book</span>
+      <span className='pull-right'>
+        <label className={classes.exportToBookIcon} />
+        <span className={classes.vivliostyleExportText}>Export Book</span>
+      </span>
       { modal }
     </div>
   )
