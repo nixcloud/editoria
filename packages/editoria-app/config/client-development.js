@@ -63,6 +63,7 @@ module.exports = {
     ]
   },
   'pubsweet-client': {
+    API_ENDPOINT: 'http://localhost:3000',
     navigation: 'app/components/Navigation/Navigation.jsx',
     routes: 'app/routes.jsx',
     theme: 'ThemeEditoria'
@@ -74,7 +75,8 @@ module.exports = {
   },
   validations: {
     collection: {
-      productionEditor: Joi.object().allow(null)
+      productionEditor: Joi.object().allow(null),
+      title: Joi.string()
     },
     fragment: {
       alignment: Joi.object(),

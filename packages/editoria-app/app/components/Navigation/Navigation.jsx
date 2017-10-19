@@ -1,44 +1,46 @@
 import React from 'react'
-import { browserHistory } from 'react-router'
+import PropTypes from 'prop-types'
+import { browserHistory } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavItem, NavbarBrand } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import Authorize from 'pubsweet-client/src/helpers/Authorize'
 import NavbarUser from 'pubsweet-component-navigation/NavbarUser'
+import actions from 'pubsweet-client/src/actions'
 
 // TODO -- break into smaller components
-export default class Navigation extends React.Component {
-  constructor (props) {
-    super(props)
-    this.logout = this.logout.bind(this)
-
-    // rewrite cleaner
-    // should the manage component maybe pass the location prop?
-    browserHistory.listen(function (event) {
+class Navigation extends React.Component {
+  // rewrite cleaner
+  // should the manage component maybe pass the location prop?
+  didMount () {
+    browserHistory.listen((event) => {
       this.collectionId = ''
       this.inEditor = event.pathname.match(/fragments/g)
       if (this.inEditor) {
-        let pathnameSplited = event.pathname.split('/')
+        const pathnameSplited = event.pathname.split('/')
         this.collectionId = pathnameSplited[2]
       }
-    }.bind(this))
+    })
   }
 
-  logout () {
-    const { logoutUser } = this.props.actions
-    logoutUser()
-    browserHistory.push('/login')
-  }
+  // logout () {
+  //   const { logoutUser } = this.props.actions
+  //   logoutUser()
+  //   browserHistory.push('/login')
+  // }
 
   render () {
-    const { currentUser } = this.props
+    const { actions, currentUser } = this.props
     let logoutButtonIfAuthenticated
 
     if (currentUser.isAuthenticated) {
+      console.log(currentUser)
       logoutButtonIfAuthenticated = (
         <NavbarUser
           user={currentUser.user}
-          onLogoutClick={this.logout}
+          onLogoutClick={this.logoutUser}
         />
       )
     }
@@ -55,7 +57,6 @@ export default class Navigation extends React.Component {
     // TODO --  fix object properties underneath
     return (
       <Navbar fluid>
-
         <Navbar.Header>
           <NavbarBrand>
             <a href='#'>
@@ -93,6 +94,20 @@ export default class Navigation extends React.Component {
 }
 
 Navigation.propTypes = {
-  actions: React.PropTypes.object.isRequired,
-  currentUser: React.PropTypes.object
+  actions: PropTypes.object.isRequired,
+  currentUser: PropTypes.object
 }
+
+function mapState (state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+function mapDispatch (dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  }
+}
+
+export default connect(mapState, mapDispatch)(Navigation)

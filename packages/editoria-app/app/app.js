@@ -8,6 +8,8 @@ import { configureStore, Root } from 'pubsweet-client'
 import { AppContainer } from 'react-hot-loader'
 import createHistory from 'history/createBrowserHistory'
 
+import routes from './routes'
+
 const history = createHistory()
 const store = configureStore(history, {})
 
@@ -15,7 +17,7 @@ const rootEl = document.getElementById('root')
 
 ReactDOM.render(
   <AppContainer>
-    <Root store={store} history={history} />
+    <Root store={store} history={history} routes={routes} />
   </AppContainer>,
   rootEl
 )
@@ -26,7 +28,7 @@ if (module.hot) {
 
     ReactDOM.render(
       <AppContainer>
-        <NextRoot store={store} history={history} />
+        <NextRoot store={store} history={history} routes={routes} />
       </AppContainer>,
       rootEl
     )

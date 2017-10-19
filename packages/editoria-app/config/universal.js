@@ -73,12 +73,13 @@ module.exports = {
     ]
   },
   pubsweetClient: {
+    API_ENDPOINT: 'http://localhost:3000/api',
     navigation: 'app/components/Navigation/Navigation.jsx',
     routes: 'app/routes.jsx',
     theme: 'ThemeEditoria'
   },
   pubsweetServer: {
-    API_ENDPOINT: '/api',
+    // API_ENDPOINT: '/api',
     dbPath: process.env.PUBSWEET_DB || path.join(__dirname, '..', 'api', 'db'),
     secret: process.env.PUBSWEET_SECRET
   },
