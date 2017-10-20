@@ -13,24 +13,19 @@ import routes from './routes'
 const history = createHistory()
 const store = configureStore(history, {})
 
-const rootEl = document.getElementById('root')
+const render = () => {
+  ReactDOM.render(
+    <AppContainer>
+      <Root store={store} history={history} routes={routes} />
+    </AppContainer>,
+    document.getElementById('root')
+  )
+}
 
-ReactDOM.render(
-  <AppContainer>
-    <Root store={store} history={history} routes={routes} />
-  </AppContainer>,
-  rootEl
-)
+render()
 
 if (module.hot) {
-  module.hot.accept('pubsweet-client/src/components/Root', () => {
-    const NextRoot = require('pubsweet-client/src/components/Root').default
-
-    ReactDOM.render(
-      <AppContainer>
-        <NextRoot store={store} history={history} routes={routes} />
-      </AppContainer>,
-      rootEl
-    )
+  module.hot.accept('./routes', () => {
+    render()
   })
 }
