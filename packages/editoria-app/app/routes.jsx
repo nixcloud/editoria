@@ -21,7 +21,9 @@ import WithConfig from 'pubsweet-component-wax/src/WithConfig'
 import BookBuilder from 'pubsweet-component-bookbuilder/src/BookBuilder'
 import Dashboard from 'pubsweet-component-editoria-dashboard/src/Dashboard'
 
-import AuthenticatedManage from './components/AuthenticatedManage/AuthenticatedManage'
+import Manage from 'pubsweet-component-manage/Manage'
+import Navigation from './components/Navigation/Navigation'
+import PrivateRoute from './components/PrivateRoute'
 
 // Pass configuration to editor
 const Editor = WithConfig(Wax, {
@@ -29,25 +31,21 @@ const Editor = WithConfig(Wax, {
   lockWhenEditing: true
 })
 
-const Manage = () => (
-  <AuthenticatedManage>
-    <Switch>
-      <Route exact path='/manage/books' component={Dashboard} />
-      <Route path='/manage/books/:id/book-builder' component={BookBuilder} />
-      <Route path='/manage/books/:bookId/fragments/:fragmentId' component={Editor} />
-      <Route path='/manage/teams' component={TeamsManager} />
-      <Route path='/manage/users' component={UsersManager} />
-    </Switch>
-  </AuthenticatedManage>
-)
-
 export default (
-  <Switch>
-    <Redirect exact path='/' to='/manage/books' />
+  <Manage nav={<Navigation />}>
+    <Switch>
+      <Redirect exact path='/' to='/books' />
 
-    <Route path='/manage' component={Manage} />
-    <Route exact path='/login' component={Login} />
-    <Route exact path='/signup' component={Signup} />
-    <Route exact path='/password-reset' component={PasswordReset} />
-  </Switch>
+      <PrivateRoute exact path='/books' component={Dashboard} />
+      <PrivateRoute path='/books/:id/book-builder' component={BookBuilder} />
+      <PrivateRoute path='/books/:bookId/fragments/:fragmentId' component={Editor} />
+
+      <PrivateRoute path='/teams' component={TeamsManager} />
+      <PrivateRoute path='/users' component={UsersManager} />
+
+      <Route path='/login' component={Login} />
+      <Route path='/signup' component={Signup} />
+      <Route path='/password-reset' component={PasswordReset} />
+    </Switch>
+  </Manage>
 )

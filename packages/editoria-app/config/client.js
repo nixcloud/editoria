@@ -10,7 +10,8 @@ module.exports = {
   },
   bookBuilder,
   'pubsweet-client': {
-    API_ENDPOINT: 'http://localhost:3000/api'
+    API_ENDPOINT: 'http://localhost:3000/api',
+    'login-redirect': '/'
   },
   validations
 }

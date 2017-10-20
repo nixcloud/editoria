@@ -21,7 +21,7 @@ class ChapterTitle extends React.Component {
     const { chapter, history, isUploadInProgress } = this.props
     if (chapter.lock !== null || isUploadInProgress) return
 
-    history.push(`/manage/books/${chapter.book}/fragments/${chapter.id}`)
+    history.push(`/books/${chapter.book}/fragments/${chapter.id}`)
   }
 
   renderTitle () {

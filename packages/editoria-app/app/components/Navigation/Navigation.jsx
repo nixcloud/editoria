@@ -40,7 +40,7 @@ class Navigation extends React.Component {
     let BackToBooks
     if (this.inEditor) {
       BackToBooks = (
-        <LinkContainer to={'/manage/books/' + this.collectionId + '/book-builder'}>
+        <LinkContainer to={'/books/' + this.collectionId + '/book-builder'}>
           <NavItem>Back to book</NavItem>
         </LinkContainer>
        )
@@ -51,25 +51,23 @@ class Navigation extends React.Component {
       <Navbar fluid>
         <Navbar.Header>
           <NavbarBrand>
-            <a href='#'>
-              Editoria
-            </a>
+            <a href='/'>Editoria</a>
           </NavbarBrand>
         </Navbar.Header>
 
         <Nav>
-          <LinkContainer to='/manage/books'>
+          <LinkContainer to='/books'>
             <NavItem>Books</NavItem>
           </LinkContainer>
 
           <Authorize operation='read' object={{ path: '/users' }}>
-            <LinkContainer to='/manage/users'>
+            <LinkContainer to='/users'>
               <NavItem>Users</NavItem>
             </LinkContainer>
           </Authorize>
 
           <Authorize operation='read' object={{ path: '/teams' }}>
-            <LinkContainer to='/manage/teams'>
+            <LinkContainer to='/teams'>
               <NavItem>Teams</NavItem>
             </LinkContainer>
           </Authorize>
