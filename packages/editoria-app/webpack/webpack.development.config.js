@@ -26,9 +26,7 @@ module.exports = [
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('dev')
-        }
+        'process.env.NODE_ENV': JSON.stringify('development')
       }),
       universal.plugins.copy
     ],
