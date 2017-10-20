@@ -1,161 +1,90 @@
-function isOwner (user, object) {
-  if (!user) return false
+const _ = require('lodash')
 
-  if (object && object.owners) {
-    const owner = object.owners.find((o) => {
-      return o.id === user.id
-    })
-    if (owner) return true
+// TODO: who can do what to collections?
+const routePermissions = {
+  '/collections': {
+    GET: () => false,
+    POST: () => false
+  },
+  '/collections/:id/fragments': {
+    GET: () => false,
+    POST: () => false
+  },
+  '/fragments': {
+    GET: () => false,
+    POST: () => false
+  },
+  '/teams': {
+    GET: () => false,
+    POST: () => false
+  },
+  '/users': {
+    GET: () => false,
+    POST: () => false
   }
-
-  return false
 }
 
-function belongsToTeam (user, team) {
-  const teams = user.teams.filter((t) => {
-    return t.teamType.name === team
-  })
-  return teams.length > 0
+const routePermission = (user, operation, route) => {
+  const permission = _.get(routePermissions, [route.path, operation])
+
+  return permission && permission({ route, user })
 }
 
-function isAuthor (user) {
-  return belongsToTeam(user, 'Author')
+const isOwner = (user, object) => {
+  if (!user || !object || !object.owners) return false
+
+  // return object.owners.includes(user.id)
+  return object.owners.some(owner => owner.id === user.id)
 }
 
-function isCopyEditor (user) {
-  return belongsToTeam(user, 'Copy Editor')
-}
+const hasTeamPermission = (user, operation, object) =>
+  user.teams.some(team =>
+    team.object.type === object.type &&
+    team.object.id === object.id &&
+    team.permissions.includes(operation)
+)
 
-function isProductionEditor (user) {
-  return belongsToTeam(user, 'Production Editor')
-}
+module.exports = async (userId, operation, object, context) => {
+  // no anonymous access
+  if (!userId) return false
 
-function hasRightsOnCollection (user, collectionId) {
-  const collectionInTeams = user.teams.find((team) => {
-    const type = team.object.type
-    const id = team.object.id
-    return type === 'collection' && id === collectionId
-  })
+  // load the User
+  const user = await context.models.User.find(userId)
 
-  if (collectionInTeams) return true
-  return false
-}
-
-// function isWorkflowIng (fragment, workflow) {
-//   if (fragment && fragment.progress) {
-//     if (workflow) {
-//       return fragment.progress[workflow] === 1
-//     }
-//   }
-//   return false
-// }
-
-const editoria = (user, operation, object) => {
-  if (!user) return false
+  // admins can do anything
   if (user.admin) return true
 
+  // only admins can do the "admin" operation
   if (operation === 'admin') return false
 
-  // object might be an array of objects (eg. teams, users, etc.)
-  // pick up if that is the case and use the first one to define the type of those objects
-  if (Array.isArray(object)) {
-    const list = object
+  // check permissions for a route
+  if (!object.type) return routePermission(user, operation, object)
 
-    let type
-    if (list.length > 0) type = list[0].type
+  switch (object.type) {
+    case 'user':
+      return object.id === user.id
 
-    if (type === 'user' || type === 'team') {
-      if (isProductionEditor(user)) {
-        if (operation === 'read') return true
-        if (operation === 'update' && type === 'team') return true
+    case 'team':
+      return false // TODO: who can read/write a team?
+
+    case 'collection':
+    case 'fragment':
+      // the owner can do anything
+      if (isOwner(user, object)) return true
+
+      // load the user's teams
+      user.teams = await Promise.all(user.teams.map(id => context.models.Team.find(id)))
+
+      // check permissions for a collection's teams
+      if (object.type === 'collection') {
+        return hasTeamPermission(user, operation, object)
       }
 
-      // remove when you can write to collection
-      // only here to get the collection's production editor
-      // edit: also here for the user to be able to read the teams
-      // TODO eventually the user should only get his teams
-      if ((isCopyEditor(user) || isAuthor(user)) && operation === 'read') return true
+      // check permissions for a fragment's teams and the parent collection's teams
+      return hasTeamPermission(user, operation, object) ||
+       hasTeamPermission(user, operation, { id: object.book, type: 'collection' })
 
-      return false
-    }
-
-    // TODO -- handle array of collections
-    if (type === 'collection') {
-      return true
-    }
-
-    // TO DO -- can anyone manage an array of fragments
+    default:
+      throw new Error('Unknown object type')
   }
-
-  if (object.type === 'fragment') {
-    const fragment = object
-    const collectionId = fragment.book
-
-    if (operation === 'read') return true
-
-    if (!hasRightsOnCollection(user, collectionId)) return false
-
-    if (isProductionEditor(user)) return true
-    // TO DO -- what about create and delete?
-
-    if (operation === 'read' || operation === 'delete' || operation === 'create') return true
-
-    // temporarily here -- change when you see what the update was
-    if (operation === 'update') return true
-
-    // do not block the if flow, as someone might belong to more than one team
-    // if (operation === 'update') {
-    //   if (isCopyEditor(user)) {
-    //     const isEditing = isWorkflowIng(fragment, 'edit')
-    //     if (isEditing) return true
-    //   }
-
-    //   if (isAuthor(user)) {
-    //     const isReviewing = isWorkflowIng(fragment, 'review')
-    //     if (isReviewing) return true
-    //   }
-    // }
-  }
-
-  if (object.type === 'collection') {
-    const collection = object
-    const hasRights = hasRightsOnCollection(user, collection.id)
-
-    if (hasRights) {
-      if (isProductionEditor(user)) return true
-
-      if (isCopyEditor(user) || isAuthor(user)) {
-        // remove the create, this WILL NOT work for multiple collections
-        // simply here to bypass the fact that to create a fragment for the collection,
-        // you need to have create rights for the collection itself
-        if (operation === 'read' || operation === 'create') return true
-      }
-    }
-
-    if (isOwner(user, collection)) return true
-  }
-
-  if (object.type === 'user') {
-    return user.id === object.id
-  }
-
-  if (object.type === 'team') {
-    const team = object
-    const collectionId = team.object.id
-
-    if (!hasRightsOnCollection(user, collectionId)) return false
-
-    const permittedOperations = ['update', 'read']
-    if (!permittedOperations.includes(operation)) return false
-
-    if (isProductionEditor(user)) return true
-
-    return false
-  }
-
-  // console.log('all failed \n')
-
-  return false
 }
-
-module.exports = editoria

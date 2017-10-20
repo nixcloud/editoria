@@ -1,14 +1,14 @@
 module.exports = {
   teamAuthors: {
     name: 'Author',
-    permissions: 'update'
+    permissions: ['PATCH']
   },
   teamCopyEditor: {
     name: 'Copy Editor',
-    permissions: 'update'
+    permissions: ['PATCH']
   },
   teamProduction: {
     name: 'Production Editor',
-    permissions: 'all'
+    permissions: ['GET', 'POST', 'PATCH', 'DELETE']
   }
 }
