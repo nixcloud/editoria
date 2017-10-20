@@ -26,7 +26,8 @@ module.exports = {
     theme: 'ThemeEditoria'
   },
   'pubsweet-server': {
-    dbPath: process.env.PUBSWEET_DB || path.join(__dirname, '..', 'api', 'db', environment)
+    dbPath: process.env.PUBSWEET_DB || path.join(__dirname, '..', 'api', 'db', environment),
+    sse: true
   },
   validations
 }
