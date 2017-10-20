@@ -30,10 +30,7 @@ module.exports = [
           NODE_ENV: JSON.stringify('dev')
         }
       }),
-      universal.plugins.copy,
-      universal.plugins.aggressiveMerging,
-      universal.plugins.occurrenceOrder,
-      universal.plugins.compression
+      universal.plugins.copy
     ],
     node: universal.node
   }
