@@ -8,6 +8,7 @@ import Actions from 'pubsweet-client/src/actions'
 
 import Division from './Division'
 import FileUploader from './FileUploader/FileUploader'
+import VivliostyleExporter from './ExportToVivliostyle/VivliostyleExporter'
 import TeamManagerModal from './TeamManager/TeamManagerModal'
 
 import styles from './styles/bookBuilder.local.scss'
@@ -25,36 +26,28 @@ export class BookBuilder extends React.Component {
     this._isProductionEditor = this._isProductionEditor.bind(this)
     this.setProductionEditor = this.setProductionEditor.bind(this)
     this.updateUploadStatus = this.updateUploadStatus.bind(this)
+    this.toggleModal = this.toggleModal.bind(this)
 
     this.state = {
       outerContainer: {},
       showTeamManager: false,
+      showModal: false,
       uploading: {}
     }
   }
 
   componentWillMount () {
-    const {
-      getCollections,
-      getFragments,
-      getTeams,
-      getUsers
-    } = this.props.actions
+    const { getCollections, getFragments, getTeams, getUsers } = this.props.actions
 
-    getUsers().then(
-      () => getTeams()
-    ).then(
-      () => {
-        return getCollections()
-      }
-    ).then(
-      () => {
+    getUsers()
+      .then(() => getTeams())
+      .then(() => getCollections())
+      .then(() => {
         const { book } = this.props
 
         this.setProductionEditor()
         getFragments(book)
-      }
-    )
+      })
   }
 
   componentDidMount () {
@@ -68,15 +61,14 @@ export class BookBuilder extends React.Component {
     const { actions, book, teams, users } = this.props
     const { updateCollection } = actions
 
-    const productionEditorsTeam = _.find(teams, function (t) {
-      return t.teamType.name === 'Production Editor' && t.object.id === book.id
-    })
+    const productionEditorsTeam = _.find(
+      teams,
+      t => t.teamType.name === 'Production Editor' && t.object.id === book.id
+    )
 
     if (!productionEditorsTeam) return
 
-    const productionEditors = _.filter(users, function (u) {
-      return _.includes(productionEditorsTeam.members, u.id)
-    })
+    const productionEditors = _.filter(users, u => _.includes(productionEditorsTeam.members, u.id))
 
     let patch
 
@@ -105,6 +97,12 @@ export class BookBuilder extends React.Component {
     updateCollection(patch)
   }
 
+  toggleModal () {
+    this.setState({
+      showModal: !this.state.showModal
+    })
+  }
+
   _toggleTeamManager () {
     this.setState({ showTeamManager: !this.state.showTeamManager })
   }
@@ -112,9 +110,7 @@ export class BookBuilder extends React.Component {
   _getRoles () {
     const { user, book } = this.props
 
-    const teams = _.filter(user.teams, function (t) {
-      return t.object.id === book.id
-    })
+    const teams = _.filter(user.teams, t => t.object.id === book.id)
 
     let roles = []
     if (user.admin) roles.push('admin')
@@ -123,7 +119,7 @@ export class BookBuilder extends React.Component {
       roles = _.union(roles, [role])
     }
 
-    _.forEach(teams, function (t) {
+    _.forEach(teams, (t) => {
       switch (t.teamType.name) {
         case 'Production Editor':
           addRole('production-editor')
@@ -143,7 +139,7 @@ export class BookBuilder extends React.Component {
   _isProductionEditor () {
     const userRoles = this._getRoles()
     const accepted = ['production-editor', 'admin']
-    const pass = _.some(accepted, (role) => _.includes(userRoles, role))
+    const pass = _.some(accepted, role => _.includes(userRoles, role))
     return pass
   }
 
@@ -176,15 +172,15 @@ export class BookBuilder extends React.Component {
 
   render () {
     const { book, chapters } = this.props
-    const { createFragment, deleteFragment, ink, updateFragment } = this.props.actions
+    const { createFragment, deleteFragment, htmlToEpub, ink, updateFragment } = this.props.actions
     const { outerContainer } = this.state
     const roles = this._getRoles()
 
-    let frontChapters = []
-    let bodyChapters = []
-    let backChapters = []
+    const frontChapters = []
+    const bodyChapters = []
+    const backChapters = []
 
-    _.forEach(chapters, function (c) {
+    _.forEach(chapters, (c) => {
       switch (c.division) {
         case 'front':
           frontChapters.push(c)
@@ -224,23 +220,31 @@ export class BookBuilder extends React.Component {
             ref='outerContainer'
           >
             <div className={styles.productionEditorContainer}>
-              <span>Production Editor: &nbsp; { productionEditor } </span>
+              <span>Production Editor: &nbsp; {productionEditor} </span>
               {teamManagerButton}
               <div className={styles.separator} />
             </div>
 
             <h1 className={styles.bookTitle}>{this.props.book.title}</h1>
+            <div className={`${styles.lineUploading} col-lg-7 col-md-2 col-sm-3 col-xs-3`} />
+            <FileUploader
+              backChapters={backChapters}
+              bodyChapters={bodyChapters}
+              book={book}
+              convert={ink}
+              create={createFragment}
+              frontChapters={frontChapters}
+              update={updateFragment}
+              updateUploadStatus={this.updateUploadStatus}
+            />
 
-              <FileUploader
-                backChapters={backChapters}
-                bodyChapters={bodyChapters}
-                book={book}
-                convert={ink}
-                create={createFragment}
-                frontChapters={frontChapters}
-                update={updateFragment}
-                updateUploadStatus={this.updateUploadStatus}
-              />
+            <VivliostyleExporter
+              book={book}
+              htmlToEpub={htmlToEpub}
+              outerContainer={outerContainer}
+              showModal={this.state.showModal}
+              showModalToggle={this.toggleModal}
+            />
 
             <Division
               add={createFragment}
@@ -287,11 +291,10 @@ export class BookBuilder extends React.Component {
               update={updateFragment}
               uploadStatus={this.state.uploading}
             />
-
           </div>
         </div>
 
-        { teamManagerModal }
+        {teamManagerModal}
       </div>
     )
   }
@@ -309,13 +312,12 @@ BookBuilder.propTypes = {
 }
 
 function mapStateToProps (state, ownProps) {
-  const book = _.find(state.collections, (c) => {
-    return c.id === ownProps.params.id
-  })
+  const book = _.find(state.collections, c => c.id === ownProps.params.id)
 
-  const chapters = _.sortBy(_.filter(state.fragments, (f) => {
-    return f.book === book.id && f.id && !f.deleted
-  }), 'index')
+  const chapters = _.sortBy(
+    _.filter(state.fragments, f => f.book === book.id && f.id && !f.deleted),
+    'index'
+  )
 
   // console.log(chapters)
 
@@ -342,7 +344,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BookBuilder)
+export default connect(mapStateToProps, mapDispatchToProps)(BookBuilder)
