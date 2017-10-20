@@ -51,7 +51,7 @@
     "sass-loader": "^6.0.6",
     "sinon": "^2.3.6",
     "sinon-as-promised": "^4.0.3",
-    "webpack": "^3.8.1",
+    "webpack": "^2.7.0",
     "webpack-node-externals": "^1.6.0"
   }
 }
