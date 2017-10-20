@@ -138,8 +138,7 @@ class FileUploader extends React.Component {
 
             return create(book, fragment)
               .then((response) => {
-                const fragmentId = response.fragment.id
-                frags.push(fragmentId)
+                frags.push(response.fragment)
 
                 if (last) self.input.value = ''  // reset input
               })
@@ -154,27 +153,28 @@ class FileUploader extends React.Component {
     makeFragments(files)
       .then(() => {
         each(files, (file, i) => {
-          const fragmentId = frags[i]
+          const fragment = frags[i]
 
-          this.handleUploadStatusChange(fragmentId, true)
+          this.handleUploadStatusChange(fragment.id, true)
           updateUploadStatus(this.state.uploading)
 
           convert(file)
             .then((response) => {
               const patch = {
-                id: fragmentId,
+                id: fragment.id,
+                rev: fragment.rev,
                 source: response.converted
               }
 
               update(book, patch)
 
-              self.handleUploadStatusChange(fragmentId, false)
+              self.handleUploadStatusChange(fragment.id, false)
               updateUploadStatus(self.state.uploading)
             })
             .catch((error) => {
               console.log(error)
 
-              self.handleUploadStatusChange(fragmentId, false)
+              self.handleUploadStatusChange(fragment.id, false)
               updateUploadStatus(self.state.uploading)
             })
         })

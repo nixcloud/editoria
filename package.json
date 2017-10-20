@@ -19,5 +19,8 @@
     "updated": "lerna updated",
     "test": "lerna run test"
   },
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "dependencies": {
+    "babel-preset-stage-0": "^6.24.1"
+  }
 }

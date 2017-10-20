@@ -86,6 +86,7 @@ export class BookBuilder extends React.Component {
 
       patch = {
         id: book.id,
+        rev: book.rev,
         productionEditor: null
       }
 
@@ -99,6 +100,7 @@ export class BookBuilder extends React.Component {
 
     patch = {
       id: book.id,
+      rev: book.rev,
       productionEditor: _.pick(foundEditor, ['id', 'username'])
     }
 
@@ -308,9 +310,9 @@ BookBuilder.propTypes = {
   // userRoles: React.PropTypes.array,
 }
 
-function mapStateToProps (state, ownProps) {
+function mapStateToProps (state, { match }) {
   const book = _.find(state.collections, (c) => {
-    return c.id === ownProps.params.id
+    return c.id === match.params.id
   })
 
   const chapters = _.sortBy(_.filter(state.fragments, (f) => {

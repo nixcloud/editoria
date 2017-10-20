@@ -13,7 +13,6 @@ const resolve = (type, entry) => {
 
 const resolvePreset = entry => resolve('preset', entry)
 const resolvePlugin = entry => resolve('plugin', entry)
-// const frontendComponents = config.pubsweet.components.filter(name => require(name).frontend)
 
 const clientComponents = config.pubsweet.components.filter((name) => {
   const component = require(name)

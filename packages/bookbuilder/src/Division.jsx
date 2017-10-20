@@ -73,6 +73,7 @@ export class Division extends React.Component {
     _.forEach(chaptersToModify, (c) => {
       const patch = {
         id: c.id,
+        rev: c.rev,
         index: (c.index - 1)
       }
 
@@ -106,6 +107,7 @@ export class Division extends React.Component {
 
         return {
           id: chapter.id,
+          rev: chapter.rev,
           index: (chapter.index + 1),
           number: number || undefined
         }
@@ -129,6 +131,7 @@ export class Division extends React.Component {
 
         return {
           id: chapter.id,
+          rev: chapter.rev,
           index: (chapter.index - 1),
           number: number || undefined
         }
@@ -155,6 +158,7 @@ export class Division extends React.Component {
       // add the dragged chapter to the list of patches that are needed
     const draggedPatch = {
       id: dragChapter.id,
+      rev: dragChapter.rev,
       index: hoverIndex,
       number: (dragChapter.subCategory === 'part') ? undefined : number
     }

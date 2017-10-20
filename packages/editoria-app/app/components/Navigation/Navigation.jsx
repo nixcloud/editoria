@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, NavItem, NavbarBrand } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 
 import Authorize from 'pubsweet-client/src/helpers/Authorize'
 import NavbarUser from 'pubsweet-component-navigation/NavbarUser'
@@ -15,7 +14,7 @@ class Navigation extends React.Component {
   // rewrite cleaner
   // should the manage component maybe pass the location prop?
   didMount () {
-    browserHistory.listen((event) => {
+    this.props.history.listen((event) => {
       this.collectionId = ''
       this.inEditor = event.pathname.match(/fragments/g)
       if (this.inEditor) {
@@ -25,22 +24,15 @@ class Navigation extends React.Component {
     })
   }
 
-  // logout () {
-  //   const { logoutUser } = this.props.actions
-  //   logoutUser()
-  //   browserHistory.push('/login')
-  // }
-
   render () {
-    const { actions, currentUser } = this.props
+    const { logoutUser, currentUser } = this.props
     let logoutButtonIfAuthenticated
 
     if (currentUser.isAuthenticated) {
-      console.log(currentUser)
       logoutButtonIfAuthenticated = (
         <NavbarUser
           user={currentUser.user}
-          onLogoutClick={this.logoutUser}
+          onLogoutClick={() => logoutUser('/login')}
         />
       )
     }
@@ -48,7 +40,7 @@ class Navigation extends React.Component {
     let BackToBooks
     if (this.inEditor) {
       BackToBooks = (
-        <LinkContainer to={'/books/' + this.collectionId + '/book-builder'}>
+        <LinkContainer to={'/manage/books/' + this.collectionId + '/book-builder'}>
           <NavItem>Back to book</NavItem>
         </LinkContainer>
        )
@@ -66,18 +58,18 @@ class Navigation extends React.Component {
         </Navbar.Header>
 
         <Nav>
-          <LinkContainer to='/books'>
+          <LinkContainer to='/manage/books'>
             <NavItem>Books</NavItem>
           </LinkContainer>
 
-          <Authorize operation='read' object='users'>
-            <LinkContainer to='/users'>
+          <Authorize operation='read' object={{ path: '/users' }}>
+            <LinkContainer to='/manage/users'>
               <NavItem>Users</NavItem>
             </LinkContainer>
           </Authorize>
 
-          <Authorize operation='read' object='teams'>
-            <LinkContainer to='/teams'>
+          <Authorize operation='read' object={{ path: '/teams' }}>
+            <LinkContainer to='/manage/teams'>
               <NavItem>Teams</NavItem>
             </LinkContainer>
           </Authorize>
@@ -94,20 +86,16 @@ class Navigation extends React.Component {
 }
 
 Navigation.propTypes = {
-  actions: PropTypes.object.isRequired,
-  currentUser: PropTypes.object
+  currentUser: PropTypes.object,
+  logoutUser: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 }
 
-function mapState (state) {
-  return {
+export default withRouter(connect(
+  state => ({
     currentUser: state.currentUser
+  }),
+  {
+    logoutUser: actions.logoutUser
   }
-}
-
-function mapDispatch (dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  }
-}
-
-export default connect(mapState, mapDispatch)(Navigation)
+)(Navigation))

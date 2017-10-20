@@ -16,20 +16,21 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
+    "config": "^1.27.0",
     "editoria-common": "0.0.1",
     "font-awesome": "4.7.0",
     "lodash": "4.17.4",
     "prop-types": "^15.5.10",
     "pubsweet-client": "1.0.0-beta.6",
     "react": "15.5.4",
-    "react-bootstrap": "0.30.10",
+    "react-bootstrap": "0.31.3",
     "react-dnd": "2.3.0",
     "react-dnd-html5-backend": "2.3.0",
     "react-dom": "15.5.4",
     "react-redux": "5.0.4",
-    "react-router": "2.8.1",
-    "react-router-bootstrap": "0.23.2",
-    "redux": "3.6.0"
+    "react-router-dom": "4.2.2",
+    "react-router-bootstrap": "0.24.4",
+    "redux": "3.7.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

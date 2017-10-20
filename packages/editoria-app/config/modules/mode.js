@@ -1,4 +1,3 @@
-
 function isOwner (user, object) {
   if (!user) return false
 

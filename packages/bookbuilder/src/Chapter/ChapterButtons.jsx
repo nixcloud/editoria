@@ -102,7 +102,7 @@ class ChapterButtons extends React.Component {
   renderEditButton () {
     const { bookId, chapter } = this.props
     const text = this.canEdit() ? 'Edit' : 'View'
-    const url = `/books/${bookId}/fragments/${chapter.id}`
+    const url = `/manage/books/${bookId}/fragments/${chapter.id}`
 
     return (
       <LinkContainer id='bb-edit' to={url} >

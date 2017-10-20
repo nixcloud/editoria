@@ -8,6 +8,7 @@
     "babel-preset-es2015-native-modules": "6.9.4",
     "babel-preset-stage-2": "6.24.1",
     "compression-webpack-plugin": "0.4.0",
+    "config": "^1.27.0",
     "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.25.0",
     "extract-text-webpack-plugin": "2.1.0",
@@ -29,6 +30,8 @@
     "pubsweet-component-login": "0.5.3",
     "pubsweet-component-manage": "0.2.0",
     "pubsweet-component-navigation": "0.3.0",
+    "pubsweet-component-password-reset-backend": "^0.1.1",
+    "pubsweet-component-password-reset-frontend": "^0.1.2",
     "pubsweet-component-signup": "0.4.0",
     "pubsweet-component-teams-manager": "0.3.0",
     "pubsweet-component-theme-editoria": "0.0.2",
@@ -47,6 +50,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.8",
     "redux": "3.6.0",
+    "regenerator-runtime": "^0.11.0",
     "sass-loader": "4.1.1",
     "script-loader": "0.7.0",
     "string-replace-loader": "1.2.0",
@@ -54,7 +58,8 @@
     "url-loader": "0.5.8",
     "webpack": "2.4.1",
     "webpack-dev-middleware": "1.10.2",
-    "webpack-hot-middleware": "2.18.0"
+    "webpack-hot-middleware": "2.18.0",
+    "winston": "^2.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
@@ -79,7 +84,6 @@
     "react-addons-test-utils": "^15.4.2",
     "react-hot-loader": "^3.1.1",
     "react-test-renderer": "^15.4.2",
-    "regenerator-runtime": "^0.11.0",
     "sinon": "^1.17.7",
     "sinon-as-promised": "^4.0.2"
   },

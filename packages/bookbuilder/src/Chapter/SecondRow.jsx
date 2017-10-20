@@ -19,7 +19,8 @@ class ChapterSecondRow extends React.Component {
 
     const patch = {
       alignment: chapter.alignment,
-      id: chapter.id
+      id: chapter.id,
+      rev: chapter.rev,
     }
 
     patch.alignment[id] = !chapter.alignment[id]
