@@ -27,8 +27,7 @@ module.exports = [
       new webpack.NoEmitOnErrorsPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify('dev'),
-          REDUXLOG_OFF: process.env.REDUXLOG_OFF
+          NODE_ENV: JSON.stringify('dev')
         }
       }),
       universal.plugins.copy,
