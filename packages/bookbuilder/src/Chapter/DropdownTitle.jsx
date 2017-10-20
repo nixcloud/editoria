@@ -181,7 +181,7 @@ class DropdownTitle extends React.Component {
         className={styles.dropDown}
         id={'dropdown-title-menu'}
         open={this.state.open}
-        onClick={this.toggle}
+        onToggle={this.toggle}
         onDoubleClick={goToEditor}
         title={title}
         ref={'dropdown-title'}
