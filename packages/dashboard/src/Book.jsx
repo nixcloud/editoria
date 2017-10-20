@@ -1,3 +1,4 @@
+import { includes, some } from 'lodash'
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 
@@ -68,94 +69,156 @@ class Book extends React.Component {
   // TODO -- refactor all roles based function into a util
   canEditBook () {
     const { roles } = this.props
-
-    return ['admin', 'production-editor'].some(role => roles.includes(role))
+    const accepted = ['admin', 'production-editor']
+    const pass = some(accepted, role => includes(roles, role))
+    return pass
   }
 
   goToBookBuilder () {
     const { book, history } = this.props
-
-    history.push(`/manage/books/${book.id}/book-builder`)
+    const url = `/books/${book.id}/book-builder`
+    history.push(url)
   }
 
   removeBook () {
-    this.props.remove(this.props.book)
+    const { book, remove } = this.props
+    remove(book)
+  }
+
+  renderTitle () {
+    const { book } = this.props
+    const { isRenaming } = this.state
+
+    if (isRenaming) {
+      return (
+        <input
+          defaultValue={book.title}
+          name='renameTitle'
+          onKeyPress={this.handleKeyOnInput}
+          ref={(el) => { this.renameTitle = el }}
+        />
+      )
+    }
+
+    return (
+      <div className={styles.bookTitleBorder}>
+        <div className={styles.bookTitleWidth}>
+          <h3 onDoubleClick={this.goToBookBuilder} >
+            { book.title }
+          </h3>
+        </div>
+      </div>
+    )
+  }
+
+  // TODO -- edit, rename and remove should be reusable components
+  renderEdit () {
+    const { book } = this.props
+
+    return (
+      <div className={styles.actionContainer} >
+        <Link
+          className={styles.editBook}
+          to={`/books/${book.id}/book-builder`}
+        >
+          Edit
+        </Link>
+      </div>
+    )
+  }
+
+  renderRename () {
+    const canRename = this.canEditBook()
+    if (!canRename) return null
+
+    const { isRenaming } = this.state
+
+    if (isRenaming) {
+      return (
+      <div className={styles.actionContainer}>
+        <a
+          className={styles.editBook}
+          href='#'
+          onClick={this.onClickSave}
+        >
+          Save
+        </a>
+      </div>
+      )
+    }
+
+    return (
+      <div className={styles.actionContainer}>
+        <a
+          className={styles.editBook}
+          href='#'
+          onClick={this.onClickRename}
+        >
+          Rename
+        </a>
+      </div>
+    )
+  }
+
+  renderRemove () {
+    const canRemove = this.canEditBook()
+    if (!canRemove) return null
+
+    return (
+      <div className={styles.actionContainer}>
+        <a
+          className={styles.editBook}
+          href='#'
+          onClick={this.toggleModal}
+        >
+          Delete
+        </a>
+      </div>
+    )
+  }
+
+  renderButtons () {
+    const edit = this.renderEdit()
+    const rename = this.renderRename()
+    const remove = this.renderRemove()
+
+    return (
+      <div className={styles.bookActions}>
+        { edit }
+        { rename }
+        { remove }
+      </div>
+    )
+  }
+
+  renderRemoveModal () {
+    const { book, container } = this.props
+    const { showModal } = this.state
+    if (!showModal) return null
+
+    return (
+      <RemoveBookModal
+        book={book}
+        container={container}
+        remove={this.removeBook}
+        show={showModal}
+        toggle={this.toggleModal}
+      />
+    )
   }
 
   render () {
-    const { book, container } = this.props
-    const { showModal, isRenaming } = this.state
+    const { book } = this.props
+
+    const title = this.renderTitle(book)
+    const buttons = this.renderButtons(book)
+    const removeModal = this.renderRemoveModal()
 
     return (
       <div className={styles.bookContainer}>
-        {isRenaming ? (
-          <input
-            defaultValue={book.title}
-            name="renameTitle"
-            onKeyPress={this.handleKeyOnInput}
-            ref={(el) => { this.renameTitle = el }}
-          />
-        ) : (
-          <div className={styles.bookTitleBorder}>
-            <div className={styles.bookTitleWidth}>
-              <h3 onDoubleClick={this.goToBookBuilder}>
-                {book.title}
-              </h3>
-            </div>
-          </div>
-        ) }
-
-        <div className={styles.bookActions}>
-          <div className={styles.actionContainer}>
-            <Link
-              className={styles.editBook}
-              to={`/manage/books/${book.id}/book-builder`}>
-              Edit
-            </Link>
-          </div>
-
-          {isRenaming ? (
-            <div className={styles.actionContainer}>
-              <a
-                className={styles.editBook}
-                href='#'
-                onClick={this.onClickSave}
-              >
-                Save
-              </a>
-            </div>
-          ) : (
-            <div className={styles.actionContainer}>
-              <a
-                className={styles.editBook}
-                href='#'
-                onClick={this.onClickRename}
-              >
-                Rename
-              </a>
-            </div>
-          )}
-
-          {this.canEditBook() && (
-            <div className={styles.actionContainer}>
-              <a
-                className={styles.editBook}
-                href="#"
-                onClick={this.toggleModal}
-              >
-                Delete
-              </a>
-            </div>
-          )}
-        </div>
-
-        <RemoveBookModal
-          book={book}
-          container={container}
-          remove={this.removeBook}
-          show={showModal}
-          toggle={this.toggleModal}
-        />
+        { title }
+        { buttons }
+        { removeModal }
       </div>
     )
   }
