@@ -4,7 +4,7 @@ import { each, get, keys, pickBy, sortBy } from 'lodash'
 import styles from '../styles/bookBuilder.local.scss'
 
 class FileUploader extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.onChange = this.onChange.bind(this)
@@ -34,7 +34,7 @@ class FileUploader extends React.Component {
     }
   }
 
-  handleUploadStatusChange (fragmentId, bool) {
+  handleUploadStatusChange(fragmentId, bool) {
     const { uploading } = this.state
     uploading[fragmentId] = bool
     this.setState({
@@ -42,7 +42,7 @@ class FileUploader extends React.Component {
     })
   }
 
-  setCounters () {
+  setCounters() {
     each(keys(this.divisionMapper), (key) => {
       const division = this.divisionMapper[key]
       const { counter } = this.state
@@ -54,100 +54,94 @@ class FileUploader extends React.Component {
     })
   }
 
-  onChange (event) {
+  onChange(event) {
     event.preventDefault()
 
-    const {
-      book,
-      convert,
-      create,
-      update,
-      updateUploadStatus
-    } = this.props
+    const { book, convert, create, update, updateUploadStatus } = this.props
 
     const originalFiles = event.target.files
-    const files = sortBy(originalFiles, 'name')  // ensure order
+    const files = sortBy(originalFiles, 'name') // ensure order
 
     this.setCounters()
 
     const self = this
     const frags = []
 
-    function makeFragments (fileList) {
-      return fileList.reduce((promise, file, i) => {
-        return promise
-          .then((result) => {
-            const name = file.name.replace(/\.[^/.]+$/, '')  // remove file extension
-            const nameSpecifier = name.slice(0, 1)  // get division from name
+    function makeFragments(fileList) {
+      return fileList.reduce(
+        (promise, file, i) =>
+          promise
+            .then((result) => {
+              const name = file.name.replace(/\.[^/.]+$/, '') // remove file extension
+              const nameSpecifier = name.slice(0, 1) // get division from name
 
-            // mark last file
-            let last
-            if ((i + 1) === files.length) last = true
+              // mark last file
+              let last
+              if (i + 1 === files.length) last = true
 
-            // // default to body
-            let division
-            if (!self.divisionMapper[nameSpecifier]) {
-              division = 'body'
-            } else {
-              division = self.divisionMapper[nameSpecifier].division
-            }
+              // // default to body
+              let division
+              if (!self.divisionMapper[nameSpecifier]) {
+                division = 'body'
+              } else {
+                division = self.divisionMapper[nameSpecifier].division
+              }
 
-            let subCategory
-            if (division !== 'body') {
-              subCategory = 'component'
-            } else {
-              if (name.slice(5, 9) === 'Part') {
+              let subCategory
+              if (division !== 'body') {
+                subCategory = 'component'
+              } else if (name.slice(5, 9) === 'Part') {
                 subCategory = 'part'
               } else {
                 subCategory = 'chapter'
               }
-            }
 
-            const index = self.state.counter[division]
-            const nextIndex = index + 1
-            const { counter } = self.state
-            counter[division] = nextIndex
-            self.setState({ counter })
+              const index = self.state.counter[division]
+              const nextIndex = index + 1
+              const { counter } = self.state
+              counter[division] = nextIndex
+              self.setState({ counter })
 
-            const fragment = {
-              book: book.id,
-              subCategory,
-              division,
-              alignment: {
-                left: false,
-                right: false
-              },
-              progress: {
-                style: 0,
-                edit: 0,
-                review: 0,
-                clean: 0
-              },
-              lock: null,
+              const fragment = {
+                book: book.id,
+                subCategory,
+                division,
+                alignment: {
+                  left: false,
+                  right: false
+                },
+                progress: {
+                  style: 0,
+                  edit: 0,
+                  review: 0,
+                  clean: 0
+                },
+                lock: null,
 
-              index,
-              kind: 'chapter',
-              title: name,
+                index,
+                kind: 'chapter',
+                title: name,
 
-              status: 'unpublished',
-              author: '',
-              source: '',
-              comments: {},
-              trackChanges: false
-            }
+                status: 'unpublished',
+                author: '',
+                source: '',
+                comments: {},
+                trackChanges: false
+              }
 
-            return create(book, fragment)
-              .then((response) => {
-                frags.push(response.fragment)
+              return create(book, fragment)
+                .then((response) => {
+                  frags.push(response.fragment)
 
-                if (last) self.input.value = ''  // reset input
-              })
-              .catch((error) => {
-                console.log(error)
-              })
-          })
-          .catch(console.error)
-      }, Promise.resolve())
+                  if (last) self.input.value = '' // reset input
+                })
+                .catch((error) => {
+                  console.log(error)
+                })
+            })
+            .catch(console.error),
+        Promise.resolve()
+      )
     }
 
     makeFragments(files)
@@ -184,11 +178,9 @@ class FileUploader extends React.Component {
       })
   }
 
-  render () {
+  render() {
     const { uploading } = this.state
-    const uploadingOnly = pickBy(uploading, (value, key) => {
-      return (value === true)
-    })
+    const uploadingOnly = pickBy(uploading, (value, key) => value === true)
     const currentlyUploading = keys(uploadingOnly).length
 
     let labelText
@@ -199,34 +191,27 @@ class FileUploader extends React.Component {
     }
 
     return (
-      <span>
-        <div className={styles.lineUploading + ' col-lg-9 col-md-5 col-sm-6 col-xs-6'} />
-      <div
-        className={styles.MultipleUploadContainer + ' col-lg-3 col-md-7 col-sm-6 col-xs-6'}
-      >
-        <label
-          htmlFor='file-uploader'
-          className={styles.uploadIcon}
-        />
+      <div className={`${styles.multipleUploadContainer} col-lg-3 col-md-8 col-sm-7 col-xs-7`}>
+        <span className='pull-right'>
+          <label htmlFor='file-uploader' className={styles.uploadIcon} />
 
-        <label
-          htmlFor='file-uploader'
-          className={styles.uploadMultipleText}
-        >
-          { labelText }
-        </label>
+          <label htmlFor='file-uploader' className={styles.uploadMultipleText}>
+            {labelText}
+          </label>
 
-        <input
-          accept='.doc,.docx'
-          id='file-uploader'
-          multiple
-          name='file-uploader'
-          onChange={this.onChange}
-          ref={(c) => { this.input = c }}
-          type='file'
-        />
+          <input
+            accept='.doc,.docx'
+            id='file-uploader'
+            multiple
+            name='file-uploader'
+            onChange={this.onChange}
+            ref={(c) => {
+              this.input = c
+            }}
+            type='file'
+          />
+        </span>
       </div>
-    </span>
     )
   }
 }
