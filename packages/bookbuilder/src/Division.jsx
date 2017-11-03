@@ -101,9 +101,15 @@ export class Division extends React.Component {
 
       // build the patches for the chapters' updates
       const patches = _.map(toModify, (chapter) => {
-        const number = (chapter.number && dragChapter.subCategory === 'part')
-          ? chapter.number
-          : chapter.number + 1
+        const number = (
+          chapter.number &&
+          (
+            dragChapter.subCategory === 'part' ||
+            dragChapter.subCategory === 'component'
+          )
+        )
+        ? chapter.number
+        : chapter.number + 1
 
         return {
           id: chapter.id,
@@ -125,9 +131,15 @@ export class Division extends React.Component {
       })
 
       const patches = _.map(toModify, (chapter) => {
-        const number = (chapter.number && dragChapter.subCategory === 'part')
-          ? chapter.number
-          : chapter.number - 1
+        const number = (
+          chapter.number &&
+          (
+            dragChapter.subCategory === 'part' ||
+            dragChapter.subCategory === 'component'
+          )
+        )
+        ? chapter.number
+        : chapter.number - 1
 
         return {
           id: chapter.id,
@@ -160,7 +172,12 @@ export class Division extends React.Component {
       id: dragChapter.id,
       rev: dragChapter.rev,
       index: hoverIndex,
-      number: (dragChapter.subCategory === 'part') ? undefined : number
+      number: (
+        dragChapter.subCategory === 'part' ||
+        dragChapter.subCategory === 'component'
+      )
+      ? undefined
+      : number
     }
     toUpdate.push(draggedPatch)
 
