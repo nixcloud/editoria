@@ -44,7 +44,8 @@ module.exports = {
     extensions: ['.js', '.jsx', '.json', '.scss'],
     modules: [
       path.resolve(__dirname, '..'),
-      path.resolve(__dirname, '..', 'node_modules'),
+      path.resolve(__dirname, '../node_modules'),
+      path.resolve(__dirname, '../../../node_modules'),
       'node_modules'
     ],
     plugins: [new ThemePlugin(config['pubsweet-client'].theme)],
