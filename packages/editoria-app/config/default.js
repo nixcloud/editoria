@@ -1,15 +1,12 @@
 const path = require('path')
 const components = require('./components')
-const teams = require('./modules/teams')
-const mode = require('./modules/mode')
-const validations = require('./modules/validations')
 
 const environment = process.env.NODE_ENV || 'development'
 
 module.exports = {
   authsome: {
-    mode,
-    teams
+    mode: path.join(__dirname, 'modules', 'mode'),
+    teams: path.join(__dirname, 'modules', 'teams')
   },
   'ink-backend': {
     email: 'editoria@coko.foundation',
@@ -23,7 +20,9 @@ module.exports = {
   'pubsweet-client': {
     navigation: 'app/components/Navigation/Navigation.jsx',
     routes: 'app/routes.jsx',
-    theme: 'ThemeEditoria'
+    theme: 'ThemeEditoria',
+    API_ENDPOINT: '/api',
+    'login-redirect': '/'
   },
   'pubsweet-server': {
     dbPath: process.env.PUBSWEET_DB || path.join(__dirname, '..', 'api', 'db', environment),
