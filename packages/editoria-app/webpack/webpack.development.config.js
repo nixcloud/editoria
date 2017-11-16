@@ -8,6 +8,7 @@ const fs = require('fs-extra')
 const config = require('config')
 const { pick } = require('lodash')
 
+console.log('conf', config)
 // can't use node-config in webpack so save whitelisted client config into the build and alias it below
 const clientConfig = pick(config, config.publicKeys)
 fs.ensureDirSync(universal.output.path)
@@ -17,9 +18,8 @@ fs.writeJsonSync(clientConfigPath, clientConfig, { spaces: 2 })
 module.exports = [
   {
     // The configuration for the client
-    name: universal.name,
-    target: universal.target,
     context: universal.context,
+    devtool: 'cheap-module-source-map',
     entry: {
       app: [
         'react-hot-loader/patch',
@@ -27,30 +27,15 @@ module.exports = [
         './app'
       ]
     },
-    output: {
-      path: universal.output.path,
-      filename: '[name].js',
-      publicPath: universal.output.publicPath
-    },
-    devtool: 'cheap-module-source-map',
     module: {
       rules: require('./common-rules')
     },
-    resolve: {
-      symlinks: false,
-      modules: [
-        path.resolve(__dirname, '..'),
-        path.resolve(__dirname, '../node_modules'),
-        path.resolve(__dirname, '../../../node_modules'),
-        'node_modules'
-      ],
-      alias: {
-        joi: 'joi-browser',
-        config: clientConfigPath
-      },
-      plugins: [new ThemePlugin(config['pubsweet-client'].theme)],
-      extensions: ['.js', '.jsx', '.json', '.scss'],
-      enforceExtension: false
+    name: universal.name,
+    node: universal.node,
+    output: {
+      filename: '[name].js',
+      path: universal.output.path,
+      publicPath: universal.output.publicPath
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
@@ -69,11 +54,28 @@ module.exports = [
       new webpack.optimize.AggressiveMergingPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
       new CompressionPlugin({
-        asset: '[path].gz[query]',
         algorithm: 'gzip',
+        asset: '[path].gz[query]',
         test: /\.js$|\.css$|\.html$/
       })
     ],
-    node: universal.node
+    resolve: {
+      alias: {
+        config: clientConfigPath,
+        joi: 'joi-browser'
+      },
+      enforceExtension: false,
+      extensions: ['.js', '.jsx', '.json', '.scss'],
+      modules: [
+        path.resolve(__dirname, '..'),
+        path.resolve(__dirname, '../node_modules'),
+        path.resolve(__dirname, '../../../node_modules'),
+        'node_modules'
+      ],
+      plugins: [new ThemePlugin(config['pubsweet-client'].theme)],
+      symlinks: false
+
+    },
+    target: universal.target
   }
 ]

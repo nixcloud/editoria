@@ -17,11 +17,12 @@ module.exports = {
   pubsweet: {
     components
   },
+  bookBuilder: path.join(__dirname, 'modules', 'book-builder'),
   'pubsweet-client': {
     navigation: 'app/components/Navigation/Navigation.jsx',
     routes: 'app/routes.jsx',
     theme: 'ThemeEditoria',
-    API_ENDPOINT: '/api',
+    API_ENDPOINT: 'http://localhost:3000/api',
     'login-redirect': '/'
   },
   'pubsweet-server': {
