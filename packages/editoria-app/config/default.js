@@ -29,5 +29,6 @@ module.exports = {
     dbPath: process.env.PUBSWEET_DB || path.join(__dirname, '..', 'api', 'db', environment),
     sse: true
   },
-  validations
+  validations,
+  publicKeys: ['pubsweet-client', 'authsome', 'pubsweet', 'validations']
 }
