@@ -8,9 +8,6 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "eslint-config-editoria": "0.0.4"
-  },
   "dependencies": {
     "react": "15.5.4",
     "react-bootstrap": "0.30.10"

@@ -2,8 +2,17 @@
   "author": "Yannis Barlas",
   "description": "Monorepo grouping all the different parts of the Editoria project",
   "devDependencies": {
-    "eslint-config-pubsweet": "^0.0.1",
-    "lerna": "^2.4.0"
+    "eslint": "^4.9.0",
+    "eslint-config-pubsweet": "^0.0.2",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-prettier": "^2.3.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "lerna": "^2.4.0",
+    "prettier": "^1.7.4"
   },
   "license": "MIT",
   "name": "editoria-monorepo",

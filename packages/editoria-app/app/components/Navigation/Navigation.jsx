@@ -73,11 +73,9 @@ class Navigation extends React.Component {
           </Authorize>
 
           {BackToBooks}
-
         </Nav>
 
         { logoutButtonIfAuthenticated }
-
       </Navbar>
     )
   }
