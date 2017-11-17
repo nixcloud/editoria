@@ -8,7 +8,7 @@ const fs = require('fs-extra')
 const config = require('config')
 const { pick } = require('lodash')
 
-console.log('conf', config)
+// console.log('conf', config)
 // can't use node-config in webpack so save whitelisted client config into the build and alias it below
 const clientConfig = pick(config, config.publicKeys)
 fs.ensureDirSync(universal.output.path)
