@@ -10,3 +10,4 @@ packages/editoria-app/logs/*
 packages/editoria-app/pubsweet.log
 packages/editoria-app/tmp/
 packages/editoria-app/uploads/*
+yarn-error.log
