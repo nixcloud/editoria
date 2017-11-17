@@ -2,13 +2,14 @@ const path = require('path')
 const components = require('./components')
 
 const bookBuilder = require('./modules/book-builder')
+const teams = require('./modules/teams')
 
 const environment = process.env.NODE_ENV || 'development'
 
 module.exports = {
   authsome: {
     mode: path.join(__dirname, 'modules', 'mode'),
-    teams: path.join(__dirname, 'modules', 'teams')
+    teams
   },
   'ink-backend': {
     email: 'editoria@coko.foundation',
