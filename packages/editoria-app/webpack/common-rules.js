@@ -1,5 +1,4 @@
 const path = require('path')
-// const config = require(`../config/${process.env.NODE_ENV}.js`)
 const babelIncludes = require('./babel-includes')
 const config = require('config')
 
@@ -15,7 +14,7 @@ const resolvePreset = entry => resolve('preset', entry)
 const resolvePlugin = entry => resolve('plugin', entry)
 
 const clientComponents = config.pubsweet.components.filter((name) => {
-  const component = require(name)
+  let component = require(name)
   // Backwards compatibility - old name was 'frontend', new name is 'client'
   return component.client || component.frontend
 })
