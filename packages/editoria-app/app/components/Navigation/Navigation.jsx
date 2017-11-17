@@ -13,7 +13,7 @@ import actions from 'pubsweet-client/src/actions'
 class Navigation extends React.Component {
   // rewrite cleaner
   // should the manage component maybe pass the location prop?
-  didMount () {
+  componentDidMount () {
     this.props.history.listen((event) => {
       this.collectionId = ''
       this.inEditor = event.pathname.match(/fragments/g)
