@@ -21,6 +21,7 @@ module.exports = {
     source: Joi.string().allow(''),
     status: Joi.string(),
     subCategory: Joi.string(),
+    title: Joi.string().allow(null),
     trackChanges: Joi.boolean()
   }
 }
