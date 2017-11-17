@@ -31,21 +31,39 @@ const Editor = WithConfig(Wax, {
   lockWhenEditing: true
 })
 
-export default (
-  <Manage nav={<Navigation />}>
-    <Switch>
-      <Redirect exact path='/' to='/books' />
+// export default (
+//   <Manage nav={<Navigation />}>
+//     <Switch>
+//       <Redirect exact path='/' to='/books' />
 
+//       <PrivateRoute exact path='/books' component={Dashboard} />
+//       <PrivateRoute path='/books/:id/book-builder' component={BookBuilder} />
+//       <PrivateRoute path='/books/:bookId/fragments/:fragmentId' component={Editor} />
+
+//       <PrivateRoute path='/teams' component={TeamsManager} />
+//       <PrivateRoute path='/users' component={UsersManager} />
+
+//       <Route path='/login' component={Login} />
+//       <Route path='/signup' component={Signup} />
+//       <Route path='/password-reset' component={PasswordReset} />
+//     </Switch>
+//   </Manage>
+// )
+
+export default (
+  <Switch>
+    <Redirect exact path='/' to='/books' />
+    <Route path='/login' component={Login} />
+    <Route path='/signup' component={Signup} />
+    <Route path='/password-reset' component={PasswordReset} />
+
+    <Manage nav={<Navigation />}>
       <PrivateRoute exact path='/books' component={Dashboard} />
       <PrivateRoute path='/books/:id/book-builder' component={BookBuilder} />
       <PrivateRoute path='/books/:bookId/fragments/:fragmentId' component={Editor} />
 
       <PrivateRoute path='/teams' component={TeamsManager} />
       <PrivateRoute path='/users' component={UsersManager} />
-
-      <Route path='/login' component={Login} />
-      <Route path='/signup' component={Signup} />
-      <Route path='/password-reset' component={PasswordReset} />
-    </Switch>
-  </Manage>
+    </Manage>
+  </Switch>
 )
