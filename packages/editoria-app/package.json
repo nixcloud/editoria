@@ -28,7 +28,7 @@
     "pubsweet-component-theme-editoria": "0.0.2",
     "pubsweet-component-users-manager": "0.2.1",
     "pubsweet-component-vivliostyle-viewer": "0.0.1",
-    "pubsweet-component-wax": "0.2.5",
+    "pubsweet-component-wax": "0.3.0",
     "pubsweet-server": "1.0.0",
     "pubsweet-theme-plugin": "0.0.1",
     "react": "15.5.4",
@@ -103,12 +103,15 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-        "./test/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "./test/fileMock.js",
       "\\.(css|less|scss)$": "identity-obj-proxy"
     },
-    "setupFiles": ["./test/jest.config.js"],
-    "snapshotSerializers": ["./node_modules/enzyme-to-json/serializer"],
+    "setupFiles": [
+      "./test/jest.config.js"
+    ],
+    "snapshotSerializers": [
+      "./node_modules/enzyme-to-json/serializer"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!pubsweet-frontend)",
       "__snapshots__"

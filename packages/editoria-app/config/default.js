@@ -1,6 +1,8 @@
 const path = require('path')
 const components = require('./components')
 
+const bookBuilder = require('./modules/book-builder')
+
 const environment = process.env.NODE_ENV || 'development'
 
 module.exports = {
@@ -17,7 +19,7 @@ module.exports = {
   pubsweet: {
     components
   },
-  bookBuilder: path.join(__dirname, 'modules', 'book-builder'),
+  bookBuilder: bookBuilder,
   'pubsweet-client': {
     navigation: 'app/components/Navigation/Navigation.jsx',
     routes: 'app/routes.jsx',
@@ -30,5 +32,5 @@ module.exports = {
     sse: true
   },
   validations: path.join(__dirname, 'modules', 'validations'),
-  publicKeys: ['pubsweet-client', 'authsome', 'pubsweet', 'validations']
+  publicKeys: ['pubsweet-client', 'authsome', 'pubsweet', 'validations', 'bookBuilder']
 }
