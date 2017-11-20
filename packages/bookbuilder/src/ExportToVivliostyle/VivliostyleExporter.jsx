@@ -40,9 +40,9 @@ const VivliostyleExporter = ({ book, htmlToEpub, showModal, showModalToggle, out
   return (
     <div
       onClick={handleHTMLToEpub}
-      className={`${classes.exportBookContainer} col-lg-2 col-md-6 col-sm-5 col-xs-5`}
+      className={`${classes.exportBookContainer}`}
     >
-      <span className='pull-right'>
+      <span>
         <label className={classes.exportToBookIcon} />
         <span className={classes.vivliostyleExportText}>Export Book</span>
       </span>

@@ -191,8 +191,8 @@ class FileUploader extends React.Component {
     }
 
     return (
-      <div className={`${styles.multipleUploadContainer} col-lg-3 col-md-8 col-sm-7 col-xs-7`}>
-        <span className='pull-right'>
+      <div className={`${styles.multipleUploadContainer}`}>
+        <span>
           <label htmlFor='file-uploader' className={styles.uploadIcon} />
 
           <label htmlFor='file-uploader' className={styles.uploadMultipleText}>
