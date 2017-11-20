@@ -11,17 +11,33 @@ import actions from 'pubsweet-client/src/actions'
 
 // TODO -- break into smaller components
 class Navigation extends React.Component {
-  // rewrite cleaner
-  // should the manage component maybe pass the location prop?
+  constructor (props) {
+    super(props)
+    this.collectionId = ''
+    this.inEditor = null
+  }
+
   componentDidMount () {
-    this.props.history.listen((event) => {
-      this.collectionId = ''
-      this.inEditor = event.pathname.match(/fragments/g)
-      if (this.inEditor) {
-        const pathnameSplited = event.pathname.split('/')
-        this.collectionId = pathnameSplited[2]
-      }
-    })
+    this.shouldAddBookLink()
+  }
+
+  componentWillUpdate () {
+    this.shouldAddBookLink()
+  }
+
+  shouldAddBookLink () {
+    const { history } = this.props
+    const { location } = history
+    const { pathname } = location
+
+    this.collectionId = ''
+    this.inEditor = null
+
+    this.inEditor = pathname.match(/fragments/g)
+    if (this.inEditor) {
+      const pathnameSplited = pathname.split('/')
+      this.collectionId = pathnameSplited[2]
+    }
   }
 
   render () {
@@ -40,7 +56,7 @@ class Navigation extends React.Component {
     let BackToBooks
     if (this.inEditor) {
       BackToBooks = (
-        <LinkContainer to={'/books/' + this.collectionId + '/book-builder'}>
+        <LinkContainer to={`/books/${this.collectionId}/book-builder`}>
           <NavItem>Back to book</NavItem>
         </LinkContainer>
        )
@@ -51,23 +67,23 @@ class Navigation extends React.Component {
       <Navbar fluid>
         <Navbar.Header>
           <NavbarBrand>
-            <a href='/'>Editoria</a>
+            <a href="/">Editoria</a>
           </NavbarBrand>
         </Navbar.Header>
 
         <Nav>
-          <LinkContainer to='/books'>
+          <LinkContainer to="/books">
             <NavItem>Books</NavItem>
           </LinkContainer>
 
-          <Authorize operation='read' object={{ path: '/users' }}>
-            <LinkContainer to='/users'>
+          <Authorize operation="read" object={{ path: '/users' }}>
+            <LinkContainer to="/users">
               <NavItem>Users</NavItem>
             </LinkContainer>
           </Authorize>
 
-          <Authorize operation='read' object={{ path: '/teams' }}>
-            <LinkContainer to='/teams'>
+          <Authorize operation="read" object={{ path: '/teams' }}>
+            <LinkContainer to="/teams">
               <NavItem>Teams</NavItem>
             </LinkContainer>
           </Authorize>
@@ -75,7 +91,7 @@ class Navigation extends React.Component {
           {BackToBooks}
         </Nav>
 
-        { logoutButtonIfAuthenticated }
+        {logoutButtonIfAuthenticated}
       </Navbar>
     )
   }
@@ -83,15 +99,17 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = {
   currentUser: PropTypes.object,
+  history: PropTypes.object.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
 }
 
-export default withRouter(connect(
-  state => ({
-    currentUser: state.currentUser
-  }),
-  {
-    logoutUser: actions.logoutUser
-  }
-)(Navigation))
+export default withRouter(
+  connect(
+    state => ({
+      currentUser: state.currentUser,
+    }),
+    {
+      logoutUser: actions.logoutUser,
+    },
+  )(Navigation),
+)
