@@ -34,6 +34,12 @@ class FileUploader extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.bodyChapters !== nextProps.bodyChapters) {
+      this.divisionMapper.b.chapterList = nextProps.bodyChapters
+    }
+  }
+
   handleUploadStatusChange(fragmentId, bool) {
     const { uploading } = this.state
     uploading[fragmentId] = bool
@@ -121,6 +127,7 @@ class FileUploader extends React.Component {
                 index,
                 kind: 'chapter',
                 title: name,
+                number: (self.divisionMapper[nameSpecifier].length + 1),
 
                 status: 'unpublished',
                 author: '',
