@@ -78,6 +78,7 @@ export class BookBuilder extends React.Component {
 
       patch = {
         id: book.id,
+        rev: book.rev,
         productionEditor: null
       }
 
@@ -91,6 +92,7 @@ export class BookBuilder extends React.Component {
 
     patch = {
       id: book.id,
+      rev: book.rev,
       productionEditor: _.pick(foundEditor, ['id', 'username'])
     }
 
@@ -219,32 +221,35 @@ export class BookBuilder extends React.Component {
             className='col-lg-offset-2 col-lg-8 col-md-8 col-sm-12 col-xs-12'
             ref='outerContainer'
           >
-            <div className={styles.productionEditorContainer}>
+            <div className={styles.productionEditorContainer + ' row'}>
               <span>Production Editor: &nbsp; {productionEditor} </span>
               {teamManagerButton}
               <div className={styles.separator} />
             </div>
 
-            <h1 className={styles.bookTitle}>{this.props.book.title}</h1>
-            <div className={`${styles.lineUploading} col-lg-7 col-md-2 col-sm-3 col-xs-3`} />
-            <FileUploader
-              backChapters={backChapters}
-              bodyChapters={bodyChapters}
-              book={book}
-              convert={ink}
-              create={createFragment}
-              frontChapters={frontChapters}
-              update={updateFragment}
-              updateUploadStatus={this.updateUploadStatus}
-            />
-
-            <VivliostyleExporter
-              book={book}
-              htmlToEpub={htmlToEpub}
-              outerContainer={outerContainer}
-              showModal={this.state.showModal}
-              showModalToggle={this.toggleModal}
-            />
+            <h1 className={styles.bookTitle + ' row'}>{this.props.book.title}</h1>
+            <div className={styles.btnContainer + ' row'}>
+              <div className={`${styles.lineUploading} `} />
+              <div className={styles.btnContainerButtons}>
+                <FileUploader
+                  backChapters={backChapters}
+                  bodyChapters={bodyChapters}
+                  book={book}
+                  convert={ink}
+                  create={createFragment}
+                  frontChapters={frontChapters}
+                  update={updateFragment}
+                  updateUploadStatus={this.updateUploadStatus}
+                />
+                <VivliostyleExporter
+                  book={book}
+                  htmlToEpub={htmlToEpub}
+                  outerContainer={outerContainer}
+                  showModal={this.state.showModal}
+                  showModalToggle={this.toggleModal}
+                />
+              </div>
+            </div>
 
             <Division
               add={createFragment}
@@ -311,8 +316,8 @@ BookBuilder.propTypes = {
   // userRoles: React.PropTypes.array,
 }
 
-function mapStateToProps (state, ownProps) {
-  const book = _.find(state.collections, c => c.id === ownProps.params.id)
+function mapStateToProps (state, { match }) {
+  const book = _.find(state.collections, c => c.id === match.params.id)
 
   const chapters = _.sortBy(
     _.filter(state.fragments, f => f.book === book.id && f.id && !f.deleted),

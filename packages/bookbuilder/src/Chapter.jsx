@@ -103,7 +103,7 @@ export class Chapter extends React.Component {
       >
 
         <div className={'col-lg-1 '+ styles.grabContainer}>
-          <div className={ styles.grabIcon + ' ' + (hasContent === true ? styles.hasContent : '')}>
+          <div className={styles.grabIcon + ' ' + (hasContent === true ? styles.hasContent : '')}>
             <div className={styles.tooltip}>
               grab to sort
             </div>

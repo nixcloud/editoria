@@ -5,7 +5,9 @@ node_modules/
 npm-debug.log
 packages/editoria-app/_build/*
 packages/editoria-app/api/db/*
+packages/editoria-app/config/local*
 packages/editoria-app/logs/*
 packages/editoria-app/pubsweet.log
 packages/editoria-app/tmp/
 packages/editoria-app/uploads/*
+yarn-error.log

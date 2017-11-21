@@ -1,26 +1,29 @@
 import React from 'react'
-import { Redirect, Route } from 'react-router'
+import { Redirect, Route, Switch } from 'react-router-dom'
 
-import { requireAuthentication } from 'pubsweet-client/src/components/AuthenticatedComponent'
+// Import Bootstrap + Font Awesome styles
+import 'pubsweet-component-manage/Manage.scss'
 
-// Manage
-import Manage from 'pubsweet-component-manage/Manage'
-import UsersManager from 'pubsweet-component-users-manager/UsersManager'
-import TeamsManager from 'pubsweet-component-teams-manager/TeamsManager'
-import Blog from 'pubsweet-component-blog/Blog'
+// Users and Teams
+import UsersManager from 'pubsweet-component-users-manager/UsersManagerContainer'
+import TeamsManager from 'pubsweet-component-teams-manager/TeamsManagerContainer'
 
 // Authentication
-import Login from 'pubsweet-component-login/Login'
-import Signup from 'pubsweet-component-signup/Signup'
+import Login from 'pubsweet-component-login/LoginContainer'
+import Signup from 'pubsweet-component-signup/SignupContainer'
+import PasswordReset from 'pubsweet-component-password-reset-frontend/PasswordReset'
 
 // Editor
 import Wax from 'pubsweet-component-wax/src/WaxPubsweet'
 import WithConfig from 'pubsweet-component-wax/src/WithConfig'
 
 // Editoria
-// import BookBuilder from './components/BookBuilder/BookBuilder'
 import BookBuilder from 'pubsweet-component-bookbuilder/src/BookBuilder'
 import Dashboard from 'pubsweet-component-editoria-dashboard/src/Dashboard'
+
+import Manage from 'pubsweet-component-manage/Manage'
+import Navigation from './components/Navigation/Navigation'
+import PrivateRoute from './components/PrivateRoute'
 
 // Pass configuration to editor
 const Editor = WithConfig(Wax, {
@@ -28,41 +31,39 @@ const Editor = WithConfig(Wax, {
   lockWhenEditing: true
 })
 
-// FIXME: this shouldn't be using the collection as the object
+// export default (
+//   <Manage nav={<Navigation />}>
+//     <Switch>
+//       <Redirect exact path='/' to='/books' />
 
-const AuthenticatedManage = requireAuthentication(
-  Manage, 'create', state => state.collections
-)
+//       <PrivateRoute exact path='/books' component={Dashboard} />
+//       <PrivateRoute path='/books/:id/book-builder' component={BookBuilder} />
+//       <PrivateRoute path='/books/:bookId/fragments/:fragmentId' component={Editor} />
 
-// TODO
-// these two setups are a bit hacky, but they work
-// leaving, as their components will most likely be removed completely soon
-const AdminOnlyUsersManager = requireAuthentication(
-  UsersManager, 'admin', state => state.collections[0]
-)
+//       <PrivateRoute path='/teams' component={TeamsManager} />
+//       <PrivateRoute path='/users' component={UsersManager} />
 
-const AdminOnlyTeamsManager = requireAuthentication(
-  TeamsManager, 'admin', state => state.collections[0]
-)
+//       <Route path='/login' component={Login} />
+//       <Route path='/signup' component={Signup} />
+//       <Route path='/password-reset' component={PasswordReset} />
+//     </Switch>
+//   </Manage>
+// )
 
 export default (
-  <Route>
-    <Redirect from='/' to='books' />
-    <Redirect from='/manage/posts' to='books' />
-
-    <Route path='/' component={AuthenticatedManage}>
-      <Route path='books' component={Dashboard} />
-      <Route path='blog' component={Blog} />
-      <Route path='books/:id/book-builder' component={BookBuilder} />
-      <Route path='books/:bookId/fragments/:fragmentId' component={Editor} />
-
-      <Route path='users' component={AdminOnlyUsersManager} />
-      <Route path='teams' component={AdminOnlyTeamsManager} />
-    </Route>
-
+  <Switch>
+    <Redirect exact path='/' to='/books' />
     <Route path='/login' component={Login} />
     <Route path='/signup' component={Signup} />
+    <Route path='/password-reset' component={PasswordReset} />
 
-    <Redirect path='*' to='books' />
-  </Route>
+    <Manage nav={<Navigation />}>
+      <PrivateRoute exact path='/books' component={Dashboard} />
+      <PrivateRoute path='/books/:id/book-builder' component={BookBuilder} />
+      <PrivateRoute path='/books/:bookId/fragments/:fragmentId' component={Editor} />
+
+      <PrivateRoute path='/teams' component={TeamsManager} />
+      <PrivateRoute path='/users' component={UsersManager} />
+    </Manage>
+  </Switch>
 )

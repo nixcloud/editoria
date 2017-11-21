@@ -38,6 +38,7 @@ class ChapterFirstRow extends React.Component {
 
     const patch = {
       id: chapter.id,
+      rev: chapter.rev,
       title: title
     }
     update(patch)
@@ -49,7 +50,7 @@ class ChapterFirstRow extends React.Component {
   // this is done to facilitate sibling-sibling component communication
   // without having to setup an event-based system for a single use case
   onClickSave () {
-    this.refs.chapterTitle.save()
+    this.chapterTitle.save()
   }
 
   render () {
@@ -64,7 +65,7 @@ class ChapterFirstRow extends React.Component {
           isRenameEmpty={isRenameEmpty}
           isUploadInProgress={isUploadInProgress}
           onSaveRename={this.onSaveRename}
-          ref='chapterTitle'
+          ref={node => { this.chapterTitle = node}}
           title={title}
           type={type}
           update={update}

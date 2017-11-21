@@ -1,8 +1,6 @@
-import {
-  get,
-  map,
-  slice
-} from 'lodash'
+import config from 'config'
+
+import { get, map, slice } from 'lodash'
 
 import React from 'react'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
@@ -75,7 +73,7 @@ class DropdownTitle extends React.Component {
     const { chapter } = this.props
     const division = chapter.division
 
-    return CONFIG.bookBuilder.chapter.dropdownValues[division]
+    return config.bookBuilder.chapter.dropdownValues[division]
   }
 
   getMenuItems () {
@@ -183,7 +181,7 @@ class DropdownTitle extends React.Component {
         className={styles.dropDown}
         id={'dropdown-title-menu'}
         open={this.state.open}
-        onClick={this.toggle}
+        onToggle={this.toggle}
         onDoubleClick={goToEditor}
         title={title}
         ref={'dropdown-title'}

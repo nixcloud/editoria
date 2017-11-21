@@ -1,5 +1,5 @@
 import React from 'react'
-import { browserHistory } from 'react-router'
+import { withRouter } from 'react-router-dom'
 
 import DropdownTitle from './DropdownTitle'
 import RenameEmptyError from './RenameEmptyError'
@@ -14,15 +14,14 @@ class ChapterTitle extends React.Component {
   }
 
   save () {
-    this.refs.title.save()
+    this.title.save()
   }
 
   goToEditor () {
-    const { chapter, isUploadInProgress } = this.props
+    const { chapter, history, isUploadInProgress } = this.props
     if (chapter.lock !== null || isUploadInProgress) return
 
-    const url = `/books/${chapter.book}/fragments/${chapter.id}`
-    browserHistory.push(url)
+    history.push(`/books/${chapter.book}/fragments/${chapter.id}`)
   }
 
   renderTitle () {
@@ -41,7 +40,7 @@ class ChapterTitle extends React.Component {
           isRenaming={isRenaming}
           goToEditor={this.goToEditor}
           onSaveRename={onSaveRename}
-          ref='title'
+          ref={(node) => { this.title = node }}
           title={title}
         />
       )
@@ -91,6 +90,7 @@ class ChapterTitle extends React.Component {
 
 ChapterTitle.propTypes = {
   chapter: React.PropTypes.object.isRequired,
+  history: React.PropTypes.object.isRequired,
   isRenaming: React.PropTypes.bool.isRequired,
   isRenameEmpty: React.PropTypes.bool.isRequired,
   isUploadInProgress: React.PropTypes.bool,
@@ -100,4 +100,4 @@ ChapterTitle.propTypes = {
   update: React.PropTypes.func.isRequired
 }
 
-export default ChapterTitle
+export default withRouter(ChapterTitle)

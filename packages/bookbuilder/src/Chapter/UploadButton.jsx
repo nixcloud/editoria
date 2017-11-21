@@ -33,6 +33,7 @@ export class UploadButton extends React.Component {
     convertFile(file).then((response) => {
       const patch = {
         id: chapter.id,
+        rev: chapter.rev,
         source: response.converted
       }
 

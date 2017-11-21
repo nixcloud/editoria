@@ -69,14 +69,29 @@ $upload-multiple: #b1b1b1;
     word-wrap: break-word;
   }
 
+  .btnContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .btnContainerButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 350px;
+  }
+
   .lineUploading {
-    border-bottom: 2px solid $line-grey;
-    // width: 80%;
+    border-top: 2px solid $line-grey;
+    margin-right: 10px;
+    width: 100%;
   }
 
   .multipleUploadContainer {
     bottom: 15px;
-    left: 10px;
+    // display: inline-block;
+    // left: 10px;
     position: relative;
     //  width: 20%;
 

@@ -1,6 +1,6 @@
 const path = require('path')
-const config = require(`../config/${process.env.NODE_ENV}.js`)
 const babelIncludes = require('./babel-includes')
+const config = require('config')
 
 const resolve = (type, entry) => {
   if (typeof entry === 'string') {
@@ -12,7 +12,12 @@ const resolve = (type, entry) => {
 
 const resolvePreset = entry => resolve('preset', entry)
 const resolvePlugin = entry => resolve('plugin', entry)
-const frontendComponents = config.pubsweet.components.filter(name => require(name).frontend)
+
+const clientComponents = config.pubsweet.components.filter((name) => {
+  let component = require(name)
+  // Backwards compatibility - old name was 'frontend', new name is 'client'
+  return component.client || component.frontend
+})
 
 module.exports = [
   {
@@ -20,14 +25,19 @@ module.exports = [
     loader: 'babel-loader',
     query: {
       presets: [
-        ['es2015', { 'modules': 'commonjs' }],
+        ['es2015', { modules: false }],
         'react',
         'stage-2'
       ].map(resolvePreset),
       plugins: [
         'react-hot-loader/babel',
         resolvePlugin('transform-decorators-legacy')
-      ]
+      ],
+      env: {
+        production: {
+          presets: ['babili']
+        }
+      }
     },
     include: babelIncludes
   },
@@ -73,7 +83,8 @@ module.exports = [
         loader: 'css-loader',
         options: {
           modules: true,
-          importLoaders: 1
+          importLoaders: 1,
+          localIdentName: '[name]_[local]-[hash:base64:8]'
         }
       },
       {
@@ -89,7 +100,7 @@ module.exports = [
     loader: 'string-replace-loader',
     query: {
       search: 'PUBSWEET_COMPONENTS',
-      replace: '[' + frontendComponents.map(component => `require('${component}')`).join(', ') + ']'
+      replace: '[' + clientComponents.map(component => `require('${component}')`).join(', ') + ']'
     },
     include: babelIncludes
   }

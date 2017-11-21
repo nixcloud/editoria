@@ -1,7 +1,6 @@
 import { includes, some } from 'lodash'
 import React from 'react'
-import { Link } from 'react-router'
-import { browserHistory } from 'react-router'
+import { Link, withRouter } from 'react-router-dom'
 
 import RemoveBookModal from './RemoveBookModal'
 import styles from './dashboard.local.scss'
@@ -50,10 +49,12 @@ class Book extends React.Component {
 
     const patch = {
       id: book.id,
+      rev: book.rev,
       title: this.renameTitle.value
     }
 
     edit(patch)
+
     this.setState({
       isRenaming: false
     })
@@ -74,9 +75,9 @@ class Book extends React.Component {
   }
 
   goToBookBuilder () {
-    const { book } = this.props
+    const { book, history } = this.props
     const url = `/books/${book.id}/book-builder`
-    browserHistory.push(url)
+    history.push(url)
   }
 
   removeBook () {
@@ -226,8 +227,10 @@ class Book extends React.Component {
 Book.propTypes = {
   book: React.PropTypes.object.isRequired,
   container: React.PropTypes.object.isRequired,
+  history: React.PropTypes.object.isRequired,
   edit: React.PropTypes.func.isRequired,
-  remove: React.PropTypes.func.isRequired
+  remove: React.PropTypes.func.isRequired,
+  roles: React.PropTypes.array.isRequired
 }
 
-export default Book
+export default withRouter(Book)

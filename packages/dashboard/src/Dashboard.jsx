@@ -1,3 +1,4 @@
+import config from 'config'
 import { each, filter, forEach, isEmpty, union } from 'lodash'
 // TODO -- clean up this import
 import Actions from 'pubsweet-client/src/actions'
@@ -8,7 +9,6 @@ import { connect } from 'react-redux'
 import AddBookModal from './AddBookModal'
 import BookList from './BookList'
 import DashboardHeader from './DashboardHeader'
-// import { teamTypes } from '../utils/config'
 import styles from './dashboard.local.scss'
 
 export class Dashboard extends React.Component {
@@ -151,7 +151,7 @@ export class Dashboard extends React.Component {
   createTeamsForBook (book) {
     const { createTeam } = this.props.actions
 
-    each(CONFIG.dashboard.teamTypes, (teamType) => {
+    each(config.authsome.teams, (teamType) => {
       // TODO -- Review the idea that the name needs to be plural for some teams
       const name = (teamType.name === 'Production Editor')
       ? teamType.name

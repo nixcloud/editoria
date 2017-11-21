@@ -1,34 +1,31 @@
+import 'regenerator-runtime/runtime'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import configureStore from 'pubsweet-client/src/store/configureStore'
-import Root from 'pubsweet-client/src/components/Root'
+import { configureStore, Root } from 'pubsweet-client'
 
 import { AppContainer } from 'react-hot-loader'
-import { browserHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory'
 
-let store = configureStore(browserHistory, {})
-let history = syncHistoryWithStore(browserHistory, store)
+import routes from './routes'
 
-const rootEl = document.getElementById('root')
+const history = createHistory()
+const store = configureStore(history, {})
 
-ReactDOM.render(
-  <AppContainer>
-    <Root store={store} history={history} />
-  </AppContainer>,
-  rootEl
-)
+const render = () => {
+  ReactDOM.render(
+    <AppContainer>
+      <Root store={store} history={history} routes={routes} />
+    </AppContainer>,
+    document.getElementById('root')
+  )
+}
+
+render()
 
 if (module.hot) {
-  module.hot.accept('pubsweet-client/src/components/Root', () => {
-    const NextRoot = require('pubsweet-client/src/components/Root').default
-
-    ReactDOM.render(
-      <AppContainer>
-        <NextRoot store={store} history={history} />
-      </AppContainer>,
-      rootEl
-    )
+  module.hot.accept('./routes', () => {
+    render()
   })
 }
