@@ -11,33 +11,18 @@ class FileUploader extends React.Component {
 
     this.state = {
       counter: {
-        front: null,
-        body: null,
-        back: null
+        front: this.props.frontChapters.length,
+        body: this.props.bodyChapters.length,
+        back: this.props.backChapters.length,
       },
-      uploading: {}
-    }
-
-    this.divisionMapper = {
-      a: {
-        chapterList: this.props.frontChapters,
-        division: 'front'
-      },
-      b: {
-        chapterList: this.props.bodyChapters,
-        division: 'body'
-      },
-      c: {
-        chapterList: this.props.backChapters,
-        division: 'back'
-      }
+      uploading: {},
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.bodyChapters !== nextProps.bodyChapters) {
-      this.divisionMapper.b.chapterList = nextProps.bodyChapters
-    }
+    //if (this.props.bodyChapters !== nextProps.bodyChapters) {
+      // this.divisionMapper.b.chapterList = nextProps.bodyChapters
+    //}
   }
 
   handleUploadStatusChange(fragmentId, bool) {
@@ -48,119 +33,115 @@ class FileUploader extends React.Component {
     })
   }
 
-  setCounters() {
-    each(keys(this.divisionMapper), (key) => {
-      const division = this.divisionMapper[key]
-      const { counter } = this.state
+  // Extracting Properties for fragment Based to Name
+  // Preferably a Rule implementation should be created
+  // moving this function to a better context a not to Uploading Component
+  extractFragmentProperties (file) {
+    const nameSpecifier = name.slice(0, 1) // get division from name
 
-      const baseCounter = get(division, 'chapterList.length') || 0
-      counter[division.division] = baseCounter
+    let division
+    if (nameSpecifier === "a") {
+      division = 'front'
+    } else if (nameSpecifier === "c") {
+      division = "back"
+    } else {
+      division = "body"
+    }
 
-      this.setState(counter)
-    })
+    let subCategory
+    if (division !== 'body') {
+      subCategory = 'component'
+    } else if (name.slice(5, 9) === 'Part') {
+      subCategory = 'part'
+    } else {
+      subCategory = 'chapter'
+    }
+    return {
+      division,
+      subCategory,
+    }
+  }
+
+  makeFragments(fileList) {
+    const { book, create } = this.props
+    const frags = [] 
+    let self = this
+   
+    return fileList.reduce(
+      (promise, file, i) =>
+        promise
+          .then(() => {
+            const name = file.name.replace(/\.[^/.]+$/, '') // remove file extension
+            const { division, subCategory } = this.extractFragmentProperties(name)
+
+            const index = self.state.counter[division]
+            const nextIndex = index + 1
+            const counter = {}
+            counter[division] = nextIndex
+            self.setState({ counter })
+
+            const fragment = {
+              book: book.id,
+              subCategory,
+              division,
+              alignment: {
+                left: false,
+                right: false
+              },
+              progress: {
+                style: 0,
+                edit: 0,
+                review: 0,
+                clean: 0
+              },
+              lock: null,
+
+              index,
+              kind: 'chapter',
+              title: name,
+              number: nextIndex,
+
+              status: 'unpublished',
+              author: '',
+              source: '',
+              comments: {},
+              trackChanges: false
+            }
+
+            return create(book, fragment)
+              .then(response => {
+                frags.push(response.fragment)
+                return frags
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          })
+          .catch(console.error),
+      Promise.resolve()
+    )
   }
 
   onChange(event) {
     event.preventDefault()
 
-    const { book, convert, create, update, updateUploadStatus } = this.props
+    const { book, convert, update, updateUploadStatus } = this.props
 
     const originalFiles = event.target.files
     const files = sortBy(originalFiles, 'name') // ensure order
 
-    this.setCounters()
-
     const self = this
-    const frags = []
-
-    function makeFragments(fileList) {
-      return fileList.reduce(
-        (promise, file, i) =>
-          promise
-            .then((result) => {
-              const name = file.name.replace(/\.[^/.]+$/, '') // remove file extension
-              const nameSpecifier = name.slice(0, 1) // get division from name
-
-              // mark last file
-              let last
-              if (i + 1 === files.length) last = true
-
-              // // default to body
-              let division
-              if (!self.divisionMapper[nameSpecifier]) {
-                division = 'body'
-              } else {
-                division = self.divisionMapper[nameSpecifier].division
-              }
-
-              let subCategory
-              if (division !== 'body') {
-                subCategory = 'component'
-              } else if (name.slice(5, 9) === 'Part') {
-                subCategory = 'part'
-              } else {
-                subCategory = 'chapter'
-              }
-
-              const index = self.state.counter[division]
-              const nextIndex = index + 1
-              const { counter } = self.state
-              counter[division] = nextIndex
-              self.setState({ counter })
-
-              const fragment = {
-                book: book.id,
-                subCategory,
-                division,
-                alignment: {
-                  left: false,
-                  right: false
-                },
-                progress: {
-                  style: 0,
-                  edit: 0,
-                  review: 0,
-                  clean: 0
-                },
-                lock: null,
-
-                index,
-                kind: 'chapter',
-                title: name,
-                number: (self.divisionMapper[nameSpecifier].length + 1),
-
-                status: 'unpublished',
-                author: '',
-                source: '',
-                comments: {},
-                trackChanges: false
-              }
-
-              return create(book, fragment)
-                .then((response) => {
-                  frags.push(response.fragment)
-
-                  if (last) self.input.value = '' // reset input
-                })
-                .catch((error) => {
-                  console.log(error)
-                })
-            })
-            .catch(console.error),
-        Promise.resolve()
-      )
-    }
-
-    makeFragments(files)
-      .then(() => {
+    this.makeFragments(files)
+      .then(frags => {
         each(files, (file, i) => {
           const fragment = frags[i]
 
-          this.handleUploadStatusChange(fragment.id, true)
-          updateUploadStatus(this.state.uploading)
+           this.handleUploadStatusChange(fragment.id, true)
+           updateUploadStatus(this.state.uploading)
 
           convert(file)
             .then((response) => {
+
               const patch = {
                 id: fragment.id,
                 rev: fragment.rev,
@@ -172,9 +153,7 @@ class FileUploader extends React.Component {
               self.handleUploadStatusChange(fragment.id, false)
               updateUploadStatus(self.state.uploading)
             })
-            .catch((error) => {
-              console.log(error)
-
+            .catch(error => {
               self.handleUploadStatusChange(fragment.id, false)
               updateUploadStatus(self.state.uploading)
             })
