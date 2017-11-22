@@ -43,6 +43,9 @@ module.exports = {
   pubsweet: {
     components,
   },
+  epub: {
+    fontsPath: '/upload/epub/fonts',
+  },
   'pubsweet-client': {
     API_ENDPOINT: 'http://localhost:3000/api',
     'login-redirect': '/',
