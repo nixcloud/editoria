@@ -12,15 +12,11 @@ const chapterSource = {
       no,
     }
   },
-
+  endDrag(props, monitor, component) {
+    props.onEndDrag()
+  },
   isDragging(props, monitor) {
     return props.id === monitor.getItem().id
-  },
-
-  endDrag(props, monitor, component) {
-    // console.log('end drag')
-    // if (monitor.didDrop()) console.log('did drop')
-    props.onEndDrag()
   },
 }
 
@@ -29,7 +25,6 @@ const chapterTarget = {
   // https://github.com/gaearon/react-dnd/blob/master/examples/04%20Sortable/Simple/Card.js
 
   hover(props, monitor, component) {
-    // console.log(monitor)
     // can only reorder within the same division
     const dragDivision = monitor.getItem().division
     const hoverDivision = props.chapter.division
