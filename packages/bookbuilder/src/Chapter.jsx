@@ -4,10 +4,18 @@ import { DragSource, DropTarget } from 'react-dnd'
 
 import FirstRow from './Chapter/FirstRow'
 import SecondRow from './Chapter/SecondRow'
-import styles from './styles/bookBuilder.local.scss'
-import { chapterSource, chapterTarget, collectDrag, collectDrop, itemTypes } from './dnd'
 
-export class Chapter extends React.Component {
+import {
+  chapterSource,
+  chapterTarget,
+  collectDrag,
+  collectDrop,
+  itemTypes,
+} from './dnd'
+
+import styles from './styles/bookBuilder.local.scss'
+
+class Chapter extends React.Component {
   constructor (props) {
     super(props)
 
@@ -157,8 +165,10 @@ Chapter.propTypes = {
   uploading: React.PropTypes.bool
 }
 
+export { Chapter as UnwrappedChapter }
+
 // combine them, as each chapter can be both a source and a target
 export default flow(
   DragSource(itemTypes.CHAPTER, chapterSource, collectDrag),
-  DropTarget(itemTypes.CHAPTER, chapterTarget, collectDrop)
+  DropTarget(itemTypes.CHAPTER, chapterTarget, collectDrop),
 )(Chapter)
