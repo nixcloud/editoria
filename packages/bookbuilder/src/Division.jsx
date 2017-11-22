@@ -7,17 +7,47 @@ import AddButton from './AddButton'
 import Chapter from './Chapter'
 import styles from './styles/bookBuilder.local.scss'
 
-export class Division extends React.Component {
+class Division extends React.Component {
   constructor(props) {
     super(props)
 
     this.onAddClick = this.onAddClick.bind(this)
-    this.onRemove = this.onRemove.bind(this)
+    this.onEndDrag = this.onEndDrag.bind(this)
     this.onMove = this.onMove.bind(this)
+    this.onRemove = this.onRemove.bind(this)
+
+    this.state = {
+      chapters: props.chapters,
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      chapters: nextProps.chapters,
+    })
+  }
+
+  // TODO -- rewrite this cleaner
+  getNewFragmentNumber(fragment, newChs) {
+    const { chapters: originalChs } = this.props
+
+    // get previous chapter number
+    const oldFragmentState = _.find(originalChs, c => c.id === fragment.id)
+    const oldNumber = oldFragmentState ? oldFragmentState.number : null
+
+    // get new chapter number
+    const currentChaptersWithNumber = _.filter(
+      newChs,
+      c => c.subCategory === 'chapter',
+    )
+    const currentNumber = _.indexOf(currentChaptersWithNumber, fragment) + 1
+
+    if (oldNumber !== currentNumber) return currentNumber
+    return null
   }
 
   onAddClick(group) {
-    const { type, chapters, add, book } = this.props
+    const { add, book, chapters, type } = this.props
 
     const newChapter = {
       alignment: {
@@ -56,6 +86,43 @@ export class Division extends React.Component {
     add(book, newChapter)
   }
 
+  // When drag is released, send all updates necessary
+  onEndDrag() {
+    const { chapters } = this.state
+    const { book, update } = this.props
+
+    const newChapters = _.clone(chapters)
+
+    _.each(chapters, (c, i) => {
+      // position has changed
+      if (c.index !== i) {
+        const patch = {
+          id: c.id,
+          index: i,
+          rev: c.rev,
+        }
+
+        if (c.number && this.getNewFragmentNumber(c, newChapters)) {
+          patch.number = this.getNewFragmentNumber(c, newChapters)
+        }
+
+        update(book, patch)
+      }
+    })
+  }
+
+  // When moving chapters, keep their order in the state
+  onMove(dragIndex, hoverIndex) {
+    const { chapters } = this.state
+    const chs = _.clone(chapters)
+
+    // Change dragged fragment position in the array
+    const dragged = chs.splice(dragIndex, 1)[0] // remove
+    chs.splice(hoverIndex, 0, dragged) // reinsert at new position
+
+    this.setState({ chapters: chs })
+  }
+
   onRemove(chapter) {
     const { chapters, remove, update, book } = this.props
     const deletedIndex = chapter.index
@@ -71,113 +138,16 @@ export class Division extends React.Component {
         rev: c.rev,
       }
 
+      if (c.number) patch.number = c.number - 1
+
       update(book, patch)
     })
-  }
-
-  // Reorder chapters
-  onMove(dragIndex, hoverIndex) {
-    // hovering over current position
-    if (dragIndex === hoverIndex) return
-
-    const { book, chapters, update } = this.props
-    const dragChapter = chapters[dragIndex]
-    const hoverChapter = chapters[hoverIndex]
-
-    let toUpdate = []
-
-    // dragging upwards
-    if (dragIndex > hoverIndex) {
-      // find the chapters that changed place
-      const toModify = _.filter(
-        chapters,
-        c => c.index >= hoverIndex && c.index < dragIndex,
-      )
-
-      // build the patches for the chapters' updates
-      const patches = _.map(toModify, chapter => {
-        const { subCategory } = dragChapter
-        const number =
-          chapter.number &&
-          (subCategory === 'part' || subCategory === 'component')
-            ? chapter.number
-            : chapter.number + 1
-
-        return {
-          id: chapter.id,
-          index: chapter.index + 1,
-          number: number || undefined,
-          rev: chapter.rev,
-        }
-      })
-
-      toUpdate = _.union(toUpdate, patches)
-    }
-
-    // dragging downwards
-    if (dragIndex < hoverIndex) {
-      // TODO -- refactor?
-      // do the same as above
-      const toModify = _.filter(
-        chapters,
-        c => c.index <= hoverIndex && c.index > dragIndex,
-      )
-
-      const patches = _.map(toModify, chapter => {
-        const { subCategory } = dragChapter
-        const number =
-          chapter.number &&
-          (subCategory === 'part' || subCategory === 'component')
-            ? chapter.number
-            : chapter.number - 1
-
-        return {
-          id: chapter.id,
-          index: chapter.index - 1,
-          number: number || undefined,
-          rev: chapter.rev,
-        }
-      })
-
-      toUpdate = _.union(toUpdate, patches)
-    }
-
-    let lastChapter = { number: 0 }
-    for (let i = 0; i < chapters.length; i += 1) {
-      if (
-        hoverChapter.index > chapters[i].index &&
-        chapters[i].number &&
-        chapters[i].index !== dragChapter.index
-      ) {
-        lastChapter = chapters[i]
-      }
-    }
-
-    const number = hoverChapter.number
-      ? hoverChapter.number
-      : lastChapter.number + 1
-
-    // add the dragged chapter to the list of patches that are needed
-    const { subCategory } = dragChapter
-    const draggedPatch = {
-      id: dragChapter.id,
-      index: hoverIndex,
-      number:
-        subCategory === 'part' || subCategory === 'component'
-          ? undefined
-          : number,
-      rev: dragChapter.rev,
-    }
-    toUpdate.push(draggedPatch)
-
-    // perform all the updates
-    _.forEach(toUpdate, patch => update(book, patch))
   }
 
   render() {
     const {
       book,
-      chapters,
+      // chapters,
       ink,
       outerContainer,
       roles,
@@ -187,7 +157,9 @@ export class Division extends React.Component {
       uploadStatus,
     } = this.props
 
-    const { onAddClick, onRemove, onMove } = this
+    const { chapters } = this.state
+
+    const { onAddClick, onEndDrag, onRemove, onMove } = this
 
     const chapterType = type === 'body' ? 'chapter' : 'component'
 
@@ -198,8 +170,9 @@ export class Division extends React.Component {
         id={c.id}
         ink={ink}
         key={c.id}
-        move={onMove}
         no={i}
+        onEndDrag={onEndDrag}
+        onMove={onMove}
         outerContainer={outerContainer}
         remove={onRemove}
         roles={roles}
@@ -265,5 +238,7 @@ Division.propTypes = {
   update: React.PropTypes.func.isRequired,
   uploadStatus: React.PropTypes.object,
 }
+
+export { Division as UnWrappedDivision }
 
 export default DragDropContext(HTML5Backend)(Division)

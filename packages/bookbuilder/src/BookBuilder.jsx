@@ -17,27 +17,32 @@ import styles from './styles/bookBuilder.local.scss'
 import './styles/fontAwesome.scss'
 
 export class BookBuilder extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
-    this._toggleTeamManager = this._toggleTeamManager.bind(this)
+    this.toggleTeamManager = this.toggleTeamManager.bind(this)
 
-    this._getRoles = this._getRoles.bind(this)
-    this._isProductionEditor = this._isProductionEditor.bind(this)
+    this.getRoles = this.getRoles.bind(this)
+    this.isProductionEditor = this.isProductionEditor.bind(this)
     this.setProductionEditor = this.setProductionEditor.bind(this)
     this.updateUploadStatus = this.updateUploadStatus.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
 
     this.state = {
       outerContainer: {},
-      showTeamManager: false,
       showModal: false,
-      uploading: {}
+      showTeamManager: false,
+      uploading: {},
     }
   }
 
-  componentWillMount () {
-    const { getCollections, getFragments, getTeams, getUsers } = this.props.actions
+  componentWillMount() {
+    const {
+      getCollections,
+      getFragments,
+      getTeams,
+      getUsers,
+    } = this.props.actions
 
     getUsers()
       .then(() => getTeams())
@@ -50,25 +55,27 @@ export class BookBuilder extends React.Component {
       })
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // I'm using the ref inside the render function it was created in
     // So it won't be available until didMount
     // Pass it to the state and use it safely (no undefined scenarios)
     this.setState({ outerContainer: this.refs.outerContainer })
   }
 
-  setProductionEditor () {
+  setProductionEditor() {
     const { actions, book, teams, users } = this.props
     const { updateCollection } = actions
 
     const productionEditorsTeam = _.find(
       teams,
-      t => t.teamType.name === 'Production Editor' && t.object.id === book.id
+      t => t.teamType.name === 'Production Editor' && t.object.id === book.id,
     )
 
     if (!productionEditorsTeam) return
 
-    const productionEditors = _.filter(users, u => _.includes(productionEditorsTeam.members, u.id))
+    const productionEditors = _.filter(users, u =>
+      _.includes(productionEditorsTeam.members, u.id),
+    )
 
     let patch
 
@@ -78,8 +85,8 @@ export class BookBuilder extends React.Component {
 
       patch = {
         id: book.id,
+        productionEditor: null,
         rev: book.rev,
-        productionEditor: null
       }
 
       return updateCollection(patch)
@@ -101,15 +108,15 @@ export class BookBuilder extends React.Component {
 
   toggleModal () {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
     })
   }
 
-  _toggleTeamManager () {
+  toggleTeamManager () {
     this.setState({ showTeamManager: !this.state.showTeamManager })
   }
 
-  _getRoles () {
+  getRoles () {
     const { user, book } = this.props
 
     const teams = _.filter(user.teams, t => t.object.id === book.id)
@@ -121,7 +128,7 @@ export class BookBuilder extends React.Component {
       roles = _.union(roles, [role])
     }
 
-    _.forEach(teams, (t) => {
+    _.forEach(teams, t => {
       switch (t.teamType.name) {
         case 'Production Editor':
           addRole('production-editor')
@@ -132,21 +139,27 @@ export class BookBuilder extends React.Component {
         case 'Author':
           addRole('author')
           break
+        default:
+          break
       }
     })
 
     return roles
   }
 
-  _isProductionEditor () {
-    const userRoles = this._getRoles()
+  isProductionEditor() {
+    const userRoles = this.getRoles()
     const accepted = ['production-editor', 'admin']
     const pass = _.some(accepted, role => _.includes(userRoles, role))
     return pass
   }
 
-  renderTeamManagerModal () {
-    if (!this._isProductionEditor()) return null
+  updateUploadStatus(status) {
+    this.setState({ uploading: status })
+  }
+
+  renderTeamManagerModal() {
+    if (!this.isProductionEditor()) return null
 
     const { outerContainer, showTeamManager } = this.state
 
@@ -161,28 +174,30 @@ export class BookBuilder extends React.Component {
         container={outerContainer}
         show={showTeamManager}
         teams={teams}
-        toggle={this._toggleTeamManager}
+        toggle={this.toggleTeamManager}
         updateTeam={updateTeam}
         users={users}
       />
     )
   }
 
-  updateUploadStatus (status) {
-    this.setState({ uploading: status })
-  }
-
   render () {
     const { book, chapters } = this.props
-    const { createFragment, deleteFragment, htmlToEpub, ink, updateFragment } = this.props.actions
+    const {
+      createFragment,
+      deleteFragment,
+      htmlToEpub,
+      ink,
+      updateFragment,
+    } = this.props.actions
     const { outerContainer } = this.state
-    const roles = this._getRoles()
+    const roles = this.getRoles()
 
     const frontChapters = []
     const bodyChapters = []
     const backChapters = []
 
-    _.forEach(chapters, (c) => {
+    _.forEach(chapters, c => {
       switch (c.division) {
         case 'front':
           frontChapters.push(c)
@@ -193,14 +208,16 @@ export class BookBuilder extends React.Component {
         case 'back':
           backChapters.push(c)
           break
+        default:
+          break
       }
     })
 
-    const isProductionEditor = this._isProductionEditor()
+    const isProductionEditor = this.isProductionEditor()
     let teamManagerButton = ''
     if (isProductionEditor) {
       teamManagerButton = (
-        <span onClick={this._toggleTeamManager}>
+        <span onClick={this.toggleTeamManager}>
           <div className={styles.teamManagerIcon} />
           <div className={styles.teamManagerBtn}>
             <a>team manager</a>
@@ -215,11 +232,11 @@ export class BookBuilder extends React.Component {
     // console.log('render bb')
 
     return (
-      <div className='bootstrap modal pubsweet-component pubsweet-component-scroll'>
+      <div className="bootstrap modal pubsweet-component pubsweet-component-scroll">
         <div className={styles.bookBuilder}>
           <div
-            className='col-lg-offset-2 col-lg-8 col-md-8 col-sm-12 col-xs-12'
-            ref='outerContainer'
+            className="col-lg-offset-2 col-lg-8 col-md-8 col-sm-12 col-xs-12"
+            ref="outerContainer"
           >
             <div className={styles.productionEditorContainer + ' row'}>
               <span>Production Editor: &nbsp; {productionEditor} </span>
@@ -321,31 +338,27 @@ function mapStateToProps (state, { match }) {
 
   const chapters = _.sortBy(
     _.filter(state.fragments, f => f.book === book.id && f.id && !f.deleted),
-    'index'
+    'index',
   )
 
-  // console.log(chapters)
-
-  const teams = state.teams
+  const { error, teams } = state
   const users = state.users.users
   const user = state.currentUser.user
-
-  const error = state.error
 
   return {
     book: book || {},
     chapters,
+    errorMessage: error,
     teams,
-    users,
     user,
     // userRoles: state.auth.roles,
-    errorMessage: error
+    users,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch)
+    actions: bindActionCreators(Actions, dispatch),
   }
 }
 
