@@ -138,7 +138,7 @@ class Division extends React.Component {
         rev: c.rev,
       }
 
-      if (c.number) patch.number = c.number - 1
+      if (chapter.number && c.number) patch.number = c.number - 1
 
       update(book, patch)
     })
