@@ -183,7 +183,7 @@ class DropdownTitle extends React.Component {
         open={this.state.open}
         onToggle={this.toggle}
         onDoubleClick={goToEditor}
-        title={title}
+        title={title || 'Choose Component'}
         ref={'dropdown-title'}
       >
 

@@ -34,7 +34,7 @@ class ChapterTitle extends React.Component {
       update
     } = this.props
 
-    if (type === 'chapter' || type === 'part') {
+    if (type === 'chapter' || type === 'part' || type === 'component') {
       return (
         <Title
           isRenaming={isRenaming}
@@ -46,16 +46,18 @@ class ChapterTitle extends React.Component {
       )
     }
 
-    if (type === 'component') {
-      return (
-        <DropdownTitle
-          chapter={chapter}
-          goToEditor={this.goToEditor}
-          title={title}
-          update={update}
-        />
-      )
-    }
+    // Closing for now the dropdown functionality and fix it later,
+    // because rewrites the functionality of Chapter title
+    // if (type === 'component') {
+    //   return (
+    //     <DropdownTitle
+    //       chapter={chapter}
+    //       goToEditor={this.goToEditor}
+    //       title={title}
+    //       update={update}
+    //     />
+    //   )
+    // }
 
     return null
   }
