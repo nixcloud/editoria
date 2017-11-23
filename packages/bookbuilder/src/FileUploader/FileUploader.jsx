@@ -79,7 +79,7 @@ class FileUploader extends React.Component {
             const counter = {}
             counter[division] = nextIndex
             self.setState({ counter })
-
+            console.log(index, nextIndex, "INDEXING")
             const fragment = {
               book: book.id,
               subCategory,
@@ -176,6 +176,10 @@ class FileUploader extends React.Component {
       labelText = 'upload multiple word files'
     }
 
+
+    const { frontChapters, backChapters, bodyChapters } = this.props
+    console.log(frontChapters.length, backChapters.length, bodyChapters.length)
+    
     return (
       <div className={`${styles.multipleUploadContainer}`}>
         <span>
