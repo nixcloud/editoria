@@ -44,6 +44,16 @@ input[type='password'].form-control {
   font-size: 14px;
 }
 
+.has-success .form-control:focus {
+  border-color: $medium-light-gray;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.has-success .control-label {
+  color: $dark-grey;
+}
+
 .form-group {
   margin-bottom: 15px;
   margin-top: 15px;

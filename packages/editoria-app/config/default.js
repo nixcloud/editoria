@@ -19,6 +19,16 @@ module.exports = {
     teams,
   },
   bookBuilder,
+  'mail-transport': {
+    host: '',
+    port: 25,
+    secure: false,
+    auth: {
+      user: '',
+      pass: ''
+    }
+  },
+
   'password-reset': {
     sender: resetSender || 'dev@example.com',
     url: resetUrl || 'http://localhost:3000/password-reset',
