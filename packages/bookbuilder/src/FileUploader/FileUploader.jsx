@@ -20,9 +20,23 @@ class FileUploader extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    //if (this.props.bodyChapters !== nextProps.bodyChapters) {
-      // this.divisionMapper.b.chapterList = nextProps.bodyChapters
-    //}
+    if (this.props.bodyChapters !== nextProps.bodyChapters) {
+       let counter = this.state.counter
+       counter.body = nextProps.bodyChapters.length
+       this.setState({ counter })
+    }
+
+    if (this.props.frontChapters !== nextProps.frontChapters) {
+      let counter = this.state.counter
+      counter.front = nextProps.frontChapters.length
+      this.setState({ counter })
+   }
+
+   if (this.props.backChapters !== nextProps.backChapters) {
+      let counter = this.state.counter
+      counter.back = nextProps.backChapters.length
+      this.setState({ counter })
+   }
   }
 
   handleUploadStatusChange(fragmentId, bool) {
@@ -76,10 +90,7 @@ class FileUploader extends React.Component {
 
             const index = self.state.counter[division]
             const nextIndex = index + 1
-            const counter = {}
-            counter[division] = nextIndex
-            self.setState({ counter })
-            console.log(index, nextIndex, "INDEXING")
+
             const fragment = {
               book: book.id,
               subCategory,
@@ -176,10 +187,6 @@ class FileUploader extends React.Component {
       labelText = 'upload multiple word files'
     }
 
-
-    const { frontChapters, backChapters, bodyChapters } = this.props
-    console.log(frontChapters.length, backChapters.length, bodyChapters.length)
-    
     return (
       <div className={`${styles.multipleUploadContainer}`}>
         <span>
