@@ -19,16 +19,18 @@ module.exports = {
     teams,
   },
   bookBuilder,
+  epub: {
+    fontsPath: '/uploads/fonts',
+  },
   'mail-transport': {
+    auth: {
+      pass: '',
+      user: '',
+    },
     host: '',
     port: 25,
     secure: false,
-    auth: {
-      user: '',
-      pass: ''
-    }
   },
-
   'password-reset': {
     sender: resetSender || 'dev@example.com',
     url: resetUrl || '/password-reset',
@@ -42,9 +44,6 @@ module.exports = {
   ],
   pubsweet: {
     components,
-  },
-  epub: {
-    fontsPath: '/uploads/fonts',
   },
   'pubsweet-client': {
     API_ENDPOINT: '/api',

@@ -14,7 +14,7 @@
     "pubsweet-client": "1.0.0-beta.9",
     "pubsweet-component-bookbuilder": "0.1.1",
     "pubsweet-component-editoria-dashboard": "0.0.4",
-    "pubsweet-component-epub": "^0.2.0",
+    "pubsweet-component-epub": "^0.2.1",
     "pubsweet-component-epub-frontend": "^0.1.0",
     "pubsweet-component-ink-backend": "0.1.0",
     "pubsweet-component-ink-frontend": "0.2.2",
