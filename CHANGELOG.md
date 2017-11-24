@@ -1,11 +1,11 @@
-## Editoria  
+# Editoria  
 
-### 1.1.4  
+## 1.1.4  
 
 #### Wax Editor  
 * Fix for unsaved changes warning  
 
-### 1.1.3  
+## 1.1.3  
 
 * New design for the book builder, the dashboard and the theme  
 
