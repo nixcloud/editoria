@@ -2,16 +2,13 @@
   "author": {
     "name": "Collaborative Knowledge Foundation"
   },
-  "dependencies": {},
   "description": "Editoria theme for PubSweet",
-  "devDependencies": {},
   "directories": {},
   "license": "MIT",
   "main": "index.js",
   "maintainers": [],
   "name": "pubsweet-component-theme-editoria",
-  "optionalDependencies": {},
   "readme": "ERROR: No README data found!",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": "https://gitlab.coko.foundation/editoria/editoria-theme"
 }

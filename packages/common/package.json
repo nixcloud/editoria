@@ -1,6 +1,6 @@
 {
   "name": "editoria-common",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Common react components for the editoria project",
   "main": "index.js",
   "scripts": {
