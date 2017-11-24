@@ -4,6 +4,9 @@ This is the Editoria monorepo.
 
 It consists of the main Editoria application, as well as the different [Pubsweet](https://gitlab.coko.foundation/pubsweet) components and helper libraries that the app is made of.  
 
+For more information, visit the project's [website](https://editoria.pub/).  
+For the editor that Editoria uses, see its related project [Wax](https://gitlab.coko.foundation/wax/wax).  
+
 ### Get up and running  
 
 Get your copy of the repository.  
