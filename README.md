@@ -5,7 +5,7 @@ This is the Editoria monorepo.
 It consists of the main Editoria application, as well as the different [Pubsweet](https://gitlab.coko.foundation/pubsweet) components and helper libraries that the app is made of.  
 
 This application is being developed by the [Coko Foundation](https://coko.foundation/), for the [University of California Press](http://www.ucpress.edu/).  
-For more information, visit the project's [website](https://editoria.pub/).  
+For more information, visit the project's [website](https://editoria.pub/) or our [chat channel](https://mattermost.coko.foundation/coko/channels/editoria).  
 For the editor that Editoria uses, see its related project [Wax](https://gitlab.coko.foundation/wax/wax).  
 
 ### Get up and running  

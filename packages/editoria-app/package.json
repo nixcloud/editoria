@@ -1,6 +1,22 @@
 {
-  "name": "editoria",
-  "description": "A new pubsweet app",
+  "name": "Editoria",
+  "description": "An application for managing book production flows",
+  "private": true,
+  "keywords": [
+    "Coko",
+    "Coko Foundation",
+    "UCP",
+    "University of California Press",
+    "book",
+    "book production",
+    "book management"
+  ],
+  "repository" : { 
+    "type" : "git",
+    "url" : "https://gitlab.coko.foundation/editoria/editoria"
+  },
+  "homepage": "https://editoria.pub/",
+  "license": "MIT",
   "version": "1.1.4",
   "dependencies": {
     "@pubsweet/db-manager": "^0.0.8",
