@@ -4,6 +4,7 @@ This is the Editoria monorepo.
 
 It consists of the main Editoria application, as well as the different [Pubsweet](https://gitlab.coko.foundation/pubsweet) components and helper libraries that the app is made of.  
 
+This application is being developed by the [Coko Foundation](https://coko.foundation/), for the [University of California Press](http://www.ucpress.edu/).  
 For more information, visit the project's [website](https://editoria.pub/).  
 For the editor that Editoria uses, see its related project [Wax](https://gitlab.coko.foundation/wax/wax).  
 
@@ -14,6 +15,8 @@ Get your copy of the repository.
 git clone https://gitlab.coko.foundation/editoria/editoria.git
 cd editoria
 ```
+
+Make sure you use you use `node >= 8`. We provide `.envrc` and `.nvmrc` files for convenience.  
 
 Install all dependencies.  
 ```sh
