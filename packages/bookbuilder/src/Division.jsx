@@ -70,7 +70,7 @@ class Division extends React.Component {
       source: '',
       status: 'unpublished',
       subCategory: type === 'body' ? group : 'component',
-      title: type === 'body' ? 'Untitled' : 'Choose Component',
+      title: 'Untitled',
       trackChanges: false,
     }
 
