@@ -31,7 +31,7 @@ module.exports = {
 
   'password-reset': {
     sender: resetSender || 'dev@example.com',
-    url: resetUrl || 'http://localhost:3000/password-reset',
+    url: resetUrl || '/password-reset',
   },
   publicKeys: [
     'authsome',
@@ -43,8 +43,11 @@ module.exports = {
   pubsweet: {
     components,
   },
+  epub: {
+    fontsPath: '/uploads/fonts',
+  },
   'pubsweet-client': {
-    API_ENDPOINT: 'http://localhost:3000/api',
+    API_ENDPOINT: '/api',
     'login-redirect': '/',
     navigation: 'app/components/Navigation/Navigation.jsx',
     routes: 'app/routes.jsx',
