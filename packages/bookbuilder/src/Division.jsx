@@ -1,4 +1,14 @@
-import { find, clone, indexOf, map, filter, forEach, each, groupBy, isEmpty, has, findIndex } from 'lodash'
+import {
+  clone,
+  each,
+  filter,
+  findIndex,
+  forEach,
+  groupBy,
+  has,
+  isEmpty,
+  map,
+} from 'lodash'
 import React from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -25,25 +35,6 @@ class Division extends React.Component {
     this.setState({
       chapters: nextProps.chapters,
     })
-  }
-
-  // TODO -- rewrite this cleaner
-  getNewFragmentNumber(fragment, newChs) {
-    const { chapters: originalChs } = this.props
-
-    // get previous chapter number
-    const oldFragmentState = find(originalChs, c => c.id === fragment.id)
-    const oldNumber = oldFragmentState ? oldFragmentState.number : null
-
-    // get new chapter number
-    const currentChaptersWithNumber = filter(
-      newChs,
-      c => c.subCategory === 'chapter',
-    )
-    const currentNumber = indexOf(currentChaptersWithNumber, fragment) + 1
-
-    if (oldNumber !== currentNumber) return currentNumber
-    return null
   }
 
   onAddClick(group) {
@@ -76,9 +67,10 @@ class Division extends React.Component {
 
     if (type === 'body') {
       const groupedFragments = groupBy(chapters, 'subCategory')
+      const hasPartsOrChapters = has(groupedFragments, group)
 
       if (!isEmpty(groupedFragments)) {
-        newChapter.number = has(groupedFragments, group)
+        newChapter.number = hasPartsOrChapters
           ? groupedFragments[group].length + 1
           : 1
       } else {
@@ -94,13 +86,11 @@ class Division extends React.Component {
     const { chapters } = this.state
     const { book, update, type } = this.props
 
-    // const newChapters = clone(chapters)
-    // const fragmentsToBeUpdated = []
     let groupedFragments
+
     if (type === 'body') {
       groupedFragments = groupBy(chapters, 'subCategory')
-      console.log("groupedFragments", groupedFragments)
-   }
+    }
 
     each(chapters, (c, i) => {
       // position has changed
@@ -110,22 +100,19 @@ class Division extends React.Component {
           index: i,
           rev: c.rev,
         }
-        // if (c.number && this.getNewFragmentNumber(c, newChapters)) {
-        //   patch.number = this.getNewFragmentNumber(c, newChapters)
-        // }
+
         if (c.number) {
-          patch.number = findIndex(groupedFragments[c.subCategory], (fragment) => {
-            return fragment.id === c.id
-          }) + 1
+          const { subCategory } = c
+          const index = findIndex(
+            groupedFragments[subCategory],
+            f => f.id === c.id,
+          )
+          patch.number = index + 1
         }
 
         update(book, patch)
       }
     })
-    // if (type === 'body') {
-    //    const temp = groupBy(chapters, 'subCategory')
-    // }
-    // console.log('this', this)
   }
 
   // When moving chapters, keep their order in the state

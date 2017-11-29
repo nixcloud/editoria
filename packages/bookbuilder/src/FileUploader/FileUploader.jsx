@@ -1,5 +1,5 @@
 import React from 'react'
-import { each, keys, pickBy, sortBy, groupBy, isEmpty } from 'lodash'
+import { each, groupBy, has, isEmpty, keys, pickBy, sortBy } from 'lodash'
 
 import styles from '../styles/bookBuilder.local.scss'
 
@@ -124,20 +124,15 @@ class FileUploader extends React.Component {
             if (division === 'body') {
               const { bodyChapters } = this.props
               const groupedFragments = groupBy(bodyChapters, 'subCategory')
-              
-                    if (!isEmpty(groupedFragments)) {
-                      fragment.number = has(groupedFragments, group)
-                        ? groupedFragments[group].length + 1
-                        : 1
-                    } else {
-                      fragment.number = 1
-                    }
-              // const groupedFragments = groupBy(bodyChapters, 'subCategory')
-              // const numberedChapters = bodyChapters.filter(
-              //   ch => ch.subCategory === 'chapter',
-              // )
-              // fragment.number = numberedChapters.length + 1
-              // fragment.number = groupedFragments[fragment.subCategory].length + 1
+              const hasPartsOrChapters = has(groupedFragments, subCategory)
+
+              if (!isEmpty(groupedFragments)) {
+                fragment.number = hasPartsOrChapters
+                  ? groupedFragments[subCategory].length + 1
+                  : 1
+              } else {
+                fragment.number = 1
+              }
             }
 
             return create(book, fragment)
