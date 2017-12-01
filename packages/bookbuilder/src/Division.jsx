@@ -9,6 +9,7 @@ import {
   isEmpty,
   map,
 } from 'lodash'
+
 import React from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -86,11 +87,8 @@ class Division extends React.Component {
     const { chapters } = this.state
     const { book, update, type } = this.props
 
-    let groupedFragments
-
-    if (type === 'body') {
-      groupedFragments = groupBy(chapters, 'subCategory')
-    }
+    const groupedFragments =
+      type === 'body' ? groupBy(chapters, 'subCategory') : null
 
     each(chapters, (c, i) => {
       // position has changed
