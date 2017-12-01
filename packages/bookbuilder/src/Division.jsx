@@ -1,4 +1,15 @@
-import _ from 'lodash'
+import {
+  clone,
+  each,
+  filter,
+  findIndex,
+  forEach,
+  groupBy,
+  has,
+  isEmpty,
+  map,
+} from 'lodash'
+
 import React from 'react'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
@@ -25,25 +36,6 @@ class Division extends React.Component {
     this.setState({
       chapters: nextProps.chapters,
     })
-  }
-
-  // TODO -- rewrite this cleaner
-  getNewFragmentNumber(fragment, newChs) {
-    const { chapters: originalChs } = this.props
-
-    // get previous chapter number
-    const oldFragmentState = _.find(originalChs, c => c.id === fragment.id)
-    const oldNumber = oldFragmentState ? oldFragmentState.number : null
-
-    // get new chapter number
-    const currentChaptersWithNumber = _.filter(
-      newChs,
-      c => c.subCategory === 'chapter',
-    )
-    const currentNumber = _.indexOf(currentChaptersWithNumber, fragment) + 1
-
-    if (oldNumber !== currentNumber) return currentNumber
-    return null
   }
 
   onAddClick(group) {
@@ -74,13 +66,17 @@ class Division extends React.Component {
       trackChanges: false,
     }
 
-    if (group === 'chapter') {
-      const chapterGroup = chapters.filter(item => {
-        const isInChapterGroup = item.subCategory === 'chapter'
-        return isInChapterGroup
-      })
+    if (type === 'body') {
+      const groupedFragments = groupBy(chapters, 'subCategory')
+      const hasPartsOrChapters = has(groupedFragments, group)
 
-      newChapter.number = chapterGroup.length + 1
+      if (!isEmpty(groupedFragments)) {
+        newChapter.number = hasPartsOrChapters
+          ? groupedFragments[group].length + 1
+          : 1
+      } else {
+        newChapter.number = 1
+      }
     }
 
     add(book, newChapter)
@@ -89,11 +85,12 @@ class Division extends React.Component {
   // When drag is released, send all updates necessary
   onEndDrag() {
     const { chapters } = this.state
-    const { book, update } = this.props
+    const { book, update, type } = this.props
 
-    const newChapters = _.clone(chapters)
+    const groupedFragments =
+      type === 'body' ? groupBy(chapters, 'subCategory') : null
 
-    _.each(chapters, (c, i) => {
+    each(chapters, (c, i) => {
       // position has changed
       if (c.index !== i) {
         const patch = {
@@ -102,8 +99,13 @@ class Division extends React.Component {
           rev: c.rev,
         }
 
-        if (c.number && this.getNewFragmentNumber(c, newChapters)) {
-          patch.number = this.getNewFragmentNumber(c, newChapters)
+        if (c.number) {
+          const { subCategory } = c
+          const index = findIndex(
+            groupedFragments[subCategory],
+            f => f.id === c.id,
+          )
+          patch.number = index + 1
         }
 
         update(book, patch)
@@ -114,7 +116,7 @@ class Division extends React.Component {
   // When moving chapters, keep their order in the state
   onMove(dragIndex, hoverIndex) {
     const { chapters } = this.state
-    const chs = _.clone(chapters)
+    const chs = clone(chapters)
 
     // Change dragged fragment position in the array
     const dragged = chs.splice(dragIndex, 1)[0] // remove
@@ -129,16 +131,21 @@ class Division extends React.Component {
 
     remove(book, chapter)
 
-    const chaptersToModify = _.filter(chapters, c => c.index > deletedIndex)
+    const chaptersToModify = filter(chapters, c => c.index > deletedIndex)
 
-    _.forEach(chaptersToModify, c => {
+    forEach(chaptersToModify, c => {
       const patch = {
         id: c.id,
         index: c.index - 1,
         rev: c.rev,
       }
 
-      if (chapter.number && c.number) patch.number = c.number - 1
+      if (
+        chapter.subCategory === c.subCategory &&
+        (chapter.number && c.number)
+      ) {
+        patch.number = c.number - 1
+      }
 
       update(book, patch)
     })
@@ -163,7 +170,7 @@ class Division extends React.Component {
 
     const chapterType = type === 'body' ? 'chapter' : 'component'
 
-    const chapterInstances = _.map(chapters, (c, i) => (
+    const chapterInstances = map(chapters, (c, i) => (
       <Chapter
         book={book}
         chapter={c}
