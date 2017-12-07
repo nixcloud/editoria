@@ -2,17 +2,6 @@ const path = require('path')
 const babelIncludes = require('./babel-includes')
 const config = require('config')
 
-const resolve = (type, entry) => {
-  if (typeof entry === 'string') {
-    return require.resolve(`babel-${type}-${entry}`)
-  } else {
-    return [require.resolve(`babel-${type}-${entry[0]}`), entry[1]]
-  }
-}
-
-const resolvePreset = entry => resolve('preset', entry)
-const resolvePlugin = entry => resolve('plugin', entry)
-
 const clientComponents = config.pubsweet.components.filter((name) => {
   let component = require(name)
   // Backwards compatibility - old name was 'frontend', new name is 'client'
@@ -25,19 +14,14 @@ module.exports = [
     loader: 'babel-loader',
     query: {
       presets: [
-        ['es2015', { modules: false }],
-        'react',
-        'stage-2'
-      ].map(resolvePreset),
-      plugins: [
-        'react-hot-loader/babel',
-        resolvePlugin('transform-decorators-legacy')
+        require('babel-preset-env'),
+        require('babel-preset-react'),
+        require('babel-preset-stage-2'),
       ],
-      env: {
-        production: {
-          presets: ['babili']
-        }
-      }
+      plugins: [
+        require('react-hot-loader/babel'),
+        require('babel-plugin-transform-decorators-legacy').default
+      ],
     },
     include: babelIncludes
   },
