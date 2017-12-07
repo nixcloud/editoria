@@ -27,7 +27,7 @@ npm run bootstrap
 Go to the app and create a database for it.  
 ```sh
 cd packages/editoria-app
-npm run setupdb -- --dev
+npm run setupdb
 ```
 
 You should now have a `config/local-development.json` file.  
