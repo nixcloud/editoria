@@ -1,4 +1,4 @@
-## Editoria  
+# Editoria  
 
 This is the Editoria monorepo.  
 
@@ -8,7 +8,7 @@ This application is being developed by the [Coko Foundation](https://coko.founda
 For more information, visit the project's [website](https://editoria.pub/) or our [chat channel](https://mattermost.coko.foundation/coko/channels/editoria).  
 For the editor that Editoria uses, see its related project [Wax](https://gitlab.coko.foundation/wax/wax).  
 
-### Roadmap
+## Roadmap
 
 The current features on our list are the following:
 * Unnumbered components in the body division (#50)
@@ -20,7 +20,7 @@ The current features on our list are the following:
 A lot of the features that end up in Editoria have to do with its editor, [Wax](https://gitlab.coko.foundation/wax/wax).  
 So be sure to take a look at its roadmap to see what's coming next. 
 
-### Get up and running  
+## Get up and running  
 
 Get your copy of the repository.  
 ```sh
