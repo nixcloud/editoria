@@ -94,7 +94,6 @@ class FileUploader extends React.Component {
             } = this.constructor.extractFragmentProperties(name)
 
             const index = self.state.counter[division]
-            const nextIndex = index + 1
 
             const fragment = {
               alignment: {
@@ -121,18 +120,23 @@ class FileUploader extends React.Component {
               trackChanges: false,
             }
 
-            if (division === 'body') {
-              const { bodyChapters } = this.props
-              const groupedFragments = groupBy(bodyChapters, 'subCategory')
-              const hasPartsOrChapters = has(groupedFragments, subCategory)
+            const { bodyChapters } = this.props
+            const groupFragmentsByDivision = groupBy(bodyChapters, 'division')
+            const groupedFragmentsBySubcategory = groupBy(
+              groupFragmentsByDivision[division],
+              'subCategory',
+            )
+            const hasPartsOrChapters = has(
+              groupedFragmentsBySubcategory,
+              subCategory,
+            )
 
-              if (!isEmpty(groupedFragments)) {
-                fragment.number = hasPartsOrChapters
-                  ? groupedFragments[subCategory].length + 1
-                  : 1
-              } else {
-                fragment.number = 1
-              }
+            if (!isEmpty(groupedFragmentsBySubcategory)) {
+              fragment.number = hasPartsOrChapters
+                ? groupedFragmentsBySubcategory[subCategory].length + 1
+                : 1
+            } else {
+              fragment.number = 1
             }
 
             return create(book, fragment)

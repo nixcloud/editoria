@@ -1,16 +1,22 @@
 module.exports = {
   chapter: {
     dropdownValues: {
-      front: [
-        'Table of Contents',
-        'Introduction',
-        'Preface'
-      ],
-      back: [
-        'Appendix A',
-        'Appendix B',
-        'Appendix C'
-      ]
-    }
-  }
+      back: ['Appendix A', 'Appendix B', 'Appendix C'],
+      front: ['Table of Contents', 'Introduction', 'Preface'],
+    },
+  },
+  divisions: [
+    {
+      name: 'front',
+      showNumberBeforeComponents: [],
+    },
+    {
+      name: 'body',
+      showNumberBeforeComponents: ['chapter'],
+    },
+    {
+      name: 'back',
+      showNumberBeforeComponents: [],
+    },
+  ],
 }

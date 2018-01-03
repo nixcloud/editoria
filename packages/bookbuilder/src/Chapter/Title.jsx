@@ -4,17 +4,28 @@ import TextInput from 'editoria-common/src/TextInput'
 import styles from '../styles/bookBuilder.local.scss'
 
 class Title extends React.Component {
-  save () {
+  save() {
     this.refs.chapterInput._save()
   }
 
-  render () {
-    const { isRenaming, goToEditor, onSaveRename, title } = this.props
+  render() {
+    const {
+      isRenaming,
+      goToEditor,
+      onSaveRename,
+      title,
+      showNumber,
+      number,
+    } = this.props
+
+    const content = showNumber
+      ? `${number ? `${number}. ` : ''} ${title || 'Untitled'}`
+      : `${title || 'Untitled'}`
 
     const input = (
       <TextInput
-        className='edit'
-        ref='chapterInput'
+        className="edit"
+        ref="chapterInput"
         onSave={onSaveRename}
         value={title}
       />
@@ -22,9 +33,7 @@ class Title extends React.Component {
 
     const plainTitle = (
       <div className={styles.bodyTitle}>
-        <h3 onDoubleClick={goToEditor}>
-          { title ? title : 'Untitled'}
-        </h3>
+        <h3 onDoubleClick={goToEditor}>{content}</h3>
       </div>
     )
 
@@ -36,8 +45,15 @@ class Title extends React.Component {
 Title.propTypes = {
   goToEditor: React.PropTypes.func.isRequired,
   isRenaming: React.PropTypes.bool.isRequired,
+  number: React.PropTypes.number,
   onSaveRename: React.PropTypes.func.isRequired,
-  title: React.PropTypes.string.isRequired
+  showNumber: React.PropTypes.bool,
+  title: React.PropTypes.string.isRequired,
+}
+
+Title.defaultProps = {
+  number: null,
+  showNumber: false,
 }
 
 export default Title
