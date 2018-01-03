@@ -8,15 +8,15 @@ module.exports = {
   divisions: [
     {
       name: 'front',
-      showNumberBeforeComponents: [],
+      showNumberBeforeComponents: ['component'],
     },
     {
       name: 'body',
-      showNumberBeforeComponents: ['chapter'],
+      showNumberBeforeComponents: ['chapter', 'part'],
     },
     {
       name: 'back',
-      showNumberBeforeComponents: [],
+      showNumberBeforeComponents: ['component'],
     },
   ],
 }

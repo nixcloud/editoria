@@ -120,8 +120,11 @@ class FileUploader extends React.Component {
               trackChanges: false,
             }
 
-            const { bodyChapters } = this.props
-            const groupFragmentsByDivision = groupBy(bodyChapters, 'division')
+            const divisionFragments = this.getFragmentsForDivision(division)
+            const groupFragmentsByDivision = groupBy(
+              divisionFragments,
+              'division',
+            )
             const groupedFragmentsBySubcategory = groupBy(
               groupFragmentsByDivision[division],
               'subCategory',
@@ -156,16 +159,20 @@ class FileUploader extends React.Component {
   // Get latest fragment rev for when ink is done
   // (and update runs with a potentially changed rev)
   getFragmentRev(id, division) {
+    const divisionFragments = this.getFragmentsForDivision(division)
+
+    const fragment = divisionFragments.find(f => f.id === id)
+    return fragment.rev
+  }
+
+  getFragmentsForDivision(division) {
     const mapper = {
       back: this.props.backChapters,
       body: this.props.bodyChapters,
       front: this.props.frontChapters,
     }
 
-    const divisionFragments = mapper[division]
-
-    const fragment = divisionFragments.find(f => f.id === id)
-    return fragment.rev
+    return mapper[division]
   }
 
   onChange(event) {
