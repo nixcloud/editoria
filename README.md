@@ -8,6 +8,18 @@ This application is being developed by the [Coko Foundation](https://coko.founda
 For more information, visit the project's [website](https://editoria.pub/) or our [chat channel](https://mattermost.coko.foundation/coko/channels/editoria).  
 For the editor that Editoria uses, see its related project [Wax](https://gitlab.coko.foundation/wax/wax).  
 
+### Roadmap
+
+The current features on our list are the following:
+* Unnumbered components in the body division (#50)
+* Redesign the component state tool in the book builder (#55)
+* Implement authorization (#57)
+* Integrate with [Manifold](https://github.com/ManifoldScholar/manifold) (#2)
+* Move smaller components to [pubsweet-ui](https://gitlab.coko.foundation/pubsweet/pubsweet/tree/master/packages/ui)
+
+A lot of the features that end up in Editoria have to do with its editor, [Wax](https://gitlab.coko.foundation/wax/wax).  
+So be sure to take a look at its roadmap to see what's coming next. 
+
 ### Get up and running  
 
 Get your copy of the repository.  
