@@ -66,17 +66,19 @@ class Division extends React.Component {
       trackChanges: false,
     }
 
-    if (type === 'body') {
-      const groupedFragments = groupBy(chapters, 'subCategory')
-      const hasPartsOrChapters = has(groupedFragments, group)
+    const groupFragmentsByDivision = groupBy(chapters, 'division')
+    const groupedFragmentsBySubcategory = groupBy(
+      groupFragmentsByDivision[type],
+      'subCategory',
+    )
+    const hasPartsOrChapters = has(groupedFragmentsBySubcategory, group)
 
-      if (!isEmpty(groupedFragments)) {
-        newChapter.number = hasPartsOrChapters
-          ? groupedFragments[group].length + 1
-          : 1
-      } else {
-        newChapter.number = 1
-      }
+    if (!isEmpty(groupedFragmentsBySubcategory)) {
+      newChapter.number = hasPartsOrChapters
+        ? groupedFragmentsBySubcategory[group].length + 1
+        : 1
+    } else {
+      newChapter.number = 1
     }
 
     add(book, newChapter)
@@ -86,9 +88,11 @@ class Division extends React.Component {
   onEndDrag() {
     const { chapters } = this.state
     const { book, update, type } = this.props
-
-    const groupedFragments =
-      type === 'body' ? groupBy(chapters, 'subCategory') : null
+    const groupFragmentsByDivision = groupBy(chapters, 'division')
+    const groupedFragmentsBySubcategory = groupBy(
+      groupFragmentsByDivision[type],
+      'subCategory',
+    )
 
     each(chapters, (c, i) => {
       // position has changed
@@ -102,7 +106,7 @@ class Division extends React.Component {
         if (c.number) {
           const { subCategory } = c
           const index = findIndex(
-            groupedFragments[subCategory],
+            groupedFragmentsBySubcategory[subCategory],
             f => f.id === c.id,
           )
           patch.number = index + 1

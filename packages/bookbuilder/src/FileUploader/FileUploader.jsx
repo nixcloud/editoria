@@ -94,7 +94,6 @@ class FileUploader extends React.Component {
             } = this.constructor.extractFragmentProperties(name)
 
             const index = self.state.counter[division]
-            const nextIndex = index + 1
 
             const fragment = {
               alignment: {
@@ -121,18 +120,26 @@ class FileUploader extends React.Component {
               trackChanges: false,
             }
 
-            if (division === 'body') {
-              const { bodyChapters } = this.props
-              const groupedFragments = groupBy(bodyChapters, 'subCategory')
-              const hasPartsOrChapters = has(groupedFragments, subCategory)
+            const divisionFragments = this.getFragmentsForDivision(division)
+            const groupFragmentsByDivision = groupBy(
+              divisionFragments,
+              'division',
+            )
+            const groupedFragmentsBySubcategory = groupBy(
+              groupFragmentsByDivision[division],
+              'subCategory',
+            )
+            const hasPartsOrChapters = has(
+              groupedFragmentsBySubcategory,
+              subCategory,
+            )
 
-              if (!isEmpty(groupedFragments)) {
-                fragment.number = hasPartsOrChapters
-                  ? groupedFragments[subCategory].length + 1
-                  : 1
-              } else {
-                fragment.number = 1
-              }
+            if (!isEmpty(groupedFragmentsBySubcategory)) {
+              fragment.number = hasPartsOrChapters
+                ? groupedFragmentsBySubcategory[subCategory].length + 1
+                : 1
+            } else {
+              fragment.number = 1
             }
 
             return create(book, fragment)
@@ -152,16 +159,20 @@ class FileUploader extends React.Component {
   // Get latest fragment rev for when ink is done
   // (and update runs with a potentially changed rev)
   getFragmentRev(id, division) {
+    const divisionFragments = this.getFragmentsForDivision(division)
+
+    const fragment = divisionFragments.find(f => f.id === id)
+    return fragment.rev
+  }
+
+  getFragmentsForDivision(division) {
     const mapper = {
       back: this.props.backChapters,
       body: this.props.bodyChapters,
       front: this.props.frontChapters,
     }
 
-    const divisionFragments = mapper[division]
-
-    const fragment = divisionFragments.find(f => f.id === id)
-    return fragment.rev
+    return mapper[division]
   }
 
   onChange(event) {

@@ -1,50 +1,57 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import { indexOf, find } from 'lodash'
+import config from 'config'
 
-import DropdownTitle from './DropdownTitle'
+// import DropdownTitle from './DropdownTitle'
 import RenameEmptyError from './RenameEmptyError'
 import Title from './Title'
 
 import styles from '../styles/bookBuilder.local.scss'
 
 class ChapterTitle extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.goToEditor = this.goToEditor.bind(this)
   }
 
-  save () {
+  save() {
     this.title.save()
   }
 
-  goToEditor () {
+  goToEditor() {
     const { chapter, history, isUploadInProgress } = this.props
     if (chapter.lock !== null || isUploadInProgress) return
 
     history.push(`/books/${chapter.book}/fragments/${chapter.id}`)
   }
 
-  renderTitle () {
+  renderTitle() {
     const {
       chapter,
       isRenaming,
       onSaveRename,
       title,
-      type,
-      update
+      // type,
+      // update,
     } = this.props
+    const { divisions } = config.bookBuilder
+    const { division, subCategory } = chapter
+    const { showNumberBeforeComponents } = find(divisions, ['name', division])
+    const showNumber =
+      indexOf(showNumberBeforeComponents, subCategory) > -1 || false
 
-    if (type === 'chapter' || type === 'part' || type === 'component') {
-      return (
-        <Title
-          isRenaming={isRenaming}
-          goToEditor={this.goToEditor}
-          onSaveRename={onSaveRename}
-          ref={(node) => { this.title = node }}
-          title={title}
-        />
-      )
-    }
+    return (
+      <Title
+        isRenaming={isRenaming}
+        goToEditor={this.goToEditor}
+        onSaveRename={onSaveRename}
+        ref={node => (this.title = node)}
+        title={title}
+        showNumber={showNumber}
+        number={chapter.number || null}
+      />
+    )
 
     // Closing for now the dropdown functionality and fix it later,
     // because rewrites the functionality of Chapter title
@@ -59,32 +66,25 @@ class ChapterTitle extends React.Component {
     //   )
     // }
 
-    return null
+    // return null
   }
 
-  renderError () {
+  renderError() {
     const { isRenameEmpty } = this.props
 
-    return (
-      <RenameEmptyError
-        isRenameEmpty={isRenameEmpty}
-      />
-    )
+    return <RenameEmptyError isRenameEmpty={isRenameEmpty} />
   }
 
-  render () {
+  render() {
     const title = this.renderTitle()
     const renameEmptyError = this.renderError()
 
     return (
       <div className={styles.chapterTitle}>
-
-        { title }
+        {title}
         {/* { this.props.chapter.index } */}
-        { renameEmptyError }
-
+        {renameEmptyError}
         {/* <div className={styles.separator} /> */}
-
       </div>
     )
   }
@@ -99,7 +99,7 @@ ChapterTitle.propTypes = {
   onSaveRename: React.PropTypes.func.isRequired,
   title: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired
+  update: React.PropTypes.func.isRequired,
 }
 
 export default withRouter(ChapterTitle)
