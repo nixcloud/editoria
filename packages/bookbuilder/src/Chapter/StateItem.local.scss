@@ -20,7 +20,7 @@ $light-grey: #b3b3b3;
 
 .disabled {
   color: $light-grey;
-  cursor: not-allowed;
+  cursor: default;
 
   &:hover {
     color: $light-grey;
