@@ -4,6 +4,7 @@ import { indexOf, find } from 'lodash'
 import config from 'config'
 
 // import DropdownTitle from './DropdownTitle'
+import withLink from 'editoria-common/src/withLink'
 import RenameEmptyError from './RenameEmptyError'
 import Title from './Title'
 
@@ -76,12 +77,14 @@ class ChapterTitle extends React.Component {
   }
 
   render() {
+    const { chapter } = this.props
     const title = this.renderTitle()
     const renameEmptyError = this.renderError()
+    const url = `/books/${chapter.book}/fragments/${chapter.id}`
 
     return (
       <div className={styles.chapterTitle}>
-        {title}
+        {withLink(title, url)}
         {/* { this.props.chapter.index } */}
         {renameEmptyError}
         {/* <div className={styles.separator} /> */}

@@ -427,6 +427,13 @@ $upload-multiple: #b1b1b1;
         position: absolute;
         top: -26px;
       }
+      a {
+        text-decoration: none;
+    
+        &:hover, &:link, &:active, &:visited {
+          text-decoration: inherit;
+        }
+      }
     }
 
     .chapterActions {
