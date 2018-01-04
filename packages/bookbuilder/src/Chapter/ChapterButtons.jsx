@@ -1,6 +1,7 @@
 import { get, includes } from 'lodash'
 import React from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
+import withLink from 'editoria-common/src/withLink'
 
 import DeleteModal from './DeleteModal'
 import EditingNotification from './EditingNotification'
@@ -99,18 +100,9 @@ class ChapterButtons extends React.Component {
     return null
   }
 
-  renderEditButton () {
-    const { bookId, chapter } = this.props
+  renderEditButton() {
     const text = this.canEdit() ? 'Edit' : 'View'
-    const url = `/books/${bookId}/fragments/${chapter.id}`
-
-    return (
-      <LinkContainer id='bb-edit' to={url} >
-        <div className={styles.actionContainer}>
-          <a> { text }</a>
-        </div>
-      </LinkContainer>
-    )
+    return text
   }
 
   renderDeleteButton () {
@@ -141,7 +133,8 @@ class ChapterButtons extends React.Component {
   }
 
   renderRightArea () {
-    const { isUploadInProgress } = this.props
+    const { isUploadInProgress, chapter } = this.props
+    const url = `/books/${chapter.book}/fragments/${chapter.id}`
 
     if (this.isLocked()) return this.renderEditingNotification()
     // close Rename of Title
@@ -159,7 +152,9 @@ class ChapterButtons extends React.Component {
 
     return (
       <div style={buttonsStyle}>
-        { editButton }
+      <div className={styles.actionContainer}>
+        { withLink(editButton, url) }
+        </div>
         {/* renameButton */}
         { deleteButton }
       </div>
