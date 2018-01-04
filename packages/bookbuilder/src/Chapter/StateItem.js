@@ -3,14 +3,15 @@ import React from 'react'
 import classNames from 'classnames'
 import classes from './StateItem.local.scss'
 
-const StateItem = ({ disabled, update, values, index }) => {
-  const handleStateItemInteraction = () => {
+const stateItem = ({ disabled, name, update, values, index }) => {
+  const handleInteraction = () => {
     if (disabled) return
-    const nextIndex = arrayToggler(values, index)
-    update(values[nextIndex])
+
+    const nextIndex = arrayShift(values, index)
+    update(name, nextIndex)
   }
 
-  const arrayToggler = (arrary, i) => (i === arrary.length - 1 ? 0 : i + 1)
+  const arrayShift = (array, i) => (i === array.length - 1 ? 0 : i + 1)
 
   return (
     <span
@@ -19,8 +20,8 @@ const StateItem = ({ disabled, update, values, index }) => {
       className={classNames(classes.root, {
         [classes.disabled]: disabled,
       })}
-      onClick={handleStateItemInteraction}
-      onKeyPress={handleStateItemInteraction}
+      onClick={handleInteraction}
+      onKeyPress={handleInteraction}
       disabled={disabled}
     >
       {values[index]}
@@ -28,15 +29,16 @@ const StateItem = ({ disabled, update, values, index }) => {
   )
 }
 
-StateItem.propTypes = {
+stateItem.propTypes = {
   disabled: PropTypes.bool,
   index: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
   values: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
-StateItem.defaultProps = {
+stateItem.defaultProps = {
   disabled: false,
 }
 
-export default StateItem
+export default stateItem
