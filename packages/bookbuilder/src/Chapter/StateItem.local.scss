@@ -2,21 +2,26 @@ $dark-grey: #404040;
 $light-grey: #b3b3b3;
 
 .root {
+  cursor: pointer;
   font-family: 'Fira Sans Condensed';
   font-size: 16px;
   font-style: italic;
   padding: 0;
-  cursor: pointer;
-  
-  &:hover{
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
     color: $dark-grey;
     transition: 0.25s ease-in-out 0s;
   }
-  
 }
+
 .disabled {
   color: $light-grey;
   cursor: not-allowed;
+
   &:hover {
     color: $light-grey;
   }
