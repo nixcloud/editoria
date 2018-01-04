@@ -2,7 +2,7 @@ import { keys, map } from 'lodash'
 import React from 'react'
 
 import AlignmentTool from './AlignmentTool'
-import ProgressList from './ProgressList'
+import StateList from './StateList'
 import UploadButton from './UploadButton'
 
 import styles from '../styles/bookBuilder.local.scss'
@@ -37,6 +37,13 @@ class ChapterSecondRow extends React.Component {
       toggleUpload,
       update
     } = this.props
+    
+    const stateValues = {
+      clean: ['To Clean', 'Cleaning', 'Cleaned'],
+      edit: ['To Edit', 'Editing', 'Edited'],
+      review: ['To Review', 'Reviewing', 'Reviewed'],
+      style: ['To Style', 'Styling', 'Styled'],
+    }
 
     const alignmentOptions = []
     map(keys(chapter.alignment), (key) => {
@@ -62,13 +69,13 @@ class ChapterSecondRow extends React.Component {
           update={update}
         />
 
-        <ProgressList
+        <StateList
           chapter={chapter}
+          stateValues={stateValues}
           modalContainer={outerContainer}
           roles={roles}
           update={update}
         />
-
         <AlignmentTool
           data={alignmentOptions}
           onClickAlignmentBox={this.onClickAlignmentBox}
