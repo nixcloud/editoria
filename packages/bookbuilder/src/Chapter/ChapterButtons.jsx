@@ -1,6 +1,5 @@
 import { get, includes } from 'lodash'
 import React from 'react'
-import { LinkContainer } from 'react-router-bootstrap'
 import withLink from 'editoria-common/src/withLink'
 
 import DeleteModal from './DeleteModal'
