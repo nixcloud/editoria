@@ -45,10 +45,9 @@ const stateList = ({ currentValues, update, values }) => {
 }
 
 stateList.propTypes = {
-  currentValues: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string))
-    .isRequired,
+  currentValues: PropTypes.objectOf(PropTypes.number).isRequired,
   update: PropTypes.func.isRequired,
-  values: PropTypes.arrayOf(PropTypes.string).isRequired,
+  values: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
 }
 
 export default stateList
