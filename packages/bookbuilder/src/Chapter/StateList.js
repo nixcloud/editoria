@@ -6,7 +6,7 @@ import { map, uniqueId, keys, last } from 'lodash'
 import classes from './StateList.local.scss'
 import StateItem from './StateItem'
 
-const stateList = ({ currentValues, fragment, update, values }) => {
+const stateList = ({ currentValues, update, values }) => {
   const progressIds = keys(values)
   const lastItem = last(progressIds)
 
@@ -45,10 +45,10 @@ const stateList = ({ currentValues, fragment, update, values }) => {
 }
 
 stateList.propTypes = {
-  currentValues: PropTypes.object.isRequired,
-  fragment: PropTypes.object.isRequired,
+  currentValues: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string))
+    .isRequired,
   update: PropTypes.func.isRequired,
-  values: PropTypes.object.isRequired,
+  values: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 export default stateList

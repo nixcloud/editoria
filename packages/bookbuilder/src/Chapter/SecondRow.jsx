@@ -84,7 +84,6 @@ class ChapterSecondRow extends React.Component {
 
         <StateList
           currentValues={chapter.progress}
-          fragment={chapter}
           values={stateValues}
           update={this.updateStateList}
         />
