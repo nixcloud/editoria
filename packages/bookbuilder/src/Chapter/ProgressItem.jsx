@@ -1,3 +1,5 @@
+/* DEPRECATED */
+
 import { includes } from 'lodash'
 import React from 'react'
 
@@ -9,7 +11,7 @@ import ProgressModal from './ProgressModal'
 import styles from '../styles/bookBuilder.local.scss'
 
 export class ProgressItem extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.canChange = this.canChange.bind(this)
@@ -25,22 +27,22 @@ export class ProgressItem extends React.Component {
       style: ['To Style', 'Styling', 'Styled'],
       edit: ['To Edit', 'Editing', 'Edited'],
       review: ['To Review', 'Reviewing', 'Reviewed'],
-      clean: ['To Clean', 'Cleaning', 'Cleaned']
+      clean: ['To Clean', 'Cleaning', 'Cleaned'],
     }
 
     this.state = {
       showModal: false,
-      showError: false
+      showError: false,
     }
   }
 
-  toggleModal () {
+  toggleModal() {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
     })
   }
 
-  changeProgressState () {
+  changeProgressState() {
     const { chapter, update, type } = this.props
     const { progressValues } = this
 
@@ -48,13 +50,13 @@ export class ProgressItem extends React.Component {
     const len = list.length
 
     let position = chapter.progress[type]
-    position += 1                      // move up a level
-    if (position >= len) position = 0  // or cycle back to the beginning
+    position += 1 // move up a level
+    if (position >= len) position = 0 // or cycle back to the beginning
 
     const patch = {
       id: chapter.id,
       rev: chapter.rev,
-      progress: chapter.progress
+      progress: chapter.progress,
     }
 
     patch.progress[type] = position
@@ -63,12 +65,13 @@ export class ProgressItem extends React.Component {
     this.setState({ showModal: false })
   }
 
-  canChange () {
+  canChange() {
     const { type, roles, chapter } = this.props
 
-    if (includes(roles, 'admin') || includes(roles, 'production-editor')) return true
+    if (includes(roles, 'admin') || includes(roles, 'production-editor'))
+      return true
 
-    const isActive = (chapter.progress[type] === 1)
+    const isActive = chapter.progress[type] === 1
 
     if (isActive) {
       if (type === 'edit') {
@@ -82,7 +85,7 @@ export class ProgressItem extends React.Component {
     return false
   }
 
-  onClick () {
+  onClick() {
     const { roles } = this.props
 
     if (!this.canChange()) {
@@ -94,17 +97,14 @@ export class ProgressItem extends React.Component {
     }
 
     // TODO -- refactor
-    if (
-      includes(roles, 'production-editor') ||
-      includes(roles, 'admin')
-    ) {
+    if (includes(roles, 'production-editor') || includes(roles, 'admin')) {
       return this.changeProgressState()
     }
 
     this.toggleModal()
   }
 
-  renderModal () {
+  renderModal() {
     const { chapter, modalContainer, type } = this.props
     const { showModal } = this.state
 
@@ -122,29 +122,26 @@ export class ProgressItem extends React.Component {
     )
   }
 
-  renderIcon () {
+  renderIcon() {
     const { hasIcon } = this.props
     if (!hasIcon) return null
 
-    return (<i className='fa fa-angle-right' />)
+    return <i className="fa fa-angle-right" />
   }
 
-  renderErrorMessage () {
+  renderErrorMessage() {
     const { showError } = this.state
     if (!showError) return null
 
     return (
-      <Alert
-        bsStyle='warning'
-        className={styles.noWritesError}
-      >
-        You don't have access to perfom this action.
-        Please contact your Production Editor.
+      <Alert bsStyle="warning" className={styles.noWritesError}>
+        You don't have access to perfom this action. Please contact your
+        Production Editor.
       </Alert>
     )
   }
 
-  render () {
+  render() {
     const { type, chapter } = this.props
     const { progressValues } = this
 
@@ -159,17 +156,12 @@ export class ProgressItem extends React.Component {
 
     return (
       <span>
-        { errorMessage }
+        {errorMessage}
 
-        <li
-          className={'progress' + currentStateValue}
-          onClick={this.onClick}
-        >
-
-          { currentStateText } &nbsp;
-          { icon }
-          { warningModal }
-
+        <li className={'progress' + currentStateValue} onClick={this.onClick}>
+          {currentStateText} &nbsp;
+          {icon}
+          {warningModal}
         </li>
       </span>
     )
@@ -182,7 +174,7 @@ ProgressItem.propTypes = {
   modalContainer: React.PropTypes.object,
   roles: React.PropTypes.array.isRequired,
   type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired
+  update: React.PropTypes.func.isRequired,
 }
 
 export default ProgressItem
