@@ -79,7 +79,7 @@ export class UploadButton extends React.Component {
     const { accept, title, type, chapter } = this.props
 
     return (
-      <span>
+      <span className={styles.btnContainer}>
         <label
           htmlFor={'single-file-uploader' + chapter.id}
           className={styles.uploadIcon + ' ' + uploadClass + ' ' + disabled}

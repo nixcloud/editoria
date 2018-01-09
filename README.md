@@ -30,7 +30,7 @@ git clone https://gitlab.coko.foundation/editoria/editoria.git
 cd editoria
 ```
 
-Make sure you use you use `node >= 8`. We provide `.envrc` and `.nvmrc` files for convenience.  
+Make sure you use you use `node >= 8.3`. We provide `.envrc` and `.nvmrc` files for convenience.  
 
 Install all dependencies.  
 ```sh
@@ -51,7 +51,10 @@ In this file, add the following:
 "pubsweet-component-ink-backend": {
   "inkEndpoint": "< your-ink-api-endpoint >",
   "email": "< your-ink-email >",
-  "password": "< your-ink-password >"
+  "password": "< your-ink-password >",
+  "recipes": {
+    "editoria-typescript": "< editoria-typescript-recipe-id >"
+  }
 }
 ```
 

@@ -1,0 +1,14 @@
+.stateListContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.itemContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.delimiter {
+  padding: 5px;
+}

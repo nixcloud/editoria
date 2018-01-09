@@ -1,10 +1,12 @@
+/* DEPRECATED */
+
 import React from 'react'
 
 import ProgressItem from './ProgressItem'
 import styles from '../styles/bookBuilder.local.scss'
 
 class ProgressList extends React.Component {
-  render () {
+  render() {
     const { chapter, roles, modalContainer, update } = this.props
 
     return (
@@ -13,7 +15,7 @@ class ProgressList extends React.Component {
           chapter={chapter}
           hasIcon
           roles={roles}
-          type='style'
+          type="style"
           update={update}
         />
 
@@ -22,7 +24,7 @@ class ProgressList extends React.Component {
           hasIcon
           modalContainer={modalContainer}
           roles={roles}
-          type='edit'
+          type="edit"
           update={update}
         />
 
@@ -31,14 +33,14 @@ class ProgressList extends React.Component {
           hasIcon
           modalContainer={modalContainer}
           roles={roles}
-          type='review'
+          type="review"
           update={update}
         />
 
         <ProgressItem
           chapter={chapter}
           roles={roles}
-          type='clean'
+          type="clean"
           update={update}
         />
       </ul>
@@ -50,7 +52,7 @@ ProgressList.propTypes = {
   chapter: React.PropTypes.object.isRequired,
   modalContainer: React.PropTypes.object.isRequired,
   roles: React.PropTypes.array.isRequired,
-  update: React.PropTypes.func.isRequired
+  update: React.PropTypes.func.isRequired,
 }
 
 export default ProgressList

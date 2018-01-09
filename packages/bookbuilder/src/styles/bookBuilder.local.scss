@@ -489,24 +489,37 @@ $upload-multiple: #b1b1b1;
     .secondLineContainer {
       display: flex;
       padding-top: 1.8%;
+      flex-direction: row;
+      align-items: center;
 
       .btnFile {
-        position: relative;
-        bottom: 3px;
+        // position: relative;
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+        margin-right: 25px;
+        // bottom: 3px;
+      }
+      .btnContainer {
+        flex-direction: row;
+        display: flex;
+        align-items: center;
       }
 
       .btnFile input[type='file'] {
         display: none !important;
       }
       .uploadText {
-        bottom: 10px;
+        // bottom: 10px;
         color: $main-grey;
         cursor: pointer;
         font-family: 'Fira Sans Condensed';
         font-size: 16px;
         font-style: normal;
-        left: 4px;
-        position: relative;
+        margin-left: 4px;
+        margin-bottom: 0px;
+        // left: 4px;
+        // position: relative;
         text-transform: uppercase;
       }
 
@@ -518,29 +531,28 @@ $upload-multiple: #b1b1b1;
         background-color: $light-grey;
         color: $black;
         cursor: pointer;
-        font-weight: 500;
-        text-align: center;
         width: 24px;
         height: 24px;
+        margin: 0px;
       }
 
-      .proggressListContainer {
-        margin-left: 3%;
-        width: 40%;
-        li {
-          font-family: 'Fira Sans Condensed';
-          font-size: 16px;
-          font-style: italic;
-          float: left;
-          padding-right: 2%;
-        }
+      // .proggressListContainer {
+      //   margin-left: 3%;
+      //   width: 40%;
+      //   li {
+      //     font-family: 'Fira Sans Condensed';
+      //     font-size: 16px;
+      //     font-style: italic;
+      //     float: left;
+      //     padding-right: 2%;
+      //   }
 
-        li:hover {
-          color: $dark-grey;
-          cursor: pointer;
-          transition: 0.25s ease-in-out 0s;
-        }
-      }
+      //   li:hover {
+      //     color: $dark-grey;
+      //     cursor: pointer;
+      //     transition: 0.25s ease-in-out 0s;
+      //   }
+      // }
     }
   }
 
