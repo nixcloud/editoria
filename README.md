@@ -20,6 +20,8 @@ The current features on our list are the following:
 A lot of the features that end up in Editoria have to do with its editor, [Wax](https://gitlab.coko.foundation/wax/wax).  
 So be sure to take a look at its roadmap to see what's coming next. 
 
+You can also follow the tasklist of the testing process with UCP [here](#60)
+
 ## Get up and running  
 
 Get your copy of the repository.  
