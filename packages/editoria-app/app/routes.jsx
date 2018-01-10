@@ -1,9 +1,6 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
-// Import Bootstrap + Font Awesome styles
-import 'pubsweet-component-manage/Manage.scss'
-
 // Users and Teams
 import UsersManager from 'pubsweet-component-users-manager/UsersManagerContainer'
 import TeamsManager from 'pubsweet-component-teams-manager/TeamsManagerContainer'
@@ -21,7 +18,6 @@ import WithConfig from 'pubsweet-component-wax/src/WithConfig'
 import BookBuilder from 'pubsweet-component-bookbuilder/src/BookBuilder'
 import Dashboard from 'pubsweet-component-editoria-dashboard/src/Dashboard'
 
-import Manage from 'pubsweet-component-manage/Manage'
 import Navigation from './components/Navigation/Navigation'
 import PrivateRoute from './components/PrivateRoute'
 
@@ -57,13 +53,15 @@ export default (
     <Route path='/signup' component={Signup} />
     <Route path='/password-reset' component={PasswordReset} />
 
-    <Manage nav={<Navigation />}>
+    <div>
+      <Navigation />
+
       <PrivateRoute exact path='/books' component={Dashboard} />
       <PrivateRoute path='/books/:id/book-builder' component={BookBuilder} />
       <PrivateRoute path='/books/:bookId/fragments/:fragmentId' component={Editor} />
 
       <PrivateRoute path='/teams' component={TeamsManager} />
       <PrivateRoute path='/users' component={UsersManager} />
-    </Manage>
+    </div>
   </Switch>
 )
