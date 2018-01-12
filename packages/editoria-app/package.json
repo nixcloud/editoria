@@ -47,7 +47,7 @@
     "pubsweet-component-wax": "^0.3.2",
     "pubsweet-server": "^1.0.0",
     "pubsweet-theme-plugin": "^0.0.1",
-    "react": "15.5.4",
+    "react": "15.6.2",
     "react-bootstrap": "0.30.10",
     "react-dnd": "2.3.0",
     "react-dnd-html5-backend": "2.3.0",
