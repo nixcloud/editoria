@@ -20,7 +20,6 @@
     "editoria-common": "^0.0.3",
     "lodash": "4.17.4",
     "pubsweet-client": "1.0.0-beta.6",
-    "react": "15.5.4",
     "react-redux": "5.0.4",
     "react-router-dom": "4.2.2",
     "redux": "3.6.0"
@@ -34,5 +33,8 @@
     "react-test-renderer": "^15.6.1",
     "sinon": "^2.3.8",
     "sinon-as-promised": "^4.0.3"
+  },
+  "peerDependencies": {
+    "react": "^15.6.2"
   }
 }
