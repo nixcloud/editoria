@@ -1,6 +1,9 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
+// Import Bootstrap + Font Awesome styles
+import 'pubsweet-component-manage/Manage.scss'
+
 // Users and Teams
 import UsersManager from 'pubsweet-component-users-manager/UsersManagerContainer'
 import TeamsManager from 'pubsweet-component-teams-manager/TeamsManagerContainer'
@@ -24,7 +27,7 @@ import PrivateRoute from './components/PrivateRoute'
 // Pass configuration to editor
 const Editor = WithConfig(Wax, {
   layout: 'editoria',
-  lockWhenEditing: true
+  lockWhenEditing: true,
 })
 
 // export default (
@@ -48,20 +51,23 @@ const Editor = WithConfig(Wax, {
 
 export default (
   <Switch>
-    <Redirect exact path='/' to='/books' />
-    <Route path='/login' component={Login} />
-    <Route path='/signup' component={Signup} />
-    <Route path='/password-reset' component={PasswordReset} />
+    <Redirect exact path="/" to="/books" />
+    <Route path="/login" component={Login} />
+    <Route path="/signup" component={Signup} />
+    <Route path="/password-reset" component={PasswordReset} />
 
     <div>
       <Navigation />
 
-      <PrivateRoute exact path='/books' component={Dashboard} />
-      <PrivateRoute path='/books/:id/book-builder' component={BookBuilder} />
-      <PrivateRoute path='/books/:bookId/fragments/:fragmentId' component={Editor} />
+      <PrivateRoute exact path="/books" component={Dashboard} />
+      <PrivateRoute path="/books/:id/book-builder" component={BookBuilder} />
+      <PrivateRoute
+        path="/books/:bookId/fragments/:fragmentId"
+        component={Editor}
+      />
 
-      <PrivateRoute path='/teams' component={TeamsManager} />
-      <PrivateRoute path='/users' component={UsersManager} />
+      <PrivateRoute path="/teams" component={TeamsManager} />
+      <PrivateRoute path="/users" component={UsersManager} />
     </div>
   </Switch>
 )
