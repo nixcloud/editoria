@@ -21,14 +21,13 @@ import WithConfig from 'pubsweet-component-wax/src/WithConfig'
 import BookBuilder from 'pubsweet-component-bookbuilder/src/BookBuilder'
 import Dashboard from 'pubsweet-component-editoria-dashboard/src/Dashboard'
 
-import Manage from 'pubsweet-component-manage/Manage'
 import Navigation from './components/Navigation/Navigation'
 import PrivateRoute from './components/PrivateRoute'
 
 // Pass configuration to editor
 const Editor = WithConfig(Wax, {
   layout: 'editoria',
-  lockWhenEditing: true
+  lockWhenEditing: true,
 })
 
 // export default (
@@ -52,18 +51,23 @@ const Editor = WithConfig(Wax, {
 
 export default (
   <Switch>
-    <Redirect exact path='/' to='/books' />
-    <Route path='/login' component={Login} />
-    <Route path='/signup' component={Signup} />
-    <Route path='/password-reset' component={PasswordReset} />
+    <Redirect exact path="/" to="/books" />
+    <Route path="/login" component={Login} />
+    <Route path="/signup" component={Signup} />
+    <Route path="/password-reset" component={PasswordReset} />
 
-    <Manage nav={<Navigation />}>
-      <PrivateRoute exact path='/books' component={Dashboard} />
-      <PrivateRoute path='/books/:id/book-builder' component={BookBuilder} />
-      <PrivateRoute path='/books/:bookId/fragments/:fragmentId' component={Editor} />
+    <div>
+      <Navigation />
 
-      <PrivateRoute path='/teams' component={TeamsManager} />
-      <PrivateRoute path='/users' component={UsersManager} />
-    </Manage>
+      <PrivateRoute exact path="/books" component={Dashboard} />
+      <PrivateRoute path="/books/:id/book-builder" component={BookBuilder} />
+      <PrivateRoute
+        path="/books/:bookId/fragments/:fragmentId"
+        component={Editor}
+      />
+
+      <PrivateRoute path="/teams" component={TeamsManager} />
+      <PrivateRoute path="/users" component={UsersManager} />
+    </div>
   </Switch>
 )

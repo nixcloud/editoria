@@ -1,31 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
-import { LinkContainer } from 'react-router-bootstrap'
-import { Navbar, Nav, NavItem, NavbarBrand } from 'react-bootstrap'
+import { withRouter, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Authorize from 'pubsweet-client/src/helpers/Authorize'
-import NavbarUser from 'pubsweet-component-navigation/NavbarUser'
 import actions from 'pubsweet-client/src/actions'
+import { AppBar } from '@pubsweet/ui'
+
+import classes from './Navigation.local.scss'
 
 // TODO -- break into smaller components
 class Navigation extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.collectionId = ''
     this.inEditor = null
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.shouldAddBookLink()
   }
 
-  componentWillUpdate () {
+  componentWillUpdate() {
     this.shouldAddBookLink()
   }
 
-  shouldAddBookLink () {
+  shouldAddBookLink() {
     const { history } = this.props
     const { location } = history
     const { pathname } = location
@@ -35,67 +35,46 @@ class Navigation extends React.Component {
 
     this.inEditor = pathname.match(/fragments/g)
     if (this.inEditor) {
-      const pathnameSplited = pathname.split('/')
-      this.collectionId = pathnameSplited[2]
+      const pathnameSplit = pathname.split('/')
+      this.collectionId = pathnameSplit[2]
     }
   }
 
-  render () {
+  render() {
     const { logoutUser, currentUser } = this.props
-    let logoutButtonIfAuthenticated
-
-    if (currentUser.isAuthenticated) {
-      logoutButtonIfAuthenticated = (
-        <NavbarUser
-          user={currentUser.user}
-          onLogoutClick={() => logoutUser('/login')}
-        />
-      )
-    }
-
-    let BackToBooks
-    if (this.inEditor) {
-      BackToBooks = (
-        <LinkContainer to={`/books/${this.collectionId}/book-builder`}>
-          <NavItem>Back to book</NavItem>
-        </LinkContainer>
-       )
-    }
 
     // TODO --  fix object properties underneath
     return (
-      <Navbar fluid>
-        <Navbar.Header>
-          <NavbarBrand>
-            <a href="/">Editoria</a>
-          </NavbarBrand>
-        </Navbar.Header>
-
-        <Nav>
-          <LinkContainer to="/books">
-            <NavItem>Books</NavItem>
-          </LinkContainer>
-
-          <Authorize operation="read" object={{ path: '/users' }}>
-            <LinkContainer to="/users">
-              <NavItem>Users</NavItem>
-            </LinkContainer>
-          </Authorize>
-
-          <Authorize operation="read" object={{ path: '/teams' }}>
-            <LinkContainer to="/teams">
-              <NavItem>Teams</NavItem>
-            </LinkContainer>
-          </Authorize>
-
-          {BackToBooks}
-        </Nav>
-
-        {logoutButtonIfAuthenticated}
-      </Navbar>
+      <AppBar
+        brand="Editoria"
+        className={classes.root}
+        navLinks={
+          <NavLinks collectionId={this.collectionId} inEditor={this.inEditor} />
+        }
+        onLogoutClick={logoutUser}
+        user={currentUser.user}
+      />
     )
   }
 }
+
+const NavLinks = ({ inEditor, collectionId }) => (
+  <div>
+    <NavLink to="/books">Books</NavLink>
+
+    <Authorize operation="read" object={{ path: '/users' }}>
+      <NavLink to="/users">Users</NavLink>
+    </Authorize>
+
+    <Authorize operation="read" object={{ path: '/teams' }}>
+      <NavLink to="/teams">Teams</NavLink>
+    </Authorize>
+
+    {inEditor && (
+      <NavLink to={`/books/${collectionId}/book-builder`}>Back to book</NavLink>
+    )}
+  </div>
+)
 
 Navigation.propTypes = {
   currentUser: PropTypes.object,

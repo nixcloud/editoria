@@ -21,6 +21,7 @@
   "dependencies": {
     "@pubsweet/db-manager": "^0.0.8",
     "@pubsweet/logger": "^0.0.1",
+    "@pubsweet/ui": "^0.2.0",
     "authsome": "0.0.9",
     "font-awesome": "4.7.0",
     "history": "^4.7.2",
@@ -59,7 +60,6 @@
     "redux": "3.6.0"
   },
   "devDependencies": {
-    "@pubsweet/db-manager": "^0.0.8",
     "app-module-path": "^2.2.0",
     "autobind-decorator": "^1.3.4",
     "babel-core": "^6.14.0",
@@ -110,15 +110,12 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "./test/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+        "./test/fileMock.js",
       "\\.(css|less|scss)$": "identity-obj-proxy"
     },
-    "setupFiles": [
-      "./test/jest.config.js"
-    ],
-    "snapshotSerializers": [
-      "./node_modules/enzyme-to-json/serializer"
-    ],
+    "setupFiles": ["./test/jest.config.js"],
+    "snapshotSerializers": ["./node_modules/enzyme-to-json/serializer"],
     "transformIgnorePatterns": [
       "node_modules/(?!pubsweet-frontend)",
       "__snapshots__"
