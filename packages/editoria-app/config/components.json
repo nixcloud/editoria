@@ -8,5 +8,7 @@
   "pubsweet-component-password-reset-frontend",
   "pubsweet-component-signup",
   "pubsweet-component-vivliostyle-viewer",
-  "pubsweet-component-wax"
+  "pubsweet-component-wax",
+  "@pubsweet/component-polling-client",
+  "@pubsweet/component-polling-server"
 ]
