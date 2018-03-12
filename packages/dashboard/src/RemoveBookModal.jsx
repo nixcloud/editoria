@@ -1,19 +1,18 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import AbstractModal from 'editoria-common/src/AbstractModal'
 
 class RemoveBookModal extends React.Component {
-  renderBody () {
+  renderBody() {
     const { book } = this.props
 
     return (
-      <span>
-        Are you sure you want to permanently delete { book.title }?
-      </span>
+      <span>Are you sure you want to permanently delete {book.title}?</span>
     )
   }
 
-  render () {
+  render() {
     const { container, remove, show, toggle } = this.props
 
     const title = 'Delete Book'
@@ -36,11 +35,18 @@ class RemoveBookModal extends React.Component {
 }
 
 RemoveBookModal.propTypes = {
-  book: React.PropTypes.object.isRequired,
-  container: React.PropTypes.object.isRequired,
-  remove: React.PropTypes.func.isRequired,
-  show: React.PropTypes.bool.isRequired,
-  toggle: React.PropTypes.func.isRequired
+  book: PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+  }),
+  container: PropTypes.any.isRequired,
+  remove: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+}
+
+RemoveBookModal.defaultProps = {
+  book: null,
 }
 
 export default RemoveBookModal

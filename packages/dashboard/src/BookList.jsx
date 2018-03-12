@@ -1,12 +1,14 @@
 import { isEmpty, map, sortBy } from 'lodash'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Book from './Book'
 import styles from './dashboard.local.scss'
 
 class BookList extends React.Component {
-  renderBookList () {
+  renderBookList() {
     const { books, container, edit, remove, roles } = this.props
+
     if (!books) return 'Fetching...'
 
     if (isEmpty(books)) {
@@ -19,39 +21,38 @@ class BookList extends React.Component {
 
     const items = sortBy(books, [book => book.title.toLowerCase()])
 
-    const bookComponents = map(items, (book) => {
-      return (
-        <Book
-          book={book}
-          container={container}
-          edit={edit}
-          key={book.id}
-          remove={remove}
-          roles={roles}
-        />
-      )
-    })
+    const bookComponents = map(items, book => (
+      <Book
+        book={book}
+        container={container}
+        edit={edit}
+        key={book.id}
+        remove={remove}
+        roles={roles}
+      />
+    ))
 
     return bookComponents
   }
 
-  render () {
+  render() {
     const bookList = this.renderBookList()
 
-    return (
-      <div className='col-lg-12'>
-        { bookList }
-      </div>
-    )
+    return <div className="col-lg-12">{bookList}</div>
   }
 }
 
 BookList.propTypes = {
-  books: React.PropTypes.array.isRequired,
-  container: React.PropTypes.object.isRequired,
-  edit: React.PropTypes.func.isRequired,
-  remove: React.PropTypes.func.isRequired,
-  roles: React.PropTypes.array.isRequired
+  books: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      title: PropTypes.string,
+    }),
+  ).isRequired,
+  container: PropTypes.any.isRequired,
+  edit: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 export default BookList
