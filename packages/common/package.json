@@ -11,7 +11,10 @@
   "dependencies": {
     "react": "^15.6.2",
     "react-bootstrap": "0.30.10",
-    "react-router-dom": "4.2.2",
+    "react-router-dom": "4.2.2"
+  },
+  "devDependencies": {
     "prop-types": "^15.5.10"
   }
+
 }
