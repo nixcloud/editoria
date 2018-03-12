@@ -1,48 +1,40 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Modal } from 'react-bootstrap'
 
 export class AbstractModal extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.performAction = this.performAction.bind(this)
   }
 
-  performAction () {
+  performAction() {
     const { successAction } = this.props
     successAction()
   }
 
-  renderHeader () {
+  renderHeader() {
     const { title } = this.props
 
     return (
       <Modal.Header>
-        <Modal.Title>
-          { title }
-        </Modal.Title>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
     )
   }
 
-  renderBody () {
+  renderBody() {
     const { body } = this.props
 
-    return (
-      <Modal.Body>
-        { body }
-      </Modal.Body>
-    )
+    return <Modal.Body>{body}</Modal.Body>
   }
 
-  renderFooter () {
+  renderFooter() {
     const { cancelText, successAction, successText, toggle } = this.props
 
     const successButton = (
-      <a
-        className='modal-button bb-modal-act'
-        onClick={this.performAction}
-      >
-        { successText }
+      <a className="modal-button bb-modal-act" onClick={this.performAction}>
+        {successText}
       </a>
     )
 
@@ -50,21 +42,21 @@ export class AbstractModal extends React.Component {
 
     return (
       <Modal.Footer>
-        <div className='modal-buttons-container'>
-
-          <a className='modal-button modal-discard bb-modal-cancel'
-            onClick={toggle}>
-            { cancelText || 'Cancel' }
+        <div className="modal-buttons-container">
+          <a
+            className="modal-button modal-discard bb-modal-cancel"
+            onClick={toggle}
+          >
+            {cancelText || 'Cancel'}
           </a>
 
-          { success }
-
+          {success}
         </div>
       </Modal.Footer>
     )
   }
 
-  render () {
+  render() {
     const { container, size, show, toggle } = this.props
 
     const header = this.renderHeader()
@@ -74,31 +66,43 @@ export class AbstractModal extends React.Component {
     return (
       <Modal
         bsSize={size || null}
-        className='modal'
+        className="modal"
         container={container}
         onHide={toggle}
         show={show}
       >
-
-        { header }
-        { body }
-        { footer }
-
+        {header}
+        {body}
+        {footer}
       </Modal>
     )
   }
 }
 
 AbstractModal.propTypes = {
-  body: React.PropTypes.object,
-  cancelText: React.PropTypes.string,
-  container: React.PropTypes.object.isRequired,
-  show: React.PropTypes.bool.isRequired,
-  size: React.PropTypes.string,
-  successAction: React.PropTypes.func,
-  successText: React.PropTypes.string,
-  title: React.PropTypes.string.isRequired,
-  toggle: React.PropTypes.func.isRequired
+  body: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.node),
+  ]).isRequired,
+  cancelText: PropTypes.string,
+  container: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]).isRequired,
+  show: PropTypes.bool.isRequired,
+  size: PropTypes.string,
+  successAction: PropTypes.func,
+  successText: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  toggle: PropTypes.func.isRequired,
+}
+
+AbstractModal.defaultProps = {
+  cancelText: null,
+  size: null,
+  successAction: null,
+  successText: null,
 }
 
 export default AbstractModal
