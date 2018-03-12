@@ -86,10 +86,7 @@ AbstractModal.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
   ]).isRequired,
   cancelText: PropTypes.string,
-  container: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node),
-  ]).isRequired,
+  container: PropTypes.any.isRequired,
   show: PropTypes.bool.isRequired,
   size: PropTypes.string,
   successAction: PropTypes.func,
