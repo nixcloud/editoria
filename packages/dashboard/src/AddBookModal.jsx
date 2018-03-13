@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import AbstractModal from 'editoria-common/src/AbstractModal'
 import styles from './dashboard.local.scss'
 
 class AddBookModal extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.handleKeyOnInput = this.handleKeyOnInput.bind(this)
@@ -14,17 +15,17 @@ class AddBookModal extends React.Component {
     this.state = { error: false }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     const { show } = this.props
     if (show) this.inputRef.focus()
   }
 
-  handleKeyOnInput (event) {
+  handleKeyOnInput(event) {
     if (event.charCode !== 13) return
     this.onCreate()
   }
 
-  onCreate () {
+  onCreate() {
     const { create, toggle } = this.props
 
     const input = this.inputRef
@@ -32,7 +33,7 @@ class AddBookModal extends React.Component {
 
     if (newTitle.length === 0) {
       return this.setState({
-        error: true
+        error: true,
       })
     }
 
@@ -40,52 +41,50 @@ class AddBookModal extends React.Component {
     toggle()
   }
 
-  onInputChange () {
+  onInputChange() {
     const { error } = this.state
     if (!error) return
     this.setState({ error: false })
   }
 
-  renderBody () {
+  renderBody() {
     const error = this.renderError()
     const message = (
-      <div style={{'paddingBottom': 4}} >
+      <div style={{ paddingBottom: 4 }}>
         Enter the title of the new book <br />
       </div>
     )
 
     return (
       <div>
-        { message }
-        { error }
+        {message}
+        {error}
 
         <input
           className={styles['add-book-input']}
-          name='title'
+          name="title"
           onChange={this.onInputChange}
           onKeyPress={this.handleKeyOnInput}
-          placeholder='eg. My new title'
-          ref={(item) => { this.inputRef = item }}
-          type='text'
+          placeholder="eg. My new title"
+          ref={item => {
+            this.inputRef = item
+          }}
+          type="text"
         />
       </div>
     )
   }
 
-  renderError () {
+  renderError() {
     const { error } = this.state
 
-    const el = (
-      <div className='error' >
-        New book title cannot be empty
-      </div>
-    )
+    const el = <div className="error">New book title cannot be empty</div>
 
     const res = error ? el : null
     return res
   }
 
-  render () {
+  render() {
     const { container, show, toggle } = this.props
     const body = this.renderBody()
 
@@ -95,8 +94,8 @@ class AddBookModal extends React.Component {
         container={container}
         show={show}
         successAction={this.onCreate}
-        successText='Add'
-        title='Add a new book'
+        successText="Add"
+        title="Add a new book"
         toggle={toggle}
       />
     )
@@ -104,10 +103,10 @@ class AddBookModal extends React.Component {
 }
 
 AddBookModal.propTypes = {
-  create: React.PropTypes.func.isRequired,
-  container: React.PropTypes.object.isRequired,
-  show: React.PropTypes.bool.isRequired,
-  toggle: React.PropTypes.func.isRequired
+  create: PropTypes.func.isRequired,
+  container: PropTypes.any.isRequired,
+  show: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
 }
 
 export default AddBookModal

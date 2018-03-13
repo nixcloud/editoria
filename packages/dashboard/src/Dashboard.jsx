@@ -3,6 +3,7 @@ import { each, filter, forEach, isEmpty, union } from 'lodash'
 // TODO -- clean up this import
 import Actions from 'pubsweet-client/src/actions'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -12,7 +13,7 @@ import DashboardHeader from './DashboardHeader'
 import styles from './dashboard.local.scss'
 
 export class Dashboard extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.createBook = this.createBook.bind(this)
@@ -24,7 +25,7 @@ export class Dashboard extends React.Component {
     this.toggleModal = this.toggleModal.bind(this)
 
     this.state = {
-      showModal: false
+      showModal: false,
     }
   }
 
@@ -32,23 +33,21 @@ export class Dashboard extends React.Component {
     Get books and teams.
     Make sure all books have teams associated with them.
   */
-  componentWillMount () {
+  componentWillMount() {
     const { actions } = this.props
     const { getCollections, getTeams } = actions
 
-    getCollections().then(
-      () => getTeams()
-    ).then(
-      () => this.findBooksWithNoTeams()
-    )
+    getCollections()
+      .then(() => getTeams())
+      .then(() => this.findBooksWithNoTeams())
   }
 
   /*
     Toggle showing 'add book' modal
   */
-  toggleModal () {
+  toggleModal() {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
     })
   }
 
@@ -56,11 +55,11 @@ export class Dashboard extends React.Component {
     Create a new book with the given title.
     Once you have the new book's db id, make the teams for it as well.
   */
-  createBook (newTitle) {
+  createBook(newTitle) {
     const { createCollection } = this.props.actions
 
     const book = {
-      title: newTitle || 'Untitled'
+      title: newTitle || 'Untitled',
     }
 
     createCollection(book).then(res => {
@@ -72,7 +71,7 @@ export class Dashboard extends React.Component {
   /*
     Edit a book's properties.
   */
-  editBook (patch) {
+  editBook(patch) {
     const { updateCollection } = this.props.actions
     updateCollection(patch)
   }
@@ -80,17 +79,17 @@ export class Dashboard extends React.Component {
   /*
     Return an array of all the roles that the current user has
   */
-  getRoles () {
+  getRoles() {
     const { user } = this.props
 
     let roles = []
     if (user.admin) roles.push('admin')
 
-    function addRole (role) {
+    function addRole(role) {
       roles = union(roles, [role])
     }
 
-    forEach(user.teams, (t) => {
+    forEach(user.teams, t => {
       switch (t.teamType.name) {
         case 'Production Editor':
           addRole('production-editor')
@@ -113,7 +112,7 @@ export class Dashboard extends React.Component {
     Remove the given book.
     Also remove all teams associated with it.
   */
-  removeBook (book) {
+  removeBook(book) {
     const { deleteCollection } = this.props.actions
 
     deleteCollection(book).then(res => {
@@ -129,13 +128,11 @@ export class Dashboard extends React.Component {
       # the command 'pubsweet setupdb'.
   */
   // TODO -- refactor so that less operations run most of the time
-  findBooksWithNoTeams () {
+  findBooksWithNoTeams() {
     const { books, teams } = this.props
 
     each(books, book => {
-      const teamsForBook = filter(teams, t => {
-        return t.object.id === book.id
-      })
+      const teamsForBook = filter(teams, t => t.object.id === book.id)
 
       if (isEmpty(teamsForBook)) {
         this.createTeamsForBook(book)
@@ -148,23 +145,24 @@ export class Dashboard extends React.Component {
     This should run either when a new book is created,
     or when a book with no teams associated with it is found.
   */
-  createTeamsForBook (book) {
+  createTeamsForBook(book) {
     const { createTeam } = this.props.actions
 
-    each(config.authsome.teams, (teamType) => {
+    each(config.authsome.teams, teamType => {
       // TODO -- Review the idea that the name needs to be plural for some teams
-      const name = (teamType.name === 'Production Editor')
-      ? teamType.name
-      : teamType.name + 's'
+      const name =
+        teamType.name === 'Production Editor'
+          ? teamType.name
+          : `${teamType.name}s`
 
       const newTeam = {
         members: [],
-        name: name,
+        name,
         object: {
           id: book.id,
-          type: 'collection'
+          type: 'collection',
         },
-        teamType: teamType
+        teamType,
       }
 
       createTeam(newTeam)
@@ -175,36 +173,31 @@ export class Dashboard extends React.Component {
     Delete all teams associated with the given book.
     This should only run after a book is deleted.
   */
-  removeTeamsForBook (book) {
+  removeTeamsForBook(book) {
     const { actions, teams } = this.props
     const { deleteTeam } = actions
 
-    const teamsToDelete = filter(teams, team => {
-      return team.object.id === book.id
-    })
+    const teamsToDelete = filter(teams, team => team.object.id === book.id)
 
     each(teamsToDelete, team => {
       deleteTeam(team)
     })
   }
 
-  render () {
+  render() {
     const { books } = this.props
     const { showModal } = this.state
 
     const roles = this.getRoles()
 
-    const className = styles.bookList +
-      ' bootstrap pubsweet-component pubsweet-component-scroll'
+    const className = `${
+      styles.bookList
+    } bootstrap pubsweet-component pubsweet-component-scroll`
 
     return (
       <div className={className}>
-        <div className='container col-lg-offset-2 col-lg-8'>
-
-          <DashboardHeader
-            roles={roles}
-            toggle={this.toggleModal}
-          />
+        <div className="container col-lg-offset-2 col-lg-8">
+          <DashboardHeader roles={roles} toggle={this.toggleModal} />
 
           <BookList
             books={books}
@@ -227,27 +220,57 @@ export class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  actions: React.PropTypes.object.isRequired,
-  books: React.PropTypes.arrayOf(React.PropTypes.object),  // TODO -- ??
-  teams: React.PropTypes.arrayOf(React.PropTypes.object),
-  user: React.PropTypes.object.isRequired
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
+  books: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      title: PropTypes.string,
+    }),
+  ),
+  teams: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      rev: PropTypes.string,
+      teamType: PropTypes.shape({
+        name: PropTypes.string,
+        permissions: PropTypes.arrayOf(PropTypes.string),
+      }),
+      members: PropTypes.arrayOf(PropTypes.string),
+      object: PropTypes.shape({
+        id: PropTypes.string,
+        type: PropTypes.string,
+      }),
+    }),
+  ),
+  user: PropTypes.shape({
+    admin: PropTypes.bool,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    type: PropTypes.string,
+    username: PropTypes.string,
+  }).isRequired,
 }
 
-function mapStateToProps (state, { params }) {
+Dashboard.defaultProps = {
+  books: null,
+  teams: null,
+}
+
+function mapStateToProps(state, { params }) {
   return {
     books: state.collections,
     teams: state.teams,
-    user: state.currentUser.user
+    user: state.currentUser.user,
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(Actions, dispatch)
+    actions: bindActionCreators(Actions, dispatch),
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Dashboard)
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)

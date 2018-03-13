@@ -1,10 +1,11 @@
 import { includes, some } from 'lodash'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import styles from './dashboard.local.scss'
 
 class DashboardHeader extends React.Component {
-  renderButton () {
+  renderButton() {
     const { roles, toggle } = this.props
 
     const accepted = ['admin', 'production-editor']
@@ -13,33 +14,28 @@ class DashboardHeader extends React.Component {
     if (!canAddBook) return null
 
     return (
-      <div
-        className={styles.addBookBtn}
-        onClick={toggle}
-      >
+      <div className={styles.addBookBtn} onClick={toggle}>
         <div className={styles.addBookIcon} />
         <a>add book</a>
       </div>
     )
   }
 
-  render () {
+  render() {
     const addButton = this.renderButton()
 
     return (
-      <div className='col-lg-12'>
-        <h1 className={styles.bookTitle}>
-          Books
-        </h1>
-        { addButton }
+      <div className="col-lg-12">
+        <h1 className={styles.bookTitle}>Books</h1>
+        {addButton}
       </div>
     )
   }
 }
 
 DashboardHeader.propTypes = {
-  roles: React.PropTypes.array.isRequired,
-  toggle: React.PropTypes.func.isRequired
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  toggle: PropTypes.func.isRequired,
 }
 
 export default DashboardHeader

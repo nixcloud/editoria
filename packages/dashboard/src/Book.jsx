@@ -1,5 +1,6 @@
 import { includes, some } from 'lodash'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 
 import RemoveBookModal from './RemoveBookModal'
@@ -7,7 +8,7 @@ import styles from './dashboard.local.scss'
 
 // TODO -- Book and Chapter should both extend a common component
 class Book extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.goToBookBuilder = this.goToBookBuilder.bind(this)
@@ -20,72 +21,72 @@ class Book extends React.Component {
 
     this.state = {
       isRenaming: false,
-      showModal: false
+      showModal: false,
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
     const { isRenaming } = this.state
     if (isRenaming) this.renameTitle.focus()
   }
 
-  toggleModal () {
+  toggleModal() {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
     })
   }
 
-  handleKeyOnInput (event) {
+  handleKeyOnInput(event) {
     if (event.charCode !== 13) return
     this.renameBook()
   }
 
-  onClickSave () {
+  onClickSave() {
     this.renameBook()
   }
 
-  renameBook () {
+  renameBook() {
     const { book, edit } = this.props
 
     const patch = {
       id: book.id,
       rev: book.rev,
-      title: this.renameTitle.value
+      title: this.renameTitle.value,
     }
 
     edit(patch)
 
     this.setState({
-      isRenaming: false
+      isRenaming: false,
     })
   }
 
-  onClickRename () {
+  onClickRename() {
     this.setState({
-      isRenaming: true
+      isRenaming: true,
     })
   }
 
   // TODO -- refactor all roles based function into a util
-  canEditBook () {
+  canEditBook() {
     const { roles } = this.props
     const accepted = ['admin', 'production-editor']
     const pass = some(accepted, role => includes(roles, role))
     return pass
   }
 
-  goToBookBuilder () {
+  goToBookBuilder() {
     const { book, history } = this.props
     const url = `/books/${book.id}/book-builder`
     history.push(url)
   }
 
-  removeBook () {
+  removeBook() {
     const { book, remove } = this.props
     remove(book)
   }
 
-  renderTitle () {
+  renderTitle() {
     const { book } = this.props
     const { isRenaming } = this.state
 
@@ -93,9 +94,11 @@ class Book extends React.Component {
       return (
         <input
           defaultValue={book.title}
-          name='renameTitle'
+          name="renameTitle"
           onKeyPress={this.handleKeyOnInput}
-          ref={(el) => { this.renameTitle = el }}
+          ref={el => {
+            this.renameTitle = el
+          }}
         />
       )
     }
@@ -103,31 +106,26 @@ class Book extends React.Component {
     return (
       <div className={styles.bookTitleBorder}>
         <div className={styles.bookTitleWidth}>
-          <h3 onDoubleClick={this.goToBookBuilder} >
-            { book.title }
-          </h3>
+          <h3 onDoubleClick={this.goToBookBuilder}>{book.title}</h3>
         </div>
       </div>
     )
   }
 
   // TODO -- edit, rename and remove should be reusable components
-  renderEdit () {
+  renderEdit() {
     const { book } = this.props
 
     return (
-      <div className={styles.actionContainer} >
-        <Link
-          className={styles.editBook}
-          to={`/books/${book.id}/book-builder`}
-        >
+      <div className={styles.actionContainer}>
+        <Link className={styles.editBook} to={`/books/${book.id}/book-builder`}>
           Edit
         </Link>
       </div>
     )
   }
 
-  renderRename () {
+  renderRename() {
     const canRename = this.canEditBook()
     if (!canRename) return null
 
@@ -135,63 +133,51 @@ class Book extends React.Component {
 
     if (isRenaming) {
       return (
-      <div className={styles.actionContainer}>
-        <a
-          className={styles.editBook}
-          href='#'
-          onClick={this.onClickSave}
-        >
-          Save
-        </a>
-      </div>
+        <div className={styles.actionContainer}>
+          <a className={styles.editBook} href="#" onClick={this.onClickSave}>
+            Save
+          </a>
+        </div>
       )
     }
 
     return (
       <div className={styles.actionContainer}>
-        <a
-          className={styles.editBook}
-          href='#'
-          onClick={this.onClickRename}
-        >
+        <a className={styles.editBook} href="#" onClick={this.onClickRename}>
           Rename
         </a>
       </div>
     )
   }
 
-  renderRemove () {
+  renderRemove() {
     const canRemove = this.canEditBook()
     if (!canRemove) return null
 
     return (
       <div className={styles.actionContainer}>
-        <a
-          className={styles.editBook}
-          href='#'
-          onClick={this.toggleModal}
-        >
+        <a className={styles.editBook} href="#" onClick={this.toggleModal}>
           Delete
         </a>
       </div>
     )
   }
 
-  renderButtons () {
+  renderButtons() {
     const edit = this.renderEdit()
     const rename = this.renderRename()
     const remove = this.renderRemove()
 
     return (
       <div className={styles.bookActions}>
-        { edit }
-        { rename }
-        { remove }
+        {edit}
+        {rename}
+        {remove}
       </div>
     )
   }
 
-  renderRemoveModal () {
+  renderRemoveModal() {
     const { book, container } = this.props
     const { showModal } = this.state
     if (!showModal) return null
@@ -207,7 +193,7 @@ class Book extends React.Component {
     )
   }
 
-  render () {
+  render() {
     const { book } = this.props
 
     const title = this.renderTitle(book)
@@ -216,21 +202,25 @@ class Book extends React.Component {
 
     return (
       <div className={styles.bookContainer}>
-        { title }
-        { buttons }
-        { removeModal }
+        {title}
+        {buttons}
+        {removeModal}
       </div>
     )
   }
 }
 
 Book.propTypes = {
-  book: React.PropTypes.object.isRequired,
-  container: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired,
-  edit: React.PropTypes.func.isRequired,
-  remove: React.PropTypes.func.isRequired,
-  roles: React.PropTypes.array.isRequired
+  book: PropTypes.shape({
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
+  container: PropTypes.any.isRequired,
+  history: PropTypes.any.isRequired,
+  edit: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
 }
 
 export default withRouter(Book)
