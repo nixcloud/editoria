@@ -5,11 +5,12 @@
 */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const ENTER_KEY_CODE = 13
 
 export default class TextInput extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this._onChange = this._onChange.bind(this)
@@ -17,41 +18,41 @@ export default class TextInput extends React.Component {
     this._save = this._save.bind(this)
 
     this.state = {
-      value: this.props.value || ''
+      value: this.props.value || '',
     }
   }
 
-  render () {
+  render() {
     const { className, id, placeholder } = this.props
     const { value } = this.state
 
     return (
       <input
+        autoFocus
         className={className}
         id={id}
-        placeholder={placeholder}
         onChange={this._onChange}
         onKeyDown={this._onKeyDown}
+        placeholder={placeholder}
         value={value}
-        autoFocus
       />
     )
   }
 
-  _save () {
+  _save() {
     this.props.onSave(this.state.value)
     this.setState({
-      value: ''
+      value: '',
     })
   }
 
-  _onChange (event) {
+  _onChange(event) {
     this.setState({
-      value: event.target.value
+      value: event.target.value,
     })
   }
 
-  _onKeyDown (event) {
+  _onKeyDown(event) {
     if (event.keyCode === ENTER_KEY_CODE) {
       this._save()
     }
@@ -59,9 +60,21 @@ export default class TextInput extends React.Component {
 }
 
 TextInput.propTypes = {
-  className: React.PropTypes.string,
-  id: React.PropTypes.string,
-  placeholder: React.PropTypes.string,
-  onSave: React.PropTypes.func.isRequired,
-  value: React.PropTypes.string
+  className: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  id: PropTypes.string,
+  placeholder: PropTypes.string,
+  onSave: PropTypes.func.isRequired,
+  value: PropTypes.string,
+}
+
+TextInput.defaultProps = {
+  className: null,
+  id: null,
+  placeholder: null,
+  value: null,
 }

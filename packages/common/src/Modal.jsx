@@ -1,11 +1,12 @@
 // TODO -- deprecate this in favor of abstract modal
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Modal } from 'react-bootstrap'
 // import TeamManager from '../BookBuilder/TeamManager/TeamManager'
 
 export class BookBuilderModal extends React.Component {
-  render () {
+  render() {
     const {
       action,
       chapter,
@@ -19,47 +20,49 @@ export class BookBuilderModal extends React.Component {
       toggle,
       type,
       users,
-      updateTeam
+      updateTeam,
     } = this.props
 
     const modalSize = size || null
     let modalBodyText = ''
 
-    const success = successAction ? <a className='modal-button bb-modal-act'
-      onClick={successAction}>
-      { successText }
-    </a> : null
+    const success = successAction ? (
+      <a className="modal-button bb-modal-act" onClick={successAction}>
+        {successText}
+      </a>
+    ) : null
 
     // TODO -- move to individual modal components
     if (action === 'delete') {
       modalBodyText = (
         <div>
-          Are you sure you want to delete { type } "{ chapter.title }"?
+          Are you sure you want to delete {type} "{chapter.title}"?
         </div>
       )
     } else if (action === 'unlock') {
       modalBodyText = (
         <div>
-          This action will unlock the chapter that
-          is currently being edited. <br />
+          This action will unlock the chapter that is currently being edited.{' '}
+          <br />
           Use with caution.
         </div>
       )
-    // } else if (action === 'EditoriaTeamManager') {
-    //   // TODO -- ESPECIALLY THIS ONE
-    //   modalBodyText = (
-    //     <div>
-    //       <TeamManager
-    //         teams={teams}
-    //         users={users}
-    //         updateTeam={updateTeam}
-    //      />
-    //     </div>
-    //   )
+      // } else if (action === 'EditoriaTeamManager') {
+      //   // TODO -- ESPECIALLY THIS ONE
+      //   modalBodyText = (
+      //     <div>
+      //       <TeamManager
+      //         teams={teams}
+      //         users={users}
+      //         updateTeam={updateTeam}
+      //      />
+      //     </div>
+      //   )
     } else if (action === 'workflow-warning') {
       modalBodyText = (
         <div>
-          You won’t be able to edit this chapter after updating this workflow status.
+          You won’t be able to edit this chapter after updating this workflow
+          status.
           <br />
           Are you sure you wish to continue?
         </div>
@@ -68,55 +71,61 @@ export class BookBuilderModal extends React.Component {
 
     return (
       <Modal
-        show={show}
-        onHide={toggle}
-        container={container}
-        className='modal'
         bsSize={modalSize}
+        className="modal"
+        container={container}
+        onHide={toggle}
+        show={show}
       >
-
         <Modal.Header>
-          <Modal.Title>
-            { title }
-          </Modal.Title>
+          <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
 
-        <Modal.Body>
-          { modalBodyText }
-        </Modal.Body>
+        <Modal.Body>{modalBodyText}</Modal.Body>
 
         <Modal.Footer>
-          <div className='modal-buttons-container'>
-
-            <a className='modal-button modal-discard bb-modal-cancel'
-              onClick={toggle}>
+          <div className="modal-buttons-container">
+            <a
+              className="modal-button modal-discard bb-modal-cancel"
+              onClick={toggle}
+            >
               Cancel
             </a>
 
             {success}
-
           </div>
         </Modal.Footer>
-
       </Modal>
     )
   }
 }
 
 BookBuilderModal.propTypes = {
-  action: React.PropTypes.string.isRequired,
-  chapter: React.PropTypes.object,
-  container: React.PropTypes.object.isRequired,
-  show: React.PropTypes.bool.isRequired,
-  size: React.PropTypes.string,
-  successAction: React.PropTypes.func,
-  successText: React.PropTypes.string,
-  teams: React.PropTypes.array,
-  title: React.PropTypes.string.isRequired,
-  toggle: React.PropTypes.func.isRequired,
-  type: React.PropTypes.string,
-  updateTeam: React.PropTypes.func,
-  users: React.PropTypes.array
+  action: PropTypes.string.isRequired,
+  chapter: PropTypes.shape({
+    title: PropTypes.string,
+  }),
+  container: PropTypes.any.isRequired,
+  show: PropTypes.bool.isRequired,
+  size: PropTypes.string,
+  successAction: PropTypes.func,
+  successText: PropTypes.string,
+  // teams: PropTypes.array,
+  title: PropTypes.string.isRequired,
+  toggle: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  // updateTeam: PropTypes.func,
+  // users: PropTypes.array,
+}
+
+BookBuilderModal.defaultProps = {
+  chapter: {
+    title: null,
+  },
+  size: null,
+  successAction: null,
+  successText: null,
+  type: null,
 }
 
 export default BookBuilderModal
