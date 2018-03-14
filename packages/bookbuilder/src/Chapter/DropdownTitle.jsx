@@ -92,7 +92,7 @@ class DropdownTitle extends React.Component {
   }
 
   setCustomTitle(e) {
-    const value = get(this.refs, 'dropDownInput.state.value', null)
+    const value = get(this.dropDownInput, 'state.value', null)
     this.update(value)
     // TODO -- why the timeout here?
     setTimeout(() => this.close(), 10)
@@ -117,7 +117,7 @@ class DropdownTitle extends React.Component {
 
   handleClickOutside(event) {
     const domNode = findDOMNode(this)
-    const input = findDOMNode(this.refs.dropDownInput)
+    const input = findDOMNode(this.dropDownInput)
 
     if (input) input.focus()
 
@@ -143,7 +143,9 @@ class DropdownTitle extends React.Component {
           className={`drop-input ${styles.dropDownInput}`}
           onSave={this.setCustomTitle}
           placeholder="Type a custom title"
-          ref="dropDownInput"
+          ref={input => {
+            this.dropDownInput = input
+          }}
         />
       </div>
     )
@@ -171,7 +173,9 @@ class DropdownTitle extends React.Component {
         onDoubleClick={goToEditor}
         onToggle={this.toggle}
         open={this.state.open}
-        ref="dropdown-title"
+        ref={btn => {
+          this.dropdownTitle = btn
+        }}
         title={title || 'Choose Component'}
       >
         <div style={dropdownStyle}>

@@ -199,8 +199,8 @@ ChapterButtons.propTypes = {
   isRenaming: PropTypes.bool.isRequired,
   isUploadInProgress: PropTypes.bool,
   modalContainer: PropTypes.any.isRequired,
-  onClickRename: PropTypes.func.isRequired,
-  onClickSave: PropTypes.func.isRequired,
+  // onClickRename: PropTypes.func.isRequired, // should refactor
+  // onClickSave: PropTypes.func.isRequired,
   remove: PropTypes.func.isRequired,
   roles: PropTypes.arrayOf(PropTypes.string).isRequired,
   type: PropTypes.string.isRequired,
