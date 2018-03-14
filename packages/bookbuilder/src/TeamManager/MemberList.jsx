@@ -8,7 +8,6 @@ export class MemberList extends React.Component {
   render() {
     const { members, color, team, update } = this.props
     const remove = team.teamType.name !== 'Production Editor'
-    console.log('mem', members)
 
     const list = members.map((member, i) => (
       <Member
