@@ -58,14 +58,14 @@ const VivliostyleExporter = ({
   )
 }
 
-VivliostyleExporter.PropTypes = {
+VivliostyleExporter.propTypes = {
   book: PropTypes.shape({
     id: PropTypes.string,
     rev: PropTypes.string,
     title: PropTypes.string,
   }).isRequired,
   htmlToEpub: PropTypes.func.isRequired,
-  showModal: PropTypes.func.isRequired,
+  showModal: PropTypes.bool.isRequired,
   showModalToggle: PropTypes.func.isRequired,
   outerContainer: PropTypes.any.isRequired,
 }
