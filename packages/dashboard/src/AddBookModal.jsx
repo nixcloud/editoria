@@ -15,10 +15,17 @@ class AddBookModal extends React.Component {
     this.state = { error: false }
   }
 
-  componentDidUpdate() {
-    const { show } = this.props
-    if (show) this.inputRef.focus()
-  }
+  // focusTextInput() {
+  //   if (this.textInput) this.textInput.focus()
+  // }
+
+  // componentDidMount() {
+  //   const { show } = this.props
+  //   console.log('did update', this.textInput)
+  //   if (show) this.focusTextInput()
+  // }
+
+  // TODO -- figure out how to make input ref auto focus work when we move away from bootstrap modals
 
   handleKeyOnInput(event) {
     if (event.charCode !== 13) return
@@ -28,7 +35,7 @@ class AddBookModal extends React.Component {
   onCreate() {
     const { create, toggle } = this.props
 
-    const input = this.inputRef
+    const input = this.textInput
     const newTitle = input.value.trim()
 
     if (newTitle.length === 0) {
@@ -61,13 +68,14 @@ class AddBookModal extends React.Component {
         {error}
 
         <input
+          autoFocus
           className={styles['add-book-input']}
           name="title"
           onChange={this.onInputChange}
           onKeyPress={this.handleKeyOnInput}
           placeholder="eg. My new title"
-          ref={item => {
-            this.inputRef = item
+          ref={(input) => {
+            this.textInput = input
           }}
           type="text"
         />
