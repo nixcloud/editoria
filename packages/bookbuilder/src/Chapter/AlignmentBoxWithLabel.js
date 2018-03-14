@@ -41,21 +41,20 @@ AlignmentBoxWithLabel.propTypes = {
     top: PropTypes.bool,
     bottom: PropTypes.bool,
     right: PropTypes.bool,
-    left: PropTypes.bool
+    left: PropTypes.bool,
   }),
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 AlignmentBoxWithLabel.defaultProps = {
-  active: false,
   labelPositionRight: false,
   noBorder: {
     top: false,
     bottom: false,
     right: false,
-    left: false
+    left: false,
   },
-  onClick: () => null
+  onClick: () => null,
 }
 
 export default AlignmentBoxWithLabel

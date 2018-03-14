@@ -5,7 +5,7 @@ import AlignmentBoxWithLabel from './AlignmentBoxWithLabel'
 import classes from './AlignmentTool.local.scss'
 
 const AlignmentTool = ({ data, onClickAlignmentBox }) => {
-  const onClick = (event) => {
+  const onClick = event => {
     const id = event.currentTarget.id
     onClickAlignmentBox(id)
   }
@@ -31,8 +31,8 @@ const AlignmentTool = ({ data, onClickAlignmentBox }) => {
       <AlignmentBoxWithLabel
         active={rightData.active}
         id={rightData.id}
-        labelText={rightData.label}
         labelPositionRight
+        labelText={rightData.label}
         noBorder={noBorderLeft}
         onClick={onClick}
       />
@@ -41,12 +41,14 @@ const AlignmentTool = ({ data, onClickAlignmentBox }) => {
 }
 
 AlignmentTool.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    active: PropTypes.bool.isRequired,
-    id: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired
-  })).isRequired,
-  onClickAlignmentBox: PropTypes.func.isRequired
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      active: PropTypes.bool.isRequired,
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  onClickAlignmentBox: PropTypes.func.isRequired,
 }
 
 export default AlignmentTool

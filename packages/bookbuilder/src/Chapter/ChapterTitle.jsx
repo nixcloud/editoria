@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { indexOf, find } from 'lodash'
 import config from 'config'
@@ -94,15 +95,49 @@ class ChapterTitle extends React.Component {
 }
 
 ChapterTitle.propTypes = {
-  chapter: React.PropTypes.object.isRequired,
-  history: React.PropTypes.object.isRequired,
-  isRenaming: React.PropTypes.bool.isRequired,
-  isRenameEmpty: React.PropTypes.bool.isRequired,
-  isUploadInProgress: React.PropTypes.bool,
-  onSaveRename: React.PropTypes.func.isRequired,
-  title: React.PropTypes.string.isRequired,
-  type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired,
+  chapter: PropTypes.shape({
+    alignment: PropTypes.objectOf(PropTypes.bool),
+    author: PropTypes.string,
+    book: PropTypes.string,
+    division: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    kind: PropTypes.string,
+    lock: PropTypes.shape({
+      editor: PropTypes.shape({
+        username: PropTypes.string,
+      }),
+      timestamp: PropTypes.string,
+    }),
+    number: PropTypes.number,
+    owners: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        username: PropTypes.string,
+      }),
+    ),
+    progress: PropTypes.objectOf(PropTypes.number),
+    rev: PropTypes.string,
+    source: PropTypes.string,
+    status: PropTypes.string,
+    subCategory: PropTypes.string,
+    title: PropTypes.string,
+    trackChanges: PropTypes.bool,
+    type: PropTypes.string,
+  }).isRequired,
+  history: PropTypes.any.isRequired,
+  isRenaming: PropTypes.bool.isRequired,
+  isRenameEmpty: PropTypes.bool.isRequired,
+  isUploadInProgress: PropTypes.bool,
+  onSaveRename: PropTypes.func.isRequired,
+  title: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+}
+
+ChapterTitle.defaultProps = {
+  isUploadInProgress: false,
+  title: null,
 }
 
 export default withRouter(ChapterTitle)

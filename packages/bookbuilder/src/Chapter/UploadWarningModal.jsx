@@ -1,19 +1,20 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import AbstractModal from 'editoria-common/src/AbstractModal'
 
 class UploadWarningModal extends React.Component {
-  renderBody () {
+  renderBody() {
     const { type } = this.props
 
     return (
       <div>
-        You are not allowed to import contents while a { type } is being edited.
+        You are not allowed to import contents while a {type} is being edited.
       </div>
     )
   }
 
-  render () {
+  render() {
     const { container, show, toggle } = this.props
     const body = this.renderBody()
     const title = 'Import not allowed'
@@ -31,10 +32,10 @@ class UploadWarningModal extends React.Component {
 }
 
 UploadWarningModal.propTypes = {
-  container: React.PropTypes.object.isRequired,
-  show: React.PropTypes.bool.isRequired,
-  toggle: React.PropTypes.func.isRequired,
-  type: React.PropTypes.string.isRequired
+  container: PropTypes.any.isRequired,
+  show: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
 }
 
 export default UploadWarningModal

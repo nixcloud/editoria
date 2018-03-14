@@ -98,8 +98,8 @@ class Navigation extends React.Component {
 }
 
 Navigation.propTypes = {
-  currentUser: PropTypes.object,
-  history: PropTypes.object.isRequired,
+  currentUser: PropTypes.any,
+  history: PropTypes.any.isRequired,
   logoutUser: PropTypes.func.isRequired,
 }
 

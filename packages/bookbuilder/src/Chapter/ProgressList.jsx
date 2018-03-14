@@ -1,6 +1,7 @@
 /* DEPRECATED */
 
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import ProgressItem from './ProgressItem'
 import styles from '../styles/bookBuilder.local.scss'
@@ -49,10 +50,39 @@ class ProgressList extends React.Component {
 }
 
 ProgressList.propTypes = {
-  chapter: React.PropTypes.object.isRequired,
-  modalContainer: React.PropTypes.object.isRequired,
-  roles: React.PropTypes.array.isRequired,
-  update: React.PropTypes.func.isRequired,
+  chapter: PropTypes.shape({
+    alignment: PropTypes.objectOf(PropTypes.bool),
+    author: PropTypes.string,
+    book: PropTypes.string,
+    division: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    kind: PropTypes.string,
+    lock: PropTypes.shape({
+      editor: PropTypes.shape({
+        username: PropTypes.string,
+      }),
+      timestamp: PropTypes.string,
+    }),
+    number: PropTypes.number,
+    owners: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        username: PropTypes.string,
+      }),
+    ),
+    progress: PropTypes.objectOf(PropTypes.number),
+    rev: PropTypes.string,
+    source: PropTypes.string,
+    status: PropTypes.string,
+    subCategory: PropTypes.string,
+    title: PropTypes.string,
+    trackChanges: PropTypes.bool,
+    type: PropTypes.string,
+  }).isRequired,
+  modalContainer: PropTypes.any.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  update: PropTypes.func.isRequired,
 }
 
 export default ProgressList

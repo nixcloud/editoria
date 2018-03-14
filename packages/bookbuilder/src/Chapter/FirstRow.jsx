@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import ChapterButtons from './ChapterButtons'
 import ChapterTitle from './ChapterTitle'
@@ -91,15 +92,53 @@ class ChapterFirstRow extends React.Component {
 }
 
 ChapterFirstRow.propTypes = {
-  book: React.PropTypes.object.isRequired,
-  chapter: React.PropTypes.object.isRequired,
-  isUploadInProgress: React.PropTypes.bool,
-  outerContainer: React.PropTypes.object.isRequired,
-  remove: React.PropTypes.func.isRequired,
-  roles: React.PropTypes.array,
-  title: React.PropTypes.string.isRequired,
-  type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired
+  book: PropTypes.shape({
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
+  chapter: PropTypes.shape({
+    alignment: PropTypes.objectOf(PropTypes.bool),
+    author: PropTypes.string,
+    book: PropTypes.string,
+    division: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    kind: PropTypes.string,
+    lock: PropTypes.shape({
+      editor: PropTypes.shape({
+        username: PropTypes.string,
+      }),
+      timestamp: PropTypes.string,
+    }),
+    number: PropTypes.number,
+    owners: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        username: PropTypes.string,
+      }),
+    ),
+    progress: PropTypes.objectOf(PropTypes.number),
+    rev: PropTypes.string,
+    source: PropTypes.string,
+    status: PropTypes.string,
+    subCategory: PropTypes.string,
+    title: PropTypes.string,
+    trackChanges: PropTypes.bool,
+    type: PropTypes.string,
+  }).isRequired,
+  isUploadInProgress: PropTypes.bool,
+  outerContainer: PropTypes.any.isRequired,
+  remove: PropTypes.func.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  title: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+}
+
+ChapterFirstRow.defaultProps = {
+  isUploadInProgress: false,
+  title: null,
 }
 
 export default ChapterFirstRow

@@ -1,11 +1,12 @@
 import { includes } from 'lodash'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import styles from '../styles/bookBuilder.local.scss'
 import UnlockModal from './UnlockModal'
 
 class EditingNotification extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.formatDate = this.formatDate.bind(this)
@@ -13,22 +14,22 @@ class EditingNotification extends React.Component {
     this.toggleModal = this.toggleModal.bind(this)
 
     this.state = {
-      showModal: false
+      showModal: false,
     }
   }
 
-  toggleModal () {
+  toggleModal() {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
     })
   }
 
-  isAdmin () {
+  isAdmin() {
     const { roles } = this.props
     return includes(roles, 'admin')
   }
 
-  formatDate (timestamp) {
+  formatDate(timestamp) {
     const date = new Date(timestamp)
 
     const day = date.getDate()
@@ -37,28 +38,28 @@ class EditingNotification extends React.Component {
 
     let hours = date.getHours().toString()
     if (hours.length === 1) {
-      hours = '0' + hours
+      hours = `0${hours}`
     }
 
     let minutes = date.getMinutes().toString()
     if (minutes.length === 1) {
-      minutes = '0' + minutes
+      minutes = `0${minutes}`
     }
 
-    const theDate = month + '/' + day + '/' + year
-    const theTime = hours + ':' + minutes
-    const formatted = theDate + ' ' + theTime
+    const theDate = `${month}/${day}/${year}`
+    const theTime = `${hours}:${minutes}`
+    const formatted = `${theDate} ${theTime}`
 
     return formatted
   }
 
-  render () {
+  render() {
     const { chapter, modalContainer, update } = this.props
     const { showModal } = this.state
     const username = chapter.lock.editor.username
     const isAdmin = this.isAdmin()
 
-    let message = username + ' is editing'
+    const message = `${username} is editing`
     let hoverTitle, unlockModal
     let toggle = noop
 
@@ -77,42 +78,70 @@ class EditingNotification extends React.Component {
 
       if (chapter.lock.timestamp) {
         const date = this.formatDate(chapter.lock.timestamp)
-        hoverTitle = username + ' has been editing since ' + date
+        hoverTitle = `${username} has been editing since ${date}`
       }
     }
 
     const inlineStyle = {
-      'cursor': isAdmin ? 'pointer' : 'default'
+      cursor: isAdmin ? 'pointer' : 'default',
     }
 
     return (
-      <a id='bb-unlock'
+      <a
         className={styles.lEditing}
+        id="bb-unlock"
         onClick={toggle}
         style={inlineStyle}
         title={hoverTitle}
       >
         <i
-          className={styles.lockIcon + ' fa fa-lock'}
-          aria-hidden='true'
-          alt='unlock'
+          alt="unlock"
+          aria-hidden="true"
+          className={`${styles.lockIcon} fa fa-lock`}
         />
 
-        <span className={styles.lockMessage}>
-          { message }
-        </span>
+        <span className={styles.lockMessage}>{message}</span>
 
-        { unlockModal }
+        {unlockModal}
       </a>
     )
   }
 }
 
 EditingNotification.propTypes = {
-  chapter: React.PropTypes.object.isRequired,
-  modalContainer: React.PropTypes.object.isRequired,
-  roles: React.PropTypes.array.isRequired,
-  update: React.PropTypes.func.isRequired
+  chapter: PropTypes.shape({
+    alignment: PropTypes.objectOf(PropTypes.bool),
+    author: PropTypes.string,
+    book: PropTypes.string,
+    division: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    kind: PropTypes.string,
+    lock: PropTypes.shape({
+      editor: PropTypes.shape({
+        username: PropTypes.string,
+      }),
+      timestamp: PropTypes.string,
+    }),
+    number: PropTypes.number,
+    owners: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        username: PropTypes.string,
+      }),
+    ),
+    progress: PropTypes.objectOf(PropTypes.number),
+    rev: PropTypes.string,
+    source: PropTypes.string,
+    status: PropTypes.string,
+    subCategory: PropTypes.string,
+    title: PropTypes.string,
+    trackChanges: PropTypes.bool,
+    type: PropTypes.string,
+  }).isRequired,
+  modalContainer: PropTypes.any.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  update: PropTypes.func.isRequired,
 }
 
 const noop = () => {}

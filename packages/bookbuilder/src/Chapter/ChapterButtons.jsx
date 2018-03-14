@@ -1,5 +1,6 @@
 import { get, includes } from 'lodash'
 import React from 'react'
+import PropTypes from 'prop-types'
 import withLink from 'editoria-common/src/withLink'
 
 import DeleteModal from './DeleteModal'
@@ -7,7 +8,7 @@ import EditingNotification from './EditingNotification'
 import styles from '../styles/bookBuilder.local.scss'
 
 class ChapterButtons extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.canEdit = this.canEdit.bind(this)
@@ -20,17 +21,17 @@ class ChapterButtons extends React.Component {
     this.toggleDeleteModal = this.toggleDeleteModal.bind(this)
 
     this.state = {
-      showDeleteModal: false
+      showDeleteModal: false,
     }
   }
 
   // TODO -- should maybe check for lock
-  isLocked () {
+  isLocked() {
     const { chapter } = this.props
     return get(chapter, 'lock.editor.username')
   }
 
-  canEdit () {
+  canEdit() {
     const { chapter, roles } = this.props
 
     if (includes(roles, 'admin') || includes(roles, 'production-editor')) {
@@ -38,25 +39,25 @@ class ChapterButtons extends React.Component {
     }
 
     if (includes(roles, 'copy-editor')) {
-      const isEditing = (chapter.progress.edit === 1)
+      const isEditing = chapter.progress.edit === 1
       if (isEditing) return true
     }
 
     if (includes(roles, 'author')) {
-      const isReviewing = (chapter.progress.review === 1)
+      const isReviewing = chapter.progress.review === 1
       if (isReviewing) return true
     }
 
     return false
   }
 
-  toggleDeleteModal () {
+  toggleDeleteModal() {
     this.setState({
-      showDeleteModal: !this.state.showDeleteModal
+      showDeleteModal: !this.state.showDeleteModal,
     })
   }
 
-  renderEditingNotification () {
+  renderEditingNotification() {
     const { chapter, modalContainer, roles, update } = this.props
 
     return (
@@ -69,13 +70,8 @@ class ChapterButtons extends React.Component {
     )
   }
 
-  renderRenameButton () {
-    const {
-      isRenaming,
-      onClickRename,
-      onClickSave,
-      type
-    } = this.props
+  renderRenameButton() {
+    const { isRenaming, onClickRename, onClickSave, type } = this.props
 
     if (type === 'chapter' || type === 'part') {
       let renameButtonText = 'Rename'
@@ -88,11 +84,10 @@ class ChapterButtons extends React.Component {
 
       return (
         <div className={styles.actionContainer}>
-          <a id='bb-rename'
-          onClick={renameButtonFunction}>
-          { renameButtonText }
-        </a>
-      </div>
+          <a id="bb-rename" onClick={renameButtonFunction}>
+            {renameButtonText}
+          </a>
+        </div>
       )
     }
 
@@ -104,7 +99,7 @@ class ChapterButtons extends React.Component {
     return text
   }
 
-  renderDeleteButton () {
+  renderDeleteButton() {
     const { chapter, modalContainer, remove } = this.props
     const { showDeleteModal } = this.state
     const toggle = this.toggleDeleteModal
@@ -124,14 +119,14 @@ class ChapterButtons extends React.Component {
     }
 
     return (
-      <a id='bb-delete' onClick={toggle} >
+      <a id="bb-delete" onClick={toggle}>
         Delete
-        { deleteModal }
+        {deleteModal}
       </a>
     )
   }
 
-  renderRightArea () {
+  renderRightArea() {
     const { isUploadInProgress, chapter } = this.props
     const url = `/books/${chapter.book}/fragments/${chapter.id}`
 
@@ -144,45 +139,76 @@ class ChapterButtons extends React.Component {
     let buttonsStyle = {}
     if (isUploadInProgress) {
       buttonsStyle = {
-        'opacity': '0.3',
-        'pointerEvents': 'none'
+        opacity: '0.3',
+        pointerEvents: 'none',
       }
     }
 
     return (
       <div style={buttonsStyle}>
-      <div className={styles.actionContainer}>
-        { withLink(editButton, url) }
+        <div className={styles.actionContainer}>
+          {withLink(editButton, url)}
         </div>
         {/* renameButton */}
-        { deleteButton }
+        {deleteButton}
       </div>
     )
   }
 
-  render () {
-    let rightArea = this.renderRightArea()
+  render() {
+    const rightArea = this.renderRightArea()
 
     return (
-      <div className={styles.chapterActions + ' pull-right'}>
-        { rightArea }
-      </div>
+      <div className={`${styles.chapterActions} pull-right`}>{rightArea}</div>
     )
   }
 }
 
 ChapterButtons.propTypes = {
-  bookId: React.PropTypes.string.isRequired,
-  chapter: React.PropTypes.object.isRequired,
-  isRenaming: React.PropTypes.bool.isRequired,
-  isUploadInProgress: React.PropTypes.bool,
-  modalContainer: React.PropTypes.object.isRequired,
-  onClickRename: React.PropTypes.func.isRequired,
-  onClickSave: React.PropTypes.func.isRequired,
-  remove: React.PropTypes.func.isRequired,
-  roles: React.PropTypes.array.isRequired,
-  type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired
+  bookId: PropTypes.string.isRequired,
+  chapter: PropTypes.shape({
+    alignment: PropTypes.objectOf(PropTypes.bool),
+    author: PropTypes.string,
+    book: PropTypes.string,
+    division: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    kind: PropTypes.string,
+    lock: PropTypes.shape({
+      editor: PropTypes.shape({
+        username: PropTypes.string,
+      }),
+      timestamp: PropTypes.string,
+    }),
+    number: PropTypes.number,
+    owners: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        username: PropTypes.string,
+      }),
+    ),
+    progress: PropTypes.objectOf(PropTypes.number),
+    rev: PropTypes.string,
+    source: PropTypes.string,
+    status: PropTypes.string,
+    subCategory: PropTypes.string,
+    title: PropTypes.string,
+    trackChanges: PropTypes.bool,
+    type: PropTypes.string,
+  }).isRequired,
+  isRenaming: PropTypes.bool.isRequired,
+  isUploadInProgress: PropTypes.bool,
+  modalContainer: PropTypes.any.isRequired,
+  onClickRename: PropTypes.func.isRequired,
+  onClickSave: PropTypes.func.isRequired,
+  remove: PropTypes.func.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  type: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+}
+
+ChapterButtons.defaultProps = {
+  isUploadInProgress: false,
 }
 
 export default ChapterButtons

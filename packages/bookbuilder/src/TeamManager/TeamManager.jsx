@@ -1,30 +1,54 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import GroupList from './GroupList'
 import styles from '../styles/teamManager.local.scss'
 
 export class TeamManager extends React.Component {
-
-  render () {
+  render() {
     const { teams, users, updateTeam } = this.props
 
     return (
       <div className={styles.teamManager}>
-        <GroupList
-          teams={teams}
-          users={users}
-          update={updateTeam}
-        />
+        <GroupList teams={teams} update={updateTeam} users={users} />
       </div>
     )
   }
-
 }
 
 TeamManager.propTypes = {
-  teams: React.PropTypes.array.isRequired,
-  users: React.PropTypes.array,
-  updateTeam: React.PropTypes.func.isRequired
+  teams: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      rev: PropTypes.string,
+      teamType: PropTypes.shape({
+        name: PropTypes.string,
+        permissions: PropTypes.arrayOf(PropTypes.string),
+      }),
+      members: PropTypes.arrayOf(PropTypes.string),
+      object: PropTypes.shape({
+        id: PropTypes.string,
+        type: PropTypes.string,
+      }),
+    }),
+  ).isRequired,
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      admin: PropTypes.bool,
+      email: PropTypes.string,
+      id: PropTypes.string,
+      rev: PropTypes.string,
+      type: PropTypes.string,
+      username: PropTypes.string,
+    }),
+  ),
+  updateTeam: PropTypes.func.isRequired,
+}
+
+TeamManager.defaultProps = {
+  users: null,
 }
 
 export default TeamManager

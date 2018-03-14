@@ -11,6 +11,7 @@ import {
 } from 'lodash'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 
@@ -237,17 +238,52 @@ class Division extends React.Component {
 }
 
 Division.propTypes = {
-  add: React.PropTypes.func.isRequired,
-  book: React.PropTypes.object.isRequired,
-  chapters: React.PropTypes.array.isRequired,
-  ink: React.PropTypes.func.isRequired,
-  outerContainer: React.PropTypes.object.isRequired,
-  remove: React.PropTypes.func.isRequired,
-  roles: React.PropTypes.array,
-  title: React.PropTypes.string.isRequired,
-  type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired,
-  uploadStatus: React.PropTypes.object,
+  add: PropTypes.func.isRequired,
+  book: PropTypes.shape({
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
+  chapters: PropTypes.arrayOf(
+    PropTypes.shape({
+      alignment: PropTypes.objectOf(PropTypes.bool),
+      author: PropTypes.string,
+      book: PropTypes.string,
+      division: PropTypes.string,
+      id: PropTypes.string,
+      index: PropTypes.number,
+      kind: PropTypes.string,
+      lock: PropTypes.shape({
+        editor: PropTypes.shape({
+          username: PropTypes.string,
+        }),
+        timestamp: PropTypes.string,
+      }),
+      number: PropTypes.number,
+      owners: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          username: PropTypes.string,
+        }),
+      ),
+      progress: PropTypes.objectOf(PropTypes.number),
+      rev: PropTypes.string,
+      source: PropTypes.string,
+      status: PropTypes.string,
+      subCategory: PropTypes.string,
+      title: PropTypes.string,
+      trackChanges: PropTypes.bool,
+      type: PropTypes.string,
+    }),
+  ).isRequired,
+  ink: PropTypes.func.isRequired,
+  outerContainer: PropTypes.any.isRequired,
+  remove: PropTypes.func.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+  uploadStatus: PropTypes.objectOf(PropTypes.bool),
 }
 
 export { Division as UnWrappedDivision }

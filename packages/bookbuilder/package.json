@@ -20,8 +20,8 @@
     "editoria-common": "^0.0.3",
     "font-awesome": "4.7.0",
     "lodash": "4.17.4",
-    "prop-types": "^15.5.10",
     "pubsweet-client": "1.0.0-beta.6",
+    "react": "^15.6.2",
     "react-bootstrap": "0.31.3",
     "react-dnd": "2.3.0",
     "react-dnd-html5-backend": "2.3.0",
@@ -44,6 +44,7 @@
     "jest": "^20.0.4",
     "node-sass": "^4.5.3",
     "react-addons-test-utils": "^15.6.0",
+    "prop-types": "^15.5.10",
     "react-styleguidist": "^6.0.24",
     "react-test-renderer": "^15.6.1",
     "sass-loader": "^6.0.6",
@@ -51,8 +52,5 @@
     "sinon-as-promised": "^4.0.3",
     "webpack": "^2.7.0",
     "webpack-node-externals": "^1.6.0"
-  },
-  "peerDependencies": {
-    "react": "^15.6.2"
   }
 }

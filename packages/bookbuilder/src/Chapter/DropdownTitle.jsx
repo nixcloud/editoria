@@ -3,6 +3,7 @@ import config from 'config'
 import { get, map, slice } from 'lodash'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import { DropdownButton, MenuItem } from 'react-bootstrap'
 import { findDOMNode } from 'react-dom'
 
@@ -11,7 +12,7 @@ import TextInput from 'editoria-common/src/TextInput'
 import styles from '../styles/bookBuilder.local.scss'
 
 class DropdownTitle extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.breakIntoColumns = this.breakIntoColumns.bind(this)
@@ -26,14 +27,14 @@ class DropdownTitle extends React.Component {
     this.update = this.update.bind(this)
 
     this.state = {
-      open: false
+      open: false,
     }
 
     this.maxItemsInColumn = 5
     this.width = 180
   }
 
-  breakIntoColumns (items) {
+  breakIntoColumns(items) {
     const max = this.maxItemsInColumn
     const width = this.width
 
@@ -42,26 +43,21 @@ class DropdownTitle extends React.Component {
 
     // TODO -- width is 180, why am I looping that?!
     while (loopIt <= width) {
-      let start = (loopIt - 1) * max
-      let end = start + max
+      const start = (loopIt - 1) * max
+      const end = start + max
 
       columns.push(slice(items, start, end))
       loopIt += 1
     }
 
-    return map(columns, (column, i) => {
-      return (
-        <div
-          className={styles.menuItemContainer}
-          key={i}
-        >
-          { column }
-        </div>
-      )
-    })
+    return map(columns, (column, i) => (
+      <div className={styles.menuItemContainer} key={i}>
+        {column}
+      </div>
+    ))
   }
 
-  getColumnCount () {
+  getColumnCount() {
     const dropdownOptions = this.getDropdownOptions()
     const len = dropdownOptions.length
 
@@ -69,65 +65,57 @@ class DropdownTitle extends React.Component {
     return 1
   }
 
-  getDropdownOptions () {
+  getDropdownOptions() {
     const { chapter } = this.props
     const division = chapter.division
 
     return config.bookBuilder.chapter.dropdownValues[division]
   }
 
-  getMenuItems () {
+  getMenuItems() {
     const dropdownOptions = this.getDropdownOptions()
     const onClickOption = this.onClickOption
 
-    const menuItems = map(dropdownOptions, function (item, i) {
-      return (
-        <MenuItem
-          className={styles.menuItem}
-          onClick={onClickOption}
-          key={i}
-        >
-          { item }
-        </MenuItem>
-      )
-    })
+    const menuItems = map(dropdownOptions, (item, i) => (
+      <MenuItem className={styles.menuItem} key={i} onClick={onClickOption}>
+        {item}
+      </MenuItem>
+    ))
 
     return menuItems
   }
 
-  onClickOption (event) {
+  onClickOption(event) {
     const value = event.target.innerHTML.trim()
     this.update(value)
     this.close()
   }
 
-  setCustomTitle (e) {
-    let value = get(this.refs, 'dropDownInput.state.value', null)
+  setCustomTitle(e) {
+    const value = get(this.refs, 'dropDownInput.state.value', null)
     this.update(value)
     // TODO -- why the timeout here?
     setTimeout(() => this.close(), 10)
   }
 
-  toggle () {
+  toggle() {
     // Give it a delay, cause on double click, the dropdown opens briefly,
     // before being redirected to the editor.
-    setTimeout(() =>
-      this.setState({ open: !this.state.open })
-    , 200)
+    setTimeout(() => this.setState({ open: !this.state.open }), 200)
   }
 
-  close () {
+  close() {
     this.setState({ open: false })
   }
 
-  update (title) {
+  update(title) {
     const { chapter, update } = this.props
 
     chapter.title = title
     update(chapter)
   }
 
-  handleClickOutside (event) {
+  handleClickOutside(event) {
     const domNode = findDOMNode(this)
     const input = findDOMNode(this.refs.dropDownInput)
 
@@ -140,28 +128,28 @@ class DropdownTitle extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     window.addEventListener('click', this.handleClickOutside)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('click', this.handleClickOutside)
   }
 
-  renderInput () {
+  renderInput() {
     return (
       <div className={styles.dropDownInputContairer}>
         <TextInput
-          ref='dropDownInput'
-          className={'drop-input ' + styles.dropDownInput}
+          className={`drop-input ${styles.dropDownInput}`}
           onSave={this.setCustomTitle}
-          placeholder='Type a custom title'
+          placeholder="Type a custom title"
+          ref="dropDownInput"
         />
       </div>
     )
   }
 
-  render () {
+  render() {
     const { goToEditor, title } = this.props
 
     const columnCount = this.getColumnCount()
@@ -173,35 +161,62 @@ class DropdownTitle extends React.Component {
     if (columnCount > 1) columns = this.breakIntoColumns(menuItems)
 
     const dropdownStyle = {
-      width: width * columnCount
+      width: width * columnCount,
     }
 
     return (
       <DropdownButton
         className={styles.dropDown}
-        id={'dropdown-title-menu'}
-        open={this.state.open}
-        onToggle={this.toggle}
+        id="dropdown-title-menu"
         onDoubleClick={goToEditor}
+        onToggle={this.toggle}
+        open={this.state.open}
+        ref="dropdown-title"
         title={title || 'Choose Component'}
-        ref={'dropdown-title'}
       >
-
         <div style={dropdownStyle}>
-          { input }
-          { columns }
+          {input}
+          {columns}
         </div>
-
       </DropdownButton>
     )
   }
 }
 
 DropdownTitle.propTypes = {
-  chapter: React.PropTypes.object.isRequired,
-  goToEditor: React.PropTypes.func.isRequired,
-  title: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired
+  chapter: PropTypes.shape({
+    alignment: PropTypes.objectOf(PropTypes.bool),
+    author: PropTypes.string,
+    book: PropTypes.string,
+    division: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    kind: PropTypes.string,
+    lock: PropTypes.shape({
+      editor: PropTypes.shape({
+        username: PropTypes.string,
+      }),
+      timestamp: PropTypes.string,
+    }),
+    number: PropTypes.number,
+    owners: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        username: PropTypes.string,
+      }),
+    ),
+    progress: PropTypes.objectOf(PropTypes.number),
+    rev: PropTypes.string,
+    source: PropTypes.string,
+    status: PropTypes.string,
+    subCategory: PropTypes.string,
+    title: PropTypes.string,
+    trackChanges: PropTypes.bool,
+    type: PropTypes.string,
+  }).isRequired,
+  goToEditor: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
 }
 
 export default DropdownTitle
