@@ -1,5 +1,6 @@
 import { flow } from 'lodash'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { DragSource, DropTarget } from 'react-dnd'
 
 import FirstRow from './Chapter/FirstRow'
@@ -16,31 +17,31 @@ import {
 import styles from './styles/bookBuilder.local.scss'
 
 class Chapter extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.toggleUpload = this.toggleUpload.bind(this)
     this.update = this.update.bind(this)
 
     this.state = {
-      isUploadInProgress: false
+      isUploadInProgress: false,
     }
   }
 
-  update (patch) {
+  update(patch) {
     const { book, update } = this.props
     update(book, patch)
   }
 
-  toggleUpload () {
+  toggleUpload() {
     this.setState({
-      isUploadInProgress: !this.state.isUploadInProgress
+      isUploadInProgress: !this.state.isUploadInProgress,
     })
 
     // if (!this.state.isUploadInProgress) this.removeUploadState()
   }
 
-  renderHasContent () {
+  renderHasContent() {
     const { chapter } = this.props
     const source = chapter.source || ''
     const hasContent = source.trim().length > 0
@@ -78,7 +79,7 @@ class Chapter extends React.Component {
   //   }
   // }
 
-  render () {
+  render() {
     const {
       book,
       chapter,
@@ -91,7 +92,7 @@ class Chapter extends React.Component {
       roles,
       title,
       type,
-      uploading
+      uploading,
     } = this.props
 
     // console.log('ch upl', this.props.uploading)
@@ -99,70 +100,119 @@ class Chapter extends React.Component {
     const { isUploadInProgress } = this.state
 
     const listItemStyle = {
-      opacity: isDragging ? 0 : 1
+      opacity: isDragging ? 0 : 1,
     }
 
     // TODO -- refactor these huge class names
     // TODO -- make the dot and line component/s
-    return connectDragSource(connectDropTarget(
-      <li
-        className={styles.chapterContainer + ' col-lg-12 bb-chapter ' + (chapter.subCategory === 'chapter' ? styles.isChapter : styles.isPart)}
-        style={listItemStyle}
-      >
-
-        <div className={'col-lg-1 '+ styles.grabContainer}>
-          <div className={styles.grabIcon + ' ' + (hasContent === true ? styles.hasContent : '')}>
-            <div className={styles.tooltip}>
-              grab to sort
+    return connectDragSource(
+      connectDropTarget(
+        <li
+          className={`${styles.chapterContainer} col-lg-12 bb-chapter ${
+            chapter.subCategory === 'chapter' ? styles.isChapter : styles.isPart
+          }`}
+          style={listItemStyle}
+        >
+          <div className={`col-lg-1 ${styles.grabContainer}`}>
+            <div
+              className={`${styles.grabIcon} ${
+                hasContent === true ? styles.hasContent : ''
+              }`}
+            >
+              <div className={styles.tooltip}>grab to sort</div>
             </div>
           </div>
-        </div>
 
-        <div className={'col-lg-11 ' + styles.chapterMainContent}>
-          <FirstRow
-            book={book}
-            chapter={chapter}
-            isUploadInProgress={isUploadInProgress || uploading}
-            outerContainer={outerContainer}
-            remove={remove}
-            roles={roles}
-            title={title}
-            type={type}
-            update={this.update}
+          <div className={`col-lg-11 ${styles.chapterMainContent}`}>
+            <FirstRow
+              book={book}
+              chapter={chapter}
+              isUploadInProgress={isUploadInProgress || uploading}
+              outerContainer={outerContainer}
+              remove={remove}
+              roles={roles}
+              title={title}
+              type={type}
+              update={this.update}
+            />
+
+            <SecondRow
+              chapter={chapter}
+              convertFile={ink}
+              isUploadInProgress={isUploadInProgress || uploading}
+              outerContainer={outerContainer}
+              roles={roles}
+              toggleUpload={this.toggleUpload}
+              update={this.update}
+              viewOrEdit={this._viewOrEdit}
+            />
+          </div>
+
+          <div
+            className={
+              chapter.division === 'body'
+                ? styles.leftBorderBody
+                : styles.leftBorderComponent
+            }
           />
-
-          <SecondRow
-            chapter={chapter}
-            isUploadInProgress={isUploadInProgress || uploading}
-            convertFile={ink}
-            outerContainer={outerContainer}
-            roles={roles}
-            toggleUpload={this.toggleUpload}
-            update={this.update}
-            viewOrEdit={this._viewOrEdit}
-          />
-        </div>
-
-        <div className={chapter.division === 'body' ? styles.leftBorderBody : styles.leftBorderComponent} />
-      </li>
-    ))
+        </li>,
+      ),
+    )
   }
 }
 
 Chapter.propTypes = {
-  book: React.PropTypes.object.isRequired,
-  chapter: React.PropTypes.object.isRequired,
-  connectDragSource: React.PropTypes.func.isRequired,
-  connectDropTarget: React.PropTypes.func.isRequired,
-  ink: React.PropTypes.func.isRequired,
-  isDragging: React.PropTypes.bool.isRequired,
-  outerContainer: React.PropTypes.object.isRequired,
-  remove: React.PropTypes.func.isRequired,
-  roles: React.PropTypes.array,
-  title: React.PropTypes.string.isRequired,
-  type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired,
-  uploading: React.PropTypes.bool
+  book: PropTypes.shape({
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
+  chapter: PropTypes.shape({
+    alignment: PropTypes.objectOf(PropTypes.bool),
+    author: PropTypes.string,
+    book: PropTypes.string,
+    division: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    kind: PropTypes.string,
+    lock: PropTypes.shape({
+      editor: PropTypes.shape({
+        username: PropTypes.string,
+      }),
+      timestamp: PropTypes.string,
+    }),
+    number: PropTypes.number,
+    owners: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        username: PropTypes.string,
+      }),
+    ),
+    progress: PropTypes.objectOf(PropTypes.number),
+    rev: PropTypes.string,
+    source: PropTypes.string,
+    status: PropTypes.string,
+    subCategory: PropTypes.string,
+    title: PropTypes.string,
+    trackChanges: PropTypes.bool,
+    type: PropTypes.string,
+  }).isRequired,
+  connectDragSource: PropTypes.func.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
+  ink: PropTypes.func.isRequired,
+  isDragging: PropTypes.bool.isRequired,
+  outerContainer: PropTypes.any.isRequired,
+  remove: PropTypes.func.isRequired,
+  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  title: PropTypes.string,
+  type: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+  uploading: PropTypes.bool,
+}
+
+Chapter.defaultProps = {
+  uploading: false,
+  title: null,
 }
 
 export { Chapter as UnwrappedChapter }

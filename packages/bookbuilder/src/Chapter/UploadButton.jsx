@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import UploadWarningModal from './UploadWarningModal'
 import styles from '../styles/bookBuilder.local.scss'
 
 export class UploadButton extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.handleFileUpload = this.handleFileUpload.bind(this)
@@ -12,58 +13,60 @@ export class UploadButton extends React.Component {
     this.toggleModal = this.toggleModal.bind(this)
 
     this.state = {
-      showModal: false
+      showModal: false,
     }
   }
 
-  renderUploadIndicator () {
+  renderUploadIndicator() {
     const { isUploadInProgress } = this.props
     if (isUploadInProgress) return true
 
     return false
   }
 
-  handleFileUpload (event) {
+  handleFileUpload(event) {
     event.preventDefault()
 
     const file = event.target.files[0]
     const { chapter, convertFile, toggleUpload, update } = this.props
 
     toggleUpload()
-    convertFile(file).then((response) => {
-      const patch = {
-        id: chapter.id,
-        rev: chapter.rev,
-        source: response.converted
-      }
+    convertFile(file)
+      .then(response => {
+        const patch = {
+          id: chapter.id,
+          rev: chapter.rev,
+          source: response.converted,
+        }
 
-      update(patch)
-      toggleUpload()
-    }).catch((error) => {
-      console.error('INK error', error)
-      toggleUpload()
-    })
+        update(patch)
+        toggleUpload()
+      })
+      .catch(error => {
+        console.error('INK error', error)
+        toggleUpload()
+      })
   }
 
-  toggleModal () {
+  toggleModal() {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
     })
   }
 
-  onClick () {
+  onClick() {
     if (!this.isLocked()) return
     this.toggleModal()
   }
 
-  isLocked () {
+  isLocked() {
     const { chapter } = this.props
 
     if (chapter.lock === null) return false
     return true
   }
 
-  renderInput () {
+  renderInput() {
     let noAction = false
     let uploadClass = ''
     let text = 'upload word'
@@ -81,31 +84,31 @@ export class UploadButton extends React.Component {
     return (
       <span className={styles.btnContainer}>
         <label
-          htmlFor={'single-file-uploader' + chapter.id}
-          className={styles.uploadIcon + ' ' + uploadClass + ' ' + disabled}
+          className={`${styles.uploadIcon} ${uploadClass} ${disabled}`}
           disabled={noAction}
+          htmlFor={`single-file-uploader${chapter.id}`}
         />
         <label
-          htmlFor={'single-file-uploader' + chapter.id}
-          className={styles.uploadText + ' ' + disabled}
+          className={`${styles.uploadText} ${disabled}`}
           disabled={noAction}
+          htmlFor={`single-file-uploader${chapter.id}`}
         >
           {text}
         </label>
         <input
-          id={'single-file-uploader' + chapter.id}
           accept={accept}
+          disabled={noAction}
+          id={`single-file-uploader${chapter.id}`}
+          name="single-file-uploader"
           onChange={this.handleFileUpload}
           title={title}
-          name='single-file-uploader'
           type={type}
-          disabled={noAction}
         />
       </span>
     )
   }
 
-  renderModal () {
+  renderModal() {
     if (!this.isLocked()) return null
 
     const { showModal } = this.state
@@ -122,7 +125,7 @@ export class UploadButton extends React.Component {
     )
   }
 
-  render () {
+  render() {
     const input = this.renderInput()
     const modal = this.renderModal()
 
@@ -130,34 +133,67 @@ export class UploadButton extends React.Component {
     let buttonStyle = {}
     if (this.isLocked()) {
       buttonStyle = {
-        'opacity': '0.3'
+        opacity: '0.3',
       }
     }
 
     return (
       <div
         className={styles.btnFile}
-        id='bb-upload'
+        id="bb-upload"
         onClick={this.onClick}
         style={buttonStyle}
       >
-        { input }
-        { modal }
+        {input}
+        {modal}
       </div>
     )
   }
 }
 
 UploadButton.propTypes = {
-  accept: React.PropTypes.string.isRequired,
-  chapter: React.PropTypes.object.isRequired,
-  convertFile: React.PropTypes.func.isRequired,
-  modalContainer: React.PropTypes.object.isRequired,
-  isUploadInProgress: React.PropTypes.bool,
-  title: React.PropTypes.string.isRequired,
-  toggleUpload: React.PropTypes.func.isRequired,
-  type: React.PropTypes.string.isRequired,
-  update: React.PropTypes.func.isRequired
+  accept: PropTypes.string.isRequired,
+  chapter: PropTypes.shape({
+    alignment: PropTypes.objectOf(PropTypes.bool),
+    author: PropTypes.string,
+    book: PropTypes.string,
+    division: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.number,
+    kind: PropTypes.string,
+    lock: PropTypes.shape({
+      editor: PropTypes.shape({
+        username: PropTypes.string,
+      }),
+      timestamp: PropTypes.string,
+    }),
+    number: PropTypes.number,
+    owners: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        username: PropTypes.string,
+      }),
+    ),
+    progress: PropTypes.objectOf(PropTypes.number),
+    rev: PropTypes.string,
+    source: PropTypes.string,
+    status: PropTypes.string,
+    subCategory: PropTypes.string,
+    title: PropTypes.string,
+    trackChanges: PropTypes.bool,
+    type: PropTypes.string,
+  }).isRequired,
+  convertFile: PropTypes.func.isRequired,
+  modalContainer: PropTypes.any.isRequired,
+  isUploadInProgress: PropTypes.bool,
+  title: PropTypes.string.isRequired,
+  toggleUpload: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  update: PropTypes.func.isRequired,
+}
+
+UploadButton.defaultProps = {
+  isUploadInProgress: false,
 }
 
 export default UploadButton

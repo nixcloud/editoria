@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import TextInput from 'editoria-common/src/TextInput'
 import styles from '../styles/bookBuilder.local.scss'
@@ -25,8 +26,8 @@ class Title extends React.Component {
     const input = (
       <TextInput
         className="edit"
-        ref="chapterInput"
         onSave={onSaveRename}
+        ref="chapterInput"
         value={title}
       />
     )
@@ -43,17 +44,18 @@ class Title extends React.Component {
 }
 
 Title.propTypes = {
-  goToEditor: React.PropTypes.func.isRequired,
-  isRenaming: React.PropTypes.bool.isRequired,
-  number: React.PropTypes.number,
-  onSaveRename: React.PropTypes.func.isRequired,
-  showNumber: React.PropTypes.bool,
-  title: React.PropTypes.string.isRequired,
+  goToEditor: PropTypes.func.isRequired,
+  isRenaming: PropTypes.bool.isRequired,
+  number: PropTypes.number,
+  onSaveRename: PropTypes.func.isRequired,
+  showNumber: PropTypes.bool,
+  title: PropTypes.string,
 }
 
 Title.defaultProps = {
   number: null,
   showNumber: false,
+  title: null,
 }
 
 export default Title

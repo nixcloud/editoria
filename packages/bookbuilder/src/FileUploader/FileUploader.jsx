@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { each, groupBy, has, isEmpty, keys, pickBy, sortBy } from 'lodash'
 
 import styles from '../styles/bookBuilder.local.scss'
@@ -232,9 +233,9 @@ class FileUploader extends React.Component {
     return (
       <div className={`${styles.multipleUploadContainer}`}>
         <span>
-          <label htmlFor="file-uploader" className={styles.uploadIcon} />
+          <label className={styles.uploadIcon} htmlFor="file-uploader" />
 
-          <label htmlFor="file-uploader" className={styles.uploadMultipleText}>
+          <label className={styles.uploadMultipleText} htmlFor="file-uploader">
             {labelText}
           </label>
 
@@ -256,14 +257,111 @@ class FileUploader extends React.Component {
 }
 
 FileUploader.propTypes = {
-  backChapters: React.PropTypes.array.isRequired,
-  bodyChapters: React.PropTypes.array.isRequired,
-  book: React.PropTypes.object.isRequired,
-  convert: React.PropTypes.func.isRequired,
-  create: React.PropTypes.func.isRequired,
-  frontChapters: React.PropTypes.array.isRequired,
-  update: React.PropTypes.func.isRequired,
-  updateUploadStatus: React.PropTypes.func.isRequired,
+  backChapters: PropTypes.arrayOf(
+    PropTypes.shape({
+      alignment: PropTypes.objectOf(PropTypes.bool),
+      author: PropTypes.string,
+      book: PropTypes.string,
+      division: PropTypes.string,
+      id: PropTypes.string,
+      index: PropTypes.number,
+      kind: PropTypes.string,
+      lock: PropTypes.shape({
+        editor: PropTypes.shape({
+          username: PropTypes.string,
+        }),
+        timestamp: PropTypes.string,
+      }),
+      number: PropTypes.number,
+      owners: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          username: PropTypes.string,
+        }),
+      ),
+      progress: PropTypes.objectOf(PropTypes.number),
+      rev: PropTypes.string,
+      source: PropTypes.string,
+      status: PropTypes.string,
+      subCategory: PropTypes.string,
+      title: PropTypes.string,
+      trackChanges: PropTypes.bool,
+      type: PropTypes.string,
+    }),
+  ).isRequired,
+  bodyChapters: PropTypes.arrayOf(
+    PropTypes.shape({
+      alignment: PropTypes.objectOf(PropTypes.bool),
+      author: PropTypes.string,
+      book: PropTypes.string,
+      division: PropTypes.string,
+      id: PropTypes.string,
+      index: PropTypes.number,
+      kind: PropTypes.string,
+      lock: PropTypes.shape({
+        editor: PropTypes.shape({
+          username: PropTypes.string,
+        }),
+        timestamp: PropTypes.string,
+      }),
+      number: PropTypes.number,
+      owners: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          username: PropTypes.string,
+        }),
+      ),
+      progress: PropTypes.objectOf(PropTypes.number),
+      rev: PropTypes.string,
+      source: PropTypes.string,
+      status: PropTypes.string,
+      subCategory: PropTypes.string,
+      title: PropTypes.string,
+      trackChanges: PropTypes.bool,
+      type: PropTypes.string,
+    }),
+  ).isRequired,
+  book: PropTypes.shape({
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
+  convert: PropTypes.func.isRequired,
+  create: PropTypes.func.isRequired,
+  frontChapters: PropTypes.arrayOf(
+    PropTypes.shape({
+      alignment: PropTypes.objectOf(PropTypes.bool),
+      author: PropTypes.string,
+      book: PropTypes.string,
+      division: PropTypes.string,
+      id: PropTypes.string,
+      index: PropTypes.number,
+      kind: PropTypes.string,
+      lock: PropTypes.shape({
+        editor: PropTypes.shape({
+          username: PropTypes.string,
+        }),
+        timestamp: PropTypes.string,
+      }),
+      number: PropTypes.number,
+      owners: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          username: PropTypes.string,
+        }),
+      ),
+      progress: PropTypes.objectOf(PropTypes.number),
+      rev: PropTypes.string,
+      source: PropTypes.string,
+      status: PropTypes.string,
+      subCategory: PropTypes.string,
+      title: PropTypes.string,
+      trackChanges: PropTypes.bool,
+      type: PropTypes.string,
+    }),
+  ).isRequired,
+  update: PropTypes.func.isRequired,
+  updateUploadStatus: PropTypes.func.isRequired,
 }
 
 export default FileUploader

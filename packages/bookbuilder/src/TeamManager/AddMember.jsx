@@ -1,12 +1,13 @@
 import { find, union } from 'lodash'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import TextInput from 'editoria-common/src/TextInput'
 
 import styles from '../styles/teamManager.local.scss'
 
 export class AddMember extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this._onClickAdd = this._onClickAdd.bind(this)
@@ -18,22 +19,20 @@ export class AddMember extends React.Component {
     this._hide = this._hide.bind(this)
 
     this.state = {
-      message: {}
+      message: {},
     }
   }
 
-  _onClickAdd () {
+  _onClickAdd() {
     this.setState({ message: {} })
     this._search(this.refs.addUser.state.value)
     this.refs.addUser.state.value = ''
   }
 
-  _search (username) {
+  _search(username) {
     const { team, users } = this.props
 
-    let user = find(users, function (c) {
-      return c.username === username
-    })
+    const user = find(users, c => c.username === username)
 
     if (user) {
       team.members = union(team.members, [user.id])
@@ -44,82 +43,99 @@ export class AddMember extends React.Component {
     this._updateMessage('error', username)
   }
 
-  _save (team) {
+  _save(team) {
     const { update } = this.props
     update(team)
   }
 
-  _updateMessage (error, username) {
+  _updateMessage(error, username) {
     let msg
 
     if (error) {
-      msg = 'user ' + username + ' not found'
+      msg = `user ${username} not found`
       return this.setState({
         message: {
           error: true,
           text: msg,
-          classname: 'failureGroup'
-        }
+          classname: 'failureGroup',
+        },
       })
     }
 
-    msg = 'user ' + username + ' successfully added to group'
+    msg = `user ${username} successfully added to group`
     this.setState({
       message: {
         error: false,
         text: msg,
-        classname: 'successGroup'
-      }
+        classname: 'successGroup',
+      },
     })
   }
 
-  _hide () {
+  _hide() {
     this.setState({ message: {} })
     this.props.hideInput()
   }
 
-  render () {
+  render() {
     const { show } = this.props
 
-    let addSingleMember = show
-    ? (
+    const addSingleMember = show ? (
       <div className={styles.userInputContainer}>
         <TextInput
-          ref='addUser'
           className={styles.usernameInput}
           onSave={this._onClickAdd}
-          placeholder='Please enter the username'
+          placeholder="Please enter the username"
+          ref="addUser"
         />
 
-        <a className={styles.addUsernameBtn}
-          onClick={this._onClickAdd}>
+        <a className={styles.addUsernameBtn} onClick={this._onClickAdd}>
           add
         </a>
 
-        <a className={styles.closeUsernameBtn}
-          onClick={this._hide}>
+        <a className={styles.closeUsernameBtn} onClick={this._hide}>
           x
         </a>
 
         <span className={styles[this.state.message.classname]}>
-          { this.state.message.text }
+          {this.state.message.text}
         </span>
       </div>
-        )
-       : null
+    ) : null
 
-    return (
-      <span> {addSingleMember} </span>
-    )
+    return <span> {addSingleMember} </span>
   }
 }
 
 AddMember.propTypes = {
-  show: React.PropTypes.bool.isRequired,
-  hideInput: React.PropTypes.func.isRequired,
-  team: React.PropTypes.object.isRequired,
-  users: React.PropTypes.array.isRequired,
-  update: React.PropTypes.func.isRequired
+  show: PropTypes.bool.isRequired,
+  hideInput: PropTypes.func.isRequired,
+  team: PropTypes.shape({
+    id: PropTypes.string,
+    name: PropTypes.string,
+    type: PropTypes.string,
+    rev: PropTypes.string,
+    teamType: PropTypes.shape({
+      name: PropTypes.string,
+      permissions: PropTypes.arrayOf(PropTypes.string),
+    }),
+    members: PropTypes.arrayOf(PropTypes.string),
+    object: PropTypes.shape({
+      id: PropTypes.string,
+      type: PropTypes.string,
+    }),
+  }),
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      admin: PropTypes.bool,
+      email: PropTypes.string,
+      id: PropTypes.string,
+      rev: PropTypes.string,
+      type: PropTypes.string,
+      username: PropTypes.string,
+    }),
+  ),
+  update: PropTypes.func.isRequired,
 }
 
 export default AddMember

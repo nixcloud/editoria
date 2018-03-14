@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -100,23 +101,23 @@ export class BookBuilder extends React.Component {
     patch = {
       id: book.id,
       rev: book.rev,
-      productionEditor: _.pick(foundEditor, ['id', 'username'])
+      productionEditor: _.pick(foundEditor, ['id', 'username']),
     }
 
     updateCollection(patch)
   }
 
-  toggleModal () {
+  toggleModal() {
     this.setState({
       showModal: !this.state.showModal,
     })
   }
 
-  toggleTeamManager () {
+  toggleTeamManager() {
     this.setState({ showTeamManager: !this.state.showTeamManager })
   }
 
-  getRoles () {
+  getRoles() {
     const { user, book } = this.props
 
     const teams = _.filter(user.teams, t => t.object.id === book.id)
@@ -124,7 +125,7 @@ export class BookBuilder extends React.Component {
     let roles = []
     if (user.admin) roles.push('admin')
 
-    function addRole (role) {
+    function addRole(role) {
       roles = _.union(roles, [role])
     }
 
@@ -181,7 +182,7 @@ export class BookBuilder extends React.Component {
     )
   }
 
-  render () {
+  render() {
     const { book, chapters } = this.props
     const {
       createFragment,
@@ -226,7 +227,8 @@ export class BookBuilder extends React.Component {
       )
     }
 
-    const productionEditor = _.get(book, 'productionEditor.username') || 'unassigned'
+    const productionEditor =
+      _.get(book, 'productionEditor.username') || 'unassigned'
     const teamManagerModal = this.renderTeamManagerModal()
 
     // console.log('render bb')
@@ -238,14 +240,16 @@ export class BookBuilder extends React.Component {
             className="col-lg-offset-2 col-lg-8 col-md-8 col-sm-12 col-xs-12"
             ref="outerContainer"
           >
-            <div className={styles.productionEditorContainer + ' row'}>
+            <div className={`${styles.productionEditorContainer} row`}>
               <span>Production Editor: &nbsp; {productionEditor} </span>
               {teamManagerButton}
               <div className={styles.separator} />
             </div>
 
-            <h1 className={styles.bookTitle + ' row'}>{this.props.book.title}</h1>
-            <div className={styles.btnContainer + ' row'}>
+            <h1 className={`${styles.bookTitle} row`}>
+              {this.props.book.title}
+            </h1>
+            <div className={`${styles.btnContainer} row`}>
               <div className={`${styles.lineUploading} `} />
               <div className={styles.btnContainerButtons}>
                 <FileUploader
@@ -276,8 +280,8 @@ export class BookBuilder extends React.Component {
               outerContainer={outerContainer}
               remove={deleteFragment}
               roles={roles}
-              title='Frontmatter'
-              type='front'
+              title="Frontmatter"
+              type="front"
               update={updateFragment}
               uploadStatus={this.state.uploading}
             />
@@ -292,8 +296,8 @@ export class BookBuilder extends React.Component {
               outerContainer={outerContainer}
               remove={deleteFragment}
               roles={roles}
-              title='Body'
-              type='body'
+              title="Body"
+              type="body"
               update={updateFragment}
               uploadStatus={this.state.uploading}
             />
@@ -308,8 +312,8 @@ export class BookBuilder extends React.Component {
               outerContainer={outerContainer}
               remove={deleteFragment}
               roles={roles}
-              title='Backmatter'
-              type='back'
+              title="Backmatter"
+              type="back"
               update={updateFragment}
               uploadStatus={this.state.uploading}
             />
@@ -323,17 +327,90 @@ export class BookBuilder extends React.Component {
 }
 
 BookBuilder.propTypes = {
-  actions: React.PropTypes.object.isRequired,
-  book: React.PropTypes.object.isRequired,
-  chapters: React.PropTypes.array.isRequired,
+  actions: PropTypes.objectOf(PropTypes.func).isRequired,
+  book: PropTypes.shape({
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    title: PropTypes.string,
+  }).isRequired,
+  chapters: PropTypes.arrayOf(
+    PropTypes.shape({
+      alignment: PropTypes.objectOf(PropTypes.bool),
+      author: PropTypes.string,
+      book: PropTypes.string,
+      division: PropTypes.string,
+      id: PropTypes.string,
+      index: PropTypes.number,
+      kind: PropTypes.string,
+      lock: PropTypes.shape({
+        editor: PropTypes.shape({
+          username: PropTypes.string,
+        }),
+        timestamp: PropTypes.string,
+      }),
+      number: PropTypes.number,
+      owners: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string,
+          username: PropTypes.string,
+        }),
+      ),
+      progress: PropTypes.objectOf(PropTypes.number),
+      rev: PropTypes.string,
+      source: PropTypes.string,
+      status: PropTypes.string,
+      subCategory: PropTypes.string,
+      title: PropTypes.string,
+      trackChanges: PropTypes.bool,
+      type: PropTypes.string,
+    }),
+  ).isRequired,
   // error: React.PropTypes.string,
-  teams: React.PropTypes.array,
-  users: React.PropTypes.array,
-  user: React.PropTypes.object
+  teams: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      type: PropTypes.string,
+      rev: PropTypes.string,
+      teamType: PropTypes.shape({
+        name: PropTypes.string,
+        permissions: PropTypes.arrayOf(PropTypes.string),
+      }),
+      members: PropTypes.arrayOf(PropTypes.string),
+      object: PropTypes.shape({
+        id: PropTypes.string,
+        type: PropTypes.string,
+      }),
+    }),
+  ),
+  user: PropTypes.shape({
+    admin: PropTypes.bool,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    type: PropTypes.string,
+    username: PropTypes.string,
+  }),
+  users: PropTypes.arrayOf(
+    PropTypes.shape({
+      admin: PropTypes.bool,
+      email: PropTypes.string,
+      id: PropTypes.string,
+      rev: PropTypes.string,
+      type: PropTypes.string,
+      username: PropTypes.string,
+    }),
+  ),
   // userRoles: React.PropTypes.array,
 }
 
-function mapStateToProps (state, { match }) {
+BookBuilder.defaultProps = {
+  teams: null,
+  user: null,
+  users: null,
+}
+
+function mapStateToProps(state, { match }) {
   const book = _.find(state.collections, c => c.id === match.params.id)
 
   const chapters = _.sortBy(
@@ -356,7 +433,7 @@ function mapStateToProps (state, { match }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(Actions, dispatch),
   }

@@ -33,20 +33,19 @@ AlignmentBox.propTypes = {
     top: PropTypes.bool,
     bottom: PropTypes.bool,
     right: PropTypes.bool,
-    left: PropTypes.bool
+    left: PropTypes.bool,
   }),
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 AlignmentBox.defaultProps = {
-  active: false,
   noBorder: {
     top: false,
     bottom: false,
     right: false,
-    left: false
+    left: false,
   },
-  onClick: () => null
+  onClick: () => null,
 }
 
 export default AlignmentBox
