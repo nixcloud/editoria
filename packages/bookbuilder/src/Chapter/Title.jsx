@@ -5,9 +5,9 @@ import TextInput from 'editoria-common/src/TextInput'
 import styles from '../styles/bookBuilder.local.scss'
 
 class Title extends React.Component {
-  save() {
-    this.refs.chapterInput._save()
-  }
+  // save() {
+  //   this.refs.chapterInput._save()
+  // }
 
   render() {
     const {
@@ -27,7 +27,7 @@ class Title extends React.Component {
       <TextInput
         className="edit"
         onSave={onSaveRename}
-        ref="chapterInput"
+        // ref="chapterInput"
         value={title}
       />
     )

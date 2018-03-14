@@ -10,7 +10,7 @@ class ChapterFirstRow extends React.Component {
     super(props)
 
     this.onClickRename = this.onClickRename.bind(this)
-    this.onClickSave = this.onClickSave.bind(this)
+    // this.onClickSave = this.onClickSave.bind(this)
     this.onSaveRename = this.onSaveRename.bind(this)
 
     this.state = {
@@ -50,9 +50,9 @@ class ChapterFirstRow extends React.Component {
   // follow a chain of refs to call the save function of the input
   // this is done to facilitate sibling-sibling component communication
   // without having to setup an event-based system for a single use case
-  onClickSave () {
-    this.chapterTitle.save()
-  }
+  // onClickSave () {
+  //   this.chapterTitle.save()
+  // }
 
   render () {
     const { book, chapter, isUploadInProgress, outerContainer, remove, roles, title, type, update } = this.props
@@ -66,7 +66,7 @@ class ChapterFirstRow extends React.Component {
           isRenameEmpty={isRenameEmpty}
           isUploadInProgress={isUploadInProgress}
           onSaveRename={this.onSaveRename}
-          ref={node => { this.chapterTitle = node}}
+          // ref={node => { this.chapterTitle = node}}
           title={title}
           type={type}
           update={update}
@@ -79,7 +79,7 @@ class ChapterFirstRow extends React.Component {
           isUploadInProgress={isUploadInProgress}
           modalContainer={outerContainer}
           onClickRename={this.onClickRename}
-          onClickSave={this.onClickSave}
+          // onClickSave={this.onClickSave}
           remove={remove}
           roles={roles}
           type={type}

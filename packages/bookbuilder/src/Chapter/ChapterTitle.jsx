@@ -48,7 +48,7 @@ class ChapterTitle extends React.Component {
         isRenaming={isRenaming}
         goToEditor={this.goToEditor}
         onSaveRename={onSaveRename}
-        ref={node => (this.title = node)}
+        // ref={node => (this.title = node)}
         title={title}
         showNumber={showNumber}
         number={chapter.number || null}

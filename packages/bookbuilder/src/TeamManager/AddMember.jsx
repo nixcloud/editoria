@@ -25,8 +25,8 @@ export class AddMember extends React.Component {
 
   _onClickAdd() {
     this.setState({ message: {} })
-    this._search(this.refs.addUser.state.value)
-    this.refs.addUser.state.value = ''
+    this._search(this.addUser.state.value)
+    this.addUser.state.value = ''
   }
 
   _search(username) {
@@ -86,7 +86,9 @@ export class AddMember extends React.Component {
           className={styles.usernameInput}
           onSave={this._onClickAdd}
           placeholder="Please enter the username"
-          ref="addUser"
+          ref={input => {
+            this.addUser = input
+          }}
         />
 
         <a className={styles.addUsernameBtn} onClick={this._onClickAdd}>
