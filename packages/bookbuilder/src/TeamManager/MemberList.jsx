@@ -8,6 +8,7 @@ export class MemberList extends React.Component {
   render() {
     const { members, color, team, update } = this.props
     const remove = team.teamType.name !== 'Production Editor'
+    console.log('mem', members)
 
     const list = members.map((member, i) => (
       <Member
@@ -25,7 +26,7 @@ export class MemberList extends React.Component {
 }
 
 MemberList.propTypes = {
-  members: PropTypes.arrayOf(PropTypes.string).isRequired,
+  members: PropTypes.arrayOf(PropTypes.any).isRequired,
   team: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
