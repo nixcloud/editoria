@@ -10274,23 +10274,23 @@ pubsweet-component-signup@^0.4.1:
     react-router "^4.2.0"
     redux "^3.7.2"
 
-pubsweet-component-teams-manager@^0.3.0:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/pubsweet-component-teams-manager/-/pubsweet-component-teams-manager-0.3.2.tgz#78d3b1d79c8daed31033361e06d0844d1f1abbe7"
+pubsweet-component-teams-manager@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pubsweet-component-teams-manager/-/pubsweet-component-teams-manager-1.0.0.tgz#af2a931669342c7fb9e8385eeda266dd99b603cd"
   dependencies:
     prop-types "^15.5.10"
-    react-bootstrap "^0.31.3"
-    react-dom "^15.6.1"
+    react-bootstrap "^0.32.0"
+    react-dom "^16.2.0"
     react-redux "^5.0.6"
     react-select "^1.0.0-rc.10"
     redux "^3.7.2"
 
-pubsweet-component-users-manager@^0.2.1:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/pubsweet-component-users-manager/-/pubsweet-component-users-manager-0.2.3.tgz#8cad081f405f5428a3e4d27a4d0ad77763ce0a2f"
+pubsweet-component-users-manager@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/pubsweet-component-users-manager/-/pubsweet-component-users-manager-1.0.0.tgz#1659ad808dc882f515dbb4a761e5c2243bab2e06"
   dependencies:
     prop-types "^15.5.10"
-    react-bootstrap "^0.31.3"
+    react-bootstrap "^0.32.0"
     react-redux "^5.0.6"
     redux "^3.7.2"
 
@@ -10542,7 +10542,7 @@ react-addons-test-utils@^15.4.2, react-addons-test-utils@^15.6.0:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/react-addons-test-utils/-/react-addons-test-utils-15.6.2.tgz#c12b6efdc2247c10da7b8770d185080a7b047156"
 
-react-bootstrap@0.32.1:
+react-bootstrap@0.32.1, react-bootstrap@^0.32.0:
   version "0.32.1"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.32.1.tgz#60624c1b48a39d773ef6cce6421a4f33ecc166bb"
   dependencies:
