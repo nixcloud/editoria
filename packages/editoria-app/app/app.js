@@ -7,7 +7,6 @@ import { configureStore, Root } from 'pubsweet-client'
 
 import { AppContainer } from 'react-hot-loader'
 import createHistory from 'history/createBrowserHistory'
-
 import routes from './routes'
 
 const history = createHistory()
