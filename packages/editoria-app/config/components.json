@@ -10,5 +10,6 @@
   "pubsweet-component-vivliostyle-viewer",
   "pubsweet-component-wax",
   "@pubsweet/component-polling-client",
-  "@pubsweet/component-polling-server"
+  "@pubsweet/component-polling-server",
+  "pubsweet-component-theme-editoria"
 ]

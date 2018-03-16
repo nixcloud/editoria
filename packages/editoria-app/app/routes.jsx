@@ -23,6 +23,7 @@ import Dashboard from 'pubsweet-component-editoria-dashboard/src/Dashboard'
 import Manage from 'pubsweet-component-manage/Manage'
 import Navigation from './components/Navigation/Navigation'
 import PrivateRoute from './components/PrivateRoute'
+// import AuthenticatedManage from './components/AuthenticatedManage/AuthenticatedManage'
 
 // Pass configuration to editor
 const Editor = WithConfig(Wax, {
@@ -73,22 +74,42 @@ const Editor = WithConfig(Wax, {
 // )
 
 export default (
-  
   <Switch>
-    <Redirect exact path='/' to='/books' />
-    <Route path='/login' component={Login} />
-    <Route path='/signup' component={Signup} />
-    <Route path='/password-reset' component={PasswordReset} />
+    <Redirect exact path="/" to="/books" />
+    <Route component={Login} path="/login" />
+    <Route component={Signup} path="/signup" />
+    <Route component={PasswordReset} path="/password-reset" />
 
     <Manage nav={<Navigation />}>
-      <PrivateRoute exact path='/books' component={Dashboard} />
-      <PrivateRoute path='/books/:id/book-builder' component={BookBuilder} />
-      <PrivateRoute path='/books/:bookId/fragments/:fragmentId' component={Editor} />
+      <PrivateRoute component={Dashboard} exact path="/books" />
+      <PrivateRoute component={BookBuilder} path="/books/:id/book-builder" />
 
-      <PrivateRoute path='/teams' component={TeamsManager} />
-      <PrivateRoute path='/users' component={UsersManager} />
+      <PrivateRoute
+        component={Editor}
+        path="/books/:bookId/fragments/:fragmentId"
+      />
+      <PrivateRoute component={TeamsManager} path="/teams" />
+      <PrivateRoute component={UsersManager} path="/users" />
     </Manage>
   </Switch>
-  
 )
 
+// const Managed = () => (
+//   <AuthenticatedManage>
+//     <Switch>
+//       <Route component={Dashboard} path="/manage/books" />
+//       <Route component={UsersManager} path="/manage/users" />
+//       <Route component={TeamsManager} path="/manage/teams" />
+//       <Route component={BookBuilder} path="/manage/books/:id/book-builder" />
+//     </Switch>
+//   </AuthenticatedManage>
+// )
+
+// export default (
+//   <Switch>
+//     <Route component={Managed} path="/manage" />
+//     <Route component={Login} path="/login" />
+//     <Route component={Signup} path="/signup" />
+
+//   </Switch>
+// )

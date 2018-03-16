@@ -115,9 +115,7 @@ export class Dashboard extends React.Component {
   removeBook(book) {
     const { deleteCollection } = this.props.actions
 
-    deleteCollection(book).then(res => {
-      this.removeTeamsForBook(book)
-    })
+    deleteCollection(book)
   }
 
   /*
