@@ -1,5 +1,22 @@
 # Editoria  
 
+## 1.3.0
+
+#### Wax
+* Search / find and replace
+* Notes pane is hidden if there are no notes in the document
+* Note callouts work with track changes
+* Track changes previous / next navigation
+* Copy / cut and paste works with track changes
+* Indicator for how many items exist in a collapsed comment discussion
+* Performance improvements
+
+#### Maintenance
+* Switch to using yarn instead of npm by default
+* React 16
+* Upgrade to latest pubsweet client
+* Clean up component prop types and refs
+
 ## 1.2.0  
 
 * Upgrade to latest Pubsweet server, client, and components  
