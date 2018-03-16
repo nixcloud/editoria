@@ -20,7 +20,7 @@
     "editoria-common": "^0.0.3",
     "font-awesome": "4.7.0",
     "lodash": "4.17.4",
-    "pubsweet-client": "1.0.0-beta.6",
+    "pubsweet-client": "^2.1.1",
     "react": "^16.2.0",
     "react-bootstrap": "0.32.1",
     "react-dnd": "2.5.4",

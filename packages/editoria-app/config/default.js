@@ -3,6 +3,7 @@ const path = require('path')
 const components = require('./components')
 const bookBuilder = require('./modules/book-builder')
 const teams = require('./modules/teams')
+const logger = require('winston')
 
 const {
   NODE_ENV: nodeEnv,
@@ -22,18 +23,15 @@ module.exports = {
   epub: {
     fontsPath: '/uploads/fonts',
   },
-  'mail-transport': {
-    auth: {
-      pass: '',
-      user: '',
-    },
-    host: '',
-    port: 25,
-    secure: false,
-  },
   'password-reset': {
-    sender: resetSender || 'dev@example.com',
-    url: resetUrl || '/password-reset',
+    url: 'http://localhost:3000/password-reset',
+    sender: 'noreply@pubsweet.org',
+  },
+  mailer: {
+    from: 'nobody@example.com',
+    transport: {
+      sendmail: true,
+    },
   },
   publicKeys: [
     'authsome',
@@ -55,6 +53,9 @@ module.exports = {
   'pubsweet-server': {
     dbPath: dbPath || path.join(__dirname, '..', 'api', 'db', environment),
     sse: true,
+    logger,
+    port: 3000,
+    uploads: 'uploads',
   },
   validations: path.join(__dirname, 'modules', 'validations'),
 }
