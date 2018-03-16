@@ -1,6 +1,6 @@
 # Editoria  
 
-## 1.3.0
+## 1.3.0 (in progress)
 
 #### Wax
 * Search / find and replace
