@@ -6,4 +6,10 @@ module.exports = {
       cfg => `http://localhost:${cfg['pubsweet-server'].port}`,
     ),
   },
+  dbManager: {
+    username: 'admin',
+    password: '12345678',
+    email: 'admin@example.com',
+    admin: true,
+  },
 }

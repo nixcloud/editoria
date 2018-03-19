@@ -5,12 +5,7 @@ const bookBuilder = require('./modules/book-builder')
 const teams = require('./modules/teams')
 const logger = require('winston')
 
-const {
-  NODE_ENV: nodeEnv,
-  PUBSWEET_DB: dbPath,
-  PUBSWEET_PASSWORD_RESET_SENDER: resetSender,
-  PUBSWEET_PASSWORD_RESET_URL: resetUrl,
-} = process.env
+const { NODE_ENV: nodeEnv, PUBSWEET_DB: dbPath } = process.env
 
 const environment = nodeEnv || 'development'
 
@@ -24,13 +19,19 @@ module.exports = {
     fontsPath: '/uploads/fonts',
   },
   'password-reset': {
-    url: 'http://localhost:3000/password-reset',
-    sender: 'noreply@pubsweet.org',
+    url:
+      process.env.PUBSWEET_PASSWORD_RESET_URL ||
+      'http://localhost:3000/password-reset',
+    sender: process.env.PUBSWEET_PASSWORD_RESET_SENDER || 'dev@example.com',
   },
   mailer: {
-    from: 'nobody@example.com',
+    from: process.env.PUBSWEET_MAILER_SENDER || 'dev@example.com',
     transport: {
-      sendmail: true,
+      host: process.env.PUBSWEET_MAILER_HOSTNAME || 'smtp.mailgun.org',
+      auth: {
+        user: process.env.PUBSWEET_MAILER_USERNAME,
+        pass: process.env.PUBSWEET_MAILER_PASSWORD,
+      },
     },
   },
   publicKeys: [
