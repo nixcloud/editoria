@@ -170,71 +170,72 @@ const editoriaMode = async (userId, operation, object, context) => {
   // console.log('object', object)
   // console.log('path', object.path)
   // console.log('context', context)
+  return true
 
-  if (!userId) return false // there is no public data
-  const user = await context.models.User.find(userId)
+  // if (!userId) return false // there is no public data
+  // const user = await context.models.User.find(userId)
 
-  if (user && user.admin === true) return true // let admin do anything
-  // HACK -- only admins can do the "admin" operation
-  if (operation === 'admin') return false
+  // if (user && user.admin === true) return true // let admin do anything
+  // // HACK -- only admins can do the "admin" operation
+  // if (operation === 'admin') return false
 
-  if (!object) return false
+  // if (!object) return false
 
-  if (!object.type && object.path) {
-    switch (object.path) {
-      case '/collections':
-        if (operation === 'GET') {
-          return {
-            filter: collections => getFilteredArray(collections, user, context),
-          }
-        }
+  // if (!object.type && object.path) {
+  //   switch (object.path) {
+  //     case '/collections':
+  //       if (operation === 'GET') {
+  //         return {
+  //           filter: collections => getFilteredArray(collections, user, context),
+  //         }
+  //       }
 
-        if (operation === 'POST') {
-          return isProductionEditor(user, context)
-        }
+  //       if (operation === 'POST') {
+  //         return isProductionEditor(user, context)
+  //       }
 
-        return false
+  //       return false
 
-      case '/teams':
-        return true
+  //     case '/teams':
+  //       return true
 
-      case '/users':
-        return true
+  //     case '/users':
+  //       return true
 
-      default:
-        return false
-    }
-  }
+  //     default:
+  //       return false
+  //   }
+  // }
 
-  switch (object.type) {
-    case 'user':
-      return true
+  // switch (object.type) {
+  //   case 'user':
+  //     return true
 
-    case 'team':
-      return true
+  //   case 'team':
+  //     return true
 
-    case 'collection':
-      console.log('collection', operation, object)
-      if (operation === 'read' || operation === 'GET') {
-        return hasRightsOnObject(object, user, context)
-      }
+  //   case 'collection':
+  //     console.log('collection', operation, object)
+  //     if (operation === 'read' || operation === 'GET') {
+  //       return hasRightsOnObject(object, user, context)
+  //     }
 
-      // if (operation === 'read' || operation === 'GET') {
-      //   return hasRightsOnObject(object, user, context)
-      // }
+  //     // if (operation === 'read' || operation === 'GET') {
+  //     //   return hasRightsOnObject(object, user, context)
+  //     // }
 
-      if (operation === 'delete' || operation === 'DELETE') {
-        return isProductionEditorForBook(object, user, context)
-      }
+  //     if (operation === 'delete' || operation === 'DELETE') {
+  //       return isProductionEditorForBook(object, user, context)
+  //     }
 
-      return false
+  //     return false
 
-    case 'fragment':
-      return true
+  //   case 'fragment':
+  //     return true
 
-    default:
-      return false
-  }
+  //   default:
+  //     return false
+  // }
 }
 
 module.exports = editoriaMode
