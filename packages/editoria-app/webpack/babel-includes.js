@@ -25,6 +25,8 @@ module.exports = [
   /wax-[^/]+\/src/,
   /pubsweet-[^/\\]+\/(?!node_modules)/,
   /@pubsweet\/[^/\\]+\/(?!node_modules)/,
+  /pubsweet-[^/]+\/src/,
+  /pubsweet-component-/,
   // include pubsweet packages when npm linked from monorepo
   filepath =>
     // is a child of packages but not node_modules

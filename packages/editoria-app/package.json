@@ -31,7 +31,7 @@
     "lodash": "4.17.4",
     "prop-types": "^15.6.0",
     "pubsweet": "^2.0.0",
-    "pubsweet-client": "2.1.1",
+    "pubsweet-client": "^2.1.1",
     "pubsweet-component-bookbuilder": "^0.2.0",
     "pubsweet-component-editoria-dashboard": "^0.0.5",
     "pubsweet-component-epub": "^0.2.13",
