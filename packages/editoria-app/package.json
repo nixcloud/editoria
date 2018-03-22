@@ -19,12 +19,12 @@
   "license": "MIT",
   "version": "1.2.0",
   "dependencies": {
-    "@pubsweet/db-manager": "^1.0.0",
-    "@pubsweet/logger": "^0.2.2",
-    "@pubsweet/ui": "^3.0.0",
     "@pubsweet/component-polling-client": "^0.0.1",
     "@pubsweet/component-polling-server": "^0.0.2",
+    "@pubsweet/db-manager": "^1.0.0",
     "@pubsweet/default-theme": "^0.2.0",
+    "@pubsweet/logger": "^0.2.2",
+    "@pubsweet/ui": "^3.0.0",
     "authsome": "0.0.9",
     "font-awesome": "4.7.0",
     "history": "^4.7.2",
@@ -45,21 +45,21 @@
     "pubsweet-component-password-reset-frontend": "1.0.0",
     "pubsweet-component-signup": "^0.4.1",
     "pubsweet-component-teams-manager": "1.0.0",
-    "pubsweet-component-users-manager": "1.0.0",
     "pubsweet-component-theme-editoria": "^0.0.3",
+    "pubsweet-component-users-manager": "1.0.0",
     "pubsweet-component-vivliostyle-viewer": "^0.0.2",
     "pubsweet-component-wax": "^0.5.16",
     "pubsweet-server": "^2.0.0",
     "pubsweet-theme-plugin": "^0.0.3",
     "react": "^16.2.0",
     "react-bootstrap": "0.32.1",
-    "recompose": "^0.26.0",
     "react-dnd": "2.5.4",
     "react-dnd-html5-backend": "2.5.4",
     "react-dom": "^16.2.0",
     "react-redux": "5.0.4",
     "react-router-bootstrap": "0.24.4",
     "react-router-dom": "^4.2.2",
+    "recompose": "^0.26.0",
     "redux": "3.6.0"
   },
   "devDependencies": {
@@ -134,12 +134,15 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-        "./test/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "./test/fileMock.js",
       "\\.(css|less|scss)$": "identity-obj-proxy"
     },
-    "setupFiles": ["./test/jest.config.js"],
-    "snapshotSerializers": ["./node_modules/enzyme-to-json/serializer"],
+    "setupFiles": [
+      "./test/jest.config.js"
+    ],
+    "snapshotSerializers": [
+      "./node_modules/enzyme-to-json/serializer"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!pubsweet-frontend)",
       "__snapshots__"

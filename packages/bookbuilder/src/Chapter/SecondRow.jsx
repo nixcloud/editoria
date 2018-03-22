@@ -22,7 +22,6 @@ class ChapterSecondRow extends React.Component {
     const patch = {
       id: chapter.id,
       progress: chapter.progress,
-      rev: chapter.rev,
     }
 
     patch.progress[name] = index
@@ -35,7 +34,6 @@ class ChapterSecondRow extends React.Component {
     const patch = {
       alignment: chapter.alignment,
       id: chapter.id,
-      rev: chapter.rev,
     }
 
     patch.alignment[id] = !chapter.alignment[id]

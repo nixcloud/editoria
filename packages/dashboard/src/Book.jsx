@@ -50,7 +50,6 @@ class Book extends React.Component {
 
     const patch = {
       id: book.id,
-      rev: book.rev,
       title: this.renameTitle.value,
     }
 

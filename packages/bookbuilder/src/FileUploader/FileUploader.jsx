@@ -159,12 +159,12 @@ class FileUploader extends React.Component {
 
   // Get latest fragment rev for when ink is done
   // (and update runs with a potentially changed rev)
-  getFragmentRev(id, division) {
-    const divisionFragments = this.getFragmentsForDivision(division)
+  // getFragmentRev(id, division) {
+  //   const divisionFragments = this.getFragmentsForDivision(division)
 
-    const fragment = divisionFragments.find(f => f.id === id)
-    return fragment.rev
-  }
+  //   const fragment = divisionFragments.find(f => f.id === id)
+  //   return fragment.rev
+  // }
 
   getFragmentsForDivision(division) {
     const mapper = {
@@ -197,7 +197,6 @@ class FileUploader extends React.Component {
             .then(response => {
               const patch = {
                 id: fragment.id,
-                rev: this.getFragmentRev(fragment.id, fragment.division),
                 source: response.converted,
               }
 

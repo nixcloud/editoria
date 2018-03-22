@@ -6,7 +6,7 @@ import ChapterTitle from './ChapterTitle'
 import styles from '../styles/bookBuilder.local.scss'
 
 class ChapterFirstRow extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.onClickRename = this.onClickRename.bind(this)
@@ -15,23 +15,23 @@ class ChapterFirstRow extends React.Component {
 
     this.state = {
       isRenameEmpty: false,
-      isRenamingTitle: false
+      isRenamingTitle: false,
     }
   }
 
-  onClickRename () {
+  onClickRename() {
     this.setState({
-      isRenamingTitle: true
+      isRenamingTitle: true,
     })
   }
 
-  onSaveRename (title) {
+  onSaveRename(title) {
     const { chapter, update } = this.props
     title = title.trim()
 
     if (title.length === 0) {
       return this.setState({
-        isRenameEmpty: true
+        isRenameEmpty: true,
       })
     }
 
@@ -39,8 +39,7 @@ class ChapterFirstRow extends React.Component {
 
     const patch = {
       id: chapter.id,
-      rev: chapter.rev,
-      title: title
+      title,
     }
     update(patch)
 
@@ -54,16 +53,26 @@ class ChapterFirstRow extends React.Component {
   //   this.chapterTitle.save()
   // }
 
-  render () {
-    const { book, chapter, isUploadInProgress, outerContainer, remove, roles, title, type, update } = this.props
+  render() {
+    const {
+      book,
+      chapter,
+      isUploadInProgress,
+      outerContainer,
+      remove,
+      roles,
+      title,
+      type,
+      update,
+    } = this.props
     const { isRenameEmpty, isRenamingTitle } = this.state
 
     return (
       <div className={styles.FirstRow}>
         <ChapterTitle
           chapter={chapter}
-          isRenaming={isRenamingTitle}
           isRenameEmpty={isRenameEmpty}
+          isRenaming={isRenamingTitle}
           isUploadInProgress={isUploadInProgress}
           onSaveRename={this.onSaveRename}
           // ref={node => { this.chapterTitle = node}}
@@ -86,7 +95,6 @@ class ChapterFirstRow extends React.Component {
           update={update}
         />
       </div>
-
     )
   }
 }
