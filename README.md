@@ -12,24 +12,24 @@ For the editor that Editoria uses, see its related project [Wax](https://gitlab.
 
 The current features on our list are the following:
 
-|Module       |Description                              |In progress  |Issue
-|:--:         |--                                       |:--:         |:--:
-|System       |Implement roles & authorization          |             |#57
-|System       |Integrate with Manifold                  |             |#2
-|Editor       |Improve editor performane                |&#x2714;     |
-|Editor       |Image captions                           |             |#84
-|Editor       |Keyboard shortcuts to add diacritics     |             |
-|Editor       |Turn spell-check on and off              |             |
-|Editor       |Small caps style                         |             |
-|Editor       |Track spaces                             |             |
-|Editor       |Track inline formatting (eg. italics)    |             |
-|Editor       |Track block formatting (eg. headings)    |             |
-|Editor       |Expand set of special characters         |             |
-|Editor       |Text highlighter                         |             |
-|Editor       |Arrow navigation between notes           |             |
-|Editor       |Update note icon in toolbar              |             |
-|Editor       |Increase font size for text              |             |
-|Book builder |Redesign component state tool            |             |#55
+|Module       |Description                              |In progress  |Issue|
+|:--:         |--                                       |:--:         |:--:|
+|System       |Implement roles & authorization          |             |#57|
+|System       |Integrate with Manifold                  |             |#2|
+|Editor       |Improve editor performane                |&#x2714;     ||
+|Editor       |Image captions                           |             |#84|
+|Editor       |Keyboard shortcuts to add diacritics     |             ||
+|Editor       |Turn spell-check on and off              |             ||
+|Editor       |Small caps style                         |             ||
+|Editor       |Track spaces                             |             ||
+|Editor       |Track inline formatting (eg. italics)    |             ||
+|Editor       |Track block formatting (eg. headings)    |             ||
+|Editor       |Expand set of special characters         |             ||
+|Editor       |Text highlighter                         |             ||
+|Editor       |Arrow navigation between notes           |             ||
+|Editor       |Update note icon in toolbar              |             ||
+|Editor       |Increase font size for text              |             ||
+|Book builder |Redesign component state tool            |             |#55|
 
 You can also find more detailed (and more technical) lists of the current tasks at hand on these pages:
 * https://gitlab.coko.foundation/editoria/editoria/milestones/4
