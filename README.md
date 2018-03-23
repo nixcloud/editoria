@@ -11,6 +11,7 @@ For the editor that Editoria uses, see its related project [Wax](https://gitlab.
 ## Roadmap
 
 The current features on our list are the following:
+* Support for image captioning (#84)
 * Unnumbered components in the body division (#50)
 * Redesign the component state tool in the book builder (#55)
 * Implement authorization (#57)
