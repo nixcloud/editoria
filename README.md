@@ -13,7 +13,7 @@ For the editor that Editoria uses, see its related project [Wax](https://gitlab.
 The current features on our list are the following:
 
 |Module       |Description                              |In progress  |Issue|
-|:--:         |--                                       |:--:         |:--:|
+|:---:        |---                                      |:---:        |:---:|
 |System       |Implement roles & authorization          |             |#57|
 |System       |Integrate with Manifold                  |             |#2|
 |Editor       |Improve editor performane                |&#x2714;     ||
