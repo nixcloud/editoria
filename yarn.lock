@@ -9850,30 +9850,6 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
-pubsweet-client@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-2.1.1.tgz#2294224b244f6090740173f36ed49d61a2f40356"
-  dependencies:
-    authsome "0.0.9"
-    config "^1.21.0"
-    event-source-polyfill "^0.0.10"
-    global "^4.3.1"
-    isomorphic-fetch "^2.1.1"
-    lint-staged "^6.0.0"
-    lodash "^4.0.0"
-    prop-types "^15.5.8"
-    react "^16.2.0"
-    react-css-themr "^2.1.2"
-    react-redux "^5.0.2"
-    react-router-dom "^4.2.2"
-    react-router-redux next
-    redux "^3.6.0"
-    redux-form "^7.0.3"
-    redux-logger "^3.0.1"
-    redux-thunk "^2.2.0"
-    reselect "^3.0.1"
-    styled-components "^3.1.4"
-
 pubsweet-client@^2.1.1:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-2.2.4.tgz#c0386d0918fe073d74d996fc871e23593728f46b"
@@ -10284,13 +10260,6 @@ react-bootstrap@^0.31.3:
 react-codemirror2@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/react-codemirror2/-/react-codemirror2-4.2.1.tgz#4ad3c5c60ebbcb34880f961721b51527324ec021"
-
-react-css-themr@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/react-css-themr/-/react-css-themr-2.1.2.tgz#e017514e471c232f43a754a55b49d81faf5dafb8"
-  dependencies:
-    hoist-non-react-statics "^1.2.0"
-    invariant "^2.2.1"
 
 react-deep-force-update@^2.1.1:
   version "2.1.1"
