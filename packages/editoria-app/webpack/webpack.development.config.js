@@ -35,6 +35,7 @@ module.exports = [
       rules,
     },
     resolve: {
+      symlinks: false,
       modules: [
         path.resolve(__dirname, '..'),
         path.resolve(__dirname, '..', 'node_modules'),

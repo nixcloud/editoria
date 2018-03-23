@@ -48,7 +48,7 @@
     "pubsweet-component-users-manager": "1.0.0",
     "pubsweet-component-theme-editoria": "^0.0.3",
     "pubsweet-component-vivliostyle-viewer": "^0.0.2",
-    "pubsweet-component-wax": "^0.5.11",
+    "pubsweet-component-wax": "^0.5.16",
     "pubsweet-server": "1.1.1",
     "pubsweet-theme-plugin": "^0.0.3",
     "react": "^16.2.0",
