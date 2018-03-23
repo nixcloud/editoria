@@ -19,7 +19,7 @@ The current features on our list are the following:
 |Editor       |Improve editor performane                |&#x2714;     |wax/wax#120|
 |Editor       |Image captions                           |             |#84|
 |Editor       |Keyboard shortcuts to add diacritics     |             |wax/wax#123|
-|Editor       |Turn spell-check on and off              |             ||
+|Editor       |Turn spell-check on and off              |             |wax/wax#124|
 |Editor       |Small caps style                         |             ||
 |Editor       |Track spaces                             |             ||
 |Editor       |Track inline formatting (eg. italics)    |             ||
