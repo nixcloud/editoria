@@ -14,7 +14,9 @@ The current features on our list are the following:
 
 |Module       |Description                              |In progress  |Issue|
 |:---:        |---                                      |:---:        |:---:|
-|System       |Implement roles & authorization          |             |#57|
+|System       |Switch to Postgres                       |&#x2714;     |#80|
+|System       |Use docker containers for deployments    |&#x2714;     |#81|
+|System       |Implement roles & authorization          |&#x2714;     |#57|
 |System       |Integrate with Manifold                  |             |#2|
 |Editor       |Improve editor performane                |&#x2714;     |wax/wax#120|
 |Editor       |Image captions                           |             |wax/wax#127|
