@@ -346,7 +346,10 @@ BookBuilder.propTypes = {
         editor: PropTypes.shape({
           username: PropTypes.string,
         }),
-        timestamp: PropTypes.string,
+        timestamp: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.instanceOf(Date),
+        ]),
       }),
       number: PropTypes.number,
       owners: PropTypes.arrayOf(
