@@ -16,9 +16,9 @@ The current features on our list are the following:
 |:---:        |---                                      |:---:        |:---:|
 |System       |Implement roles & authorization          |             |#57|
 |System       |Integrate with Manifold                  |             |#2|
-|Editor       |Improve editor performane                |&#x2714;     |https://gitlab.coko.foundation/wax/wax/issues/120|
+|Editor       |Improve editor performane                |&#x2714;     |wax/wax#120|
 |Editor       |Image captions                           |             |#84|
-|Editor       |Keyboard shortcuts to add diacritics     |             ||
+|Editor       |Keyboard shortcuts to add diacritics     |             |wax/wax#123|
 |Editor       |Turn spell-check on and off              |             ||
 |Editor       |Small caps style                         |             ||
 |Editor       |Track spaces                             |             ||
