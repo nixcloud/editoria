@@ -3297,7 +3297,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.5.1, create-react-class@^15.6.0:
+create-react-class@^15.5.1:
   version "15.6.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   dependencies:
@@ -9463,10 +9463,6 @@ pkginfo@0.3.x:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/pkginfo/-/pkginfo-0.3.1.tgz#5b29f6a81f70717142e09e765bbeab97b4f81e21"
 
-pkginfo@0.x.x:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/pkginfo/-/pkginfo-0.4.1.tgz#b5418ef0439de5425fc4995042dced14fb2a84ff"
-
 platform@1.3.5:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/platform/-/platform-1.3.5.tgz#fb6958c696e07e2918d2eeda0f0bc9448d733444"
@@ -10181,18 +10177,7 @@ promisify-event@^1.0.0:
   dependencies:
     pinkie-promise "^2.0.0"
 
-prompt@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/prompt/-/prompt-1.0.0.tgz#8e57123c396ab988897fb327fd3aedc3e735e4fe"
-  dependencies:
-    colors "^1.1.2"
-    pkginfo "0.x.x"
-    read "1.0.x"
-    revalidator "0.1.x"
-    utile "0.3.x"
-    winston "2.1.x"
-
-prompt@flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87:
+prompt@^1.0.0, prompt@flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87:
   version "1.0.0"
   resolved "https://codeload.github.com/flatiron/prompt/tar.gz/1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87"
   dependencies:
@@ -10284,30 +10269,6 @@ pubsweet-client@2.1.1:
     reselect "^3.0.1"
     styled-components "^3.1.4"
 
-pubsweet-client@^1.0.0-beta.7:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-1.1.4.tgz#9b4ea16bd25d305d7e3392aa45c0db8865471611"
-  dependencies:
-    authsome "0.0.9"
-    config "^1.21.0"
-    event-source-polyfill "^0.0.10"
-    global "^4.3.1"
-    isomorphic-fetch "^2.1.1"
-    lint-staged "^6.0.0"
-    lodash "^4.0.0"
-    prop-types "^15.5.8"
-    pubsweet-component-login "^0.6.0"
-    react "^15.4.4"
-    react-css-themr "^2.1.2"
-    react-redux "^5.0.2"
-    react-router-dom "^4.2.2"
-    react-router-redux next
-    redux "^3.6.0"
-    redux-form "^7.0.3"
-    redux-logger "^3.0.1"
-    redux-thunk "^2.2.0"
-    reselect "^3.0.1"
-
 pubsweet-client@^2.1.1:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-2.2.3.tgz#2a36b8660e2ee1e8bb45789a9ed0c1ee900afa3c"
@@ -10382,18 +10343,6 @@ pubsweet-component-login@^0.5.5:
     react-router-redux "^4.0.8"
     redux "^3.7.2"
 
-pubsweet-component-login@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/pubsweet-component-login/-/pubsweet-component-login-0.6.0.tgz#4f5ee6ca096b8b8651d50c9798957a694e42c6d2"
-  dependencies:
-    prop-types "^15.5.10"
-    react-bootstrap "^0.31.3"
-    react-redux "^5.0.6"
-    react-router-dom "^4.2.2"
-    react-router-redux "^4.0.8"
-    redux "^3.7.2"
-    redux-form "^7.0.3"
-
 pubsweet-component-manage@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/pubsweet-component-manage/-/pubsweet-component-manage-0.2.3.tgz#6bf1479d6ffc8ab57fef63d7558a4153f5de98b8"
@@ -10459,16 +10408,17 @@ pubsweet-component-users-manager@1.0.0:
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-pubsweet-component-wax@^0.5.11:
-  version "0.5.11"
-  resolved "https://registry.yarnpkg.com/pubsweet-component-wax/-/pubsweet-component-wax-0.5.11.tgz#36176a3f21daabda396d366fe1782a71e6c3f95b"
+pubsweet-component-wax@^0.5.16:
+  version "0.5.16"
+  resolved "https://registry.yarnpkg.com/pubsweet-component-wax/-/pubsweet-component-wax-0.5.16.tgz#b22571a3a1c00d309ed5f03d5c62d2300c2b38e7"
   dependencies:
     lodash "4.17.4"
-    pubsweet-client "^1.0.0-beta.7"
-    react ">=15.0.0 <17.0.0"
-    react-redux "^5.0.6"
-    redux "^3.7.2"
-    wax-editor-react "^0.1.13"
+    pubsweet-client "^2.1.1"
+    react "^16.2.0"
+    react-dom "^16.2.0"
+    react-redux "5.0.4"
+    redux "3.6.0"
+    wax-editor-react "^0.1.17"
 
 pubsweet-server@1.1.1, pubsweet-server@^1.0.0-beta.2, pubsweet-server@^1.0.1:
   version "1.1.1"
@@ -10817,7 +10767,7 @@ react-docgen@^3.0.0-beta9:
     node-dir "^0.1.10"
     recast "^0.12.6"
 
-"react-dom@>=15.0.0 <17.0.0", react-dom@^16.2.0:
+react-dom@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.0.tgz#69003178601c0ca19b709b33a83369fe6124c044"
   dependencies:
@@ -11078,7 +11028,7 @@ react-transition-group@^2.0.0, react-transition-group@^2.2.0:
     prop-types "^15.5.8"
     warning "^3.0.0"
 
-"react@>=15.0.0 <17.0.0", react@^16.2.0:
+react@^16.2.0:
   version "16.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
   dependencies:
@@ -11086,16 +11036,6 @@ react-transition-group@^2.0.0, react-transition-group@^2.2.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-
-react@^15.4.4:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
-  dependencies:
-    create-react-class "^15.6.0"
-    fbjs "^0.8.9"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.0"
-    prop-types "^15.5.10"
 
 read-cmd-shim@^1.0.1:
   version "1.0.1"
@@ -13957,24 +13897,23 @@ watchpack@^1.3.1, watchpack@^1.4.0:
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
 
-wax-editor-core@^0.3.12:
-  version "0.3.12"
-  resolved "https://registry.yarnpkg.com/wax-editor-core/-/wax-editor-core-0.3.12.tgz#56814a8d7ab632677a6debdca35d6872aa7b243f"
+wax-editor-core@^0.3.16:
+  version "0.3.16"
+  resolved "https://registry.yarnpkg.com/wax-editor-core/-/wax-editor-core-0.3.16.tgz#3fb43c0531e180a9fbc9e13b530a9ec23f8c5932"
   dependencies:
     font-awesome "^4.7.0"
     lodash "^4.17.4"
     substance "1.0.0-beta.6.5"
 
-wax-editor-react@^0.1.13:
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/wax-editor-react/-/wax-editor-react-0.1.13.tgz#66f60ecfa13bd71ccda33fa5aa1b8318ba144817"
+wax-editor-react@^0.1.17:
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/wax-editor-react/-/wax-editor-react-0.1.17.tgz#4fb6a06e826f21fc1e23163f42209f0611646c40"
   dependencies:
     lodash "^4.17.4"
-    prop-types "^15.6.0"
-    react ">=15.0.0 <17.0.0"
-    react-dom ">=15.0.0 <17.0.0"
+    react "^16.2.0"
+    react-dom "^16.2.0"
     react-router-dom "^4.2.2"
-    wax-editor-core "^0.3.12"
+    wax-editor-core "^0.3.16"
 
 wbuf@^1.1.0, wbuf@^1.7.2:
   version "1.7.3"
@@ -14217,18 +14156,6 @@ winston@0.8.x:
   dependencies:
     async "0.2.x"
     colors "0.6.x"
-    cycle "1.0.x"
-    eyes "0.1.x"
-    isstream "0.1.x"
-    pkginfo "0.3.x"
-    stack-trace "0.0.x"
-
-winston@2.1.x:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/winston/-/winston-2.1.1.tgz#3c9349d196207fd1bdff9d4bc43ef72510e3a12e"
-  dependencies:
-    async "~1.0.0"
-    colors "1.0.x"
     cycle "1.0.x"
     eyes "0.1.x"
     isstream "0.1.x"
