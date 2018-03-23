@@ -19,17 +19,17 @@ The current features on our list are the following:
 |System       |Implement roles & authorization          |&#x2714;     |#57|
 |System       |Integrate with Manifold                  |             |#2|
 |Editor       |Improve editor performane                |&#x2714;     |wax/wax#120|
-|Editor       |Image captions                           |             |wax/wax#127|
+|Editor       |Image captions                           |&#x2714;     |wax/wax#127|
 |Editor       |Keyboard shortcuts to add diacritics     |             |wax/wax#129|
-|Editor       |Turn spell-check on and off              |             |wax/wax#124|
+|Editor       |Turn spell-check on and off              |&#x2714;     |wax/wax#124|
 |Editor       |Small caps style                         |             |wax/wax#125|
 |Editor       |Track spaces                             |             |wax/wax#119|
 |Editor       |Track inline formatting (eg. italics)    |             |wax/wax#40|
 |Editor       |Track block formatting (eg. headings)    |             |wax/wax#40|
 |Editor       |Expand set of special characters         |             |wax/wax#128|
 |Editor       |Text highlighter                         |             |wax/wax#18|
-|Editor       |Arrow navigation between notes           |             ||
-|Editor       |Update note icon in toolbar              |             |wax/wax#126|
+|Editor       |Arrow navigation between notes           |&#x2714;     |wax/wax#133|
+|Editor       |Update note icon in toolbar              |&#x2714;     |wax/wax#126|
 |Editor       |Increase font size for text              |             ||
 |Book builder |Redesign component state tool            |             |#55|
 
