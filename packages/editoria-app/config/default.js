@@ -5,10 +5,6 @@ const bookBuilder = require('./modules/book-builder')
 const teams = require('./modules/teams')
 const logger = require('winston')
 
-const { NODE_ENV: nodeEnv, PUBSWEET_DB: dbPath } = process.env
-
-const environment = nodeEnv || 'development'
-
 module.exports = {
   authsome: {
     mode: path.join(__dirname, 'modules', 'mode'),
@@ -52,7 +48,7 @@ module.exports = {
     theme: 'ThemeEditoria',
   },
   'pubsweet-server': {
-    dbPath: dbPath || path.join(__dirname, '..', 'api', 'db', environment),
+    db: {},
     sse: true,
     logger,
     port: 3000,
