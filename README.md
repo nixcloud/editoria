@@ -9,7 +9,6 @@ For more information, visit the project's [website](https://editoria.pub/) or ou
 For the editor that Editoria uses, see its related project [Wax](https://gitlab.coko.foundation/wax/wax).  
 
 ## Roadmap
-<i class="fa fa-circle"></i>cc  
 The current features on our list are the following:
 
 |Module       |Description                              |In progress  |Done     |Issue|
