@@ -92,9 +92,9 @@
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-"@pubsweet/component-polling-server@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@pubsweet/component-polling-server/-/component-polling-server-0.0.3.tgz#4b97810d41bf2ea7a343c8536e41ea5bf044ea29"
+"@pubsweet/component-polling-server@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@pubsweet/component-polling-server/-/component-polling-server-0.0.4.tgz#d75db64e5e8b14943972f38ba6799f3db3e70690"
 
 "@pubsweet/db-manager@^1.0.3":
   version "1.0.3"
@@ -106,6 +106,17 @@
     joi "^13.1.0"
     pg "^7.4.1"
     pubsweet-server "^2.0.3"
+
+"@pubsweet/db-manager@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.0.4.tgz#9cc0b392768033ac58b362203b0c6600267946b1"
+  dependencies:
+    "@pubsweet/logger" "^0.2.2"
+    fs-extra "^4.0.2"
+    isomorphic-fetch "^2.2.1"
+    joi "^13.1.0"
+    pg "^7.4.1"
+    pubsweet-server "^2.0.4"
 
 "@pubsweet/default-theme@^0.2.0":
   version "0.2.1"
@@ -131,7 +142,7 @@
     joi "^13.1.0"
     lodash "^4.17.4"
 
-"@pubsweet/ui@^3.0.0", "@pubsweet/ui@^3.2.1":
+"@pubsweet/ui@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-3.2.1.tgz#963623fc8f76e8cbe18666a7ad126d501d34696e"
   dependencies:
@@ -140,6 +151,29 @@
     enzyme "^3.2.0"
     enzyme-adapter-react-16 "^1.1.1"
     humps "^2.0.1"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
+    react "^16.2.0"
+    react-dom "^16.2.0"
+    react-feather "^1.0.8"
+    react-redux "^5.0.2"
+    react-router-dom "^4.2.2"
+    react-tag-autocomplete "^5.5.0"
+    recompose "^0.26.0"
+    redux "^3.6.0"
+    redux-form "^7.0.3"
+    styled-components "^2.4.0"
+
+"@pubsweet/ui@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-3.3.0.tgz#61d6973000a460818a2e52ad8c6c585758b85d3a"
+  dependencies:
+    babel-jest "^21.2.0"
+    classnames "^2.2.5"
+    enzyme "^3.2.0"
+    enzyme-adapter-react-16 "^1.1.1"
+    humps "^2.0.1"
+    invariant "^2.2.3"
     lodash "^4.17.4"
     prop-types "^15.5.10"
     react "^16.2.0"
@@ -9782,7 +9816,7 @@ promisify-event@^1.0.0:
   dependencies:
     pinkie-promise "^2.0.0"
 
-prompt@^1.0.0, prompt@flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87:
+prompt@^1.0.0, "prompt@github:flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87":
   version "1.0.0"
   resolved "https://codeload.github.com/flatiron/prompt/tar.gz/1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87"
   dependencies:
@@ -9850,11 +9884,36 @@ public-encrypt@^4.0.0:
     parse-asn1 "^5.0.0"
     randombytes "^2.0.1"
 
-pubsweet-client@^2.1.1, pubsweet-client@^2.2.4:
+pubsweet-client@^2.1.1:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-2.2.4.tgz#c0386d0918fe073d74d996fc871e23593728f46b"
   dependencies:
     "@pubsweet/ui" "^3.2.1"
+    authsome "0.0.9"
+    config "^1.21.0"
+    event-source-polyfill "^0.0.10"
+    global "^4.3.1"
+    isomorphic-fetch "^2.1.1"
+    lint-staged "^6.0.0"
+    lodash "^4.0.0"
+    prop-types "^15.5.8"
+    react "^16.2.0"
+    react-redux "^5.0.2"
+    react-router-dom "^4.2.2"
+    react-router-redux next
+    redux "^3.6.0"
+    redux-form "^7.0.3"
+    redux-logger "^3.0.1"
+    redux-thunk "^2.2.0"
+    reselect "^3.0.1"
+    styled-components "^2.4.0"
+    styled-normalize "^3.0.1"
+
+pubsweet-client@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-2.2.5.tgz#f4adc69009b128a5cda0c48d480004cea22a9eef"
+  dependencies:
+    "@pubsweet/ui" "^3.3.0"
     authsome "0.0.9"
     config "^1.21.0"
     event-source-polyfill "^0.0.10"
@@ -10039,6 +10098,44 @@ pubsweet-server@^2.0.3:
     uuid "^3.0.1"
     winston "^2.2.0"
 
+pubsweet-server@^2.0.4, pubsweet-server@^2.0.5:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-2.0.4.tgz#65609758d96c3e784c47e6113a64315abc092352"
+  dependencies:
+    "@pubsweet/logger" "^0.2.2"
+    apollo-server-express "^1.3.2"
+    apollo-upload-server "^4.0.2"
+    authsome "0.0.9"
+    bcrypt "^1.0.2"
+    bluebird "^3.5.1"
+    body-parser "^1.15.2"
+    colors "^1.1.2"
+    config "^1.26.2"
+    cookie-parser "^1.4.3"
+    dotenv "^4.0.0"
+    express "^4.16.1"
+    graphql "^0.12.3"
+    graphql-tools "^2.18.0"
+    helmet "^3.8.1"
+    http-status-codes "^1.0.6"
+    joi "^13.1.0"
+    jsonwebtoken "^7.1.7"
+    lodash "^4.0.0"
+    minimist "^1.2.0"
+    morgan "^1.8.2"
+    multer "^1.1.0"
+    passport "^0.3.2"
+    passport-anonymous "^1.0.1"
+    passport-http-bearer "^1.0.1"
+    passport-local "^1.0.0"
+    pg "^7.4.1"
+    promise-queue "^2.2.3"
+    prompt "^1.0.0"
+    pubsweet-sse "^0.1.4"
+    require-relative "^0.8.7"
+    uuid "^3.0.1"
+    winston "^2.2.0"
+
 pubsweet-sse@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-0.1.4.tgz#1ff38a230143cbd487a8d44afb28a6c4746ee464"
@@ -10047,11 +10144,11 @@ pubsweet-theme-plugin@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/pubsweet-theme-plugin/-/pubsweet-theme-plugin-0.0.3.tgz#1773543a95ed9f56eb8b14f13f24496e034d140b"
 
-pubsweet@^2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.1.3.tgz#bbf7b748a356f9685cf09f14f10ad89ebc0c5a1e"
+pubsweet@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.1.4.tgz#5968d1800da9115a67a0531895d299f621eebfb6"
   dependencies:
-    "@pubsweet/db-manager" "^1.0.3"
+    "@pubsweet/db-manager" "^1.0.4"
     "@pubsweet/logger" "^0.2.2"
     bluebird "^3.5.0"
     colors "^1.1.2"
@@ -10061,7 +10158,7 @@ pubsweet@^2.1.3:
     fs-extra "^4.0.2"
     inflection "^1.12.0"
     prompt flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87
-    pubsweet-server "^2.0.3"
+    pubsweet-server "^2.0.4"
     require-relative "^0.8.7"
     uuid "^3.0.1"
     webpack "^3.8.1"
