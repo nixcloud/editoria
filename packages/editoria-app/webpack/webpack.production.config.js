@@ -1,22 +1,16 @@
+process.env.NODE_ENV = 'production'
+process.env.BABEL_ENV = 'production'
+
+const config = require('config')
 const path = require('path')
 const webpack = require('webpack')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ThemePlugin = require('pubsweet-theme-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
-const fs = require('fs-extra')
-const config = require('config')
-const { pick } = require('lodash')
-const rules = require('./common-rules')
-
-const outputPath = path.resolve(__dirname, '..', '_build', 'assets')
-
-// can't use node-config in webpack so save whitelisted client config into the build and alias it below
-const clientConfig = pick(config, config.publicKeys)
-fs.ensureDirSync(outputPath)
-const clientConfigPath = path.join(outputPath, 'client-config.json')
-fs.writeJsonSync(clientConfigPath, clientConfig, { spaces: 2 })
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const rules = require('./rules.production')
+const resolve = require('./common-resolve')
 
 module.exports = [
   {
@@ -28,36 +22,27 @@ module.exports = [
       app: ['./app'],
     },
     output: {
-      path: outputPath,
+      path: path.join(__dirname, '..', '_build', 'assets'),
       filename: '[name].[hash].js',
       publicPath: '/assets/',
     },
     module: {
       rules,
     },
-    resolve: {
-      modules: [
-        path.resolve(__dirname, '..'),
-        path.resolve(__dirname, '..', 'node_modules'),
-        'node_modules',
-      ],
-      alias: {
-        joi: 'joi-browser',
-        config: clientConfigPath,
-      },
-      extensions: ['.js', '.jsx', '.json', '.scss'],
-      plugins: [new ThemePlugin(config['pubsweet-client'].theme)],
-    },
+    resolve,
+    // devtool: 'source-map',
     plugins: [
+      new CleanWebpackPlugin(['assets'], {
+        root: path.join(__dirname, '..', '_build'),
+      }),
       new HtmlWebpackPlugin({
-        title: 'PubSweet app',
-        template: '../app/index.ejs', // Load a custom template
-        inject: 'body', // Inject all scripts into the body
+        title: 'Editoria',
+        template: '../app/index-production.html',
+        inject: 'body',
       }),
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('production'),
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       }),
-      // put dynamically required modules into the build
       new webpack.ContextReplacementPlugin(/./, __dirname, {
         [config.authsome.mode]: config.authsome.mode,
         [config.validations]: config.validations,
@@ -66,10 +51,8 @@ module.exports = [
       new CopyWebpackPlugin([{ from: '../static' }]),
       new webpack.optimize.AggressiveMergingPlugin(),
       new webpack.optimize.OccurrenceOrderPlugin(),
-      new CompressionPlugin({
-        asset: '[path].gz[query]',
-        algorithm: 'gzip',
-        test: /\.js$|\.css$|\.html$/,
+      new UglifyJSPlugin({
+        // sourceMap: true
       }),
     ],
     node: {
