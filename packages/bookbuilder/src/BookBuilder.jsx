@@ -87,7 +87,6 @@ export class BookBuilder extends React.Component {
       patch = {
         id: book.id,
         productionEditor: null,
-        rev: book.rev,
       }
 
       return updateCollection(patch)
@@ -100,7 +99,6 @@ export class BookBuilder extends React.Component {
 
     patch = {
       id: book.id,
-      rev: book.rev,
       productionEditor: _.pick(foundEditor, ['id', 'username']),
     }
 

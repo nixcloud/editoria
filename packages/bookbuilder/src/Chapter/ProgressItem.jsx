@@ -56,7 +56,6 @@ export class ProgressItem extends React.Component {
 
     const patch = {
       id: chapter.id,
-      rev: chapter.rev,
       progress: chapter.progress,
     }
 

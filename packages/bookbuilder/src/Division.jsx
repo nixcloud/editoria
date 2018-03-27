@@ -101,7 +101,6 @@ class Division extends React.Component {
         const patch = {
           id: c.id,
           index: i,
-          rev: c.rev,
         }
 
         if (c.number) {
@@ -142,7 +141,6 @@ class Division extends React.Component {
       const patch = {
         id: c.id,
         index: c.index - 1,
-        rev: c.rev,
       }
 
       if (
