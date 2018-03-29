@@ -31,6 +31,7 @@ The current features on our list are the following:
 |Editor       |Update note icon in toolbar              |&#x2714;     |         |wax/wax#126|
 |Editor       |Increase font size for text              |             |         |
 |Book builder |Redesign component state tool            |             |         |#55|
+|Book builder |Introduce unnumbered chapters            |             |         |#50|
 
 <br/>
 You can also find more detailed (and more technical) lists of the current tasks at hand on these pages:
