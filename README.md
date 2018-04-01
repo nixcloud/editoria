@@ -11,27 +11,33 @@ For the editor that Editoria uses, see its related project [Wax](https://gitlab.
 ## Roadmap
 The current features on our list are the following:
 
-|Module       |Description                              |In progress  |Done     |Issue|
-|:---:        |---                                      |:---:        |:---:    |:---:|
-|System       |Switch to Postgres                       |             |&#x2714; |#80|
-|System       |Use docker containers for deployments    |             |         |#89|
-|System       |Implement roles & authorization          |&#x2714;     |         |#57|
-|System       |Integrate with Manifold                  |             |         |#2|
-|Editor       |Improve editor performane                |             |&#x2714; |wax/wax#120|
-|Editor       |Image captions                           |&#x2714;     |         |wax/wax#127|
-|Editor       |Keyboard shortcuts to add diacritics     |             |         |wax/wax#129|
-|Editor       |Turn spell-check on and off              |&#x2714;     |         |wax/wax#124|
-|Editor       |Small caps style                         |             |         |wax/wax#125|
-|Editor       |Track spaces                             |             |         |wax/wax#119|
-|Editor       |Track inline formatting (eg. italics)    |             |         |wax/wax#40|
-|Editor       |Track block formatting (eg. headings)    |             |         |wax/wax#40|
-|Editor       |Expand set of special characters         |             |         |wax/wax#128|
-|Editor       |Text highlighter                         |             |         |wax/wax#18|
-|Editor       |Arrow navigation between notes           |&#x2714;     |         |wax/wax#133|
-|Editor       |Update note icon in toolbar              |&#x2714;     |         |wax/wax#126|
-|Editor       |Increase font size for text              |             |         |
-|Book builder |Redesign component state tool            |             |         |#55|
-|Book builder |Introduce unnumbered chapters            |             |         |#50|
+|Module             |Description                                    |In progress    |Done     |Issue|
+|:---:              |---                                            |:---:          |:---:    |:---:|
+|System             |Switch to Postgres                             |               |&#x2714; |#80|
+|System             |Use docker containers for deployments          |               |         |#89|
+|System             |Implement roles & authorization                |&#x2714;       |         |#57|
+|System             |Integrate with Manifold                        |               |         |#2|
+|Editor             |Improve editor performane                      |               |&#x2714; |wax/wax#120|
+|Editor             |Image captions                                 |&#x2714;       |         |wax/wax#127|
+|Editor             |Keyboard shortcuts to add diacritics           |               |         |wax/wax#129|
+|Editor             |Turn spell-check on and off                    |&#x2714;       |         |wax/wax#124|
+|Editor             |Small caps style                               |               |         |wax/wax#125|
+|Editor             |Track spaces                                   |               |         |wax/wax#119|
+|Editor             |Track inline formatting (eg. italics)          |               |         |wax/wax#40|
+|Editor             |Track block formatting (eg. headings)          |               |         |wax/wax#40|
+|Editor             |Expand set of special characters               |               |         |wax/wax#128|
+|Editor             |Text highlighter                               |               |         |wax/wax#18|
+|Editor             |Arrow navigation between notes                 |&#x2714;       |         |wax/wax#133|
+|Editor             |Update note icon in toolbar                    |&#x2714;       |         |wax/wax#126|
+|Editor             |Increase font size for text                    |               |         |
+|Book builder       |Redesign component state tool                  |               |         |#55|
+|Book builder       |Introduce unnumbered chapters                  |               |         |#50|
+|Document ingestion |Convert hyphens between numerals en dashes     |               |&#x2714; |
+|Document ingestion |En and em dashes normalized                    |               |&#x2714; |
+|Document ingestion |Clean up spaces around punctuation             |               |&#x2714; |
+|Document ingestion |Convert series of periods to ellipses          |               |&#x2714; |
+|Document ingestion |Normalize directional quotes and apostrophes   |               |&#x2714; |
+|Document ingestion |Convert underlining and bolding to italics     |               |&#x2714; |
 
 <br/>
 You can also find more detailed (and more technical) lists of the current tasks at hand on these pages:
