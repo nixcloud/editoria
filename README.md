@@ -17,11 +17,13 @@ The current features on our list are the following:
 |System             |Use docker containers for deployments          |               |         |#89|
 |System             |Implement roles & authorization                |&#x2714;       |         |#57|
 |System             |Integrate with Manifold                        |               |         |#2|
+|Book builder       |Redesign component state tool                  |               |         |#55|
+|Book builder       |Introduce unnumbered chapters                  |               |         |#50|
 |Editor             |Improve editor performane                      |               |&#x2714; |wax/wax#120|
 |Editor             |Image captions                                 |&#x2714;       |         |wax/wax#127|
-|Editor             |Keyboard shortcuts to add diacritics           |               |         |wax/wax#129|
+|Editor             |Keyboard shortcuts to add diacritics           |&#x2714;       |         |wax/wax#129|
 |Editor             |Turn spell-check on and off                    |&#x2714;       |         |wax/wax#124|
-|Editor             |Small caps style                               |               |         |wax/wax#125|
+|Editor             |Small caps style                               |&#x2714;       |         |wax/wax#125|
 |Editor             |Track spaces                                   |               |         |wax/wax#119|
 |Editor             |Track inline formatting (eg. italics)          |               |         |wax/wax#40|
 |Editor             |Track block formatting (eg. headings)          |               |         |wax/wax#40|
@@ -30,8 +32,6 @@ The current features on our list are the following:
 |Editor             |Arrow navigation between notes                 |&#x2714;       |         |wax/wax#133|
 |Editor             |Update note icon in toolbar                    |&#x2714;       |         |wax/wax#126|
 |Editor             |Increase font size for text                    |               |         |
-|Book builder       |Redesign component state tool                  |               |         |#55|
-|Book builder       |Introduce unnumbered chapters                  |               |         |#50|
 |Document ingestion |Convert hyphens between numerals en dashes     |               |&#x2714; |
 |Document ingestion |En and em dashes normalized                    |               |&#x2714; |
 |Document ingestion |Clean up spaces around punctuation             |               |&#x2714; |
