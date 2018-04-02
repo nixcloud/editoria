@@ -32,12 +32,12 @@ The current features on our list are the following:
 |Editor             |Arrow navigation between notes                 |&#x2714;       |         |wax/wax#133|
 |Editor             |Update note icon in toolbar                    |&#x2714;       |         |wax/wax#126|
 |Editor             |Increase font size for text                    |               |         |
-|Document ingestion |Convert hyphens between numerals en dashes     |               |&#x2714; |xsweet/editoria_typescript#21|
-|Document ingestion |En and em dashes normalized                    |               |&#x2714; |xsweet/editoria_typescript#21|
-|Document ingestion |Clean up spaces around punctuation             |               |&#x2714; |xsweet/editoria_typescript#21|
-|Document ingestion |Convert series of periods to ellipses          |               |&#x2714; |xsweet/editoria_typescript#21|
-|Document ingestion |Normalize directional quotes and apostrophes   |               |&#x2714; |xsweet/editoria_typescript#21|
-|Document ingestion |Convert underlining and bolding to italics     |               |&#x2714; |XSweet/editoria_typescript/issues/29, XSweet/HTMLevator/issues/2|
+|Document ingestion |Convert hyphens between numerals en dashes     |               |&#x2714; |https://gitlab.coko.foundation/xsweet/editoria_typescript#21|
+|Document ingestion |En and em dashes normalized                    |               |&#x2714; |https://gitlab.coko.foundation/xsweet/editoria_typescript#21|
+|Document ingestion |Clean up spaces around punctuation             |               |&#x2714; |https://gitlab.coko.foundation/xsweet/editoria_typescript#21|
+|Document ingestion |Convert series of periods to ellipses          |               |&#x2714; |https://gitlab.coko.foundation/xsweet/editoria_typescript#21|
+|Document ingestion |Normalize directional quotes and apostrophes   |               |&#x2714; |https://gitlab.coko.foundation/xsweet/editoria_typescript#21|
+|Document ingestion |Convert underlining and bolding to italics     |               |&#x2714; |https://gitlab.coko.foundation/XSweet/editoria_typescript/issues/29, https://gitlab.coko.foundation/XSweet/HTMLevator/issues/2|
 
 <br/>
 You can also find more detailed (and more technical) lists of the current tasks at hand on these pages:
