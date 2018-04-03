@@ -56,20 +56,16 @@ Make sure you use you use `node >= 8.3`. We provide `.envrc` and `.nvmrc` files 
 
 Install all dependencies.  
 ```sh
-npm i
-npm run bootstrap
+yarn
 ```
 
-Go to the app and create a database for it.  
-```sh
-cd packages/editoria-app
-npm run setupdb
-```
-
-You should now have a `config/local-development.json` file.  
-Edit that to connect to [INK](https://gitlab.coko.foundation/INK/ink-api).  
+Create a `local-development.json` file inside the `config` folder.  
+Edit that to enter your database secret, as well as to connect to [INK](https://gitlab.coko.foundation/INK/ink-api).  
 In this file, add the following:  
 ```json
+"pubsweet-server": {
+    "secret": "<your-secret-here>"
+}
 "pubsweet-component-ink-backend": {
   "inkEndpoint": "< your-ink-api-endpoint >",
   "email": "< your-ink-email >",
@@ -83,12 +79,13 @@ Ensure that:
 * the `<your-ink-api-endpoint>` in `local-development.json` ends with a trailing slash
 * if INK is running as a service on a port, it is on port `3000`
 
+Go to the app folder and get the database docker up and running.  
+```sh
+cd packages/editoria-app
+yarn start:services
+``` 
+
 You're good to go. Run the app with:  
 ```sh
-npm start
-```
-
-If for some reason you want to delete all dependencies from all the packages:  
-```sh
-npm run clean
+yarn server
 ```
