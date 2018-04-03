@@ -19,7 +19,7 @@ The current features on our list are the following:
 |System             |Integrate with Manifold                        |               |         |#2|
 |Book builder       |Redesign component state tool                  |               |         |#55|
 |Book builder       |Introduce unnumbered chapters                  |               |         |#50|
-|Editor             |Improve editor performane                      |               |&#x2714; |wax/wax#120|
+|Editor             |Improve editor performance                     |               |&#x2714; |wax/wax#120|
 |Editor             |Image captions                                 |&#x2714;       |         |wax/wax#127|
 |Editor             |Keyboard shortcuts to add diacritics           |&#x2714;       |         |wax/wax#129|
 |Editor             |Turn spell-check on and off                    |&#x2714;       |         |wax/wax#124|
