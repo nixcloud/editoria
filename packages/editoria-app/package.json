@@ -151,7 +151,7 @@
   "scripts": {
     "setupdb": "pubsweet setupdb ./",
     "start": "pubsweet start",
-    "server": "NODE_ENV=production pubsweet server",
+    "server": "pubsweet start",
     "resetdb": "pubsweet setupdb --clobber ./",
     "start:services": "docker-compose up postgres",
     "test": "NODE_ENV=test jest",
