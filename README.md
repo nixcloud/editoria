@@ -54,9 +54,10 @@ cd editoria
 
 Make sure you use you use `node >= 8.3`. We provide `.envrc` and `.nvmrc` files for convenience.  
 
-Install all dependencies.  
+Install all dependencies and navigate to the editoria app folder.  
 ```sh
 yarn
+cd packages/editoria-app
 ```
 
 Create a `local-development.json` file inside the `config` folder.  
@@ -79,9 +80,8 @@ Ensure that:
 * the `<your-ink-api-endpoint>` in `local-development.json` ends with a trailing slash
 * if INK is running as a service on a port, it is on port `3000`
 
-Go to the app folder and get the database docker up and running.  
+Get the database docker up and running.  
 ```sh
-cd packages/editoria-app
 yarn start:services
 ``` 
 
