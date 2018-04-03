@@ -64,16 +64,18 @@ Create a `local-development.json` file inside the `config` folder.
 Edit that to enter your database secret, as well as to connect to [INK](https://gitlab.coko.foundation/INK/ink-api).  
 In this file, add the following:  
 ```json
-"pubsweet-server": {
-    "secret": "<your-secret-here>"
-}
-"pubsweet-component-ink-backend": {
-  "inkEndpoint": "< your-ink-api-endpoint >",
-  "email": "< your-ink-email >",
-  "password": "< your-ink-password >",
-  "recipes": {
-    "editoria-typescript": "< editoria-typescript-recipe-id >"
-  }
+{
+    "pubsweet-server": {
+        "secret": "<your-secret-here>"
+    },
+    "pubsweet-component-ink-backend": {
+        "inkEndpoint": "< your-ink-api-endpoint >",
+        "email": "< your-ink-email >",
+        "password": "< your-ink-password >",
+        "recipes": {
+            "editoria-typescript": "< editoria-typescript-recipe-id >"
+        }
+    }
 }
 ```
 Ensure that:
