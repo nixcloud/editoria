@@ -1,7 +1,8 @@
+const { pickBy } = require('lodash')
 /** The base class for Editoria's Authsome mode. */
 class EditoriaMode {
   /**
-   * Creates a new instance of XpubCollabraMode
+   * Creates a new instance of EditoriaMode
    *
    * @param {string} userId A user's UUID
    * @param {string} operation The operation you're authorizing for
@@ -42,7 +43,6 @@ class EditoriaMode {
    * @returns {boolean}
    */
   async isTeamMember(teamType, object) {
-    // console.log('isteam')
     if (!this.user || !Array.isArray(this.user.teams)) {
       return false
     }
@@ -56,13 +56,14 @@ class EditoriaMode {
         team.object.id === object.id
     } else {
       // We're asking if a user is a member of a global team
-      membershipCondition = team => team.teamType === teamType && !team.object
+      // membershipCondition = team => team.teamType === teamType && !team.object// later when globals will be introduced
+      membershipCondition = team => team.teamType === teamType
     }
 
     const memberships = await Promise.all(
       this.user.teams.map(async teamId => {
-        const team = await this.context.models.Team.find(teamId)
-        return membershipCondition(team)
+        const teamFound = await this.context.models.Team.find(teamId)
+        return membershipCondition(teamFound)
       }),
     )
 
@@ -87,11 +88,8 @@ class EditoriaMode {
    * @param {any} object
    * @returns {boolean}
    */
-  isAuthor() {
-    if (!this.object || !this.object.owners || !this.user) {
-      return false
-    }
-    return this.object.owners.includes(this.user.id)
+  isAuthor(object) {
+    return this.isTeamMember('author', object)
   }
 
   /**
@@ -122,9 +120,12 @@ class EditoriaMode {
    *
    * @returns {boolean}
    */
-  // isProductionEditor() {
-  //   return this.isTeamMember('productionEditor')
-  // }
+  isProductionEditor() {
+    if (!this.user || !Array.isArray(this.user.teams)) {
+      return false
+    }
+    return this.isTeamMember('productionEditor')
+  }
 
   /**
    * Checks if userId is present, indicating an authenticated user
@@ -135,148 +136,227 @@ class EditoriaMode {
   isAuthenticated() {
     return !!this.userId
   }
-}
 
-/** This class is used to handle authorization requirements for REST endpoints. */
-class RESTMode extends EditoriaMode {
-  /**
-   * Determine if the current operation is a listing of the collections
-   *
-   * @returns {boolean}
-   * @memberof RESTMode
-   */
-  isListingCollections() {
-    if (
-      this.operation === 'read' &&
-      this.object &&
-      this.object.path === '/collections'
-    ) {
-      return true
-    }
-    return false
-  }
-
-  /**
-   * Determine if the current operation is reading a collection
-   *
-   * @returns { boolean }
-   * @memberof RESTMode
-   */
-  isGettingCollection() {
-    if (
-      this.operation === 'read' &&
-      this.object &&
-      this.object.type === '/books'
-    ) {
-      return true
-    }
-    return false
-  }
-
-  /**
-   * Returns true if the current operation is a create on collections
-   *
-   * @returns {boolean}
-   */
-  isCreatingCollections() {
-    return (
-      this.operation === 'create' &&
-      this.object &&
-      this.object.path === '/collections'
-    )
-  }
-
-  isGettingGlobalUsers() {
-    if (
-      this.operation === 'read' &&
-      this.object &&
-      this.object.path === '/users'
-    ) {
-      return true
-    }
-    return false
-  }
-
-  isGettingGlobalTeams() {
-    if (
-      this.operation === 'read' &&
-      this.object &&
-      this.object.path === '/teams'
-    ) {
-      return true
-    }
-    return false
-  }
-
-  /**
-   * An async functions that's the entry point for determining
-   * authorization results. Returns true (if allowed), false (if not allowed),
-   * and { filter: function(filterable) } if partially allowed
-   *
-   * @returns {any} Returns true, false or { filter: fn }
-   * @memberof RESTMode
-   */
-  async determine() {
+  async canReadCollection() {
     if (!this.isAuthenticated()) {
-      return this.unauthenticatedUser(this.operation)
+      return false
     }
 
     this.user = await this.context.models.User.find(this.userId)
-    console.log('user', this.user)
 
-    // Admins can do anything
-    if (this.isAdmin()) {
-      console.log('is admin')
+    const collection = await this.context.models.Collection.find(this.object.id)
+
+    const permission =
+      (await this.isAuthor(collection)) ||
+      (await this.isAssignedCopyEditor(collection)) ||
+      (await this.isAssignedProductionEditor(collection))
+
+    return permission
+  }
+
+  async canListCollections() {
+    if (!this.isAuthenticated()) {
+      return false
+    }
+    this.user = await this.context.models.User.find(this.userId)
+
+    return {
+      filter: async collections => {
+        const filteredCollections = await Promise.all(
+          collections.map(async collection => {
+            const condition =
+              (await this.isAuthor(collection)) ||
+              (await this.isAssignedCopyEditor(collection)) || // eslint-disable-line
+              (await this.isAssignedProductionEditor(collection)) // eslint-disable-line
+            return condition ? collection : undefined // eslint-disable-line
+          }, this),
+        )
+
+        return filteredCollections.filter(collection => collection)
+      },
+    }
+  }
+
+  async canListUsers() {
+    return this.isAuthenticated()
+  }
+
+  async canReadUser() {
+    if (!this.isAuthenticated()) {
+      return false
+    }
+
+    this.user = await this.context.models.User.find(this.userId)
+
+    if (this.user.id === this.object.id) {
       return true
     }
-    // Navbar Rules
-    if (this.isGettingGlobalTeams() || this.isGettingGlobalUsers()) {
-      return this.isAdmin()
+    return {
+      filter: user =>
+        pickBy(user, (_, key) => ['id', 'username', 'type'].includes(key)),
+    }
+  }
+
+  async canListTeams() {
+    return this.isAuthenticated()
+  }
+
+  async canReadTeam() {
+    if (!this.isAuthenticated()) {
+      return false
     }
 
-    // Users can create collections
-    if (this.isCreatingCollections()) {
-      return this.isAdmin()
+    this.user = await this.context.models.User.find(this.userId)
+
+    // logic here
+    return true
+  }
+
+  async canViewTeams() {
+    return this.isAdmin()
+  }
+  async canViewUsers() {
+    return this.isAdmin()
+  }
+
+  /**
+   * Checks if a user can create a collection.
+   *
+   * @returns {boolean}
+   */
+  async canCreateCollection() {
+    this.user = await this.context.models.User.find(this.userId)
+    if (!this.isAuthenticated) {
+      return false
     }
-
-    if (this.isListingCollections()) {
-      const test = {
-        filter: async collections => {
-          const filteredCollections = await Promise.all(
-            collections.map(async collection => {
-              const condition =
-                this.isAuthor(collection) ||
-                ((await this.isAssignedCopyEditor(collection)) ||
-                  (await this.isAssignedProductionEditor(collection)))
-              return condition ? collection : undefined // eslint-disable-line
-            }),
-          )
-
-          return filteredCollections.filter(collection => collection)
-        },
-      }
-      return test
-    }
-
-    return false
+    return this.isProductionEditor()
   }
 }
 
 module.exports = {
+  before: async (userId, operation, object, context) => {
+    const user = await context.models.User.find(userId)
+    return user.admin
+  },
   GET: (userId, operation, object, context) => {
-    const mode = new RESTMode(userId, operation, object, context)
-    return mode.determine()
+    const mode = new EditoriaMode(userId, operation, object, context)
+
+    // GET /api/collections
+    if (object && object.path === '/collections') {
+      return mode.canListCollections()
+    }
+    // GET /api/collection
+    if (object && object.type === 'collection') {
+      return mode.canReadCollection()
+    }
+
+    // GET /api/users
+    if (object && object.path === '/users') {
+      return mode.canListUsers()
+    }
+
+    // // GET /api/fragments
+    // if (object && object.path === '/fragments') {
+    //   return mode.canListFragments()
+    // }
+
+    // // GET /api/teams
+    if (object && object.path === '/teams') {
+      return mode.canListTeams()
+    }
+
+    // // GET /api/fragment
+    // if (object && object.type === 'fragment') {
+    //   return mode.canReadFragment()
+    // }
+
+    // // GET /api/team
+    if (object && object.type === 'team') {
+      return mode.canReadTeam()
+    }
+
+    // // GET /api/user
+    if (object && object.type === 'user') {
+      return mode.canReadUser()
+    }
+
+    return false
   },
   POST: (userId, operation, object, context) => {
-    const mode = new RESTMode(userId, operation, object, context)
-    return mode.determine()
+    const mode = new EditoriaMode(userId, operation, object, context)
+    // POST /api/collections
+    if (object && object.path === '/collections') {
+      console.log('hello')
+      return mode.canCreateCollection()
+    }
+
+    // POST /api/users
+    if (object && object.path === '/users') {
+      return mode.canCreateUser()
+    }
+
+    // POST /api/fragments
+    if (object && object.path === '/fragments') {
+      return mode.canCreateFragment()
+    }
+
+    // POST /api/collections/:collectionId/fragments
+    if (object && object.path === '/collections/:collectionId/fragments') {
+      return mode.canCreateFragmentInACollection()
+    }
+
+    // POST /api/teams
+    if (object && object.path === '/teams') {
+      return mode.canCreateTeam()
+    }
+
+    return false
   },
   PATCH: (userId, operation, object, context) => {
-    const mode = new RESTMode(userId, operation, object, context)
-    return mode.determine()
+    const mode = new EditoriaMode(userId, operation, object, context)
+    // PATCH /api/collections/:id
+    if (object && object.type === 'collection') {
+      return mode.canUpdateCollection()
+    }
+    // PATCH /api/fragments/:id
+    if (object && object.type === 'fragment') {
+      return mode.canUpdateFragment()
+    }
+
+    // PATCH /api/teams/:id
+    if (object && object.type === '/teams') {
+      return mode.canUpdateTeam()
+    }
+
+    return false
   },
   DELETE: (userId, operation, object, context) => {
-    const mode = new RESTMode(userId, operation, object, context)
-    return mode.determine()
+    const mode = new EditoriaMode(userId, operation, object, context)
+    // DELETE /api/collections/:id
+    if (object && object.type === 'collection') {
+      return mode.canDeleteCollection()
+    }
+
+    // DELETE /api/fragments/:id
+    if (object && object.type === 'fragments') {
+      return mode.canDeleteFragment()
+    }
+
+    // DELETE /api/teams/:id
+    if (object && object.type === 'teams') {
+      return mode.canDeleteTeam()
+    }
+
+    return false
+  },
+  PRESENTATION: (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    if (object && object.path === '/users') {
+      return mode.canViewUsers()
+    }
+    if (object && object.path === '/teams') {
+      return mode.canViewTeams()
+    }
+    return false
   },
 }

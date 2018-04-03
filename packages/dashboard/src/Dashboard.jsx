@@ -38,8 +38,9 @@ export class Dashboard extends React.Component {
     const { getCollections, getTeams } = actions
 
     getCollections()
-      .then(() => getTeams())
-      .then(() => this.findBooksWithNoTeams())
+      .then((val) => {console.log('col', val)})
+    getTeams()
+      // .then(() => this.findBooksWithNoTeams())
   }
 
   /*
@@ -145,26 +146,53 @@ export class Dashboard extends React.Component {
   */
   createTeamsForBook(book) {
     const { createTeam } = this.props.actions
+    const teamTypes = Object.keys(config.authsome.teams)
 
-    each(config.authsome.teams, teamType => {
-      // TODO -- Review the idea that the name needs to be plural for some teams
-      const name =
-        teamType.name === 'Production Editor'
-          ? teamType.name
-          : `${teamType.name}s`
-
+    for (let i = 0; i < teamTypes.length; i += 1) {
+      const teamType = teamTypes[i]
       const newTeam = {
         members: [],
-        name,
+        name: config.authsome.teams[teamType].name,
         object: {
           id: book.id,
           type: 'collection',
         },
-        teamType,
+        teamType: teamType,
       }
-
       createTeam(newTeam)
-    })
+    }
+    // teamTypes.map(teamType => {
+    //   const newTeam = {
+    //     members: [],
+    //     name: config.authsome.teams[teamType].name,
+    //     object: {
+    //       id: book.id,
+    //       type: 'collection',
+    //     },
+    //     teamType,
+    //   }
+    //   createTeam(newTeam)
+    // })
+    // each(config.authsome.teams, teamType => {
+    //   console.log('teamType', teamType)
+    //   // TODO -- Review the idea that the name needs to be plural for some teams
+    //   const name =
+    //     teamType.name === 'Production Editor'
+    //       ? teamType.name
+    //       : `${teamType.name}s`
+
+    //   const newTeam = {
+    //     members: [],
+    //     name,
+    //     object: {
+    //       id: book.id,
+    //       type: 'collection',
+    //     },
+    //     teamType,
+    //   }
+
+    //   createTeam(newTeam)
+    // })
   }
 
   /*
