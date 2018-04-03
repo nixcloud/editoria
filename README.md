@@ -54,34 +54,36 @@ cd editoria
 
 Make sure you use you use `node >= 8.3`. We provide `.envrc` and `.nvmrc` files for convenience.  
 
-Install all dependencies.  
+Install all dependencies and navigate to the editoria app folder.  
 ```sh
 yarn
+cd packages/editoria-app
 ```
 
 Create a `local-development.json` file inside the `config` folder.  
 Edit that to enter your database secret, as well as to connect to [INK](https://gitlab.coko.foundation/INK/ink-api).  
 In this file, add the following:  
 ```json
-"pubsweet-server": {
-    "secret": "<your-secret-here>"
-}
-"pubsweet-component-ink-backend": {
-  "inkEndpoint": "< your-ink-api-endpoint >",
-  "email": "< your-ink-email >",
-  "password": "< your-ink-password >",
-  "recipes": {
-    "editoria-typescript": "< editoria-typescript-recipe-id >"
-  }
+{
+    "pubsweet-server": {
+        "secret": "<your-secret-here>"
+    },
+    "pubsweet-component-ink-backend": {
+        "inkEndpoint": "< your-ink-api-endpoint >",
+        "email": "< your-ink-email >",
+        "password": "< your-ink-password >",
+        "recipes": {
+            "editoria-typescript": "< editoria-typescript-recipe-id >"
+        }
+    }
 }
 ```
 Ensure that:
 * the `<your-ink-api-endpoint>` in `local-development.json` ends with a trailing slash
 * if INK is running as a service on a port, it is on port `3000`
 
-Go to the app folder and get the database docker up and running.  
+Get the database docker up and running.  
 ```sh
-cd packages/editoria-app
 yarn start:services
 ``` 
 
