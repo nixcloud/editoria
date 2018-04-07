@@ -32,12 +32,13 @@ The current features on our list are the following:
 |Editor             |Arrow navigation between notes                 |&#x2714;       |         |wax/wax#133|
 |Editor             |Update note icon in toolbar                    |&#x2714;       |         |wax/wax#126|
 |Editor             |Increase font size for text                    |               |         |
-|Document ingestion |Convert hyphens between numerals en dashes     |               |&#x2714; |XSweet/editoria_typescript#21
-|Document ingestion |En and em dashes normalized                    |               |&#x2714; |XSweet/editoria_typescript#21
-|Document ingestion |Clean up spaces around punctuation             |               |&#x2714; |XSweet/editoria_typescript#21
+|Document ingestion |Normalize en and em dashes, convert hyphens between numerals to en dashes|               |&#x2714; |XSweet/editoria_typescript#21
+|Document ingestion |Clean up white space (around punctuation, multiple spaces)|               |&#x2714; |XSweet/editoria_typescript#21|
 |Document ingestion |Convert series of periods to ellipses          |               |&#x2714; |XSweet/editoria_typescript#21
 |Document ingestion |Normalize directional quotes and apostrophes   |               |&#x2714; |XSweet/editoria_typescript#21
-|Document ingestion |Convert underlining and bolding to italics     |               |&#x2714; |XSweet/editoria_typescript#29, XSweet/editoria_typescript#21
+|Document ingestion |Convert underlining and bolding to italics     |&#x2714;       |         |XSweet/editoria_typescript#29, XSweet/editoria_typescript#21
+|Document ingestion |Force punctuation to match formatting of preceding word|&#x2714;       |         |XSweet/HTMLevator#3|
+|Document ingestion |Improve header promotion                       |&#x2714;       |         |XSweet/XSweet#123|
 
 <br/>
 You can also find more detailed (and more technical) lists of the current tasks at hand on these pages:
