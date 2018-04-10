@@ -43,7 +43,9 @@ class EditoriaMode {
    * @returns {boolean}
    */
   async isTeamMember(teamType, object) {
+    console.log('user', this.user)
     if (!this.user || !Array.isArray(this.user.teams)) {
+      console.log('in teamMemeber false1')
       return false
     }
 
@@ -62,10 +64,13 @@ class EditoriaMode {
 
     const memberships = await Promise.all(
       this.user.teams.map(async teamId => {
+        console.log('in teamMemeber user.teams.map', teamId)
         const teamFound = await this.context.models.Team.find(teamId)
+        console.log('in teamMemeber teamFound', teamFound)
         return membershipCondition(teamFound)
       }),
     )
+    console.log('membership', memberships)
 
     return memberships.includes(true)
   }
@@ -99,7 +104,10 @@ class EditoriaMode {
    * @returns {boolean}
    */
   isAdmin() {
-    return this.user && this.user.admin
+    if (this.user && this.user.admin) {
+      return true
+    }
+    return false
   }
 
   /**
@@ -121,9 +129,10 @@ class EditoriaMode {
    * @returns {boolean}
    */
   isProductionEditor() {
-    if (!this.user || !Array.isArray(this.user.teams)) {
-      return false
-    }
+    console.log('isProduction?', this.isTeamMember('productionEditor'))
+    // if (!this.user || !Array.isArray(this.user.teams)) {
+    //   return false
+    // }
     return this.isTeamMember('productionEditor')
   }
 
@@ -211,11 +220,20 @@ class EditoriaMode {
     // logic here
     return true
   }
+  async canCreateTeam() {
+    this.user = await this.context.models.User.find(this.userId)
+    // if (!this.isAuthenticated()) {
+    //   return false
+    // }
 
+    return this.isProductionEditor()
+  }
   async canViewTeams() {
+    this.user = await this.context.models.User.find(this.userId)
     return this.isAdmin()
   }
   async canViewUsers() {
+    this.user = await this.context.models.User.find(this.userId)
     return this.isAdmin()
   }
 
@@ -284,9 +302,13 @@ module.exports = {
   },
   POST: (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
+    console.log('user', userId)
+    console.log('operation', operation)
+    console.log('object', object)
+    console.log('context', context)
     // POST /api/collections
     if (object && object.path === '/collections') {
-      console.log('hello')
+      // console.log('hello')
       return mode.canCreateCollection()
     }
 
@@ -307,6 +329,7 @@ module.exports = {
 
     // POST /api/teams
     if (object && object.path === '/teams') {
+      console.log('in here')
       return mode.canCreateTeam()
     }
 
@@ -324,7 +347,7 @@ module.exports = {
     }
 
     // PATCH /api/teams/:id
-    if (object && object.type === '/teams') {
+    if (object && object.type === 'team') {
       return mode.canUpdateTeam()
     }
 

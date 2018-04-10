@@ -44,6 +44,8 @@ class Navigation extends React.Component {
     const { logoutUser, currentUser } = this.props
     let logoutButtonIfAuthenticated
 
+    if (currentUser.user === null) return null
+
     if (currentUser.isAuthenticated) {
       logoutButtonIfAuthenticated = (
         <NavbarUser

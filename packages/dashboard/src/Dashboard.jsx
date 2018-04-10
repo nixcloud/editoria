@@ -19,10 +19,11 @@ export class Dashboard extends React.Component {
     this.createBook = this.createBook.bind(this)
     this.createTeamsForBook = this.createTeamsForBook.bind(this)
     this.editBook = this.editBook.bind(this)
-    this.findBooksWithNoTeams = this.findBooksWithNoTeams.bind(this)
+    // this.findBooksWithNoTeams = this.findBooksWithNoTeams.bind(this)
     this.removeBook = this.removeBook.bind(this)
     this.removeTeamsForBook = this.removeTeamsForBook.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
+    this.isProductionEditor = this.isProductionEditor.bind(this)
 
     this.state = {
       showModal: false,
@@ -37,10 +38,11 @@ export class Dashboard extends React.Component {
     const { actions } = this.props
     const { getCollections, getTeams } = actions
 
-    getCollections()
-      .then((val) => {console.log('col', val)})
+    getCollections().then(val => {
+      console.log('col', val)
+    })
     getTeams()
-      // .then(() => this.findBooksWithNoTeams())
+    // .then(() => this.findBooksWithNoTeams())
   }
 
   /*
@@ -80,34 +82,35 @@ export class Dashboard extends React.Component {
   /*
     Return an array of all the roles that the current user has
   */
-  getRoles() {
-    const { user } = this.props
+  // getRoles() {
+  // const { user } = this.props
+  // console.log('teams', this.state)
 
-    let roles = []
-    if (user.admin) roles.push('admin')
+  // let roles = []
+  // if (user.admin) roles.push('admin')
 
-    function addRole(role) {
-      roles = union(roles, [role])
-    }
+  // function addRole(role) {
+  //   roles = union(roles, [role])
+  // }
 
-    forEach(user.teams, t => {
-      switch (t.teamType.name) {
-        case 'Production Editor':
-          addRole('production-editor')
-          break
-        case 'Copy Editor':
-          addRole('copy-editor')
-          break
-        case 'Author':
-          addRole('author')
-          break
-        default:
-          break
-      }
-    })
+  // forEach(user.teams, t => {
+  //   switch (t.teamType.name) {
+  //     case 'Production Editor':
+  //       addRole('production-editor')
+  //       break
+  //     case 'Copy Editor':
+  //       addRole('copy-editor')
+  //       break
+  //     case 'Author':
+  //       addRole('author')
+  //       break
+  //     default:
+  //       break
+  //   }
+  // })
 
-    return roles
-  }
+  // return roles
+  // }
 
   /*
     Remove the given book.
@@ -127,16 +130,29 @@ export class Dashboard extends React.Component {
       # the command 'pubsweet setupdb'.
   */
   // TODO -- refactor so that less operations run most of the time
-  findBooksWithNoTeams() {
-    const { books, teams } = this.props
+  // findBooksWithNoTeams() {
+  //   const { books, teams } = this.props
 
-    each(books, book => {
-      const teamsForBook = filter(teams, t => t.object.id === book.id)
+  //   each(books, book => {
+  //     const teamsForBook = filter(teams, t => t.object.id === book.id)
 
-      if (isEmpty(teamsForBook)) {
-        this.createTeamsForBook(book)
-      }
+  //     if (isEmpty(teamsForBook)) {
+  //       this.createTeamsForBook(book)
+  //     }
+  //   })
+  // }
+
+  isProductionEditor(userId) {
+    const { teams } = this.props
+    const productionEditorTeams = filter(teams, {
+      teamType: 'productionEditor',
     })
+    console.log
+
+    const membership = productionEditorTeams.map(team =>
+      team.members.includes(userId),
+    )
+    return membership.includes(true)
   }
 
   /*
@@ -146,18 +162,24 @@ export class Dashboard extends React.Component {
   */
   createTeamsForBook(book) {
     const { createTeam } = this.props.actions
+    const { user } = this.props
+
     const teamTypes = Object.keys(config.authsome.teams)
 
     for (let i = 0; i < teamTypes.length; i += 1) {
       const teamType = teamTypes[i]
+      const members = []
+      if (this.isProductionEditor(user.id) && teamType === 'productionEditor') {
+        members.push(user.id)
+      }
       const newTeam = {
-        members: [],
+        members,
         name: config.authsome.teams[teamType].name,
         object: {
           id: book.id,
           type: 'collection',
         },
-        teamType: teamType,
+        teamType,
       }
       createTeam(newTeam)
     }
@@ -213,9 +235,9 @@ export class Dashboard extends React.Component {
   render() {
     const { books } = this.props
     const { showModal } = this.state
-    console.log('props parent', this.props)
+    // console.log('props parent', this.props)
 
-    const roles = this.getRoles()
+    // const roles = this.getRoles()
 
     const className = `${
       styles.bookList
@@ -224,14 +246,13 @@ export class Dashboard extends React.Component {
     return (
       <div className={className}>
         <div className="container col-lg-offset-2 col-lg-8">
-          <DashboardHeader roles={roles} toggle={this.toggleModal} user={this.props.user} />
+          <DashboardHeader toggle={this.toggleModal} user={this.props.user} />
 
           <BookList
             books={books}
             container={this}
             edit={this.editBook}
             remove={this.removeBook}
-            roles={roles}
           />
         </div>
 
@@ -287,7 +308,7 @@ Dashboard.defaultProps = {
 }
 
 function mapStateToProps(state, { params }) {
-  console.log('state', state)
+  // console.log('state', state)
   return {
     books: state.collections,
     teams: state.teams,
