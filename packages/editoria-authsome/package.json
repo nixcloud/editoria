@@ -8,7 +8,7 @@
     "docs": "jsdoc2md src/index.js > README.md"
   },
   "keywords": ["authsome", "authorization", "access", "control", "xpub"],
-  "author": "Jure Triglav",
+  "author": "Coko Foundation",
   "license": "MIT",
   "devDependencies": {
     "jest": "^22.2.0",

@@ -14,7 +14,7 @@ const collections = [
 const teams = [
   {
     id: 'team1',
-    teamType: 'handlingEditor',
+    teamType: 'productionEditor',
     object: {
       id: 'collection2',
       type: 'collection',
@@ -22,7 +22,7 @@ const teams = [
   },
   {
     id: 'team2',
-    teamType: 'seniorEditor',
+    teamType: 'copyEditor',
     object: {
       id: 'collection1',
       type: 'collection',
@@ -30,8 +30,7 @@ const teams = [
   },
   {
     id: 'team3',
-    teamType: 'managingEditor',
-    // No associated object means this is a global team
+    teamType: 'author',
   },
 ]
 
