@@ -100,6 +100,7 @@ Get the database docker container up and running:
 yarn start:services
 ```
 
+
 You're good to go. Open a separate terminal in the same folder and run the app with:  
 ```sh
 yarn server
