@@ -185,6 +185,7 @@ export class Dashboard extends React.Component {
   render() {
     const { books } = this.props
     const { showModal } = this.state
+    console.log('props parent', this.props)
 
     const roles = this.getRoles()
 
@@ -195,7 +196,7 @@ export class Dashboard extends React.Component {
     return (
       <div className={className}>
         <div className="container col-lg-offset-2 col-lg-8">
-          <DashboardHeader roles={roles} toggle={this.toggleModal} />
+          <DashboardHeader roles={roles} toggle={this.toggleModal} user={this.props.user} />
 
           <BookList
             books={books}
@@ -258,6 +259,7 @@ Dashboard.defaultProps = {
 }
 
 function mapStateToProps(state, { params }) {
+  console.log('state', state)
   return {
     books: state.collections,
     teams: state.teams,

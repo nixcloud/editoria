@@ -2,13 +2,22 @@ const path = require('path')
 
 const components = require('./components')
 const bookBuilder = require('./modules/book-builder')
-const teams = require('./modules/teams')
 const logger = require('winston')
 
 module.exports = {
   authsome: {
-    mode: path.join(__dirname, 'modules', 'mode'),
-    teams,
+    mode: require.resolve('pubsweet-editoria-authsome'),
+    teams: {
+      productionEditor: {
+        name: 'Production Editor',
+      },
+      copyEditor: {
+        name: 'Copy Editor',
+      },
+      author: {
+        name: 'Author',
+      },
+    },
   },
   bookBuilder,
   epub: {
