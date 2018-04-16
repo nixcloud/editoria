@@ -22,8 +22,10 @@ The current features on our list are the following:
 |Editor             |Improve editor performance                     |               |&#x2714; |wax/wax#120|
 |Editor             |Image captions                                 |&#x2714;       |         |wax/wax#127|
 |Editor             |Keyboard shortcuts to add diacritics           |&#x2714;       |         |wax/wax#129|
-|Editor             |Turn spell-check on and off                    |&#x2714;       |         |wax/wax#124|
-|Editor             |Small caps style                               |&#x2714;       |         |wax/wax#125|
+|Editor             |Turn spell-check on and off                    |               |&#x2714; |wax/wax#124|
+|Editor             |Small caps style                               |               |&#x2714; |wax/wax#125|
+|Editor             |Note callout deletion with track changes       |               |&#x2714; |wax/wax#36|
+|Editor             |Cutting and pasting with track changes         |               |&#x2714; |wax/wax#15|
 |Editor             |Track spaces                                   |               |         |wax/wax#119|
 |Editor             |Track inline formatting (eg. italics)          |               |         |wax/wax#40|
 |Editor             |Track block formatting (eg. headings)          |               |         |wax/wax#40|
