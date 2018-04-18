@@ -63,7 +63,7 @@ yarn
 cd packages/editoria-app
 ```
 
-Create a `local-development.json` file inside the `config` folder.  
+Create a `config/local-development.json` file.  
 Edit that to enter your database secret, as well as to connect to [INK](https://gitlab.coko.foundation/INK/ink-api).  
 In this file, add the following:  
 ```json
@@ -85,6 +85,8 @@ Ensure that:
 * the `<your-ink-api-endpoint>` in `local-development.json` ends with a trailing slash
 * if INK is running as a service on a port, it is on port `3000`
 
+Note: if you want to use a non-default database, see [Pubsweet: Development: Setup](https://gitlab.coko.foundation/pubsweet/pubsweet/wikis/Development:%20setup#setup-2)
+
 Get the database docker up and running.  
 ```sh
 yarn start:services
@@ -94,3 +96,7 @@ You're good to go. Open a separate terminal in the same folder and run the app w
 ```sh
 yarn server
 ```
+
+## Developer info
+
+see also the [Pubsweet wiki](https://gitlab.coko.foundation/pubsweet/pubsweet/wikis/home) for developer notes.
