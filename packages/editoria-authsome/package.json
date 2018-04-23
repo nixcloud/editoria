@@ -7,17 +7,18 @@
     "test": "jest",
     "docs": "jsdoc2md src/index.js > README.md"
   },
-  "keywords": ["authsome", "authorization", "access", "control", "xpub"],
+  "keywords": ["authsome", "authorization", "access", "control", "editoria"],
   "author": "Coko Foundation",
   "license": "MIT",
   "devDependencies": {
     "jest": "^22.2.0",
     "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1",
+    "jest-environment-db": "^1.0.0",
     "pubsweet-server": "^2.0.4"
   },
   "dependencies": {
-    "authsome": "^0.0.10"
+    "authsome": "^0.1.0"
   },
   "jest": {
     "testEnvironment": "jest-environment-db",

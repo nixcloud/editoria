@@ -43,9 +43,8 @@ class EditoriaMode {
    * @returns {boolean}
    */
   async isTeamMember(teamType, object) {
-    console.log('user', this.user)
     if (!this.user || !Array.isArray(this.user.teams)) {
-      console.log('in teamMemeber false1')
+      // console.log('in teamMemeber false1')
       return false
     }
 
@@ -64,14 +63,28 @@ class EditoriaMode {
 
     const memberships = await Promise.all(
       this.user.teams.map(async teamId => {
-        console.log('in teamMemeber user.teams.map', teamId)
+        // console.log('in teamMemeber user.teams.map', teamId)
         const teamFound = await this.context.models.Team.find(teamId)
-        console.log('in teamMemeber teamFound', teamFound)
         return membershipCondition(teamFound)
       }),
     )
-    console.log('membership', memberships)
 
+    return memberships.includes(true)
+  }
+
+  async hasMembership(object) {
+    if (!this.user || !Array.isArray(this.user.teams)) {
+      return false
+    }
+
+    const membershipCondition = team => team.object.id === object.id
+
+    const memberships = await Promise.all(
+      this.user.teams.map(async teamId => {
+        const teamFound = await this.context.models.Team.find(teamId)
+        return membershipCondition(teamFound)
+      }),
+    )
     return memberships.includes(true)
   }
 
@@ -103,7 +116,8 @@ class EditoriaMode {
    *
    * @returns {boolean}
    */
-  isAdmin() {
+  async isAdmin() {
+    this.user = await this.context.models.User.find(this.userId)
     if (this.user && this.user.admin) {
       return true
     }
@@ -129,7 +143,7 @@ class EditoriaMode {
    * @returns {boolean}
    */
   isProductionEditor() {
-    console.log('isProduction?', this.isTeamMember('productionEditor'))
+    // console.log('isProduction?', this.isTeamMember('productionEditor'))
     // if (!this.user || !Array.isArray(this.user.teams)) {
     //   return false
     // }
@@ -187,7 +201,8 @@ class EditoriaMode {
   }
 
   async canListUsers() {
-    return this.isAuthenticated()
+    this.user = await this.context.models.User.find(this.userId)
+    return this.isAuthenticated() && this.isProductionEditor()
   }
 
   async canReadUser() {
@@ -207,7 +222,27 @@ class EditoriaMode {
   }
 
   async canListTeams() {
-    return this.isAuthenticated()
+    if (!this.isAuthenticated()) {
+      return false
+    }
+    this.user = await this.context.models.User.find(this.userId)
+
+    return {
+      filter: async teams => {
+        const filteredTeams = await Promise.all(
+          teams.map(async team => {
+            const condition = this.belongsToTeam(team)
+            return condition ? team : undefined // eslint-disable-line
+          }, this),
+        )
+
+        return filteredTeams.filter(team => team)
+      },
+    }
+  }
+
+  belongsToTeam(team) {
+    return this.user.teams.includes(team.id)
   }
 
   async canReadTeam() {
@@ -217,22 +252,18 @@ class EditoriaMode {
 
     this.user = await this.context.models.User.find(this.userId)
 
-    // logic here
-    return true
+    if (this.object && this.object.type === 'team') {
+      return this.belongsToTeam(this.object.id)
+    }
+    return false
   }
+
   async canCreateTeam() {
     this.user = await this.context.models.User.find(this.userId)
-    // if (!this.isAuthenticated()) {
-    //   return false
-    // }
-
     return this.isProductionEditor()
   }
-  async canViewTeams() {
-    this.user = await this.context.models.User.find(this.userId)
-    return this.isAdmin()
-  }
-  async canViewUsers() {
+
+  async canViewNavLink() {
     this.user = await this.context.models.User.find(this.userId)
     return this.isAdmin()
   }
@@ -248,6 +279,37 @@ class EditoriaMode {
       return false
     }
     return this.isProductionEditor()
+  }
+
+  async canRenameCollection() {
+    this.user = await this.context.models.User.find(this.userId)
+    if (!this.isAuthenticated) {
+      return false
+    }
+    const collection = await this.context.models.Collection.find(this.object.id)
+    return collection && this.isAssignedProductionEditor(collection)
+  }
+  async canDeleteCollection() {
+    this.user = await this.context.models.User.find(this.userId)
+    if (!this.isAuthenticated) {
+      return false
+    }
+    const collection = await this.context.models.Collection.find(this.object.id)
+    return collection && this.isAssignedProductionEditor(collection)
+  }
+
+  async canUpdateCollection() {
+    this.user = await this.context.models.User.find(this.userId)
+    if (!this.isAuthenticated) {
+      return false
+    }
+    const collection = await this.context.models.Collection.find(this.object.id)
+    return this.isAssignedProductionEditor(collection)
+  }
+  async canBroadcastEvent() {
+    this.user = await this.context.models.User.find(this.userId)
+    if (this.user.admin) return true
+    return this.hasMembership(this.object)
   }
 }
 
@@ -273,20 +335,10 @@ module.exports = {
       return mode.canListUsers()
     }
 
-    // // GET /api/fragments
-    // if (object && object.path === '/fragments') {
-    //   return mode.canListFragments()
-    // }
-
     // // GET /api/teams
     if (object && object.path === '/teams') {
       return mode.canListTeams()
     }
-
-    // // GET /api/fragment
-    // if (object && object.type === 'fragment') {
-    //   return mode.canReadFragment()
-    // }
 
     // // GET /api/team
     if (object && object.type === 'team') {
@@ -302,10 +354,10 @@ module.exports = {
   },
   POST: (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    console.log('user', userId)
-    console.log('operation', operation)
-    console.log('object', object)
-    console.log('context', context)
+    // console.log('user', userId)
+    // console.log('operation', operation)
+    // console.log('object', object)
+    // console.log('context', context)
     // POST /api/collections
     if (object && object.path === '/collections') {
       // console.log('hello')
@@ -329,7 +381,7 @@ module.exports = {
 
     // POST /api/teams
     if (object && object.path === '/teams') {
-      console.log('in here')
+      // console.log('in here')
       return mode.canCreateTeam()
     }
 
@@ -372,14 +424,42 @@ module.exports = {
 
     return false
   },
-  PRESENTATION: (userId, operation, object, context) => {
+  'can view nav links': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    if (object && object.path === '/users') {
-      return mode.canViewUsers()
-    }
-    if (object && object.path === '/teams') {
-      return mode.canViewTeams()
+    if (object && object === ('users' || 'teams')) {
+      return mode.canViewNavLink()
     }
     return false
   },
+  'can add books': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canCreateCollection()
+  },
+  'can rename books': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canRenameCollection()
+  },
+  'can delete books': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canDeleteCollection()
+  },
+  'collection:create': (userId, operation, object, context) => {
+    console.log('hell one', userId)
+    const mode = new EditoriaMode(userId, operation, object.collection, context)
+    return mode.canBroadcastEvent()
+  },
+  'collection:patch': (userId, operation, object, context) => {
+    console.log('ob in patch', object.collection)
+    const mode = new EditoriaMode(userId, operation, object.collection, context)
+    return mode.canBroadcastEvent()
+  },
+  'collection:delete': (userId, operation, object, context) => {
+    console.log('ob in patch', object.collection)
+    const mode = new EditoriaMode(userId, operation, object.collection, context)
+    return mode.canBroadcastEvent()
+  },
+  
+  // 'fragment:create': T.CREATE_FRAGMENT_SUCCESS,
+  // 'fragment:patch': T.UPDATE_FRAGMENT_SUCCESS,
+  // 'fragment:delete': T.DELETE_FRAGMENT_SUCCESS,
 }

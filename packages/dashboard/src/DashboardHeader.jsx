@@ -59,7 +59,7 @@ class DashboardHeader extends React.Component {
     return (
       <div className="col-lg-12">
         <h1 className={styles.bookTitle}>Books</h1>
-        <Authorize operation="POST" object={{ path: '/collections' }}>
+        <Authorize operation="can add books">
           <div className={styles.addBookBtn} onClick={toggle}>
             <div className={styles.addBookIcon} />
             <a>add book</a>
@@ -75,5 +75,4 @@ DashboardHeader.propTypes = {
   toggle: PropTypes.func.isRequired,
 }
 
-// export default DashboardHeader
 export default DashboardHeader

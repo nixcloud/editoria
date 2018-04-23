@@ -147,7 +147,6 @@ export class Dashboard extends React.Component {
     const productionEditorTeams = filter(teams, {
       teamType: 'productionEditor',
     })
-    console.log
 
     const membership = productionEditorTeams.map(team =>
       team.members.includes(userId),
@@ -233,10 +232,10 @@ export class Dashboard extends React.Component {
   }
 
   render() {
-    const { books } = this.props
+    const { books, teams } = this.props
     const { showModal } = this.state
-    // console.log('props parent', this.props)
-
+    console.log('teams', teams)
+    // if (teams.length === 0) return null
     // const roles = this.getRoles()
 
     const className = `${

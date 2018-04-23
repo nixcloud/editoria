@@ -78,13 +78,13 @@ class Navigation extends React.Component {
             <NavItem>Books</NavItem>
           </LinkContainer>
 
-          <Authorize operation="PRESENTATION" object={{ path: '/users' }}>
+          <Authorize operation="can view nav links" object="users">
             <LinkContainer to="/users">
               <NavItem>Users</NavItem>
             </LinkContainer>
           </Authorize>
 
-          <Authorize operation="PRESENTATION" object={{ path: '/teams' }}>
+          <Authorize operation="can view nav links" object="teams">
             <LinkContainer to="/teams">
               <NavItem>Teams</NavItem>
             </LinkContainer>
