@@ -32,7 +32,6 @@ The current features on our list are the following:
 |Editor             |Track block formatting (eg. headings)          |               |         |wax/wax#40|
 |Editor             |Expand set of special characters               |               |         |wax/wax#128|
 |Editor             |Text highlighter                               |&#x2714;       |         |wax/wax#18|
-|Editor             |Keyboard Shortcuts for diacrtics               |&#x2714;       |         |wax/wax#129|
 |Editor             |Arrow navigation between notes                 |               |&#x2714; |wax/wax#133|
 |Editor             |Update note icon in toolbar                    |               |&#x2714; |wax/wax#126|
 |Editor             |Increase font size for text                    |               |         |
