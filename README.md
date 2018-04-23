@@ -92,7 +92,7 @@ yarn resetdb
 
 Follow the prompts to enter user credentials and complete the database setup.
 
-***Note**: If you want to use a non-default database, see [Pubsweet development setup](https://gitlab.coko.foundation/pubsweet/pubsweet/wikis/Development:%20setup#setup-2).*
+_**Note**: If you want to use a non-default database, see [Pubsweet development setup](https://gitlab.coko.foundation/pubsweet/pubsweet/wikis/Development:%20setup#setup-2)._
 
 Get the database docker container up and running:  
 ```sh
