@@ -45,8 +45,8 @@ The current features on our list are the following:
 
 <br/>
 You can also find more detailed (and more technical) lists of the current tasks at hand on these pages:
-* https://gitlab.coko.foundation/editoria/editoria/milestones/5
-* https://gitlab.coko.foundation/wax/wax/milestones/5
+* https://gitlab.coko.foundation/editoria/editoria/milestones/8
+* https://gitlab.coko.foundation/wax/wax/milestones/7
 
 ## Get up and running  
 
