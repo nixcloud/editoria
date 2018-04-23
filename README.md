@@ -20,19 +20,21 @@ The current features on our list are the following:
 |Book builder       |Redesign component state tool                  |               |         |#55|
 |Book builder       |Introduce unnumbered chapters                  |               |         |#50|
 |Editor             |Improve editor performance                     |               |&#x2714; |wax/wax#120|
-|Editor             |Image captions                                 |&#x2714;       |         |wax/wax#127|
-|Editor             |Keyboard shortcuts to add diacritics           |&#x2714;       |         |wax/wax#129|
+|Editor             |Image captions                                 |               |&#x2714; |wax/wax#127|
+|Editor             |Keyboard shortcuts to add diacritics           |               |&#x2714; |wax/wax#129|
 |Editor             |Turn spell-check on and off                    |               |&#x2714; |wax/wax#124|
 |Editor             |Small caps style                               |               |&#x2714; |wax/wax#125|
 |Editor             |Note callout deletion with track changes       |               |&#x2714; |wax/wax#36|
 |Editor             |Cutting and pasting with track changes         |               |&#x2714; |wax/wax#15|
-|Editor             |Track spaces                                   |               |         |wax/wax#119|
+|Editor             |Track spaces                                   |               |&#x2714; |wax/wax#119|
+|Editor             |Full Screen Mode                               |               |&#x2714; |wax/wax#150|
 |Editor             |Track inline formatting (eg. italics)          |               |         |wax/wax#40|
 |Editor             |Track block formatting (eg. headings)          |               |         |wax/wax#40|
 |Editor             |Expand set of special characters               |               |         |wax/wax#128|
-|Editor             |Text highlighter                               |               |         |wax/wax#18|
-|Editor             |Arrow navigation between notes                 |&#x2714;       |         |wax/wax#133|
-|Editor             |Update note icon in toolbar                    |&#x2714;       |         |wax/wax#126|
+|Editor             |Text highlighter                               |&#x2714;       |         |wax/wax#18|
+|Editor             |Keyboard Shortcuts for diacrtics               |&#x2714;       |         |wax/wax#129|
+|Editor             |Arrow navigation between notes                 |               |&#x2714; |wax/wax#133|
+|Editor             |Update note icon in toolbar                    |               |&#x2714; |wax/wax#126|
 |Editor             |Increase font size for text                    |               |         |
 |Document ingestion |Normalize en and em dashes, convert hyphens between numerals to en dashes|               |&#x2714; |XSweet/editoria_typescript#21
 |Document ingestion |Clean up white space (around punctuation, multiple spaces)|               |&#x2714; |XSweet/editoria_typescript#21|
