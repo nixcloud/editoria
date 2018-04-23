@@ -85,9 +85,16 @@ Ensure that:
 * the `<your-ink-api-endpoint>` in `local-development.json` ends with a trailing slash
 * if INK is running as a service on a port, it is on port `3000`
 
-Note: if you want to use a non-default database, see [Pubsweet: Development: Setup](https://gitlab.coko.foundation/pubsweet/pubsweet/wikis/Development:%20setup#setup-2)
+Create a database and enter credentials for an admin user account:
+```sh
+yarn resetdb
+```
 
-Get the database docker up and running.  
+Follow the prompts to enter user credentials and complete the database setup.
+
+_**Note**: If you want to use a non-default database, see [Pubsweet development setup](https://gitlab.coko.foundation/pubsweet/pubsweet/wikis/Development:%20setup#setup-2)._
+
+Get the database docker container up and running:  
 ```sh
 yarn start:services
 ```
