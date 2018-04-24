@@ -10048,9 +10048,9 @@ pubsweet-component-users-manager@1.0.0:
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-pubsweet-component-wax@^0.5.16:
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/pubsweet-component-wax/-/pubsweet-component-wax-0.5.16.tgz#b22571a3a1c00d309ed5f03d5c62d2300c2b38e7"
+pubsweet-component-wax@^0.5.18:
+  version "0.5.18"
+  resolved "https://registry.yarnpkg.com/pubsweet-component-wax/-/pubsweet-component-wax-0.5.18.tgz#82e60c2c935dfa27b931ccc54035806873810eba"
   dependencies:
     lodash "4.17.4"
     pubsweet-client "^2.1.1"
@@ -10058,7 +10058,7 @@ pubsweet-component-wax@^0.5.16:
     react-dom "^16.2.0"
     react-redux "5.0.4"
     redux "3.6.0"
-    wax-editor-react "^0.1.17"
+    wax-editor-react "^0.1.19"
 
 pubsweet-server@^2.0.3:
   version "2.0.3"
@@ -13467,23 +13467,23 @@ watchpack@^1.3.1, watchpack@^1.4.0:
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
 
-wax-editor-core@^0.3.16:
-  version "0.3.16"
-  resolved "https://registry.yarnpkg.com/wax-editor-core/-/wax-editor-core-0.3.16.tgz#3fb43c0531e180a9fbc9e13b530a9ec23f8c5932"
+wax-editor-core@^0.3.18:
+  version "0.3.18"
+  resolved "https://registry.yarnpkg.com/wax-editor-core/-/wax-editor-core-0.3.18.tgz#d402b0d0663209379c493c6d469cdf99b89f5774"
   dependencies:
     font-awesome "^4.7.0"
     lodash "^4.17.4"
     substance "1.0.0-beta.6.5"
 
-wax-editor-react@^0.1.17:
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/wax-editor-react/-/wax-editor-react-0.1.17.tgz#4fb6a06e826f21fc1e23163f42209f0611646c40"
+wax-editor-react@^0.1.19:
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/wax-editor-react/-/wax-editor-react-0.1.19.tgz#fcaffd867e7495d295258bc5c9fd2d1e52aa2471"
   dependencies:
     lodash "^4.17.4"
     react "^16.2.0"
     react-dom "^16.2.0"
     react-router-dom "^4.2.2"
-    wax-editor-core "^0.3.16"
+    wax-editor-core "^0.3.18"
 
 wbuf@^1.1.0, wbuf@^1.7.2:
   version "1.7.3"

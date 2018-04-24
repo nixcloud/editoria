@@ -17,7 +17,7 @@
   },
   "homepage": "https://editoria.pub/",
   "license": "MIT",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "dependencies": {
     "@pubsweet/component-polling-client": "^0.0.2",
     "@pubsweet/component-polling-server": "^0.0.4",
@@ -48,7 +48,7 @@
     "pubsweet-component-theme-editoria": "^0.0.3",
     "pubsweet-component-users-manager": "1.0.0",
     "pubsweet-component-vivliostyle-viewer": "^0.0.2",
-    "pubsweet-component-wax": "^0.5.16",
+    "pubsweet-component-wax": "^0.5.18",
     "pubsweet-server": "^2.0.4",
     "pubsweet-theme-plugin": "^0.0.3",
     "react": "^16.2.0",
