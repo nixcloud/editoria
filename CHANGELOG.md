@@ -1,6 +1,6 @@
 # Editoria  
 
-## 1.3.0 (in progress)
+## 1.3.0
 
 #### Wax
 * Search / find and replace
@@ -10,12 +10,29 @@
 * Copy / cut and paste works with track changes
 * Indicator for how many items exist in a collapsed comment discussion
 * Performance improvements
+* Find and Replace a single match and undo throws an Error
+* Undo / Redo Notes on certain Occasions throws an Error
+* Opening an Empty Chapter Save is Enabled and modal is triggered if you try to go back without any change in the Editor
+* if Track Changes is on, user cannot remove an image
+* Remove additions on cut operation in track changes if done from the same user
+* With track Changes on if you accept a deleted note and undo throws an error
+* With track Changes on if you delete a whole paragraph and undo throws an error
+* Navigate Through Notes with left and right arrow
+* Toggle on /off Native Spell Checker
+* Full screen mode
+* Track Spaces
+* Image Captions
+* Change note icon in the toolbar
+* Add keyboard shortcuts for accept & reject track changes
+* Small Caps
 
 #### Maintenance
 * Switch to using yarn instead of npm by default
 * React 16
 * Upgrade to latest pubsweet client
 * Clean up component prop types and refs
+* Switch to Postgres
+* Docker container for the DB provided via yarn start:services
 
 ## 1.2.0  
 
