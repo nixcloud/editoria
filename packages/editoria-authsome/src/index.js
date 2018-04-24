@@ -43,10 +43,10 @@ class EditoriaMode {
    * @returns {boolean}
    */
   async isTeamMember(teamType, object) {
-    if (!this.user || !Array.isArray(this.user.teams)) {
-      // console.log('in teamMemeber false1')
-      return false
-    }
+    // if (!this.user || !Array.isArray(this.user.teams)) {
+    //   // console.log('in teamMemeber false1')
+    //   return false
+    // }
 
     let membershipCondition
     if (object) {
@@ -73,9 +73,9 @@ class EditoriaMode {
   }
 
   async hasMembership(object) {
-    if (!this.user || !Array.isArray(this.user.teams)) {
-      return false
-    }
+    // if (!this.user || !Array.isArray(this.user.teams)) {
+    //   return false
+    // }
 
     const membershipCondition = team => team.object.id === object.id
 
@@ -95,9 +95,9 @@ class EditoriaMode {
    * @param {any} object
    * @returns {boolean}
    */
-  unauthenticatedUser(object) {
-    return this.operation === '/login'
-  }
+  // unauthenticatedUser(object) {
+  //   return this.operation === '/login'
+  // }
 
   /**
    * Checks if the user is an author, as represented with the owners
@@ -116,13 +116,14 @@ class EditoriaMode {
    *
    * @returns {boolean}
    */
-  async isAdmin() {
-    this.user = await this.context.models.User.find(this.userId)
-    if (this.user && this.user.admin) {
-      return true
-    }
-    return false
-  }
+  // async isAdmin() {
+  //   this.user = await this.context.models.User.find(this.userId)
+  //   if (this.user && this.user.admin) {
+  //     console.log('here')
+  //     return true
+  //   }
+  //   return false
+  // }
 
   /**
    * Checks if user is a senior editor (member of a team of type senior editor) for an object
@@ -156,14 +157,14 @@ class EditoriaMode {
    * @param {any} userId
    * @returns {boolean}
    */
-  isAuthenticated() {
-    return !!this.userId
-  }
+  // isAuthenticated() {
+  //   return !!this.userId
+  // }
 
   async canReadCollection() {
-    if (!this.isAuthenticated()) {
-      return false
-    }
+    // if (!this.isAuthenticated()) {
+    //   return false
+    // }
 
     this.user = await this.context.models.User.find(this.userId)
 
@@ -178,9 +179,9 @@ class EditoriaMode {
   }
 
   async canListCollections() {
-    if (!this.isAuthenticated()) {
-      return false
-    }
+    // if (!this.isAuthenticated()) {
+    //   return false
+    // }
     this.user = await this.context.models.User.find(this.userId)
 
     return {
@@ -202,13 +203,13 @@ class EditoriaMode {
 
   async canListUsers() {
     this.user = await this.context.models.User.find(this.userId)
-    return this.isAuthenticated() && this.isProductionEditor()
+    return this.isProductionEditor()
   }
 
   async canReadUser() {
-    if (!this.isAuthenticated()) {
-      return false
-    }
+    // if (!this.isAuthenticated()) {
+    //   return false
+    // }
 
     this.user = await this.context.models.User.find(this.userId)
 
@@ -222,9 +223,9 @@ class EditoriaMode {
   }
 
   async canListTeams() {
-    if (!this.isAuthenticated()) {
-      return false
-    }
+    // if (!this.isAuthenticated()) {
+    //   return false
+    // }
     this.user = await this.context.models.User.find(this.userId)
 
     return {
@@ -246,16 +247,13 @@ class EditoriaMode {
   }
 
   async canReadTeam() {
-    if (!this.isAuthenticated()) {
-      return false
-    }
+    // if (!this.isAuthenticated()) {
+    //   return false
+    // }
 
     this.user = await this.context.models.User.find(this.userId)
 
-    if (this.object && this.object.type === 'team') {
-      return this.belongsToTeam(this.object.id)
-    }
-    return false
+    return this.belongsToTeam(this.object.id)
   }
 
   async canCreateTeam() {
@@ -263,11 +261,22 @@ class EditoriaMode {
     return this.isProductionEditor()
   }
 
-  async canViewNavLink() {
+  async canUpdateTeam() {
     this.user = await this.context.models.User.find(this.userId)
-    return this.isAdmin()
+    const teamFound = await this.context.models.Team.find(this.object.id)
+    const collection = await this.context.models.Collection.find(
+      teamFound.object.id,
+    )
+    return this.isAssignedProductionEditor(collection)
   }
 
+  // async canViewNavLink() {
+  //   // this.user = await this.context.models.User.find(this.userId)
+  //   // if (this.user.admin) {
+  //   //   return true
+  //   // }
+  //   return false
+  // }
   /**
    * Checks if a user can create a collection.
    *
@@ -275,40 +284,39 @@ class EditoriaMode {
    */
   async canCreateCollection() {
     this.user = await this.context.models.User.find(this.userId)
-    if (!this.isAuthenticated) {
-      return false
-    }
+    // if (!this.isAuthenticated) {
+    //   return false
+    // }
     return this.isProductionEditor()
   }
 
   async canRenameCollection() {
     this.user = await this.context.models.User.find(this.userId)
-    if (!this.isAuthenticated) {
-      return false
-    }
+    // if (!this.isAuthenticated) {
+    //   return false
+    // }
     const collection = await this.context.models.Collection.find(this.object.id)
     return collection && this.isAssignedProductionEditor(collection)
   }
   async canDeleteCollection() {
     this.user = await this.context.models.User.find(this.userId)
-    if (!this.isAuthenticated) {
-      return false
-    }
+    // if (!this.isAuthenticated) {
+    //   return false
+    // }
     const collection = await this.context.models.Collection.find(this.object.id)
     return collection && this.isAssignedProductionEditor(collection)
   }
 
   async canUpdateCollection() {
     this.user = await this.context.models.User.find(this.userId)
-    if (!this.isAuthenticated) {
-      return false
-    }
+    // if (!this.isAuthenticated) {
+    //   return false
+    // }
     const collection = await this.context.models.Collection.find(this.object.id)
     return this.isAssignedProductionEditor(collection)
   }
   async canBroadcastEvent() {
     this.user = await this.context.models.User.find(this.userId)
-    if (this.user.admin) return true
     return this.hasMembership(this.object)
   }
 }
@@ -316,7 +324,7 @@ class EditoriaMode {
 module.exports = {
   before: async (userId, operation, object, context) => {
     const user = await context.models.User.find(userId)
-    return user.admin
+    return user && user.admin
   },
   GET: (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
@@ -414,19 +422,18 @@ module.exports = {
     // }
 
     // DELETE /api/teams/:id
-    if (object && object.type === 'teams') {
-      return mode.canDeleteTeam()
+    if (object && object.type === 'team') {
+      return mode.canUpdateTeam()
     }
 
     return false
   },
-  'can view nav links': (userId, operation, object, context) => {
-    const mode = new EditoriaMode(userId, operation, object, context)
-    if (object && object === ('users' || 'teams')) {
-      return mode.canViewNavLink()
-    }
-    return false
-  },
+  'can view nav links': (userId, operation, object, context) =>
+    // const mode = new EditoriaMode(userId, operation, object, context)
+    // if (object && object === ('users' || 'teams')) {
+    //   return false
+    // }
+    false,
   'can add books': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canCreateCollection()
@@ -440,18 +447,18 @@ module.exports = {
     return mode.canDeleteCollection()
   },
   'collection:create': (userId, operation, object, context) => {
-    console.log('hell one', userId)
-    const mode = new EditoriaMode(userId, operation, object.collection, context)
+    const { collection } = object
+    const mode = new EditoriaMode(userId, operation, collection, context)
     return mode.canBroadcastEvent()
   },
   'collection:patch': (userId, operation, object, context) => {
-    console.log('ob in patch', object.collection)
-    const mode = new EditoriaMode(userId, operation, object.collection, context)
+    const { collection } = object
+    const mode = new EditoriaMode(userId, operation, collection, context)
     return mode.canBroadcastEvent()
   },
   'collection:delete': (userId, operation, object, context) => {
-    console.log('ob in patch', object.collection)
-    const mode = new EditoriaMode(userId, operation, object.collection, context)
+    const { collection } = object
+    const mode = new EditoriaMode(userId, operation, collection, context)
     return mode.canBroadcastEvent()
   },
   // TODO:

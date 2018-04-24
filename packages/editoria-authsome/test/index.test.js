@@ -301,6 +301,36 @@ describe('Admin', () => {
     const permission = await authsome.can('adminId', 'PATCH', collections[0])
     expect(permission).toBe(true)
   })
+  it('updates teams ', async () => {
+    const permission = await authsome.can('adminId', 'PATCH', teams[0])
+    expect(permission).toBe(true)
+  })
+  it('deletes collections', async () => {
+    const permission = await authsome.can('adminId', 'DELETE', collections[1])
+    expect(permission).toBe(true)
+  })
+  it('deletes teams ', async () => {
+    const permission = await authsome.can('adminId', 'DELETE', teams[0])
+    expect(permission).toBe(true)
+  })
+  it('could accept collection:create', async () => {
+    const permission = await authsome.can('adminId', 'collection:create', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(true)
+  })
+  it('could accept collection:patch', async () => {
+    const permission = await authsome.can('adminId', 'collection:patch', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(true)
+  })
+  it('could accept collection:delete', async () => {
+    const permission = await authsome.can('adminId', 'collection:delete', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(true)
+  })
 })
 
 describe('User', () => {
@@ -351,6 +381,36 @@ describe('User', () => {
   })
   it('could not update collection if she/he is not in the correct team', async () => {
     const permission = await authsome.can('user', 'PATCH', collections[0])
+    expect(permission).toBe(false)
+  })
+  it('could not update teams if she/he is not the Production Editor of the collection', async () => {
+    const permission = await authsome.can('user', 'PATCH', teams[0])
+    expect(permission).toBe(false)
+  })
+  it('could not delete a collection if she/he is not member of a team with the right permissions', async () => {
+    const permission = await authsome.can('user', 'DELETE', collections[1])
+    expect(permission).toBe(false)
+  })
+  it('could not delete teams ', async () => {
+    const permission = await authsome.can('user', 'DELETE', teams[0])
+    expect(permission).toBe(false)
+  })
+  it('could not accept collection:create if she/he is unassigned', async () => {
+    const permission = await authsome.can('user', 'collection:create', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(false)
+  })
+  it('could not accept collection:patch if she/he is unassigned', async () => {
+    const permission = await authsome.can('user', 'collection:patch', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(false)
+  })
+  it('could not accept collection:delete if she/he is unassigned', async () => {
+    const permission = await authsome.can('user', 'collection:delete', {
+      collection: collections[0],
+    })
     expect(permission).toBe(false)
   })
 })
@@ -449,6 +509,71 @@ describe('Production Editor', () => {
   it('updates a collection', async () => {
     const permission = await authsome.can('user1', 'PATCH', collections[0])
     expect(permission).toBe(true)
+  })
+  it('deletes a collection where she/he is Production Editor', async () => {
+    const permission = await authsome.can('user1', 'DELETE', collections[0])
+    expect(permission).toBe(true)
+  })
+  it('could not delete a collection where she/he is not Production Editor', async () => {
+    const permission = await authsome.can('user1', 'DELETE', collections[1])
+    expect(permission).toBe(false)
+  })
+  it('could update teams if she/he is the Production Editor of that collection', async () => {
+    const permission = await authsome.can('user1', 'PATCH', teams[0])
+    expect(permission).toBe(true)
+  })
+  it('could not update teams if she/he is not the Production Editor of that collection', async () => {
+    const permission = await authsome.can('user1', 'PATCH', teams[3])
+    expect(permission).toBe(false)
+  })
+  it('could delete teams if she/he is Production editor of that colleciton', async () => {
+    const permission = await authsome.can('user1', 'DELETE', teams[0])
+    expect(permission).toBe(true)
+  })
+  it('could accept collection:create', async () => {
+    const permission = await authsome.can('user1', 'collection:create', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(true)
+  })
+  it('could accept collection:patch', async () => {
+    const permission = await authsome.can('user1', 'collection:patch', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(true)
+  })
+  it('could accept collection:delete', async () => {
+    const permission = await authsome.can('user1', 'collection:delete', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(true)
+  })
+})
+
+describe('Corrupted Cases', () => {
+  it('GET', async () => {
+    const permission = await authsome.can('user', 'GET')
+    expect(permission).toBe(false)
+  })
+  it('GET', async () => {
+    const permission = await authsome.can('user', 'GET', {type: 'teams'})
+    expect(permission).toBe(false)
+  })
+  it('PATCH', async () => {
+    const permission = await authsome.can('user', 'PATCH')
+    expect(permission).toBe(false)
+  })
+  it('PATCH', async () => {
+    const permission = await authsome.can('user', 'POST')
+    expect(permission).toBe(false)
+  })
+  it('DELETE', async () => {
+    const permission = await authsome.can('user', 'DELETE')
+    expect(permission).toBe(false)
+  })
+  it('NO USER', async () => {
+    const permission = await authsome.can(null, 'GET')
+    expect(permission).toBe(false)
   })
 })
 
