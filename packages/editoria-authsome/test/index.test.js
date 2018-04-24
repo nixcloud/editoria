@@ -285,6 +285,22 @@ describe('Admin', () => {
     const permission = await authsome.can('adminId', 'GET', users[0])
     expect(permission).toBe(true)
   })
+  it('creates collection ', async () => {
+    const permission = await authsome.can('adminId', 'POST', {
+      path: '/collections',
+    })
+    expect(permission).toBe(true)
+  })
+  it('creates teams ', async () => {
+    const permission = await authsome.can('adminId', 'POST', {
+      path: '/teams',
+    })
+    expect(permission).toBe(true)
+  })
+  it('updates collection ', async () => {
+    const permission = await authsome.can('adminId', 'PATCH', collections[0])
+    expect(permission).toBe(true)
+  })
 })
 
 describe('User', () => {
@@ -320,6 +336,22 @@ describe('User', () => {
     const permission = await authsome.can('user', 'GET', users[1])
     const filteredUsers = await permission.filter(users)
     expect(filteredUsers).toEqual({})
+  })
+  it('could not create collection if she/he does not have the right permissions', async () => {
+    const permission = await authsome.can('user', 'POST', {
+      path: '/collections',
+    })
+    expect(permission).toBe(false)
+  })
+  it('could not create teams ', async () => {
+    const permission = await authsome.can('user', 'POST', {
+      path: '/teams',
+    })
+    expect(permission).toBe(false)
+  })
+  it('could not update collection if she/he is not in the correct team', async () => {
+    const permission = await authsome.can('user', 'PATCH', collections[0])
+    expect(permission).toBe(false)
   })
 })
 
@@ -386,12 +418,36 @@ describe('Production Editor', () => {
     const permission = await authsome.can('user1', 'GET', collections[0])
     expect(permission).toBe(true)
   })
+  it('could not read a collection where she/he is not assigned as Production Editor', async () => {
+    const permission = await authsome.can('user1', 'GET', collections[1])
+    expect(permission).toBe(false)
+  })
   it('reads a team she/he belongs', async () => {
     const permission = await authsome.can('user1', 'GET', teams[0])
     expect(permission).toBe(true)
   })
+  it('could not read a team that she/he is not member of', async () => {
+    const permission = await authsome.can('user1', 'GET', teams[1])
+    expect(permission).toBe(false)
+  })
   it('reads her/him self', async () => {
     const permission = await authsome.can('user1', 'GET', users[1])
+    expect(permission).toBe(true)
+  })
+  it('creates collection ', async () => {
+    const permission = await authsome.can('user1', 'POST', {
+      path: '/collections',
+    })
+    expect(permission).toBe(true)
+  })
+  it('creates teams ', async () => {
+    const permission = await authsome.can('user1', 'POST', {
+      path: '/teams',
+    })
+    expect(permission).toBe(true)
+  })
+  it('updates a collection', async () => {
+    const permission = await authsome.can('user1', 'PATCH', collections[0])
     expect(permission).toBe(true)
   })
 })
@@ -442,6 +498,10 @@ describe('Copy Editor', () => {
     )
     expect(permission).toBe(false)
   })
+  it('could not update collection if she/he is not in the correct team', async () => {
+    const permission = await authsome.can('user2', 'PATCH', collections[0])
+    expect(permission).toBe(false)
+  })
 })
 
 describe('Author', () => {
@@ -488,6 +548,10 @@ describe('Author', () => {
       'can delete books',
       collections[0],
     )
+    expect(permission).toBe(false)
+  })
+  it('could not update collection if she/he is not in the correct team', async () => {
+    const permission = await authsome.can('user3', 'PATCH', collections[0])
     expect(permission).toBe(false)
   })
 })

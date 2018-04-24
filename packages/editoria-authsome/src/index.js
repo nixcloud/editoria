@@ -231,7 +231,7 @@ class EditoriaMode {
       filter: async teams => {
         const filteredTeams = await Promise.all(
           teams.map(async team => {
-            const condition = this.belongsToTeam(team)
+            const condition = this.belongsToTeam(team.id)
             return condition ? team : undefined // eslint-disable-line
           }, this),
         )
@@ -241,8 +241,8 @@ class EditoriaMode {
     }
   }
 
-  belongsToTeam(team) {
-    return this.user.teams.includes(team.id)
+  belongsToTeam(teamId) {
+    return this.user.teams.includes(teamId)
   }
 
   async canReadTeam() {
@@ -354,34 +354,29 @@ module.exports = {
   },
   POST: (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    // console.log('user', userId)
-    // console.log('operation', operation)
-    // console.log('object', object)
-    // console.log('context', context)
     // POST /api/collections
     if (object && object.path === '/collections') {
       // console.log('hello')
       return mode.canCreateCollection()
     }
-
+    // TODO:
     // POST /api/users
-    if (object && object.path === '/users') {
-      return mode.canCreateUser()
-    }
+    // if (object && object.path === '/users') {
+    //   return mode.canCreateUser()
+    // }
 
     // POST /api/fragments
-    if (object && object.path === '/fragments') {
-      return mode.canCreateFragment()
-    }
+    // if (object && object.path === '/fragments') {
+    //   return mode.canCreateFragment()
+    // }
 
     // POST /api/collections/:collectionId/fragments
-    if (object && object.path === '/collections/:collectionId/fragments') {
-      return mode.canCreateFragmentInACollection()
-    }
+    // if (object && object.path === '/collections/:collectionId/fragments') {
+    //   return mode.canCreateFragmentInACollection()
+    // }
 
     // POST /api/teams
     if (object && object.path === '/teams') {
-      // console.log('in here')
       return mode.canCreateTeam()
     }
 
@@ -393,10 +388,11 @@ module.exports = {
     if (object && object.type === 'collection') {
       return mode.canUpdateCollection()
     }
+    // TODO:
     // PATCH /api/fragments/:id
-    if (object && object.type === 'fragment') {
-      return mode.canUpdateFragment()
-    }
+    // if (object && object.type === 'fragment') {
+    //   return mode.canUpdateFragment()
+    // }
 
     // PATCH /api/teams/:id
     if (object && object.type === 'team') {
@@ -411,11 +407,11 @@ module.exports = {
     if (object && object.type === 'collection') {
       return mode.canDeleteCollection()
     }
-
+    // TODO:
     // DELETE /api/fragments/:id
-    if (object && object.type === 'fragments') {
-      return mode.canDeleteFragment()
-    }
+    // if (object && object.type === 'fragments') {
+    //   return mode.canDeleteFragment()
+    // }
 
     // DELETE /api/teams/:id
     if (object && object.type === 'teams') {
@@ -458,7 +454,7 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, object.collection, context)
     return mode.canBroadcastEvent()
   },
-  
+  // TODO:
   // 'fragment:create': T.CREATE_FRAGMENT_SUCCESS,
   // 'fragment:patch': T.UPDATE_FRAGMENT_SUCCESS,
   // 'fragment:delete': T.DELETE_FRAGMENT_SUCCESS,
