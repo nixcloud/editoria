@@ -81,6 +81,7 @@ jspm_packages
 myapp
 testapp
 api/db/*
+/data
 !api/db/.gitkeep
 .vscode
 .wallaby.js

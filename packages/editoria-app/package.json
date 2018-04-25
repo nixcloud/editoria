@@ -153,7 +153,7 @@
     "start": "pubsweet start",
     "server": "pubsweet start",
     "resetdb": "pubsweet setupdb --clobber ./",
-    "start:services": "docker-compose up postgres",
+    "start:services": "docker-compose up --force-recreate postgres",
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watch",
     "test:cover": "NODE_ENV=test jest --coverage",

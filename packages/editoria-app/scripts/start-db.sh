@@ -1,0 +1,1 @@
+nohup bash -c "yarn start:services" > /dev/null 2>&1 &
