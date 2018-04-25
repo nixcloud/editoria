@@ -5,7 +5,7 @@ services:
       image: postgres:10
       restart: always
       ports:
-        - 5442:5442
+        - 5432:5432
       environment:
         - POSTGRES_USER=john
         - POSTGRES_DB=editoria 
