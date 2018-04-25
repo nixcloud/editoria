@@ -555,15 +555,15 @@ describe('Corrupted Cases', () => {
     const permission = await authsome.can('user', 'GET')
     expect(permission).toBe(false)
   })
-  it('GET', async () => {
-    const permission = await authsome.can('user', 'GET', {type: 'teams'})
+  it('GET with typo in object type', async () => {
+    const permission = await authsome.can('user', 'GET', { type: 'teams' })
     expect(permission).toBe(false)
   })
   it('PATCH', async () => {
     const permission = await authsome.can('user', 'PATCH')
     expect(permission).toBe(false)
   })
-  it('PATCH', async () => {
+  it('POST', async () => {
     const permission = await authsome.can('user', 'POST')
     expect(permission).toBe(false)
   })

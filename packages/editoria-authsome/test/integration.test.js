@@ -125,25 +125,28 @@
 
 // const teams = [
 //   {
-//     id: 'team1',
-//     teamType: 'Handling Editor',
+//     id: 'prod1',
+//     teamType: 'productionEditor',
 //     object: {
 //       id: 'collection2',
 //       type: 'collection',
 //     },
 //   },
 //   {
-//     id: 'team2',
-//     teamType: 'Senior Editor',
+//     id: 'auth1',
+//     teamType: 'author',
 //     object: {
 //       id: 'collection1',
 //       type: 'collection',
 //     },
 //   },
 //   {
-//     id: 'team3',
-//     teamType: 'Managing Editor',
-//     // No associated object means this is a global team
+//     id: 'cp1',
+//     teamType: 'copyEditor',
+//     object: {
+//       id: 'collection2',
+//       type: 'collection',
+//     },
 //   },
 // ]
 
