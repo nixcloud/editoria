@@ -2,7 +2,7 @@ import { get, includes } from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import withLink from 'editoria-common/src/withLink'
-
+import Authorize from 'pubsweet-client/src/helpers/Authorize'
 import DeleteModal from './DeleteModal'
 import EditingNotification from './EditingNotification'
 import styles from '../styles/bookBuilder.local.scss'
@@ -150,7 +150,9 @@ class ChapterButtons extends React.Component {
           {withLink(editButton, url)}
         </div>
         {/* renameButton */}
-        {deleteButton}
+        <Authorize object={chapter} operation="can view deleteComponent">
+          {deleteButton}
+        </Authorize>
       </div>
     )
   }

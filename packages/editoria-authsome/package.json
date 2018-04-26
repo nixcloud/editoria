@@ -15,7 +15,8 @@
     "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1",
     "jest-environment-db": "^1.0.0",
-    "pubsweet-server": "^2.0.4"
+    "pubsweet-server": "^6.1.0",
+    "supertest": "^2.0.0"
   },
   "dependencies": {
     "authsome": "^0.1.0"

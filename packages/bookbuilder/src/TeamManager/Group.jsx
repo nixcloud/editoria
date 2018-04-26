@@ -28,12 +28,12 @@ export class Group extends React.Component {
 
   render() {
     const { team, users, options, update } = this.props
-
     const members = users.filter(user => _.includes(team.members, user.id))
+    console.log('members', members)
 
     return (
       <div>
-        <GroupHeader showInput={this._showAddMember} title={team.name} />
+        <GroupHeader showInput={this._showAddMember} title={options.title} />
 
         <AddMember
           hideInput={this._closeAddMember}

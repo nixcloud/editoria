@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
+import Authorize from 'pubsweet-client/src/helpers/Authorize'
 import { connect } from 'react-redux'
 
 // TODO -- clean up this import
@@ -24,8 +25,8 @@ export class BookBuilder extends React.Component {
     this.toggleTeamManager = this.toggleTeamManager.bind(this)
 
     this.getRoles = this.getRoles.bind(this)
-    this.isProductionEditor = this.isProductionEditor.bind(this)
-    this.setProductionEditor = this.setProductionEditor.bind(this)
+    // this.isProductionEditor = this.isProductionEditor.bind(this)
+    // this.setProductionEditor = this.setProductionEditor.bind(this)
     this.updateUploadStatus = this.updateUploadStatus.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
 
@@ -51,7 +52,7 @@ export class BookBuilder extends React.Component {
       .then(() => {
         const { book } = this.props
 
-        this.setProductionEditor()
+        // this.setProductionEditor()
         getFragments(book)
       })
   }
@@ -63,47 +64,47 @@ export class BookBuilder extends React.Component {
     this.setState({ outerContainer: this.refs.outerContainer })
   }
 
-  setProductionEditor() {
-    const { actions, book, teams, users } = this.props
-    const { updateCollection } = actions
+  // setProductionEditor() {
+  //   const { actions, book, teams, users } = this.props
+  //   const { updateCollection } = actions
 
-    const productionEditorsTeam = _.find(
-      teams,
-      t => t.teamType.name === 'Production Editor' && t.object.id === book.id,
-    )
+  //   const productionEditorsTeam = _.find(
+  //     teams,
+  //     t => t.teamType.name === 'Production Editor' && t.object.id === book.id,
+  //   )
 
-    if (!productionEditorsTeam) return
+  //   if (!productionEditorsTeam) return
 
-    const productionEditors = _.filter(users, u =>
-      _.includes(productionEditorsTeam.members, u.id),
-    )
+  //   const productionEditors = _.filter(users, u =>
+  //     _.includes(productionEditorsTeam.members, u.id),
+  //   )
 
-    let patch
+  //   let patch
 
-    if (_.isEmpty(productionEditors)) {
-      // production editor is already set to null
-      if (book.productionEditor === null) return
+  //   if (_.isEmpty(productionEditors)) {
+  //     // production editor is already set to null
+  //     if (book.productionEditor === null) return
 
-      patch = {
-        id: book.id,
-        productionEditor: null,
-      }
+  //     patch = {
+  //       id: book.id,
+  //       productionEditor: null,
+  //     }
 
-      return updateCollection(patch)
-    }
+  //     return updateCollection(patch)
+  //   }
 
-    const currentEditor = book.productionEditor
-    const foundEditor = productionEditors[0] || null
+  //   const currentEditor = book.productionEditor
+  //   const foundEditor = productionEditors[0] || null
 
-    if (currentEditor === foundEditor) return
+  //   if (currentEditor === foundEditor) return
 
-    patch = {
-      id: book.id,
-      productionEditor: _.pick(foundEditor, ['id', 'username']),
-    }
+  //   patch = {
+  //     id: book.id,
+  //     productionEditor: _.pick(foundEditor, ['id', 'username']),
+  //   }
 
-    updateCollection(patch)
-  }
+  //   updateCollection(patch)
+  // }
 
   toggleModal() {
     this.setState({
@@ -146,20 +147,18 @@ export class BookBuilder extends React.Component {
     return roles
   }
 
-  isProductionEditor() {
-    const userRoles = this.getRoles()
-    const accepted = ['production-editor', 'admin']
-    const pass = _.some(accepted, role => _.includes(userRoles, role))
-    return pass
-  }
+  // isProductionEditor() {
+  //   const userRoles = this.getRoles()
+  //   const accepted = ['production-editor', 'admin']
+  //   const pass = _.some(accepted, role => _.includes(userRoles, role))
+  //   return pass
+  // }
 
   updateUploadStatus(status) {
     this.setState({ uploading: status })
   }
 
   renderTeamManagerModal() {
-    if (!this.isProductionEditor()) return null
-
     const { outerContainer, showTeamManager } = this.state
 
     if (!showTeamManager) return null
@@ -211,25 +210,7 @@ export class BookBuilder extends React.Component {
           break
       }
     })
-
-    const isProductionEditor = this.isProductionEditor()
-    let teamManagerButton = ''
-    if (isProductionEditor) {
-      teamManagerButton = (
-        <span onClick={this.toggleTeamManager}>
-          <div className={styles.teamManagerIcon} />
-          <div className={styles.teamManagerBtn}>
-            <a>team manager</a>
-          </div>
-        </span>
-      )
-    }
-
-    const productionEditor =
-      _.get(book, 'productionEditor.username') || 'unassigned'
     const teamManagerModal = this.renderTeamManagerModal()
-
-    // console.log('render bb')
 
     return (
       <div className="bootstrap modal pubsweet-component pubsweet-component-scroll">
@@ -239,11 +220,22 @@ export class BookBuilder extends React.Component {
             ref="outerContainer"
           >
             <div className={`${styles.productionEditorContainer} row`}>
-              <span>Production Editor: &nbsp; {productionEditor} </span>
-              {teamManagerButton}
+              <span>
+                Production Editor: &nbsp;{' '}
+                {book.productionEditor !== null
+                  ? book.productionEditor.username
+                  : 'Unassigned'}{' '}
+              </span>
+              <Authorize object={book} operation="can view teamManager">
+                <span onClick={this.toggleTeamManager}>
+                  <div className={styles.teamManagerIcon} />
+                  <div className={styles.teamManagerBtn}>
+                    <a>team manager</a>
+                  </div>
+                </span>
+              </Authorize>
               <div className={styles.separator} />
             </div>
-
             <h1 className={`${styles.bookTitle} row`}>
               {this.props.book.title}
             </h1>
@@ -317,8 +309,9 @@ export class BookBuilder extends React.Component {
             />
           </div>
         </div>
-
-        {teamManagerModal}
+        <Authorize object={book} operation="can view teamManager">
+          {teamManagerModal}
+        </Authorize>
       </div>
     )
   }
@@ -419,9 +412,9 @@ function mapStateToProps(state, { match }) {
     'index',
   )
 
-  const { error, teams } = state
-  const users = state.users.users
-  const user = state.currentUser.user
+  const { error, teams, users, currentUser: user } = state
+  // const users = state.users.users
+  // const user = state.currentUser.user
 
   return {
     book: book || {},
@@ -430,7 +423,7 @@ function mapStateToProps(state, { match }) {
     teams,
     user,
     // userRoles: state.auth.roles,
-    users,
+    users: users.users,
   }
 }
 

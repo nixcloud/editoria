@@ -38,9 +38,7 @@ export class Dashboard extends React.Component {
     const { actions } = this.props
     const { getCollections, getTeams } = actions
 
-    getCollections().then(val => {
-      console.log('col', val)
-    })
+    getCollections()
     getTeams()
     // .then(() => this.findBooksWithNoTeams())
   }
@@ -60,9 +58,13 @@ export class Dashboard extends React.Component {
   */
   createBook(newTitle) {
     const { createCollection } = this.props.actions
+    const { user } = this.props
 
     const book = {
       title: newTitle || 'Untitled',
+      productionEditor: this.isProductionEditor(user.id)
+        ? { username: user.username, userId: user.id }
+        : null,
     }
 
     createCollection(book).then(res => {
@@ -160,7 +162,8 @@ export class Dashboard extends React.Component {
     or when a book with no teams associated with it is found.
   */
   createTeamsForBook(book) {
-    const { createTeam } = this.props.actions
+    const { createTeam, getCurrentUser } = this.props.actions
+    console.log('actions', this.props.actions)
     const { user } = this.props
 
     const teamTypes = Object.keys(config.authsome.teams)
@@ -180,7 +183,9 @@ export class Dashboard extends React.Component {
         },
         teamType,
       }
-      createTeam(newTeam)
+      createTeam(newTeam).then(res => {
+        getCurrentUser()
+      })
     }
     // teamTypes.map(teamType => {
     //   const newTeam = {
@@ -232,9 +237,8 @@ export class Dashboard extends React.Component {
   }
 
   render() {
-    const { books, teams } = this.props
+    const { books } = this.props
     const { showModal } = this.state
-    console.log('teams', teams)
     // if (teams.length === 0) return null
     // const roles = this.getRoles()
 
@@ -307,7 +311,6 @@ Dashboard.defaultProps = {
 }
 
 function mapStateToProps(state, { params }) {
-  // console.log('state', state)
   return {
     books: state.collections,
     teams: state.teams,

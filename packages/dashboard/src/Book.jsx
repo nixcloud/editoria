@@ -27,7 +27,6 @@ class Book extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('in did', this.props)
     const { isRenaming } = this.state
     if (isRenaming) this.renameTitle.focus()
   }
@@ -202,8 +201,6 @@ class Book extends React.Component {
     const title = this.renderTitle(book)
     const buttons = this.renderButtons(book)
     const removeModal = this.renderRemoveModal()
-
-    console.log('book props', this.props)
 
     return (
       <div className={styles.bookContainer}>

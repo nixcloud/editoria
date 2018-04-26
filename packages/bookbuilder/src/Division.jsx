@@ -14,6 +14,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import Authorize from 'pubsweet-client/src/helpers/Authorize'
 
 import AddButton from './AddButton'
 import Chapter from './Chapter'
@@ -196,13 +197,19 @@ class Division extends React.Component {
     let addButtons
     if (type === 'body') {
       addButtons = (
-        <span>
-          <AddButton add={onAddClick} group="chapter" />
-          <AddButton add={onAddClick} group="part" />
-        </span>
+        <Authorize object={book} operation="can view addComponent">
+          <span>
+            <AddButton add={onAddClick} group="chapter" />
+            <AddButton add={onAddClick} group="part" />
+          </span>
+        </Authorize>
       )
     } else {
-      addButtons = <AddButton add={onAddClick} group="component" />
+      addButtons = (
+        <Authorize object={book} operation="can view addComponent">
+          <AddButton add={onAddClick} group="component" />
+        </Authorize>
+      )
     }
 
     const list = (

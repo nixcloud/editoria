@@ -6,14 +6,97 @@ const collections = [
   {
     id: 'collection1',
     type: 'collection',
+    fragments: ['fragment1', 'fragment2', 'fragment3', 'fragment4'],
+    owners: ['user1', 'user3'],
   },
   {
     id: 'collection2',
     type: 'collection',
+    owners: ['user2', 'user3'],
   },
   {
     id: 'collection3',
     type: 'collection',
+    owners: ['user1', 'user2', 'user3'],
+  },
+]
+
+const fragments = [
+  {
+    id: 'fragment1',
+    type: 'fragment',
+    book: 'collection1',
+    index: 0,
+    kind: 'component',
+    division: 'front',
+    subCategory: 'chapter',
+    progress: {
+      clean: 0,
+      edit: 0,
+      review: 0,
+      style: 0,
+    },
+    alignment: {
+      left: false,
+      right: false,
+    },
+  },
+  {
+    id: 'fragment2',
+    type: 'fragment',
+    book: 'collection1',
+    index: 0,
+    kind: 'component',
+    division: 'body',
+    subCategory: 'chapter',
+    progress: {
+      clean: 0,
+      edit: 0,
+      review: 0,
+      style: 0,
+    },
+    alignment: {
+      left: false,
+      right: false,
+    },
+  },
+  {
+    id: 'fragment3',
+    type: 'fragment',
+    book: 'collection1',
+    index: 0,
+    kind: 'component',
+    division: 'body',
+    subCategory: 'part',
+    progress: {
+      clean: 0,
+      edit: 0,
+      review: 0,
+      style: 0,
+    },
+    alignment: {
+      left: false,
+      right: false,
+    },
+  },
+  {
+    id: 'fragment4',
+    type: 'fragment',
+    book: 'collection1',
+    index: 0,
+    kind: 'component',
+    division: 'back',
+    subCategory: 'component',
+    progress: {
+      clean: 0,
+      edit: 0,
+      review: 0,
+      style: 0,
+    },
+    alignment: {
+      left: false,
+      right: false,
+    },
   },
 ]
 
@@ -331,6 +414,24 @@ describe('Admin', () => {
     })
     expect(permission).toBe(true)
   })
+  it('lists the fragments of a collection', async () => {
+    const permission = await authsome.can('adminId', 'GET', {
+      path: '/fragments',
+    })
+    expect(permission).toBe(true)
+  })
+  it('reads the fragments of a collection', async () => {
+    const permission = await authsome.can('adminId', 'GET', fragments[0])
+    expect(permission).toBe(true)
+  })
+  it('creates user', async () => {
+    const permission = await authsome.can('adminId', 'POST', { path: '/users' })
+    expect(permission).toBe(true)
+  })
+  it('views team manager', async () => {
+    const permission = await authsome.can('adminId', 'can view teamManager', collections[0])
+    expect(permission).toBe(true)
+  })
 })
 
 describe('User', () => {
@@ -407,10 +508,28 @@ describe('User', () => {
     })
     expect(permission).toBe(false)
   })
-  it('could not accept collection:delete if she/he is unassigned', async () => {
+  it('accepts collection:delete', async () => {
     const permission = await authsome.can('user', 'collection:delete', {
       collection: collections[0],
     })
+    expect(permission).toBe(true)
+  })
+  it('lists the fragments of a collection', async () => {
+    const permission = await authsome.can('user', 'GET', {
+      path: '/fragments',
+    })
+    expect(permission).toBe(true)
+  })
+  it('could not read the fragments of a collection if she/he has no membership', async () => {
+    const permission = await authsome.can('user', 'GET', fragments[0])
+    expect(permission).toBe(false)
+  })
+  it('creates user', async () => {
+    const permission = await authsome.can('user', 'POST', { path: '/users' })
+    expect(permission).toBe(true)
+  })
+  it('could not view team manager if she/he is not production editor of collection', async () => {
+    const permission = await authsome.can('user', 'can view teamManager', collections[0])
     expect(permission).toBe(false)
   })
 })
@@ -546,6 +665,14 @@ describe('Production Editor', () => {
     const permission = await authsome.can('user1', 'collection:delete', {
       collection: collections[0],
     })
+    expect(permission).toBe(true)
+  })
+  it('reads the fragments of a collection if she/he has membership', async () => {
+    const permission = await authsome.can('user1', 'GET', fragments[0])
+    expect(permission).toBe(true)
+  })
+  it('could view team manager of collection where she/he is member of', async () => {
+    const permission = await authsome.can('user1', 'can view teamManager', collections[0])
     expect(permission).toBe(true)
   })
 })
