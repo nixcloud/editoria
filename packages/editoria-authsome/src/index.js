@@ -561,6 +561,14 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canViewDeleteComponent()
   },
+  'can view uploadButton': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canUpdateCollection()
+  },
+  'can view alignmentTool': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canUpdateCollection()
+  },
   'collection:create': (userId, operation, object, context) => {
     const { collection } = object
     const mode = new EditoriaMode(userId, operation, collection, context)
