@@ -1,1 +1,1 @@
-yarn setupdb --username=admin --email=admin@example.com --password=adminadmin & yarn server
+yarn server

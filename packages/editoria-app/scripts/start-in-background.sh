@@ -1,1 +1,1 @@
-nohup bash -c "yarn setupdb --username=admin --email=admin@example.com --password=adminadmin & yarn server" > /dev/null 2>&1 &
+nohup bash -c "yarn server" > /dev/null 2>&1 &
