@@ -399,7 +399,6 @@ $upload-multiple: #b1b1b1;
       h3 {
         background-color: $white;
         color: $dark-grey !important;
-        cursor: pointer;
         display: inline;
         font-size: 28px;
         font-family: 'Vollkorn';
@@ -411,6 +410,9 @@ $upload-multiple: #b1b1b1;
         position: relative;
         top: 13px;
         word-wrap: break-word;
+        .cursorPointer {
+          cursor: pointer;
+        }
       }
       input {
         font-size: 28px;

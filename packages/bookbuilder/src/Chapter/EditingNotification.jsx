@@ -25,8 +25,8 @@ class EditingNotification extends React.Component {
   }
 
   isAdmin() {
-    const { roles } = this.props
-    return includes(roles, 'admin')
+    const { user } = this.props
+    return user.admin
   }
 
   formatDate(timestamp) {
@@ -140,7 +140,14 @@ EditingNotification.propTypes = {
     type: PropTypes.string,
   }).isRequired,
   modalContainer: PropTypes.any.isRequired,
-  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.shape({
+    admin: PropTypes.bool,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    type: PropTypes.string,
+    username: PropTypes.string,
+  }),
   update: PropTypes.func.isRequired,
 }
 

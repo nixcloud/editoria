@@ -60,7 +60,7 @@ class ChapterFirstRow extends React.Component {
       isUploadInProgress,
       outerContainer,
       remove,
-      roles,
+      user,
       title,
       type,
       update,
@@ -90,7 +90,7 @@ class ChapterFirstRow extends React.Component {
           onClickRename={this.onClickRename}
           // onClickSave={this.onClickSave}
           remove={remove}
-          roles={roles}
+          user={user}
           type={type}
           update={update}
         />
@@ -138,7 +138,14 @@ ChapterFirstRow.propTypes = {
   isUploadInProgress: PropTypes.bool,
   outerContainer: PropTypes.any.isRequired,
   remove: PropTypes.func.isRequired,
-  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.shape({
+    admin: PropTypes.bool,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    type: PropTypes.string,
+    username: PropTypes.string,
+  }),
   title: PropTypes.string,
   type: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,

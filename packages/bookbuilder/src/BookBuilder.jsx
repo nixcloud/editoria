@@ -24,7 +24,7 @@ export class BookBuilder extends React.Component {
 
     this.toggleTeamManager = this.toggleTeamManager.bind(this)
 
-    this.getRoles = this.getRoles.bind(this)
+    // this.getRoles = this.getRoles.bind(this)
     // this.isProductionEditor = this.isProductionEditor.bind(this)
     // this.setProductionEditor = this.setProductionEditor.bind(this)
     this.updateUploadStatus = this.updateUploadStatus.bind(this)
@@ -116,36 +116,36 @@ export class BookBuilder extends React.Component {
     this.setState({ showTeamManager: !this.state.showTeamManager })
   }
 
-  getRoles() {
-    const { user, book } = this.props
+  // getRoles() {
+  //   const { user, book } = this.props
 
-    const teams = _.filter(user.teams, t => t.object.id === book.id)
+  //   const teams = _.filter(user.teams, t => t.object.id === book.id)
 
-    let roles = []
-    if (user.admin) roles.push('admin')
+  //   let roles = []
+  //   if (user.admin) roles.push('admin')
 
-    function addRole(role) {
-      roles = _.union(roles, [role])
-    }
+  //   function addRole(role) {
+  //     roles = _.union(roles, [role])
+  //   }
 
-    _.forEach(teams, t => {
-      switch (t.teamType.name) {
-        case 'Production Editor':
-          addRole('production-editor')
-          break
-        case 'Copy Editor':
-          addRole('copy-editor')
-          break
-        case 'Author':
-          addRole('author')
-          break
-        default:
-          break
-      }
-    })
+  //   _.forEach(teams, t => {
+  //     switch (t.teamType.name) {
+  //       case 'Production Editor':
+  //         addRole('production-editor')
+  //         break
+  //       case 'Copy Editor':
+  //         addRole('copy-editor')
+  //         break
+  //       case 'Author':
+  //         addRole('author')
+  //         break
+  //       default:
+  //         break
+  //     }
+  //   })
 
-    return roles
-  }
+  //   return roles
+  // }
 
   // isProductionEditor() {
   //   const userRoles = this.getRoles()
@@ -180,7 +180,7 @@ export class BookBuilder extends React.Component {
   }
 
   render() {
-    const { book, chapters } = this.props
+    const { book, chapters, user } = this.props
     const {
       createFragment,
       deleteFragment,
@@ -189,7 +189,7 @@ export class BookBuilder extends React.Component {
       updateFragment,
     } = this.props.actions
     const { outerContainer } = this.state
-    const roles = this.getRoles()
+    // const roles = this.getRoles()
 
     const frontChapters = []
     const bodyChapters = []
@@ -221,10 +221,10 @@ export class BookBuilder extends React.Component {
           >
             <div className={`${styles.productionEditorContainer} row`}>
               <span>
-                Production Editor: &nbsp;{' '}
-                {book.productionEditor !== null
+                Production Editor: &nbsp;
+                {book.productionEditor
                   ? book.productionEditor.username
-                  : 'Unassigned'}{' '}
+                  : 'Unassigned'}
               </span>
               <Authorize object={book} operation="can view teamManager">
                 <span onClick={this.toggleTeamManager}>
@@ -242,16 +242,21 @@ export class BookBuilder extends React.Component {
             <div className={`${styles.btnContainer} row`}>
               <div className={`${styles.lineUploading} `} />
               <div className={styles.btnContainerButtons}>
-                <FileUploader
-                  backChapters={backChapters}
-                  bodyChapters={bodyChapters}
-                  book={book}
-                  convert={ink}
-                  create={createFragment}
-                  frontChapters={frontChapters}
-                  update={updateFragment}
-                  updateUploadStatus={this.updateUploadStatus}
-                />
+                <Authorize
+                  object={book}
+                  operation="can view multipleFilesUpload"
+                >
+                  <FileUploader
+                    backChapters={backChapters}
+                    bodyChapters={bodyChapters}
+                    book={book}
+                    convert={ink}
+                    create={createFragment}
+                    frontChapters={frontChapters}
+                    update={updateFragment}
+                    updateUploadStatus={this.updateUploadStatus}
+                  />
+                </Authorize>
                 <VivliostyleExporter
                   book={book}
                   htmlToEpub={htmlToEpub}
@@ -269,7 +274,7 @@ export class BookBuilder extends React.Component {
               ink={ink}
               outerContainer={outerContainer}
               remove={deleteFragment}
-              roles={roles}
+              user={user}
               title="Frontmatter"
               type="front"
               update={updateFragment}
@@ -285,7 +290,7 @@ export class BookBuilder extends React.Component {
               ink={ink}
               outerContainer={outerContainer}
               remove={deleteFragment}
-              roles={roles}
+              user={user}
               title="Body"
               type="body"
               update={updateFragment}
@@ -301,7 +306,7 @@ export class BookBuilder extends React.Component {
               ink={ink}
               outerContainer={outerContainer}
               remove={deleteFragment}
-              roles={roles}
+              user={user}
               title="Backmatter"
               type="back"
               update={updateFragment}
@@ -413,16 +418,13 @@ function mapStateToProps(state, { match }) {
   )
 
   const { error, teams, users, currentUser: user } = state
-  // const users = state.users.users
-  // const user = state.currentUser.user
 
   return {
     book: book || {},
     chapters,
     errorMessage: error,
     teams,
-    user,
-    // userRoles: state.auth.roles,
+    user: user.user,
     users: users.users,
   }
 }

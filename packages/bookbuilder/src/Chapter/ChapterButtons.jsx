@@ -11,12 +11,12 @@ class ChapterButtons extends React.Component {
   constructor(props) {
     super(props)
 
-    this.canEdit = this.canEdit.bind(this)
+    // this.canEdit = this.canEdit.bind(this)
     this.isLocked = this.isLocked.bind(this)
     this.renderDeleteButton = this.renderDeleteButton.bind(this)
-    this.renderEditButton = this.renderEditButton.bind(this)
+    // this.renderEditButton = this.renderEditButton.bind(this)
     this.renderEditingNotification = this.renderEditingNotification.bind(this)
-    this.renderRenameButton = this.renderRenameButton.bind(this)
+    // this.renderRenameButton = this.renderRenameButton.bind(this)
     this.renderRightArea = this.renderRightArea.bind(this)
     this.toggleDeleteModal = this.toggleDeleteModal.bind(this)
 
@@ -31,25 +31,25 @@ class ChapterButtons extends React.Component {
     return get(chapter, 'lock.editor.username')
   }
 
-  canEdit() {
-    const { chapter, roles } = this.props
+  // canEdit() {
+  //   const { chapter, roles } = this.props
 
-    if (includes(roles, 'admin') || includes(roles, 'production-editor')) {
-      return true
-    }
+  //   if (includes(roles, 'admin') || includes(roles, 'production-editor')) {
+  //     return true
+  //   }
 
-    if (includes(roles, 'copy-editor')) {
-      const isEditing = chapter.progress.edit === 1
-      if (isEditing) return true
-    }
+  //   if (includes(roles, 'copy-editor')) {
+  //     const isEditing = chapter.progress.edit === 1
+  //     if (isEditing) return true
+  //   }
 
-    if (includes(roles, 'author')) {
-      const isReviewing = chapter.progress.review === 1
-      if (isReviewing) return true
-    }
+  //   if (includes(roles, 'author')) {
+  //     const isReviewing = chapter.progress.review === 1
+  //     if (isReviewing) return true
+  //   }
 
-    return false
-  }
+  //   return false
+  // }
 
   toggleDeleteModal() {
     this.setState({
@@ -58,46 +58,47 @@ class ChapterButtons extends React.Component {
   }
 
   renderEditingNotification() {
-    const { chapter, modalContainer, roles, update } = this.props
+    const { chapter, modalContainer, user, update } = this.props
+
 
     return (
       <EditingNotification
         chapter={chapter}
         modalContainer={modalContainer}
-        roles={roles}
+        user={user}
         update={update}
       />
     )
   }
 
-  renderRenameButton() {
-    const { isRenaming, onClickRename, onClickSave, type } = this.props
+  // renderRenameButton() {
+    // const { isRenaming, onClickRename, onClickSave, type } = this.props
 
-    if (type === 'chapter' || type === 'part') {
-      let renameButtonText = 'Rename'
-      let renameButtonFunction = onClickRename
+    // if (type === 'chapter' || type === 'part') {
+    //   let renameButtonText = 'Rename'
+    //   let renameButtonFunction = onClickRename
 
-      if (isRenaming) {
-        renameButtonText = 'Save'
-        renameButtonFunction = onClickSave
-      }
+    //   if (isRenaming) {
+    //     renameButtonText = 'Save'
+    //     renameButtonFunction = onClickSave
+    //   }
 
-      return (
-        <div className={styles.actionContainer}>
-          <a id="bb-rename" onClick={renameButtonFunction}>
-            {renameButtonText}
-          </a>
-        </div>
-      )
-    }
+    //   return (
+    //     <div className={styles.actionContainer}>
+    //       <a id="bb-rename" onClick={renameButtonFunction}>
+    //         {renameButtonText}
+    //       </a>
+    //     </div>
+    //   )
+    // }
 
-    return null
-  }
+    // return null
+  // }
 
-  renderEditButton() {
-    const text = this.canEdit() ? 'Edit' : 'View'
-    return text
-  }
+  // renderEditButton() {
+  //   const text = this.canEdit() ? 'Edit' : 'View'
+  //   return text
+  // }
 
   renderDeleteButton() {
     const { chapter, modalContainer, remove } = this.props
@@ -133,7 +134,7 @@ class ChapterButtons extends React.Component {
     if (this.isLocked()) return this.renderEditingNotification()
     // close Rename of Title
     // const renameButton = this.renderRenameButton()
-    const editButton = this.renderEditButton()
+    // const editButton = this.renderEditButton()
     const deleteButton = this.renderDeleteButton()
 
     let buttonsStyle = {}
@@ -147,7 +148,13 @@ class ChapterButtons extends React.Component {
     return (
       <div style={buttonsStyle}>
         <div className={styles.actionContainer}>
-          {withLink(editButton, url)}
+          <Authorize
+            object={chapter}
+            operation="can view fragmentEdit"
+            unauthorized={withLink('View', url)}
+          >
+            {withLink('Edit', url)}
+          </Authorize>
         </div>
         {/* renameButton */}
         <Authorize object={chapter} operation="can view deleteComponent">
@@ -204,7 +211,14 @@ ChapterButtons.propTypes = {
   // onClickRename: PropTypes.func.isRequired, // should refactor
   // onClickSave: PropTypes.func.isRequired,
   remove: PropTypes.func.isRequired,
-  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.shape({
+    admin: PropTypes.bool,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    type: PropTypes.string,
+    username: PropTypes.string,
+  }),
   type: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
 }

@@ -83,6 +83,7 @@ class ChapterSecondRow extends React.Component {
           />
         </Authorize>
         <StateList
+          bookId={chapter.book}
           currentValues={chapter.progress}
           update={this.updateStateList}
           values={stateValues}

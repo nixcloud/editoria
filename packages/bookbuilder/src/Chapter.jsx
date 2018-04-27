@@ -89,7 +89,7 @@ class Chapter extends React.Component {
       isDragging,
       outerContainer,
       remove,
-      roles,
+      user,
       title,
       type,
       uploading,
@@ -130,7 +130,7 @@ class Chapter extends React.Component {
               isUploadInProgress={isUploadInProgress || uploading}
               outerContainer={outerContainer}
               remove={remove}
-              roles={roles}
+              user={user}
               title={title}
               type={type}
               update={this.update}
@@ -141,7 +141,7 @@ class Chapter extends React.Component {
               convertFile={ink}
               isUploadInProgress={isUploadInProgress || uploading}
               outerContainer={outerContainer}
-              roles={roles}
+              user={user}
               toggleUpload={this.toggleUpload}
               update={this.update}
               viewOrEdit={this._viewOrEdit}
@@ -203,7 +203,14 @@ Chapter.propTypes = {
   isDragging: PropTypes.bool.isRequired,
   outerContainer: PropTypes.any.isRequired,
   remove: PropTypes.func.isRequired,
-  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.shape({
+    admin: PropTypes.bool,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    type: PropTypes.string,
+    username: PropTypes.string,
+  }),
   title: PropTypes.string,
   type: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,

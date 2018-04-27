@@ -161,7 +161,7 @@ class Division extends React.Component {
       // chapters,
       ink,
       outerContainer,
-      roles,
+      user,
       title,
       type,
       update,
@@ -186,7 +186,7 @@ class Division extends React.Component {
         onMove={onMove}
         outerContainer={outerContainer}
         remove={onRemove}
-        roles={roles}
+        user={user}
         title={c.title}
         type={c.subCategory}
         update={update}
@@ -284,7 +284,14 @@ Division.propTypes = {
   ink: PropTypes.func.isRequired,
   outerContainer: PropTypes.any.isRequired,
   remove: PropTypes.func.isRequired,
-  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.shape({
+    admin: PropTypes.bool,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    type: PropTypes.string,
+    username: PropTypes.string,
+  }),
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,

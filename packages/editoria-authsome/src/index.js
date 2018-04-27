@@ -1,5 +1,5 @@
 const { pickBy } = require('lodash')
-/** The base class for Editoria's Authsome mode. */
+
 class EditoriaMode {
   /**
    * Creates a new instance of EditoriaMode
@@ -34,36 +34,19 @@ class EditoriaMode {
     return operationMap[operation] ? operationMap[operation] : operation
   }
 
-  /**
-   * Checks if user is a member of a team of a certain type for a certain object
-   *
-   * @param {any} user
-   * @param {any} teamType
-   * @param {any} object
-   * @returns {boolean}
-   */
   async isTeamMember(teamType, object) {
-    // if (!this.user || !Array.isArray(this.user.teams)) {
-    //   // console.log('in teamMemeber false1')
-    //   return false
-    // }
-
     let membershipCondition
     if (object) {
-      // We're asking if a user is a member of a team for a specific object
       membershipCondition = team =>
         team.teamType === teamType &&
         team.object &&
         team.object.id === object.id
     } else {
-      // We're asking if a user is a member of a global team
-      // membershipCondition = team => team.teamType === teamType && !team.object// later when globals will be introduced
       membershipCondition = team => team.teamType === teamType
     }
 
     const memberships = await Promise.all(
       this.user.teams.map(async teamId => {
-        // console.log('in teamMemeber user.teams.map', teamId)
         const teamFound = await this.context.models.Team.find(teamId)
         return membershipCondition(teamFound)
       }),
@@ -73,10 +56,6 @@ class EditoriaMode {
   }
 
   async hasMembership(object) {
-    // if (!this.user || !Array.isArray(this.user.teams)) {
-    //   return false
-    // }
-
     const membershipCondition = team => team.object.id === object.id
 
     const memberships = await Promise.all(
@@ -88,48 +67,10 @@ class EditoriaMode {
     return memberships.includes(true)
   }
 
-  /**
-   * Returns permissions for unauthenticated users
-   *
-   * @param {any} operation
-   * @param {any} object
-   * @returns {boolean}
-   */
-  // unauthenticatedUser(object) {
-  //   return this.operation === '/login'
-  // }
-
-  /**
-   * Checks if the user is an author, as represented with the owners
-   * relationship
-   *
-   * @param {any} object
-   * @returns {boolean}
-   */
   isAuthor(object) {
     return this.isTeamMember('author', object)
   }
 
-  /**
-   * Checks if the user is an author, as represented with the owners
-   * relationship
-   *
-   * @returns {boolean}
-   */
-  // async isAdmin() {
-  //   this.user = await this.context.models.User.find(this.userId)
-  //   if (this.user && this.user.admin) {
-  //     console.log('here')
-  //     return true
-  //   }
-  //   return false
-  // }
-
-  /**
-   * Checks if user is a senior editor (member of a team of type senior editor) for an object
-   *
-   * @returns {boolean}
-   */
   isAssignedCopyEditor(object) {
     return this.isTeamMember('copyEditor', object)
   }
@@ -138,34 +79,11 @@ class EditoriaMode {
     return this.isTeamMember('productionEditor', object)
   }
 
-  /**
-   * Checks if user is a senior editor (member of a team of type senior editor) for an object
-   *
-   * @returns {boolean}
-   */
   isProductionEditor() {
-    // console.log('isProduction?', this.isTeamMember('productionEditor'))
-    // if (!this.user || !Array.isArray(this.user.teams)) {
-    //   return false
-    // }
     return this.isTeamMember('productionEditor')
   }
 
-  /**
-   * Checks if userId is present, indicating an authenticated user
-   *
-   * @param {any} userId
-   * @returns {boolean}
-   */
-  // isAuthenticated() {
-  //   return !!this.userId
-  // }
-
   async canReadCollection() {
-    // if (!this.isAuthenticated()) {
-    //   return false
-    // }
-
     this.user = await this.context.models.User.find(this.userId)
 
     const collection = await this.context.models.Collection.find(this.object.id)
@@ -179,9 +97,6 @@ class EditoriaMode {
   }
 
   async canListCollections() {
-    // if (!this.isAuthenticated()) {
-    //   return false
-    // }
     this.user = await this.context.models.User.find(this.userId)
 
     return {
@@ -282,7 +197,7 @@ class EditoriaMode {
         const filteredTeams = await Promise.all(
           teams.map(async team => {
             const condition = this.belongsToTeam(team.id)
-            return condition ? team : undefined // eslint-disable-line
+            return condition ? team : undefined
           }, this),
         )
 
@@ -296,12 +211,7 @@ class EditoriaMode {
   }
 
   async canReadTeam() {
-    // if (!this.isAuthenticated()) {
-    //   return false
-    // }
-
     this.user = await this.context.models.User.find(this.userId)
-
     return this.belongsToTeam(this.object.id)
   }
 
@@ -319,18 +229,6 @@ class EditoriaMode {
     return this.isAssignedProductionEditor(collection)
   }
 
-  // async canViewNavLink() {
-  //   // this.user = await this.context.models.User.find(this.userId)
-  //   // if (this.user.admin) {
-  //   //   return true
-  //   // }
-  //   return false
-  // }
-  /**
-   * Checks if a user can create a collection.
-   *
-   * @returns {boolean}
-   */
   async canCreateCollection() {
     this.user = await this.context.models.User.find(this.userId)
     return this.isProductionEditor()
@@ -395,6 +293,7 @@ class EditoriaMode {
   }
 
   async canUpdateFragment() {
+    console.log('this object', this.object)
     this.user = await this.context.models.User.find(this.userId)
     const collectionId = this.object.book
     const foundCollection = await this.context.models.Collection.find(
@@ -418,6 +317,74 @@ class EditoriaMode {
     return (
       foundFragment && foundCollection && this.hasMembership(foundCollection)
     )
+  }
+  async canFragmentEdit() {
+    this.user = await this.context.models.User.find(this.userId)
+    const fragment = this.object
+    const collectionId = fragment.book
+    const isEditingSate = fragment.progress.edit === 1
+    const isReviewingSate = fragment.progress.review === 1
+
+    const foundCollection = await this.context.models.Collection.find(
+      collectionId,
+    )
+    if (foundCollection) {
+      if (await this.isAssignedProductionEditor(foundCollection)) {
+        return true
+      } else if (
+        (await this.isAssignedCopyEditor(foundCollection)) &&
+        isEditingSate
+      ) {
+        return true
+      } else if ((await this.isAuthor(foundCollection)) && isReviewingSate) {
+        return true
+      }
+    }
+    return false
+  }
+
+  async canChangeProgress() {
+    this.user = await this.context.models.User.find(this.userId)
+    const collectionId = this.object.bookId
+    const progressType = this.object.name
+    const currentValue = this.object.currentValueIndex
+    const isEditingSate = progressType === 'edit' && currentValue === 1
+    const isReviewingSate = progressType === 'review' && currentValue === 1
+
+    const foundCollection = await this.context.models.Collection.find(
+      collectionId,
+    )
+    if (foundCollection) {
+      if (await this.isAssignedProductionEditor(foundCollection)) {
+        return true
+      } else if (
+        (await this.isAssignedCopyEditor(foundCollection)) &&
+        progressType === 'edit' &&
+        isEditingSate
+      ) {
+        return true
+      } else if (
+        (await this.isAuthor(foundCollection)) &&
+        progressType === 'review' &&
+        isReviewingSate
+      ) {
+        return true
+      }
+    }
+    return false
+  }
+
+  async canUploadMultipleFiles() {
+    this.user = await this.context.models.User.find(this.userId)
+    const collectionId = this.object.id
+    const foundCollection = await this.context.models.Collection.find(
+      collectionId,
+    )
+    const permissions =
+      foundCollection &&
+      ((await this.isAssignedProductionEditor(foundCollection)) ||
+        (await this.isAssignedCopyEditor(foundCollection)))
+    return permissions
   }
 }
 
@@ -473,19 +440,16 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, object, context)
     // POST /api/collections
     if (object && object.path === '/collections') {
-      // console.log('hello')
       return mode.canCreateCollection()
     }
     // POST /api/users
     if (object && object.path === '/users') {
       return true
     }
-
     // POST /api/fragments
     if (object && object.path === '/collections/:collectionId/fragments') {
       return mode.canCreateFragment()
     }
-
     // POST /api/teams
     if (object && object.path === '/teams') {
       return mode.canCreateTeam()
@@ -499,12 +463,10 @@ module.exports = {
     if (object && object.type === 'collection') {
       return mode.canUpdateCollection()
     }
-    // TODO:
     // PATCH /api/fragments/:id
     if (object && object.type === 'fragment') {
       return mode.canUpdateFragment()
     }
-
     // PATCH /api/teams/:id
     if (object && object.type === 'team') {
       return mode.canUpdateTeam()
@@ -518,7 +480,6 @@ module.exports = {
     if (object && object.type === 'collection') {
       return mode.canUpdateCollection()
     }
-    // TODO:
     // DELETE /api/fragments/:id
     if (object && object.type === 'fragment') {
       return mode.canDeleteFragment()
@@ -531,12 +492,7 @@ module.exports = {
 
     return false
   },
-  'can view nav links': (userId, operation, object, context) =>
-    // const mode = new EditoriaMode(userId, operation, object, context)
-    // if (object && object === ('users' || 'teams')) {
-    //   return false
-    // }
-    false,
+  'can view nav links': (userId, operation, object, context) => false,
   'can add books': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canCreateCollection()
@@ -569,6 +525,18 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canUpdateCollection()
   },
+  'can view fragmentEdit': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canFragmentEdit()
+  },
+  'can change progressList': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canChangeProgress()
+  },
+  'can view multipleFilesUpload': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canUploadMultipleFiles()
+  },
   'collection:create': (userId, operation, object, context) => {
     const { collection } = object
     const mode = new EditoriaMode(userId, operation, collection, context)
@@ -584,7 +552,6 @@ module.exports = {
     const { collection } = object
     const mode = new EditoriaMode(userId, operation, collection, context)
     return mode.canBroadcastEvent()
-    // return true
   },
   'fragment:patch': (userId, operation, object, context) => {
     const { fragment } = object
@@ -596,4 +563,5 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, collection, context)
     return mode.canBroadcastEvent()
   },
+  // TODO protect ink endpoint
 }
