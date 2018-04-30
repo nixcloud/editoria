@@ -295,7 +295,7 @@ export class BookBuilder extends React.Component {
             </div>
             <Authorize
               object={book}
-              operation="can reoder bookComponents"
+              operation="can reorder bookComponents"
               unauthorized={this.renderDivison(
                 false,
                 frontChapters,
@@ -308,7 +308,7 @@ export class BookBuilder extends React.Component {
             <div className={styles.sectionDivider} />
             <Authorize
               object={book}
-              operation="can reoder bookComponents"
+              operation="can reorder bookComponents"
               unauthorized={this.renderDivison(
                 false,
                 bodyChapters,
@@ -323,7 +323,7 @@ export class BookBuilder extends React.Component {
 
             <Authorize
               object={book}
-              operation="can reoder bookComponents"
+              operation="can reorder bookComponents"
               unauthorized={this.renderDivison(
                 false,
                 backChapters,

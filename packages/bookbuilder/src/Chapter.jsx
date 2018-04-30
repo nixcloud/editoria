@@ -136,7 +136,7 @@ class Chapter extends React.Component {
           <div className={`col-lg-1 ${styles.grabContainer}`}>
             <Authorize
               object={book}
-              operation="can reoder bookComponents"
+              operation="can reorder bookComponents"
               unauthorized={indicatorGrabAllowed(false)}
             >
               {indicatorGrabAllowed(true)}
