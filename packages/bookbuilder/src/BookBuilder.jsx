@@ -29,6 +29,7 @@ export class BookBuilder extends React.Component {
     // this.setProductionEditor = this.setProductionEditor.bind(this)
     this.updateUploadStatus = this.updateUploadStatus.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
+    this.renderDivison = this.renderDivison.bind(this)
 
     this.state = {
       outerContainer: {},
@@ -179,6 +180,33 @@ export class BookBuilder extends React.Component {
     )
   }
 
+  renderDivison(reorderingAllowed, chapters, title, type) {
+    const { book, user } = this.props
+    const {
+      createFragment,
+      deleteFragment,
+      ink,
+      updateFragment,
+    } = this.props.actions
+    const { outerContainer, uploading } = this.state
+    return (
+      <Division
+        add={createFragment}
+        book={book}
+        chapters={chapters}
+        ink={ink}
+        outerContainer={outerContainer}
+        remove={deleteFragment}
+        reorderingAllowed={reorderingAllowed}
+        title={title}
+        type={type}
+        update={updateFragment}
+        uploadStatus={uploading}
+        user={user}
+      />
+    )
+  }
+
   render() {
     const { book, chapters, user } = this.props
     const {
@@ -266,52 +294,46 @@ export class BookBuilder extends React.Component {
                 />
               </div>
             </div>
-
-            <Division
-              add={createFragment}
-              book={book}
-              chapters={frontChapters}
-              ink={ink}
-              outerContainer={outerContainer}
-              remove={deleteFragment}
-              user={user}
-              title="Frontmatter"
-              type="front"
-              update={updateFragment}
-              uploadStatus={this.state.uploading}
-            />
+            <Authorize
+              object={book}
+              operation="can reoder bookComponents"
+              unauthorized={this.renderDivison(
+                false,
+                frontChapters,
+                'Frontmatter',
+                'front',
+              )}
+            >
+              {this.renderDivison(true, frontChapters, 'Frontmatter', 'front')}
+            </Authorize>
+            <div className={styles.sectionDivider} />
+            <Authorize
+              object={book}
+              operation="can reoder bookComponents"
+              unauthorized={this.renderDivison(
+                false,
+                bodyChapters,
+                'Body',
+                'body',
+              )}
+            >
+              {this.renderDivison(true, bodyChapters, 'Body', 'body')}
+            </Authorize>
 
             <div className={styles.sectionDivider} />
 
-            <Division
-              add={createFragment}
-              book={book}
-              chapters={bodyChapters}
-              ink={ink}
-              outerContainer={outerContainer}
-              remove={deleteFragment}
-              user={user}
-              title="Body"
-              type="body"
-              update={updateFragment}
-              uploadStatus={this.state.uploading}
-            />
-
-            <div className={styles.sectionDivider} />
-
-            <Division
-              add={createFragment}
-              book={book}
-              chapters={backChapters}
-              ink={ink}
-              outerContainer={outerContainer}
-              remove={deleteFragment}
-              user={user}
-              title="Backmatter"
-              type="back"
-              update={updateFragment}
-              uploadStatus={this.state.uploading}
-            />
+            <Authorize
+              object={book}
+              operation="can reoder bookComponents"
+              unauthorized={this.renderDivison(
+                false,
+                backChapters,
+                'Backmatter',
+                'back',
+              )}
+            >
+              {this.renderDivison(true, backChapters, 'Backmatter', 'back')}
+            </Authorize>
           </div>
         </div>
         <Authorize object={book} operation="can view teamManager">

@@ -166,6 +166,7 @@ class Division extends React.Component {
       type,
       update,
       uploadStatus,
+      reorderingAllowed,
     } = this.props
 
     const { chapters } = this.state
@@ -183,6 +184,7 @@ class Division extends React.Component {
         key={c.id}
         no={i}
         onEndDrag={onEndDrag}
+        canDrag={reorderingAllowed}
         onMove={onMove}
         outerContainer={outerContainer}
         remove={onRemove}
@@ -295,6 +297,7 @@ Division.propTypes = {
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
+  reorderingAllowed: PropTypes.bool.isRequired,
   uploadStatus: PropTypes.objectOf(PropTypes.bool),
 }
 

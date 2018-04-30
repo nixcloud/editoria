@@ -2,7 +2,7 @@ import { flow } from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { DragSource, DropTarget } from 'react-dnd'
-
+import Authorize from 'pubsweet-client/src/helpers/Authorize'
 import FirstRow from './Chapter/FirstRow'
 import SecondRow from './Chapter/SecondRow'
 
@@ -102,6 +102,26 @@ class Chapter extends React.Component {
     const listItemStyle = {
       opacity: isDragging ? 0 : 1,
     }
+    const indicatorGrabAllowed = allowed => {
+      if (!allowed) {
+        return (
+          <div
+            className={`${styles.grabIcon} ${styles.notAllowed} ${
+              hasContent === true ? styles.hasContent : ''
+            }`}
+          />
+        )
+      }
+      return (
+        <div
+          className={`${styles.grabIcon} ${
+            hasContent === true ? styles.hasContent : ''
+          }`}
+        >
+          <div className={styles.tooltip}>grab to sort</div>
+        </div>
+      )
+    }
 
     // TODO -- refactor these huge class names
     // TODO -- make the dot and line component/s
@@ -114,13 +134,13 @@ class Chapter extends React.Component {
           style={listItemStyle}
         >
           <div className={`col-lg-1 ${styles.grabContainer}`}>
-            <div
-              className={`${styles.grabIcon} ${
-                hasContent === true ? styles.hasContent : ''
-              }`}
+            <Authorize
+              object={book}
+              operation="can reoder bookComponents"
+              unauthorized={indicatorGrabAllowed(false)}
             >
-              <div className={styles.tooltip}>grab to sort</div>
-            </div>
+              {indicatorGrabAllowed(true)}
+            </Authorize>
           </div>
 
           <div className={`col-lg-11 ${styles.chapterMainContent}`}>
@@ -130,10 +150,10 @@ class Chapter extends React.Component {
               isUploadInProgress={isUploadInProgress || uploading}
               outerContainer={outerContainer}
               remove={remove}
-              user={user}
               title={title}
               type={type}
               update={this.update}
+              user={user}
             />
 
             <SecondRow
@@ -141,9 +161,9 @@ class Chapter extends React.Component {
               convertFile={ink}
               isUploadInProgress={isUploadInProgress || uploading}
               outerContainer={outerContainer}
-              user={user}
               toggleUpload={this.toggleUpload}
               update={this.update}
+              user={user}
               viewOrEdit={this._viewOrEdit}
             />
           </div>

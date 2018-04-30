@@ -278,6 +278,9 @@ $upload-multiple: #b1b1b1;
       transform: rotate(270deg);
       width: 42px;
     }
+    .notAllowed {
+      cursor: default;
+    }
 
     .hasContent {
       background-color: $blue;

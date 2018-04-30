@@ -529,6 +529,11 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canFragmentEdit()
   },
+  'can reoder bookComponents': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    // make some methods reusable
+    return mode.canUploadMultipleFiles()
+  },
   'can change progressList': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canChangeProgress()
