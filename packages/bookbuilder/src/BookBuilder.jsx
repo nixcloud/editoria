@@ -208,10 +208,9 @@ export class BookBuilder extends React.Component {
   }
 
   render() {
-    const { book, chapters, user } = this.props
+    const { book, chapters } = this.props
     const {
       createFragment,
-      deleteFragment,
       htmlToEpub,
       ink,
       updateFragment,
