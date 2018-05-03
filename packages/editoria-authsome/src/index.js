@@ -244,19 +244,21 @@ class EditoriaMode {
   }
 
   async canUpdateFragment() {
-    // console.log('this', this.object)
     this.user = await this.context.models.User.find(this.userId)
     const { current, update } = this.object
     const wasEditingSate = current.progress.edit === 1
     const wasReviewingSate = current.progress.review === 1
     const diff = EditoriaMode.difference(update, current)
     const collection = await this.findCollectionByObject(current)
-    console.log('diff', diff)
+
     if (collection) {
       if (await this.isAssignedProductionEditor(collection)) {
         return true
       } else if (await this.isAssignedCopyEditor(collection)) {
         if (Object.keys(diff).length === 1) {
+          if (diff.lock && wasEditingSate) {
+            return true
+          }
           if (
             diff.progress &&
             diff.progress.edit &&
