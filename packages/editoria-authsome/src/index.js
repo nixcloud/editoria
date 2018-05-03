@@ -1,4 +1,4 @@
-const { pickBy } = require('lodash')
+const { pickBy, transform, isEqual, isObject } = require('lodash')
 
 class EditoriaMode {
   /**
@@ -34,6 +34,19 @@ class EditoriaMode {
     return operationMap[operation] ? operationMap[operation] : operation
   }
 
+  static difference(object, base) {
+    const changes = (object, base) =>
+      transform(object, (result, value, key) => {
+        if (!isEqual(value, base[key])) {
+          result[key] =
+            isObject(value) && isObject(base[key])
+              ? changes(value, base[key])
+              : value
+        }
+      })
+    return changes(object, base)
+  }
+
   async isTeamMember(teamType, object) {
     let membershipCondition
     if (object) {
@@ -48,7 +61,10 @@ class EditoriaMode {
     const memberships = await Promise.all(
       this.user.teams.map(async teamId => {
         const teamFound = await this.context.models.Team.find(teamId)
-        return membershipCondition(teamFound)
+        if (teamFound) {
+          return membershipCondition(teamFound)
+        }
+        return false
       }),
     )
 
@@ -61,7 +77,10 @@ class EditoriaMode {
     const memberships = await Promise.all(
       this.user.teams.map(async teamId => {
         const teamFound = await this.context.models.Team.find(teamId)
-        return membershipCondition(teamFound)
+        if (teamFound) {
+          return membershipCondition(teamFound)
+        }
+        return false
       }),
     )
     return memberships.includes(true)
@@ -82,11 +101,37 @@ class EditoriaMode {
   isProductionEditor() {
     return this.isTeamMember('productionEditor')
   }
-
-  async canReadCollection() {
+  async findCollectionByObject(object) {
+    let id
+    if (object.collection) {
+      id = object.collection.id
+    } else if (object.bookId && object.name) {
+      id = object.bookId
+    } else {
+      switch (object.type) {
+        case 'collection':
+          id = object.id
+          break
+        case 'fragment':
+          id = object.book
+          break
+        case 'team':
+          id = object.object.id
+          break
+        default:
+          id = undefined
+          break
+      }
+    }
+    if (id) {
+      return this.context.models.Collection.find(id)
+    }
+    return undefined
+  }
+  async canRead() {
     this.user = await this.context.models.User.find(this.userId)
 
-    const collection = await this.context.models.Collection.find(this.object.id)
+    const collection = await this.findCollectionByObject(this.object)
 
     const permission =
       (await this.isAuthor(collection)) ||
@@ -105,76 +150,15 @@ class EditoriaMode {
           collections.map(async collection => {
             const condition =
               (await this.isAuthor(collection)) ||
-              (await this.isAssignedCopyEditor(collection)) || // eslint-disable-line
-              (await this.isAssignedProductionEditor(collection)) // eslint-disable-line
-            return condition ? collection : undefined // eslint-disable-line
+              (await this.isAssignedCopyEditor(collection)) ||
+              (await this.isAssignedProductionEditor(collection))
+            return condition ? collection : undefined
           }, this),
         )
 
         return filteredCollections.filter(collection => collection)
       },
     }
-  }
-
-  async canListFragments() {
-    // if (!this.isAuthenticated()) {
-    //   return false
-    // }
-    // this.user = await this.context.models.User.find(this.userId)
-    // const collection = await this.context.models.Collection.find(this.object.book)
-    // const condition =
-    //           (await this.isAuthor(collection)) ||
-    //           (await this.isAssignedCopyEditor(collection)) || // eslint-disable-line
-    //           (await this.isAssignedProductionEditor(collection))
-    // console.log('object', this.object)
-    return true
-
-    // return {
-    //   filter: async collections => {
-    //     const filteredCollections = await Promise.all(
-    //       collections.map(async collection => {
-    //         const condition =
-    //           (await this.isAuthor(collection)) ||
-    //           (await this.isAssignedCopyEditor(collection)) || // eslint-disable-line
-    //           (await this.isAssignedProductionEditor(collection)) // eslint-disable-line
-    //         return condition ? collection : undefined // eslint-disable-line
-    //       }, this),
-    //     )
-
-    //     return filteredCollections.filter(collection => collection)
-    //   },
-    // }
-  }
-
-  async canReadFragment() {
-    this.user = await this.context.models.User.find(this.userId)
-    const collectionId = this.object.book
-    const collection = await this.context.models.Collection.find(collectionId)
-    const condition =
-      (await this.isAuthor(collection)) ||
-      (await this.isAssignedCopyEditor(collection)) || // eslint-disable-line
-      (await this.isAssignedProductionEditor(collection))
-    return condition
-  }
-
-  async canListUsers() {
-    // this.user = await this.context.models.User.find(this.userId)
-    // if (await this.isProductionEditor()) {
-    //   return true
-    // }
-    // return {
-    //   filter: async users => {
-    //     const filteredUsers = await Promise.all(
-    //       users.map(async team => {
-    //         const condition = this.belongsToTeam(team.id)
-    //         return condition ? team : undefined // eslint-disable-line
-    //       }, this),
-    //     )
-
-    //     return filteredTeams.filter(team => team)
-    //   },
-    // }
-    return true
   }
 
   async canReadUser() {
@@ -222,10 +206,9 @@ class EditoriaMode {
 
   async canUpdateTeam() {
     this.user = await this.context.models.User.find(this.userId)
-    const teamFound = await this.context.models.Team.find(this.object.id)
-    const collection = await this.context.models.Collection.find(
-      teamFound.object.id,
-    )
+    const { current } = this.object
+    const teamFound = await this.context.models.Team.find(current.id)
+    const collection = await this.findCollectionByObject(teamFound)
     return this.isAssignedProductionEditor(collection)
   }
 
@@ -234,9 +217,15 @@ class EditoriaMode {
     return this.isProductionEditor()
   }
 
-  async canUpdateCollection() {
+  async canInteractWithCollections() {
     this.user = await this.context.models.User.find(this.userId)
-    const collection = await this.context.models.Collection.find(this.object.id)
+    let current
+    if (this.object.current) {
+      current = this.object.current
+    } else {
+      current = this.object
+    }
+    const collection = await this.findCollectionByObject(current)
     return this.isAssignedProductionEditor(collection)
   }
   async canBroadcastEvent() {
@@ -244,66 +233,71 @@ class EditoriaMode {
     return this.hasMembership(this.object)
   }
 
-  async canCreateFragment() {
-    const { collection } = this.object
+  async canInteractWithFragments() {
     this.user = await this.context.models.User.find(this.userId)
-    const foundCollection = await this.context.models.Collection.find(
-      collection.id,
-    )
+    const collection = await this.findCollectionByObject(this.object)
     const permissions =
-      foundCollection &&
-      ((await this.isAssignedProductionEditor(foundCollection)) ||
-        (await this.isAssignedCopyEditor(foundCollection)))
-    return permissions
-  }
-
-  async canViewAddComponent() {
-    this.user = await this.context.models.User.find(this.userId)
-    const foundCollection = await this.context.models.Collection.find(
-      this.object.id,
-    )
-    const permissions =
-      foundCollection &&
-      ((await this.isAssignedProductionEditor(foundCollection)) ||
-        (await this.isAssignedCopyEditor(foundCollection)))
-    return permissions
-  }
-  async canViewDeleteComponent() {
-    this.user = await this.context.models.User.find(this.userId)
-    const foundCollection = await this.context.models.Collection.find(
-      this.object.book,
-    )
-    const permissions =
-      foundCollection &&
-      ((await this.isAssignedProductionEditor(foundCollection)) ||
-        (await this.isAssignedCopyEditor(foundCollection)))
-    return permissions
-  }
-  async canDeleteFragment() {
-    this.user = await this.context.models.User.find(this.userId)
-    const collectionId = this.object.book
-    const foundCollection = await this.context.models.Collection.find(
-      collectionId,
-    )
-    const permissions =
-      foundCollection &&
-      ((await this.isAssignedProductionEditor(foundCollection)) ||
-        (await this.isAssignedCopyEditor(foundCollection)))
+      collection &&
+      ((await this.isAssignedProductionEditor(collection)) ||
+        (await this.isAssignedCopyEditor(collection)))
     return permissions
   }
 
   async canUpdateFragment() {
-    console.log('this object', this.object)
+    // console.log('this', this.object)
     this.user = await this.context.models.User.find(this.userId)
-    const collectionId = this.object.book
-    const foundCollection = await this.context.models.Collection.find(
-      collectionId,
-    )
-    const permissions =
-      foundCollection &&
-      ((await this.isAssignedProductionEditor(foundCollection)) ||
-        (await this.isAssignedCopyEditor(foundCollection)))
-    return permissions
+    const { current, update } = this.object
+    const wasEditingSate = current.progress.edit === 1
+    const wasReviewingSate = current.progress.review === 1
+    const diff = EditoriaMode.difference(update, current)
+    const collection = await this.findCollectionByObject(current)
+    console.log('diff', diff)
+    if (collection) {
+      if (await this.isAssignedProductionEditor(collection)) {
+        return true
+      } else if (await this.isAssignedCopyEditor(collection)) {
+        if (Object.keys(diff).length === 1) {
+          if (
+            diff.progress &&
+            diff.progress.edit &&
+            diff.progress.edit === 2 &&
+            wasEditingSate
+          ) {
+            return true
+          }
+          if (diff.source) {
+            return true
+          }
+          if (diff.alignment) {
+            return true
+          }
+        }
+        if (Object.keys(diff).length === 2) {
+          if (diff.number !== undefined && diff.index !== undefined) {
+            return true
+          }
+          return false
+        }
+        return false
+      } else if (await this.isAuthor(collection)) {
+        if (Object.keys(diff).length === 1) {
+          if (
+            diff.progress &&
+            diff.progress.review &&
+            diff.progress.review === 2 &&
+            wasReviewingSate
+          ) {
+            return true
+          }
+          if (diff.source) {
+            return true
+          }
+        }
+        return false
+      }
+      return false
+    }
+    return false
   }
 
   async canBroadcastFragmentPatchEvent() {
@@ -311,32 +305,25 @@ class EditoriaMode {
     const foundFragment = await this.context.models.Fragment.find(
       this.object.id,
     )
-    const foundCollection = await this.context.models.Collection.find(
-      foundFragment.book,
-    )
-    return (
-      foundFragment && foundCollection && this.hasMembership(foundCollection)
-    )
+    const collection = await this.findCollectionByObject(foundFragment)
+    return foundFragment && collection && this.hasMembership(collection)
   }
   async canFragmentEdit() {
     this.user = await this.context.models.User.find(this.userId)
     const fragment = this.object
-    const collectionId = fragment.book
     const isEditingSate = fragment.progress.edit === 1
     const isReviewingSate = fragment.progress.review === 1
+    const collection = await this.findCollectionByObject(this.object)
 
-    const foundCollection = await this.context.models.Collection.find(
-      collectionId,
-    )
-    if (foundCollection) {
-      if (await this.isAssignedProductionEditor(foundCollection)) {
+    if (collection) {
+      if (await this.isAssignedProductionEditor(collection)) {
         return true
       } else if (
-        (await this.isAssignedCopyEditor(foundCollection)) &&
+        (await this.isAssignedCopyEditor(collection)) &&
         isEditingSate
       ) {
         return true
-      } else if ((await this.isAuthor(foundCollection)) && isReviewingSate) {
+      } else if ((await this.isAuthor(collection)) && isReviewingSate) {
         return true
       }
     }
@@ -345,26 +332,23 @@ class EditoriaMode {
 
   async canChangeProgress() {
     this.user = await this.context.models.User.find(this.userId)
-    const collectionId = this.object.bookId
     const progressType = this.object.name
     const currentValue = this.object.currentValueIndex
     const isEditingSate = progressType === 'edit' && currentValue === 1
     const isReviewingSate = progressType === 'review' && currentValue === 1
 
-    const foundCollection = await this.context.models.Collection.find(
-      collectionId,
-    )
-    if (foundCollection) {
-      if (await this.isAssignedProductionEditor(foundCollection)) {
+    const collection = await this.findCollectionByObject(this.object)
+    if (collection) {
+      if (await this.isAssignedProductionEditor(collection)) {
         return true
       } else if (
-        (await this.isAssignedCopyEditor(foundCollection)) &&
+        (await this.isAssignedCopyEditor(collection)) &&
         progressType === 'edit' &&
         isEditingSate
       ) {
         return true
       } else if (
-        (await this.isAuthor(foundCollection)) &&
+        (await this.isAuthor(collection)) &&
         progressType === 'review' &&
         isReviewingSate
       ) {
@@ -372,19 +356,6 @@ class EditoriaMode {
       }
     }
     return false
-  }
-
-  async canUploadMultipleFiles() {
-    this.user = await this.context.models.User.find(this.userId)
-    const collectionId = this.object.id
-    const foundCollection = await this.context.models.Collection.find(
-      collectionId,
-    )
-    const permissions =
-      foundCollection &&
-      ((await this.isAssignedProductionEditor(foundCollection)) ||
-        (await this.isAssignedCopyEditor(foundCollection)))
-    return permissions
   }
 }
 
@@ -402,21 +373,21 @@ module.exports = {
     }
     // GET /api/collection
     if (object && object.type === 'collection') {
-      return mode.canReadCollection()
+      return mode.canRead()
     }
 
     // GET /api/collections/:collectionId/fragments
     if (object && object.path === '/fragments') {
-      return mode.canListFragments()
+      return true
     }
     // GET /api/collections/:collectionId/fragments/:fragmentId
     if (object && object.type === 'fragment') {
-      return mode.canReadFragment()
+      return mode.canRead()
     }
 
     // GET /api/users
     if (object && object.path === '/users') {
-      return mode.canListUsers()
+      return true
     }
 
     // // GET /api/teams
@@ -448,7 +419,7 @@ module.exports = {
     }
     // POST /api/fragments
     if (object && object.path === '/collections/:collectionId/fragments') {
-      return mode.canCreateFragment()
+      return mode.canInteractWithFragments()
     }
     // POST /api/teams
     if (object && object.path === '/teams') {
@@ -460,15 +431,15 @@ module.exports = {
   PATCH: (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
     // PATCH /api/collections/:id
-    if (object && object.type === 'collection') {
-      return mode.canUpdateCollection()
+    if (object && object.current.type === 'collection') {
+      return mode.canInteractWithCollections()
     }
     // PATCH /api/fragments/:id
-    if (object && object.type === 'fragment') {
+    if (object && object.current.type === 'fragment') {
       return mode.canUpdateFragment()
     }
     // PATCH /api/teams/:id
-    if (object && object.type === 'team') {
+    if (object && object.current.type === 'team') {
       return mode.canUpdateTeam()
     }
 
@@ -478,11 +449,11 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, object, context)
     // DELETE /api/collections/:id
     if (object && object.type === 'collection') {
-      return mode.canUpdateCollection()
+      return mode.canInteractWithCollections()
     }
     // DELETE /api/fragments/:id
     if (object && object.type === 'fragment') {
-      return mode.canDeleteFragment()
+      return mode.canInteractWithFragments()
     }
 
     // DELETE /api/teams/:id
@@ -499,31 +470,31 @@ module.exports = {
   },
   'can rename books': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canUpdateCollection()
+    return mode.canInteractWithCollections()
   },
   'can delete books': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canUpdateCollection()
+    return mode.canInteractWithCollections()
   },
   'can view teamManager': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canUpdateCollection()
+    return mode.canInteractWithCollections()
   },
   'can view addComponent': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canViewAddComponent()
+    return mode.canInteractWithFragments()
   },
   'can view deleteComponent': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canViewDeleteComponent()
+    return mode.canInteractWithFragments()
   },
   'can view uploadButton': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canUpdateCollection()
+    return mode.canInteractWithFragments()
   },
   'can view alignmentTool': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canUpdateCollection()
+    return mode.canInteractWithFragments()
   },
   'can view fragmentEdit': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
@@ -531,8 +502,7 @@ module.exports = {
   },
   'can reorder bookComponents': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    // make some methods reusable
-    return mode.canUploadMultipleFiles()
+    return mode.canInteractWithFragments()
   },
   'can change progressList': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
@@ -544,8 +514,9 @@ module.exports = {
   },
   'can view multipleFilesUpload': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canUploadMultipleFiles()
+    return mode.canInteractWithFragments()
   },
+  // TODO: refactor to use productionEditor property of colleciton
   'collection:create': (userId, operation, object, context) => {
     const { collection } = object
     const mode = new EditoriaMode(userId, operation, collection, context)

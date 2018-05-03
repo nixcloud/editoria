@@ -60,39 +60,38 @@ class ChapterButtons extends React.Component {
   renderEditingNotification() {
     const { chapter, modalContainer, user, update } = this.props
 
-
     return (
       <EditingNotification
         chapter={chapter}
         modalContainer={modalContainer}
-        user={user}
         update={update}
+        user={user}
       />
     )
   }
 
   // renderRenameButton() {
-    // const { isRenaming, onClickRename, onClickSave, type } = this.props
+  // const { isRenaming, onClickRename, onClickSave, type } = this.props
 
-    // if (type === 'chapter' || type === 'part') {
-    //   let renameButtonText = 'Rename'
-    //   let renameButtonFunction = onClickRename
+  // if (type === 'chapter' || type === 'part') {
+  //   let renameButtonText = 'Rename'
+  //   let renameButtonFunction = onClickRename
 
-    //   if (isRenaming) {
-    //     renameButtonText = 'Save'
-    //     renameButtonFunction = onClickSave
-    //   }
+  //   if (isRenaming) {
+  //     renameButtonText = 'Save'
+  //     renameButtonFunction = onClickSave
+  //   }
 
-    //   return (
-    //     <div className={styles.actionContainer}>
-    //       <a id="bb-rename" onClick={renameButtonFunction}>
-    //         {renameButtonText}
-    //       </a>
-    //     </div>
-    //   )
-    // }
+  //   return (
+  //     <div className={styles.actionContainer}>
+  //       <a id="bb-rename" onClick={renameButtonFunction}>
+  //         {renameButtonText}
+  //       </a>
+  //     </div>
+  //   )
+  // }
 
-    // return null
+  // return null
   // }
 
   // renderEditButton() {
@@ -156,10 +155,10 @@ class ChapterButtons extends React.Component {
             {withLink('Edit', url)}
           </Authorize>
         </div>
-        {/* renameButton */}
         <Authorize object={chapter} operation="can view deleteComponent">
-          {deleteButton}
+          <div className={styles.actionContainer}>{deleteButton}</div>
         </Authorize>
+        {/* renameButton */}
       </div>
     )
   }

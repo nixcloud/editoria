@@ -429,7 +429,11 @@ describe('Admin', () => {
     expect(permission).toBe(true)
   })
   it('views team manager', async () => {
-    const permission = await authsome.can('adminId', 'can view teamManager', collections[0])
+    const permission = await authsome.can(
+      'adminId',
+      'can view teamManager',
+      collections[0],
+    )
     expect(permission).toBe(true)
   })
 })
@@ -449,11 +453,11 @@ describe('User', () => {
     const filteredTeams = await permission.filter(teams)
     expect(filteredTeams).toEqual([])
   })
-  it('could not get the available users of the system', async () => {
+  it('could get the available users of the system', async () => {
     const permission = await authsome.can('user', 'GET', {
       path: '/users',
     })
-    expect(permission).toBe(false)
+    expect(permission).toBe(true)
   })
   it('could not read a collection she/he is not assigned to', async () => {
     const permission = await authsome.can('user', 'GET', collections[0])
@@ -529,7 +533,11 @@ describe('User', () => {
     expect(permission).toBe(true)
   })
   it('could not view team manager if she/he is not production editor of collection', async () => {
-    const permission = await authsome.can('user', 'can view teamManager', collections[0])
+    const permission = await authsome.can(
+      'user',
+      'can view teamManager',
+      collections[0],
+    )
     expect(permission).toBe(false)
   })
 })
@@ -672,7 +680,11 @@ describe('Production Editor', () => {
     expect(permission).toBe(true)
   })
   it('could view team manager of collection where she/he is member of', async () => {
-    const permission = await authsome.can('user1', 'can view teamManager', collections[0])
+    const permission = await authsome.can(
+      'user1',
+      'can view teamManager',
+      collections[0],
+    )
     expect(permission).toBe(true)
   })
 })
