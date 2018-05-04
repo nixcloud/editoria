@@ -28,10 +28,10 @@ The current features on our list are the following:
 |Editor             |Cutting and pasting with track changes         |               |&#x2714; |wax/wax#15|
 |Editor             |Track spaces                                   |               |&#x2714; |wax/wax#119|
 |Editor             |Full Screen Mode                               |               |&#x2714; |wax/wax#150|
-|Editor             |Track inline formatting (eg. italics)          |               |         |wax/wax#40|
+|Editor             |Track inline formatting (eg. italics)          |&#x2714;       |         |wax/wax#160|
 |Editor             |Track block formatting (eg. headings)          |               |         |wax/wax#40|
 |Editor             |Expand set of special characters               |               |         |wax/wax#128|
-|Editor             |Text highlighter                               |&#x2714;       |         |wax/wax#18|
+|Editor             |Text highlighter                               |               |&#x2714; |wax/wax#18|
 |Editor             |Arrow navigation between notes                 |               |&#x2714; |wax/wax#133|
 |Editor             |Update note icon in toolbar                    |               |&#x2714; |wax/wax#126|
 |Editor             |Increase font size for text                    |               |         |
@@ -46,7 +46,7 @@ The current features on our list are the following:
 <br/>
 You can also find more detailed (and more technical) lists of the current tasks at hand on these pages:
 * https://gitlab.coko.foundation/editoria/editoria/milestones/9
-* https://gitlab.coko.foundation/wax/wax/milestones/7
+* https://gitlab.coko.foundation/wax/wax/milestones/9
 
 ## Get up and running  
 
