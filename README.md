@@ -39,8 +39,8 @@ The current features on our list are the following:
 |Document ingestion |Clean up white space (around punctuation, multiple spaces)|               |&#x2714; |XSweet/editoria_typescript#21|
 |Document ingestion |Convert series of periods to ellipses          |               |&#x2714; |XSweet/editoria_typescript#21
 |Document ingestion |Normalize directional quotes and apostrophes   |               |&#x2714; |XSweet/editoria_typescript#21
-|Document ingestion |Convert underlining and bolding to italics     |&#x2714;       |         |XSweet/editoria_typescript#29, XSweet/editoria_typescript#21
-|Document ingestion |Force punctuation to match formatting of preceding word|&#x2714;       |         |XSweet/HTMLevator#3|
+|Document ingestion |Convert underlining and bolding to italics     |               |&#x2714; |XSweet/editoria_typescript#29, XSweet/editoria_typescript#21
+|Document ingestion |Force punctuation to match formatting of preceding word|       |&#x2714; |XSweet/HTMLevator#3|
 |Document ingestion |Improve header promotion                       |&#x2714;       |         |XSweet/XSweet#123|
 
 <br/>
