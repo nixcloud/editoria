@@ -72,7 +72,14 @@ class EditoriaMode {
   }
 
   async hasMembership(object) {
-    const membershipCondition = team => team.object.id === object.id
+    let collection
+    if (object.collection) {
+      collection = object.collection
+    } else {
+      collection = object
+    }
+
+    const membershipCondition = team => team.object.id === collection.id
 
     const memberships = await Promise.all(
       this.user.teams.map(async teamId => {
@@ -109,9 +116,6 @@ class EditoriaMode {
       id = object.bookId
     } else {
       switch (object.type) {
-        case 'collection':
-          id = object.id
-          break
         case 'fragment':
           id = object.book
           break
@@ -119,7 +123,7 @@ class EditoriaMode {
           id = object.object.id
           break
         default:
-          id = undefined
+          id = object.id
           break
       }
     }
@@ -206,7 +210,12 @@ class EditoriaMode {
 
   async canUpdateTeam() {
     this.user = await this.context.models.User.find(this.userId)
-    const { current } = this.object
+    let current
+    if (this.object.current) {
+      current = this.object.current
+    } else {
+      current = this.object
+    }
     const teamFound = await this.context.models.Team.find(current.id)
     const collection = await this.findCollectionByObject(teamFound)
     return this.isAssignedProductionEditor(collection)
@@ -278,11 +287,13 @@ class EditoriaMode {
           if (diff.number !== undefined && diff.index !== undefined) {
             return true
           }
-          return false
         }
         return false
       } else if (await this.isAuthor(collection)) {
         if (Object.keys(diff).length === 1) {
+          if (diff.lock && wasEditingSate) {
+            return true
+          }
           if (
             diff.progress &&
             diff.progress.review &&
@@ -305,7 +316,7 @@ class EditoriaMode {
   async canBroadcastFragmentPatchEvent() {
     this.user = await this.context.models.User.find(this.userId)
     const foundFragment = await this.context.models.Fragment.find(
-      this.object.id,
+      this.object.fragment.id,
     )
     const collection = await this.findCollectionByObject(foundFragment)
     return foundFragment && collection && this.hasMembership(collection)
@@ -518,32 +529,25 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canInteractWithFragments()
   },
-  // TODO: refactor to use productionEditor property of colleciton
+  // TODO: refactor to use productionEditor property of collection
   'collection:create': (userId, operation, object, context) => {
-    const { collection } = object
-    const mode = new EditoriaMode(userId, operation, collection, context)
-    return collection.owners.includes(userId) || mode.canBroadcastEvent()
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return object.collection.owners.includes(userId) || mode.canBroadcastEvent()
   },
   'collection:patch': (userId, operation, object, context) => {
-    const { collection } = object
-    const mode = new EditoriaMode(userId, operation, collection, context)
+    const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canBroadcastEvent()
   },
   'collection:delete': (userId, operation, object, context) => true,
   'fragment:create': (userId, operation, object, context) => {
-    const { collection } = object
-    const mode = new EditoriaMode(userId, operation, collection, context)
+    const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canBroadcastEvent()
   },
   'fragment:patch': (userId, operation, object, context) => {
-    const { fragment } = object
-    const mode = new EditoriaMode(userId, operation, fragment, context)
+    const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canBroadcastFragmentPatchEvent()
   },
-  'fragment:delete': (userId, operation, object, context) => {
-    const { collection } = object
-    const mode = new EditoriaMode(userId, operation, collection, context)
-    return mode.canBroadcastEvent()
-  },
-  // TODO protect ink endpoint
+  'fragment:delete': (userId, operation, object, context) => true,
+  // TODO: protect ink endpoint
+  // TODO: protect team broadcasts
 }

@@ -2,27 +2,34 @@ const collections = [
   {
     id: 'collection1',
     type: 'collection',
-    fragments: ['fragment1', 'fragment2', 'fragment3', 'fragment4'],
+    title: 'Collection One',
+    fragments: [
+      'fragment0',
+      'fragment1',
+      'fragment2',
+      'fragment3',
+      'fragment4',
+    ],
+    owners: ['user1', 'user2', 'user3'],
   },
   {
     id: 'collection2',
+    title: 'Collection Two',
     type: 'collection',
-  },
-  {
-    id: 'collection3',
-    type: 'collection',
+    fragments: [],
   },
 ]
 
 const fragments = [
   {
-    id: 'fragment1',
+    id: 'fragment0',
     type: 'fragment',
     book: 'collection1',
+    title: 'Fragment Title',
     index: 0,
     kind: 'component',
     division: 'front',
-    subCategory: 'chapter',
+    subCategory: 'component',
     progress: {
       clean: 0,
       edit: 0,
@@ -35,9 +42,10 @@ const fragments = [
     },
   },
   {
-    id: 'fragment2',
+    id: 'fragment1',
     type: 'fragment',
     book: 'collection1',
+    title: 'Fragment Title',
     index: 0,
     kind: 'component',
     division: 'body',
@@ -54,10 +62,32 @@ const fragments = [
     },
   },
   {
-    id: 'fragment3',
+    id: 'fragment2',
     type: 'fragment',
     book: 'collection1',
-    index: 0,
+    title: 'Fragment Title',
+    index: 1,
+    kind: 'component',
+    number: 1,
+    division: 'body',
+    subCategory: 'chapter',
+    progress: {
+      clean: 0,
+      edit: 1,
+      review: 1,
+      style: 0,
+    },
+    alignment: {
+      left: false,
+      right: false,
+    },
+  },
+  {
+    id: 'fragment3',
+    type: 'fragment',
+    title: 'Fragment Title',
+    book: 'collection1',
+    index: 2,
     kind: 'component',
     division: 'body',
     subCategory: 'part',
@@ -76,6 +106,7 @@ const fragments = [
     id: 'fragment4',
     type: 'fragment',
     book: 'collection1',
+    title: 'Fragment Title',
     index: 0,
     kind: 'component',
     division: 'back',
@@ -148,33 +179,6 @@ const teams = [
     },
     type: 'team',
   },
-  {
-    id: 'teamCollection3Prod',
-    teamType: 'productionEditor',
-    object: {
-      id: 'collection3',
-      type: 'collection',
-    },
-    type: 'team',
-  },
-  {
-    id: 'teamCollection3Cp',
-    teamType: 'copyEditor',
-    object: {
-      id: 'collection3',
-      type: 'collection',
-    },
-    type: 'team',
-  },
-  {
-    id: 'teamCollection3Auth',
-    teamType: 'author',
-    object: {
-      id: 'collection3',
-      type: 'collection',
-    },
-    type: 'team',
-  },
 ]
 
 const users = [
@@ -185,25 +189,27 @@ const users = [
     type: 'user',
   },
   {
+    id: 'userWrongTeam',
+    username: 'generic',
+    teams: ['worngTeam'],
+    type: 'user',
+  },
+  {
     id: 'user1',
     username: 'alex',
-    teams: ['teamCollection1Prod', 'teamCollection3Prod'],
+    teams: ['teamCollection1Prod', 'teamCollection2Prod'],
     type: 'user',
   },
   {
     id: 'user2',
     username: 'chris',
-    teams: ['teamCollection1Cp', 'teamCollection2Cp', 'teamCollection3Cp'],
+    teams: ['teamCollection1Cp', 'teamCollection2Cp'],
     type: 'user',
   },
   {
     id: 'user3',
     username: 'john',
-    teams: [
-      'teamCollection1Auth',
-      'teamCollection2Auth',
-      'teamCollection3Auth',
-    ],
+    teams: ['teamCollection1Auth', 'teamCollection2Auth'],
     type: 'user',
   },
   {
@@ -214,73 +220,130 @@ const users = [
   },
 ]
 
-const collection1 = {
-  type: 'collection',
-  title: 'Collection1',
+const updatedCollectionTitle = {
+  current: collections[0],
+  update: { id: collections[0].id, title: 'New Collection One' },
 }
 
-const productionEditorTeam = {
-  teamType: 'productionEditor',
-  object: collection1,
-  type: 'team',
+const updateFragmentSource = {
+  current: fragments[0],
+  update: {
+    id: fragments[0].id,
+    source: '<blog><title>Updated</title></blog>',
+  },
 }
 
-const user = {
-  type: 'user',
-  username: 'testuser',
-  email: 'test@example.com',
-  password: 'test',
+const updateFragmentOrder = {
+  current: fragments[0],
+  update: {
+    id: fragments[0].id,
+    number: 2,
+    index: 2,
+  },
 }
 
-const updatedUser = {
-  username: 'changeduser',
-  email: 'changed@email.com',
-  password: 'changed',
+const updateFragmentPage = {
+  current: fragments[0],
+  update: {
+    id: fragments[0].id,
+    alignment: {
+      left: true,
+      right: false,
+    },
+  },
 }
 
-const otherUser = {
-  type: 'user',
-  username: 'anotheruser',
-  email: 'another@com.nz',
-  password: 'rubgy',
+const updateFragmentProgressEdit = {
+  current: fragments[0],
+  update: {
+    id: fragments[0].id,
+    progress: {
+      clean: 0,
+      edit: 2,
+      review: 0,
+      style: 0,
+    },
+  },
+}
+const updateFragmentProgressReview = {
+  current: fragments[0],
+  update: {
+    id: fragments[0].id,
+    progress: {
+      clean: 0,
+      edit: 0,
+      review: 2,
+      style: 0,
+    },
+  },
 }
 
-const adminUser = {
-  type: 'user',
-  username: 'admin',
-  email: 'admin@admins.example.org',
-  password: 'admin',
-  admin: true,
+const updateFragmentProgressEditCP = {
+  current: fragments[2],
+  update: {
+    id: fragments[2].id,
+    progress: {
+      clean: 0,
+      edit: 2,
+      review: 0,
+      style: 0,
+    },
+  },
 }
-
-const updatedCollection = {
-  title: 'Update Blogger posts',
+const updateFragmentLock = {
+  current: fragments[2],
+  update: {
+    lock: {
+      editor: { username: 'copyEditor' },
+    },
+  },
 }
-
-const fragment = {
-  type: 'fragment',
-  title: 'Just your regular fragment',
-  source: '<blog></blog>',
-  presentation: '<p></p>',
+const updateFragmentProgressReviewAU = {
+  current: fragments[2],
+  update: {
+    id: fragments[2].id,
+    progress: {
+      clean: 0,
+      edit: 0,
+      review: 2,
+      style: 0,
+    },
+  },
 }
-
-const updatedFragment = {
-  type: 'fragment',
-  source: '<blog><title>Updated</title></blog>',
+const updateFragmentMultipleProperties = {
+  current: fragments[2],
+  update: {
+    id: fragments[2].id,
+    progress: {
+      clean: 0,
+      edit: 0,
+      review: 2,
+      style: 0,
+    },
+    source: 'hello',
+  },
 }
-
+const updateTeam = {
+  current: teams[0],
+  update: {
+    id: teams[0].id,
+    teamType: 'someTeam',
+  },
+}
 module.exports = {
   collections,
-  collection1,
   fragments,
-  updatedCollection,
+  updatedCollectionTitle,
   users,
-  productionEditorTeam,
-  fragment,
-  updatedFragment,
-  user,
-  updatedUser,
-  otherUser,
-  adminUser,
+  updateFragmentSource,
   teams,
+  updateFragmentOrder,
+  updateFragmentPage,
+  updateFragmentProgressEdit,
+  updateFragmentProgressReview,
+  updateFragmentProgressEditCP,
+  updateFragmentProgressReviewAU,
+  updateTeam,
+  updateFragmentLock,
+  updateFragmentMultipleProperties,
 }
