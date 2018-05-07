@@ -30,6 +30,7 @@ const fragments = [
     kind: 'component',
     division: 'front',
     subCategory: 'component',
+    trackChanges: false,
     progress: {
       clean: 0,
       edit: 0,
@@ -48,6 +49,7 @@ const fragments = [
     title: 'Fragment Title',
     index: 0,
     kind: 'component',
+    trackChanges: false,
     division: 'body',
     subCategory: 'chapter',
     progress: {
@@ -67,6 +69,7 @@ const fragments = [
     book: 'collection1',
     title: 'Fragment Title',
     index: 1,
+    trackChanges: false,
     kind: 'component',
     number: 1,
     division: 'body',
@@ -298,6 +301,18 @@ const updateFragmentLock = {
     },
   },
 }
+const updateFragmentTrackChanges = {
+  current: fragments[1],
+  update: {
+    trackChanges: true,
+  },
+}
+const updateFragmentTrackChangesCP = {
+  current: fragments[2],
+  update: {
+    trackChanges: true,
+  },
+}
 const updateFragmentProgressReviewAU = {
   current: fragments[2],
   update: {
@@ -346,4 +361,6 @@ module.exports = {
   updateTeam,
   updateFragmentLock,
   updateFragmentMultipleProperties,
+  updateFragmentTrackChanges,
+  updateFragmentTrackChangesCP,
 }

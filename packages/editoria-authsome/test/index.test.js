@@ -18,6 +18,8 @@ const {
   updateTeam,
   updateFragmentLock,
   updateFragmentMultipleProperties,
+  updateFragmentTrackChanges,
+  updateFragmentTrackChangesCP,
 } = require('./fixtures/fixtures')
 
 const {
@@ -315,6 +317,34 @@ describe('Random Authanticated User', () => {
       genericUser.id,
       'can add books',
       collections[0],
+    )
+    expect(permission).toBe(false)
+  })
+  it('could accept team:create', async () => {
+    const permission = await authsome.can(genericUser.id, 'team:create', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(true)
+  })
+
+  it('could accept team:patch', async () => {
+    const permission = await authsome.can(genericUser.id, 'team:patch', {
+      fragment: fragments[0],
+    })
+    expect(permission).toBe(true)
+  })
+
+  it('could accept team:delete', async () => {
+    const permission = await authsome.can(genericUser.id, 'team:delete', {
+      collection: collections[0],
+    })
+    expect(permission).toBe(true)
+  })
+  it('could not toggle track changes', async () => {
+    const permission = await authsome.can(
+      genericUser.id,
+      'can toggle track changes',
+      fragments[1],
     )
     expect(permission).toBe(false)
   })
@@ -625,6 +655,14 @@ describe('Production Editor', () => {
       productionEditor.id,
       'can view multipleFilesUpload',
       collections[0],
+    )
+    expect(permission).toBe(true)
+  })
+  it('could toggle track changes', async () => {
+    const permission = await authsome.can(
+      productionEditor.id,
+      'can toggle track changes',
+      fragments[1],
     )
     expect(permission).toBe(true)
   })
@@ -964,6 +1002,22 @@ describe('Copy Editor', () => {
     )
     expect(permission).toBe(true)
   })
+  it('could not toggle track changes if not in editing', async () => {
+    const permission = await authsome.can(
+      copyEditor.id,
+      'can toggle track changes',
+      fragments[1],
+    )
+    expect(permission).toBe(false)
+  })
+  it('could toggle track changes when in editing', async () => {
+    const permission = await authsome.can(
+      copyEditor.id,
+      'can toggle track changes',
+      fragments[2],
+    )
+    expect(permission).toBe(true)
+  })
 })
 
 describe('Author', () => {
@@ -1254,6 +1308,14 @@ describe('Author', () => {
       author.id,
       'PATCH',
       updateFragmentMultipleProperties[0],
+    )
+    expect(permission).toBe(false)
+  })
+  it('could not toggle track changes', async () => {
+    const permission = await authsome.can(
+      author.id,
+      'can toggle track changes',
+      fragments[1],
     )
     expect(permission).toBe(false)
   })

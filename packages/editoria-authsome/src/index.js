@@ -370,6 +370,28 @@ class EditoriaMode {
     }
     return false
   }
+
+  async canToggleTrackChanges() {
+    this.user = await this.context.models.User.find(this.userId)
+    const collection = await this.findCollectionByObject(this.object)
+    const fragment = this.object
+    const isEditingSate = fragment.progress.edit === 1
+
+    if (collection) {
+      if (await this.isAuthor(collection)) {
+        return false
+      }
+      if (await this.isAssignedProductionEditor(collection)) {
+        return true
+      } else if (
+        (await this.isAssignedCopyEditor(collection)) &&
+        isEditingSate
+      ) {
+        return true
+      }
+    }
+    return false
+  }
 }
 
 module.exports = {
@@ -548,6 +570,14 @@ module.exports = {
     return mode.canBroadcastFragmentPatchEvent()
   },
   'fragment:delete': (userId, operation, object, context) => true,
+  // it is important all the clients to get notified when crud is happening on
+  // the team resource in order for the authsome to work properly
+  'team:create': (userId, operation, object, context) => true,
+  'team:delete': (userId, operation, object, context) => true,
+  'team:patch': (userId, operation, object, context) => true,
+  'can toggle track changes': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canToggleTrackChanges()
+  },
   // TODO: protect ink endpoint
-  // TODO: protect team broadcasts
 }
