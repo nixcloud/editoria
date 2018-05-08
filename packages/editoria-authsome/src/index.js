@@ -466,15 +466,26 @@ module.exports = {
   PATCH: (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
     // PATCH /api/collections/:id
-    if (object && object.current.type === 'collection') {
+    let data
+    if (object) {
+      if (object.current) {
+        data = object.current
+      } else {
+        data = object
+      }
+    } else {
+      return false
+    }
+
+    if (data.type === 'collection') {
       return mode.canInteractWithCollections()
     }
     // PATCH /api/fragments/:id
-    if (object && object.current.type === 'fragment') {
+    if (data.type === 'fragment') {
       return mode.canUpdateFragment()
     }
     // PATCH /api/teams/:id
-    if (object && object.current.type === 'team') {
+    if (data.current.type === 'team') {
       return mode.canUpdateTeam()
     }
 
