@@ -68,7 +68,7 @@ module.exports = {
     db: {},
     sse: true,
     logger,
-    port: 3000,
+    port: 6000,
     uploads: 'uploads',
   },
   validations: path.join(__dirname, 'modules', 'validations'),

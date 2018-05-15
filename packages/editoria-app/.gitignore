@@ -92,3 +92,4 @@ coverage/
 yarn-error.log
 package-lock.json
 config/local*.*
+config/*.env
