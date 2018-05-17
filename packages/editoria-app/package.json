@@ -17,21 +17,22 @@
   },
   "homepage": "https://editoria.pub/",
   "license": "MIT",
-  "version": "1.3.0",
+  "version": "1.2.0",
   "dependencies": {
-    "@pubsweet/component-polling-client": "^0.0.2",
-    "@pubsweet/component-polling-server": "^0.0.4",
-    "@pubsweet/db-manager": "^1.0.3",
+    "@pubsweet/component-polling-client": "^0.0.3",
+    "@pubsweet/component-polling-server": "^0.0.5",
+    "@pubsweet/db-manager": "^1.0.7",
     "@pubsweet/default-theme": "^0.2.0",
     "@pubsweet/logger": "^0.2.2",
-    "@pubsweet/ui": "^3.3.0",
-    "authsome": "0.0.9",
+    "@pubsweet/ui": "^3.3.3",
+    "authsome": "^0.1.0",
     "font-awesome": "4.7.0",
     "history": "^4.7.2",
     "lodash": "4.17.4",
     "prop-types": "^15.6.0",
-    "pubsweet": "^2.1.4",
-    "pubsweet-client": "^2.2.5",
+    "pubsweet": "^2.2.2",
+    "pubsweet-client": "^2.5.0",
+    "pubsweet-editoria-authsome": "^0.0.1",
     "pubsweet-component-bookbuilder": "^0.2.0",
     "pubsweet-component-editoria-dashboard": "^0.0.5",
     "pubsweet-component-epub": "^0.2.13",
@@ -48,8 +49,8 @@
     "pubsweet-component-theme-editoria": "^0.0.3",
     "pubsweet-component-users-manager": "1.0.0",
     "pubsweet-component-vivliostyle-viewer": "^0.0.2",
-    "pubsweet-component-wax": "^0.5.19",
-    "pubsweet-server": "^2.0.4",
+    "pubsweet-component-wax": "^0.5.16",
+    "pubsweet-server": "^7.0.1",
     "pubsweet-theme-plugin": "^0.0.3",
     "react": "^16.2.0",
     "react-bootstrap": "0.32.1",
@@ -134,12 +135,15 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-        "./test/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "./test/fileMock.js",
       "\\.(css|less|scss)$": "identity-obj-proxy"
     },
-    "setupFiles": ["./test/jest.config.js"],
-    "snapshotSerializers": ["./node_modules/enzyme-to-json/serializer"],
+    "setupFiles": [
+      "./test/jest.config.js"
+    ],
+    "snapshotSerializers": [
+      "./node_modules/enzyme-to-json/serializer"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!pubsweet-frontend)",
       "__snapshots__"
@@ -150,7 +154,7 @@
     "start": "pubsweet start",
     "server": "pubsweet start",
     "resetdb": "pubsweet setupdb --clobber ./",
-    "start:services": "docker-compose up --force-recreate postgres",
+    "start:services": "docker-compose up postgres",
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watch",
     "test:cover": "NODE_ENV=test jest --coverage",
