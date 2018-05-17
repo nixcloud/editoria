@@ -265,7 +265,10 @@ class EditoriaMode {
         return true
       } else if (await this.isAssignedCopyEditor(collection)) {
         if (Object.keys(diff).length === 1) {
-          if (diff.lock && wasEditingSate) {
+          if (
+            (diff.lock !== undefined || update.lock !== undefined) &&
+            wasEditingSate
+          ) {
             return true
           }
           if (
@@ -287,6 +290,9 @@ class EditoriaMode {
           if (diff.number !== undefined && diff.index !== undefined) {
             return true
           }
+          if (diff.source && diff.title) {
+            return true
+          }
         }
         return false
       } else if (await this.isAuthor(collection)) {
@@ -303,6 +309,11 @@ class EditoriaMode {
             return true
           }
           if (diff.source) {
+            return true
+          }
+        }
+        if (Object.keys(diff).length === 2) {
+          if (diff.source && diff.title) {
             return true
           }
         }
@@ -371,26 +382,26 @@ class EditoriaMode {
     return false
   }
 
-  async canToggleTrackChanges() {
+  async canInteractWithEditor() {
     this.user = await this.context.models.User.find(this.userId)
-    const collection = await this.findCollectionByObject(this.object)
     const fragment = this.object
+    const isReviewingSate = fragment.progress.review === 1
     const isEditingSate = fragment.progress.edit === 1
+    const collection = await this.findCollectionByObject(this.object)
 
     if (collection) {
-      if (await this.isAuthor(collection)) {
-        return false
-      }
       if (await this.isAssignedProductionEditor(collection)) {
-        return true
+        return 'full'
       } else if (
         (await this.isAssignedCopyEditor(collection)) &&
         isEditingSate
       ) {
-        return true
+        return 'full'
+      } else if ((await this.isAuthor(collection)) && isReviewingSate) {
+        return 'review'
       }
     }
-    return false
+    return 'selection'
   }
 }
 
@@ -586,9 +597,9 @@ module.exports = {
   'team:create': (userId, operation, object, context) => true,
   'team:delete': (userId, operation, object, context) => true,
   'team:patch': (userId, operation, object, context) => true,
-  'can toggle track changes': (userId, operation, object, context) => {
+  'can interact with editor': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canToggleTrackChanges()
+    return mode.canInteractWithEditor()
   },
   // TODO: protect ink endpoint
 }
