@@ -179,19 +179,23 @@ class EditoriaMode {
 
   async canListTeams() {
     this.user = await this.context.models.User.find(this.userId)
+    // if (await this.isProductionEditor()) {
+    //   return true
+    // }
 
-    return {
-      filter: async teams => {
-        const filteredTeams = await Promise.all(
-          teams.map(async team => {
-            const condition = this.belongsToTeam(team.id)
-            return condition ? team : undefined
-          }, this),
-        )
+    // return {
+    //   filter: async teams => {
+    //     const filteredTeams = await Promise.all(
+    //       teams.map(async team => {
+    //         const condition = this.belongsToTeam(team.id)
+    //         return condition ? team : undefined
+    //       }, this),
+    //     )
 
-        return filteredTeams.filter(team => team)
-      },
-    }
+    //     return filteredTeams.filter(team => team)
+    //   },
+    // }
+    return true
   }
 
   belongsToTeam(teamId) {
@@ -403,6 +407,29 @@ class EditoriaMode {
     }
     return 'selection'
   }
+  async canRemoveTeamMember() {
+    this.user = await this.context.models.User.find(this.userId)
+    const collection = await this.findCollectionByObject(this.object)
+    if (collection) {
+      return (
+        this.isAssignedProductionEditor(collection) &&
+        this.object.teamType !== 'productionEditor'
+      )
+    }
+    return false
+  }
+  async canGo() {
+    this.user = await this.context.models.User.find(this.userId)
+    const collection = await this.findCollectionByObject(this.object)
+    if (collection) {
+      return (
+        this.isAssignedProductionEditor(collection) ||
+        this.isAssignedCopyEditor(collection) ||
+        this.isAuthor(collection)
+      )
+    }
+    return false
+  }
 }
 
 module.exports = {
@@ -496,7 +523,7 @@ module.exports = {
       return mode.canUpdateFragment()
     }
     // PATCH /api/teams/:id
-    if (data.current.type === 'team') {
+    if (data.type === 'team') {
       return mode.canUpdateTeam()
     }
 
@@ -573,15 +600,18 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canInteractWithFragments()
   },
+  'can remove team member': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canRemoveTeamMember()
+  },
   // TODO: refactor to use productionEditor property of collection
   'collection:create': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
     return object.collection.owners.includes(userId) || mode.canBroadcastEvent()
   },
-  'collection:patch': (userId, operation, object, context) => {
-    const mode = new EditoriaMode(userId, operation, object, context)
-    return mode.canBroadcastEvent()
-  },
+  'collection:patch': (userId, operation, object, context) =>
+    // const mode = new EditoriaMode(userId, operation, object, context)
+    true,
   'collection:delete': (userId, operation, object, context) => true,
   'fragment:create': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
@@ -591,12 +621,22 @@ module.exports = {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canBroadcastFragmentPatchEvent()
   },
+  'can go': (userId, operation, object, context) => {
+    const mode = new EditoriaMode(userId, operation, object, context)
+    return mode.canGo()
+  },
   'fragment:delete': (userId, operation, object, context) => true,
   // it is important all the clients to get notified when crud is happening on
   // the team resource in order for the authsome to work properly
   'team:create': (userId, operation, object, context) => true,
   'team:delete': (userId, operation, object, context) => true,
   'team:patch': (userId, operation, object, context) => true,
+  'can view add team memeber': (userId, operation, object, context) => {
+    if (object === 'Production Editor') {
+      return false
+    }
+    return true
+  },
   'can interact with editor': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canInteractWithEditor()

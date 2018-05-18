@@ -165,15 +165,17 @@ export class BookBuilder extends React.Component {
     if (!showTeamManager) return null
     if (_.isEmpty(outerContainer)) return null
 
-    const { actions, teams, users } = this.props
-    const { updateTeam } = actions
+    const { actions, teams, users, book } = this.props
+    const { updateTeam, updateCollection } = actions
 
     return (
       <TeamManagerModal
+        book={book}
         container={outerContainer}
         show={showTeamManager}
         teams={teams}
         toggle={this.toggleTeamManager}
+        updateCollection={updateCollection}
         updateTeam={updateTeam}
         users={users}
       />
@@ -205,6 +207,18 @@ export class BookBuilder extends React.Component {
         user={user}
       />
     )
+  }
+  componentWillReceiveProps(nextProps) {
+    const { teams, user } = this.props
+    let membership
+    if (!user.admin) {
+      if (!_.isEqual(nextProps.teams, teams)) {
+        membership = nextProps.teams.map(team => team.members.includes(user.id))
+        if (!membership.includes(true)) {
+          this.props.history.replace('/books')
+        }
+      }
+    }
   }
 
   render() {
@@ -432,13 +446,15 @@ BookBuilder.defaultProps = {
 
 function mapStateToProps(state, { match }) {
   const book = _.find(state.collections, c => c.id === match.params.id)
-
+  let teams
   const chapters = _.sortBy(
     _.filter(state.fragments, f => f.book === book.id && f.id && !f.deleted),
     'index',
   )
-
-  const { error, teams, users, currentUser: user } = state
+  if (book) {
+    teams = _.filter(state.teams, t => t.object.id === book.id)
+  }
+  const { error, currentUser: user, users } = state
 
   return {
     book: book || {},

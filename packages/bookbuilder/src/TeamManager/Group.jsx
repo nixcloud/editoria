@@ -27,19 +27,28 @@ export class Group extends React.Component {
   }
 
   render() {
-    const { team, users, options, update } = this.props
+    const { team, users, options, update, updateCollection, book } = this.props
     const members = users.filter(user => _.includes(team.members, user.id))
-    console.log('members', members)
+    let allowed = true
+    if (team.teamType === 'productionEditor' && team.members.length >= 1) {
+      allowed = false
+    }
 
     return (
       <div>
-        <GroupHeader showInput={this._showAddMember} title={options.title} />
+        <GroupHeader
+          allowed={allowed}
+          showInput={this._showAddMember}
+          title={options.title}
+        />
 
         <AddMember
+          book={book}
           hideInput={this._closeAddMember}
           show={this.state.isAddMemberOpen}
           team={team}
           update={update}
+          updateCollection={updateCollection}
           users={users}
         />
 
@@ -48,6 +57,8 @@ export class Group extends React.Component {
           members={members}
           team={team}
           update={update}
+          book={book}
+          updateCollection={updateCollection}
         />
       </div>
     )

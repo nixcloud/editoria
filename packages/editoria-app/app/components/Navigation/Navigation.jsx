@@ -84,12 +84,6 @@ class Navigation extends React.Component {
             </LinkContainer>
           </Authorize>
 
-          <Authorize operation="can view nav links" object="teams">
-            <LinkContainer to="/teams">
-              <NavItem>Teams</NavItem>
-            </LinkContainer>
-          </Authorize>
-
           {BackToBooks}
         </Nav>
 

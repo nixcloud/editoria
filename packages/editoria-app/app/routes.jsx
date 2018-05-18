@@ -88,7 +88,6 @@ export default (
         component={Editor}
         path="/books/:bookId/fragments/:fragmentId"
       />
-      <PrivateRoute component={TeamsManager} path="/teams" />
       <PrivateRoute component={UsersManager} path="/users" />
     </Manage>
   </Switch>

@@ -1,6 +1,7 @@
 import { without } from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
+import Authorize from 'pubsweet-client/src/helpers/Authorize'
 
 import styles from '../styles/teamManager.local.scss'
 
@@ -8,49 +9,71 @@ export class Member extends React.Component {
   constructor(props) {
     super(props)
     this._remove = this._remove.bind(this)
+    this.renderRemove = this.renderRemove.bind(this)
   }
 
   _remove() {
-    const { user, team, update } = this.props
+    const { user, team, update, book, updateCollection } = this.props
 
     team.members = without(team.members, user.id)
-    update(team)
+    update(team).then(res => {
+      if (res.team.teamType === 'productionEditor') {
+        if (res.team.members.length < 1) {
+          updateCollection({
+            id: book.id,
+            productionEditor: null,
+          })
+        }
+      }
+    })
   }
-
-  render() {
-    const { user, color, remove } = this.props
-
-    let removeButton = ''
-    let Noline = { backgroundImage: 'none' }
-    if (remove === true) {
-      Noline = { cursor: 'default' }
-      removeButton = <a onClick={this._remove}>Remove</a>
+  renderRemove(authorized) {
+    const { user } = this.props
+    if (authorized) {
+      return (
+        <li>
+          <div className={styles.personContainer} style={{ cursor: 'default' }}>
+            <div>
+              <span>{user.username}</span>
+            </div>
+          </div>
+          <div className={styles.actionsContainer}>
+            <div className={styles.actionContainer}>
+              <a onClick={this._remove}>Remove</a>
+            </div>
+          </div>
+        </li>
+      )
     }
-
     return (
       <li>
-        <div className={styles.personContainer} style={Noline}>
+        <div
+          className={styles.personContainer}
+          style={{ backgroundImage: 'none' }}
+        >
           <div>
             <span>{user.username}</span>
           </div>
         </div>
-        <div className={styles.actionsContainer}>
-          <div className={styles.actionContainer}>{removeButton}</div>
-        </div>
       </li>
     )
+  }
+  render() {
+    const { book, team } = this.props
 
-    // return (
-    //   <li className={styles[color]}>
-    //
-    //     <span>
-    //       {user.username}
-    //     </span>
-    //
-    //     { removeButton }
-    //
-    //   </li>
-    // )
+    const authorizationObject = {
+      id: book.id,
+      teamType: team.teamType,
+    }
+    return (
+      <Authorize
+        object={authorizationObject}
+        operation="can remove team member"
+        unauthorized={this.renderRemove(false)}
+      >
+        {this.renderRemove(true)}
+      </Authorize>
+    )
   }
 }
 

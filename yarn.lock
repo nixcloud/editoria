@@ -110,7 +110,7 @@
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@pubsweet/component-polling-server/-/component-polling-server-0.0.5.tgz#b64adb18856cad1519ad210ecbc927ecfdca8816"
 
-"@pubsweet/db-manager@^1.0.12", "@pubsweet/db-manager@^1.0.7":
+"@pubsweet/db-manager@^1.0.7":
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.0.12.tgz#3e1ba6c0ac2c3c7d657eacd64c52b51ecf6dd61a"
   dependencies:
@@ -120,6 +120,19 @@
     joi "^13.1.0"
     pg "^7.4.1"
     pubsweet-server "^7.0.1"
+
+"@pubsweet/db-manager@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@pubsweet/db-manager/-/db-manager-1.1.0.tgz#20f2754a99a8cb8f54fec1d6dd6091c0eed25af1"
+  dependencies:
+    "@pubsweet/logger" "^0.2.3"
+    fs-extra "^4.0.2"
+    isomorphic-fetch "^2.2.1"
+    joi "^13.1.0"
+    pg "^7.4.1"
+    pubsweet-server "^7.1.0"
+    tmp "^0.0.33"
+    umzug "^2.1.0"
 
 "@pubsweet/default-theme@^0.2.0":
   version "0.2.2"
@@ -140,6 +153,14 @@
 "@pubsweet/logger@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.2.tgz#ef5680c766226d4b25c5915859ea259b8c688db3"
+  dependencies:
+    config "^1.26.2"
+    joi "^13.1.0"
+    lodash "^4.17.4"
+
+"@pubsweet/logger@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@pubsweet/logger/-/logger-0.2.3.tgz#e625e8cea3b61d283dc723fbad9da5e872704834"
   dependencies:
     config "^1.26.2"
     joi "^13.1.0"
@@ -170,6 +191,28 @@
 "@pubsweet/ui@^4.1.1":
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-4.1.1.tgz#ea650fe64bff6e00139e5309b20e1cb6fbcb0c64"
+  dependencies:
+    babel-jest "^21.2.0"
+    classnames "^2.2.5"
+    enzyme "^3.2.0"
+    enzyme-adapter-react-16 "^1.1.1"
+    invariant "^2.2.3"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
+    react "^16.2.0"
+    react-dom "^16.2.0"
+    react-feather "^1.0.8"
+    react-redux "^5.0.2"
+    react-router-dom "^4.2.2"
+    react-tag-autocomplete "^5.5.0"
+    recompose "^0.26.0"
+    redux "^3.6.0"
+    redux-form "^7.0.3"
+    styled-components "^3.2.5"
+
+"@pubsweet/ui@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@pubsweet/ui/-/ui-4.1.2.tgz#7442ce0ea2a5dfbd1b7ac4ae0b455824f3df637f"
   dependencies:
     babel-jest "^21.2.0"
     classnames "^2.2.5"
@@ -2000,7 +2043,7 @@ babel-runtime@^5.6.15, babel-runtime@^5.8.34:
   dependencies:
     core-js "^1.0.0"
 
-babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0, babel-runtime@^6.9.2:
+babel-runtime@^6.11.6, babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0, babel-runtime@^6.9.2:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -2155,7 +2198,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@^3.4.7, bluebird@^3.5.0, bluebird@^3.5.1, bluebird@~3.5.0:
+bluebird@^3.4.1, bluebird@^3.4.7, bluebird@^3.5.0, bluebird@^3.5.1, bluebird@~3.5.0:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
@@ -8568,7 +8611,7 @@ lodash@4.17.5:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
-"lodash@4.6.1 || ^4.16.1", lodash@^4, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@^4.8.0, lodash@~4.17.4:
+"lodash@4.6.1 || ^4.16.1", lodash@^4, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1, lodash@^4.8.0, lodash@~4.17.4:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -10768,6 +10811,38 @@ pubsweet-client@^2.1.1, pubsweet-client@^2.5.0:
     styled-components "^3.2.5"
     styled-normalize "^3.0.1"
 
+pubsweet-client@^2.5.4:
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/pubsweet-client/-/pubsweet-client-2.5.4.tgz#c404d21bdbc04e2c0cbac38dff09bc419d1cd4c6"
+  dependencies:
+    "@pubsweet/ui" "^4.1.2"
+    apollo-client-preset "^1.0.8"
+    apollo-link "^1.2.1"
+    apollo-link-context "^1.0.5"
+    apollo-upload-client "^8.0.0"
+    authsome "^0.1.0"
+    config "^1.21.0"
+    event-source-polyfill "^0.0.10"
+    global "^4.3.1"
+    graphql "^0.13.0"
+    graphql-tag "^2.7.3"
+    isomorphic-fetch "^2.1.1"
+    lint-staged "^6.0.0"
+    lodash "^4.0.0"
+    prop-types "^15.5.8"
+    react "^16.2.0"
+    react-apollo "^2.1.0"
+    react-redux "^5.0.2"
+    react-router-dom "^4.2.2"
+    react-router-redux next
+    redux "^3.6.0"
+    redux-form "^7.0.3"
+    redux-logger "^3.0.1"
+    redux-thunk "^2.2.0"
+    reselect "^3.0.1"
+    styled-components "^3.2.5"
+    styled-normalize "^3.0.1"
+
 pubsweet-component-epub-frontend@^0.1.3:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/pubsweet-component-epub-frontend/-/pubsweet-component-epub-frontend-0.1.5.tgz#178065186eec0dc221763484ca76e949be61a0e6"
@@ -10932,6 +11007,44 @@ pubsweet-server@^7.0.1:
     uuid "^3.0.1"
     winston "^2.2.0"
 
+pubsweet-server@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/pubsweet-server/-/pubsweet-server-7.1.0.tgz#d25a0b0cb49c7ff9e306a9cae2501e02ac28aae6"
+  dependencies:
+    "@pubsweet/logger" "^0.2.3"
+    apollo-server-express "^1.3.2"
+    apollo-upload-server "^4.0.2"
+    authsome "^0.1.0"
+    bcrypt "^2.0.1"
+    bluebird "^3.5.1"
+    body-parser "^1.15.2"
+    colors "^1.1.2"
+    config "^1.26.2"
+    cookie-parser "^1.4.3"
+    dotenv "^4.0.0"
+    express "^4.16.1"
+    graphql "^0.12.3"
+    graphql-tools "^2.18.0"
+    helmet "^3.8.1"
+    http-status-codes "^1.0.6"
+    joi "^13.1.0"
+    jsonwebtoken "^7.1.7"
+    lodash "^4.0.0"
+    minimist "^1.2.0"
+    morgan "^1.8.2"
+    multer "^1.1.0"
+    passport "^0.3.2"
+    passport-anonymous "^1.0.1"
+    passport-http-bearer "^1.0.1"
+    passport-local "^1.0.0"
+    pg "^7.4.1"
+    promise-queue "^2.2.3"
+    prompt "^1.0.0"
+    pubsweet-sse "^1.0.0"
+    require-relative "^0.8.7"
+    uuid "^3.0.1"
+    winston "^2.2.0"
+
 pubsweet-sse@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pubsweet-sse/-/pubsweet-sse-1.0.0.tgz#dd36aa378a302b518d417b545b064da65aec876a"
@@ -10940,12 +11053,12 @@ pubsweet-theme-plugin@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/pubsweet-theme-plugin/-/pubsweet-theme-plugin-0.0.3.tgz#1773543a95ed9f56eb8b14f13f24496e034d140b"
 
-pubsweet@^2.2.2:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.2.3.tgz#71d4852a7f9b93ad788f786279aa2d3ff7da95f8"
+pubsweet@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/pubsweet/-/pubsweet-2.2.4.tgz#9ed343f561d6288068913d1e479c0fbe65989695"
   dependencies:
-    "@pubsweet/db-manager" "^1.0.12"
-    "@pubsweet/logger" "^0.2.2"
+    "@pubsweet/db-manager" "^1.1.0"
+    "@pubsweet/logger" "^0.2.3"
     bluebird "^3.5.0"
     colors "^1.1.2"
     commander "^2.9.0"
@@ -10954,7 +11067,7 @@ pubsweet@^2.2.2:
     fs-extra "^4.0.2"
     inflection "^1.12.0"
     prompt flatiron/prompt#1c95d1d8d333b5fbc13fa5f0619f3dcf0d514f87
-    pubsweet-server "^7.0.1"
+    pubsweet-server "^7.1.0"
     require-relative "^0.8.7"
     uuid "^3.0.1"
     webpack "^3.8.1"
@@ -12211,7 +12324,7 @@ resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
-resolve@^1.1.6, resolve@^1.1.7, resolve@^1.2.0, resolve@^1.3.2, resolve@^1.3.3, resolve@^1.5.0, resolve@^1.6.0:
+resolve@^1.0.0, resolve@^1.1.6, resolve@^1.1.7, resolve@^1.2.0, resolve@^1.3.2, resolve@^1.3.3, resolve@^1.5.0, resolve@^1.6.0:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.7.1.tgz#aadd656374fd298aee895bc026b8297418677fd3"
   dependencies:
@@ -14133,6 +14246,15 @@ uid-number@^0.0.6:
 ultron@~1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.1.1.tgz#9fe1536a10a664a65266a1e3ccf85fd36302bc9c"
+
+umzug@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/umzug/-/umzug-2.1.0.tgz#c49dd71c7c26d082a9c9d3592dc6dc92cf867761"
+  dependencies:
+    babel-runtime "^6.23.0"
+    bluebird "^3.4.1"
+    lodash "^4.17.0"
+    resolve "^1.0.0"
 
 uncontrollable@^4.1.0:
   version "4.1.0"
