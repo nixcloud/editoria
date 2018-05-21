@@ -6,7 +6,7 @@ import 'pubsweet-component-manage/Manage.scss'
 
 // Users and Teams
 import UsersManager from 'pubsweet-component-users-manager/UsersManagerContainer'
-import TeamsManager from 'pubsweet-component-teams-manager/TeamsManagerContainer'
+// import TeamsManager from 'pubsweet-component-teams-manager/TeamsManagerContainer'
 
 // Authentication
 import Login from 'pubsweet-component-login/LoginContainer'

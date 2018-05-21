@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import { actions } from 'pubsweet-client'
-import Authorize from 'pubsweet-client/src/helpers/Authorize'
 
 class PrivateRoute extends React.Component {
   constructor(props) {

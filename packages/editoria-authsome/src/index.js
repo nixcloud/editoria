@@ -408,15 +408,15 @@ class EditoriaMode {
     return 'selection'
   }
   async canRemoveTeamMember() {
-    this.user = await this.context.models.User.find(this.userId)
-    const collection = await this.findCollectionByObject(this.object)
-    if (collection) {
-      return (
-        this.isAssignedProductionEditor(collection) &&
-        this.object.teamType !== 'productionEditor'
-      )
-    }
-    return false
+    // this.user = await this.context.models.User.find(this.userId)
+    // const collection = await this.findCollectionByObject(this.object)
+    // if (collection) {
+    //   return (
+    //     this.isAssignedProductionEditor(collection) &&
+    //     this.object.teamType !== 'productionEditor'
+    //   )
+    // }
+    return true
   }
   async canGo() {
     this.user = await this.context.models.User.find(this.userId)
@@ -632,9 +632,9 @@ module.exports = {
   'team:delete': (userId, operation, object, context) => true,
   'team:patch': (userId, operation, object, context) => true,
   'can view add team memeber': (userId, operation, object, context) => {
-    if (object === 'Production Editor') {
-      return false
-    }
+    // if (object === 'Production Editor') {
+    //   return false
+    // }
     return true
   },
   'can interact with editor': (userId, operation, object, context) => {

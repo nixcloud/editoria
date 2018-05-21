@@ -30,6 +30,7 @@ export class BookBuilder extends React.Component {
     this.updateUploadStatus = this.updateUploadStatus.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
     this.renderDivison = this.renderDivison.bind(this)
+    this.renderProductionEditors = this.renderProductionEditors.bind(this)
 
     this.state = {
       outerContainer: {},
@@ -182,6 +183,29 @@ export class BookBuilder extends React.Component {
     )
   }
 
+  renderProductionEditors() {
+    const { book } = this.props
+    const { productionEditor } = book
+    let names = ''
+    let label = 'Production Editor:'
+
+    if (productionEditor && productionEditor.length > 1) {
+      label = 'Production Editors:'
+      for (let i = 0; i < productionEditor.length; i += 1) {
+        if (i !== productionEditor.length - 1) {
+          names += `${productionEditor[i].username}, `
+        } else {
+          names += `${productionEditor[i].username}`
+        }
+      }
+    } else if (productionEditor) {
+      names = productionEditor[0].username
+    } else {
+      names = 'Unassigned'
+    }
+    return `${label} ${names}`
+  }
+
   renderDivison(reorderingAllowed, chapters, title, type) {
     const { book, user } = this.props
     const {
@@ -261,12 +285,7 @@ export class BookBuilder extends React.Component {
             ref="outerContainer"
           >
             <div className={`${styles.productionEditorContainer} row`}>
-              <span>
-                Production Editor: &nbsp;
-                {book.productionEditor
-                  ? book.productionEditor.username
-                  : 'Unassigned'}
-              </span>
+              <span>{this.renderProductionEditors()}</span>
               <Authorize object={book} operation="can view teamManager">
                 <span onClick={this.toggleTeamManager}>
                   <div className={styles.teamManagerIcon} />

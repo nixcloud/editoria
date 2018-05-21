@@ -47,13 +47,14 @@ export class AddMember extends React.Component {
     const { update, updateCollection, book, users } = this.props
     update(team).then(res => {
       if (res.team.teamType === 'productionEditor') {
-        if (res.team.members.length === 1) {
-          const addedUser = find(users, c => c.id === res.team.members[0])
-          updateCollection({
-            id: book.id,
-            productionEditor: addedUser,
-          })
+        const productionEditors = []
+        for (let i = 0; i < res.team.members.length; i += 1) {
+          productionEditors.push(find(users, c => c.id === res.team.members[i]))
         }
+        updateCollection({
+          id: book.id,
+          productionEditor: productionEditors,
+        })
       }
     })
   }

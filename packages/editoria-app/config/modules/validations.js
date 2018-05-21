@@ -3,7 +3,7 @@ const Joi = require('joi')
 module.exports = {
   collection: {
     created: Joi.date().required(),
-    productionEditor: Joi.object().allow(null),
+    productionEditor: Joi.array().allow(null),
     title: Joi.string().required()
   },
   fragment: {

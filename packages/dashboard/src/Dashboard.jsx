@@ -1,5 +1,5 @@
 import config from 'config'
-import { each, filter, forEach, isEmpty, union } from 'lodash'
+import { each, filter, forEach, isEmpty, union, isEqual } from 'lodash'
 // TODO -- clean up this import
 import Actions from 'pubsweet-client/src/actions'
 import React from 'react'
@@ -42,6 +42,19 @@ export class Dashboard extends React.Component {
     getTeams()
     // .then(() => this.findBooksWithNoTeams())
   }
+  // componentWillReceiveProps(nextProps) {
+  //   const { teams, books } = this.props
+  //   console.log('next', nextProps)
+  //   if(nextProps.books['-1']) {
+  //     this.props.actions.getCollections()
+  //     this.props.actions.getTeams()
+  //   }
+  //   if (!isEqual(nextProps.books, books)) {
+  //     // this.props.actions.getTeams().then(res => {
+  //     //   this.props.actions.getCollections()
+  //     // })
+  //   }
+  // }
 
   /*
     Toggle showing 'add book' modal
@@ -163,7 +176,6 @@ export class Dashboard extends React.Component {
   */
   createTeamsForBook(book) {
     const { createTeam, getCurrentUser } = this.props.actions
-    console.log('actions', this.props.actions)
     const { user } = this.props
 
     const teamTypes = Object.keys(config.authsome.teams)
