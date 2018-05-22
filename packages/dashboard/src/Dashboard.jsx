@@ -44,12 +44,14 @@ export class Dashboard extends React.Component {
   }
   // componentWillReceiveProps(nextProps) {
   //   const { teams, books } = this.props
-  //   console.log('next', nextProps)
-  //   if(nextProps.books['-1']) {
-  //     this.props.actions.getCollections()
+  //   // console.log('next', nextProps)
+  //   // if(nextProps.books['-1']) {
+  //   //   this.props.actions.getCollections()
+  //   //   this.props.actions.getTeams()
+  //   // }
+  //   if (!isEqual(nextProps.teams, teams)) {
+  //     console.log('here', nextProps.teams)
   //     this.props.actions.getTeams()
-  //   }
-  //   if (!isEqual(nextProps.books, books)) {
   //     // this.props.actions.getTeams().then(res => {
   //     //   this.props.actions.getCollections()
   //     // })
@@ -75,9 +77,7 @@ export class Dashboard extends React.Component {
 
     const book = {
       title: newTitle || 'Untitled',
-      productionEditor: this.isProductionEditor(user.id)
-        ? { username: user.username, userId: user.id }
-        : null,
+      productionEditor: this.isProductionEditor(user.id) ? [user] : [],
     }
 
     createCollection(book).then(res => {
@@ -158,15 +158,19 @@ export class Dashboard extends React.Component {
   // }
 
   isProductionEditor(userId) {
-    const { teams } = this.props
-    const productionEditorTeams = filter(teams, {
-      teamType: 'productionEditor',
-    })
+    const { teams, user } = this.props
+    if (!user.admin) {
+      const productionEditorTeams = filter(teams, {
+        teamType: 'productionEditor',
+      })
 
-    const membership = productionEditorTeams.map(team =>
-      team.members.includes(userId),
-    )
-    return membership.includes(true)
+      const membership = productionEditorTeams.map(team =>
+        team.members.includes(userId),
+      )
+
+      return membership.includes(true)
+    }
+    return false
   }
 
   /*
@@ -183,8 +187,13 @@ export class Dashboard extends React.Component {
     for (let i = 0; i < teamTypes.length; i += 1) {
       const teamType = teamTypes[i]
       const members = []
-      if (this.isProductionEditor(user.id) && teamType === 'productionEditor') {
-        members.push(user.id)
+      if (!user.admin) {
+        if (
+          this.isProductionEditor(user.id) &&
+          teamType === 'productionEditor'
+        ) {
+          members.push(user.id)
+        }
       }
       const newTeam = {
         members,
