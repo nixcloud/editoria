@@ -198,7 +198,7 @@ export class BookBuilder extends React.Component {
           names += `${productionEditor[i].username}`
         }
       }
-    } else if (productionEditor.length !== 0) {
+    } else if (productionEditor && productionEditor.length !== 0) {
       names = productionEditor[0].username
     } else {
       names = 'Unassigned'

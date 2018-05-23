@@ -301,7 +301,10 @@ class EditoriaMode {
         return false
       } else if (await this.isAuthor(collection)) {
         if (Object.keys(diff).length === 1) {
-          if (diff.lock && wasEditingSate) {
+          if (
+            (diff.lock !== undefined || update.lock !== undefined) &&
+            wasReviewingSate
+          ) {
             return true
           }
           if (
