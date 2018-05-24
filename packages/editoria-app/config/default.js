@@ -68,7 +68,7 @@ module.exports = {
     db: {},
     sse: true,
     logger,
-    port: 6000,
+    port: process.env.SERVER_PORT || 3500,
     uploads: 'uploads',
   },
   validations: path.join(__dirname, 'modules', 'validations'),
