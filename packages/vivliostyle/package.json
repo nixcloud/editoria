@@ -12,6 +12,7 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "express": "^4.15.5",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "extract-zip": "1.6.6"
   }
 }
