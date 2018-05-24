@@ -294,9 +294,9 @@ class EditoriaMode {
           if (diff.number !== undefined && diff.index !== undefined) {
             return true
           }
-          if (diff.source && diff.title) {
-            return true
-          }
+        }
+        if (diff.source) {
+          return true
         }
         return false
       } else if (await this.isAuthor(collection)) {
@@ -319,10 +319,8 @@ class EditoriaMode {
             return true
           }
         }
-        if (Object.keys(diff).length === 2) {
-          if (diff.source && diff.title) {
-            return true
-          }
+        if (diff.source) {
+          return true
         }
         return false
       }
