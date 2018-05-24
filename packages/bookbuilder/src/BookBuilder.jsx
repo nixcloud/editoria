@@ -232,18 +232,18 @@ export class BookBuilder extends React.Component {
       />
     )
   }
-  componentWillReceiveProps(nextProps) {
-    const { teams, user } = this.props
-    let membership
-    if (!user.admin) {
-      if (!_.isEqual(nextProps.teams, teams)) {
-        membership = nextProps.teams.map(team => team.members.includes(user.id))
-        if (!membership.includes(true)) {
-          this.props.history.replace('/books')
-        }
-      }
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   const { teams, user } = this.props
+  //   let membership
+  //   if (!user.admin) {
+  //     if (!_.isEqual(nextProps.teams, teams)) {
+  //       membership = nextProps.teams.map(team => team.members.includes(user.id))
+  //       if (!membership.includes(true)) {
+  //         this.props.history.replace('/books')
+  //       }
+  //     }
+  //   }
+  // }
 
   render() {
     const { book, chapters } = this.props

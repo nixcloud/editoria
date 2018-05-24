@@ -42,21 +42,22 @@ export class Dashboard extends React.Component {
     getTeams()
     // .then(() => this.findBooksWithNoTeams())
   }
-  // componentWillReceiveProps(nextProps) {
-  //   const { teams, books } = this.props
-  //   // console.log('next', nextProps)
-  //   // if(nextProps.books['-1']) {
-  //   //   this.props.actions.getCollections()
-  //   //   this.props.actions.getTeams()
-  //   // }
-  //   if (!isEqual(nextProps.teams, teams)) {
-  //     console.log('here', nextProps.teams)
-  //     this.props.actions.getTeams()
-  //     // this.props.actions.getTeams().then(res => {
-  //     //   this.props.actions.getCollections()
-  //     // })
-  //   }
-  // }
+  // This is due to the fact that user sse are not available.
+  // Refactor on pubsweet-server is needed
+  componentWillReceiveProps(nextProps) {
+    const { teams, books, user, actions } = this.props
+    const { getCollections, getTeams, getUser } = actions
+
+    if (
+      nextProps.books['-1'] ||
+      !isEqual(nextProps.teams, teams) ||
+      !isEqual(nextProps.books, books)
+    ) {
+      getUser(user)
+      getCollections()
+      getTeams()
+    }
+  }
 
   /*
     Toggle showing 'add book' modal

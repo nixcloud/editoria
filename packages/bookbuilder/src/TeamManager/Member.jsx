@@ -18,13 +18,13 @@ export class Member extends React.Component {
     team.members = without(team.members, user.id)
     update(team).then(res => {
       if (res.team.teamType === 'productionEditor') {
-        let productionEditors = []
+        const productionEditors = []
         for (let i = 0; i < res.team.members.length; i += 1) {
           productionEditors.push(find(users, c => c.id === res.team.members[i]))
         }
-        if (productionEditors.length < 1) {
-          productionEditors = null
-        }
+        // if (productionEditors.length < 1) {
+        //   productionEditors = null
+        // }
         updateCollection({
           id: book.id,
           productionEditor: productionEditors,

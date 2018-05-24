@@ -197,8 +197,6 @@ class Book extends React.Component {
 
   render() {
     const { book } = this.props
-    // console.log('book', book)
-
     const title = this.renderTitle(book)
     const buttons = this.renderButtons(book)
     const removeModal = this.renderRemoveModal()

@@ -239,7 +239,17 @@ class EditoriaMode {
       current = this.object
     }
     const collection = await this.findCollectionByObject(current)
-    return this.isAssignedProductionEditor(collection)
+    const membership = []
+    if (collection.productionEditor) {
+      for (let i = 0; i < collection.productionEditor.length; i += 1) {
+        if (collection.productionEditor[i].id === this.user.id) {
+          membership.push(true)
+        } else {
+          membership.push(false)
+        }
+      }
+    }
+    return membership.includes(true)
   }
   async canBroadcastEvent() {
     this.user = await this.context.models.User.find(this.userId)
@@ -294,9 +304,9 @@ class EditoriaMode {
           if (diff.number !== undefined && diff.index !== undefined) {
             return true
           }
-        }
-        if (diff.source) {
-          return true
+          if (diff.source && diff.title !== undefined) {
+            return true
+          }
         }
         return false
       } else if (await this.isAuthor(collection)) {
@@ -319,8 +329,10 @@ class EditoriaMode {
             return true
           }
         }
-        if (diff.source) {
-          return true
+        if (Object.keys(diff).length === 2) {
+          if (diff.source && diff.title !== undefined) {
+            return true
+          }
         }
         return false
       }
