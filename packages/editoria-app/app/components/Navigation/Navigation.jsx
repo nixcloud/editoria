@@ -44,6 +44,8 @@ class Navigation extends React.Component {
     const { logoutUser, currentUser } = this.props
     let logoutButtonIfAuthenticated
 
+    if (currentUser.user === null) return null
+
     if (currentUser.isAuthenticated) {
       logoutButtonIfAuthenticated = (
         <NavbarUser
@@ -76,15 +78,9 @@ class Navigation extends React.Component {
             <NavItem>Books</NavItem>
           </LinkContainer>
 
-          <Authorize operation="read" object={{ path: '/users' }}>
+          <Authorize operation="can view nav links" object="users">
             <LinkContainer to="/users">
               <NavItem>Users</NavItem>
-            </LinkContainer>
-          </Authorize>
-
-          <Authorize operation="read" object={{ path: '/teams' }}>
-            <LinkContainer to="/teams">
-              <NavItem>Teams</NavItem>
             </LinkContainer>
           </Authorize>
 

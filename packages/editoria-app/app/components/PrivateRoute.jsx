@@ -5,30 +5,35 @@ import { Route, Redirect, withRouter } from 'react-router-dom'
 import { actions } from 'pubsweet-client'
 
 class PrivateRoute extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
-      complete: false
+      complete: false,
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const onComplete = () => {
       this.setState({
-        complete: true
+        complete: true,
       })
     }
 
     this.props.getCurrentUser().then(onComplete, onComplete)
   }
 
-  render () {
-    const { currentUser, getCurrentUser, component: Component, ...rest } = this.props
+  render() {
+    const {
+      currentUser,
+      getCurrentUser,
+      component: Component,
+      ...rest
+    } = this.props
 
     return (
       <Route
-        render={(props) => {
+        render={props => {
           // complete, authenticated
           if (currentUser.isAuthenticated) {
             return <Component {...props} />
@@ -40,7 +45,7 @@ class PrivateRoute extends React.Component {
               <Redirect
                 to={{
                   pathname: '/login',
-                  state: { from: props.location }
+                  state: { from: props.location },
                 }}
               />
             )
@@ -64,17 +69,19 @@ PrivateRoute.propTypes = {
   component: PropTypes.func.isRequired,
   currentUser: PropTypes.shape({
     isAuthenticated: PropTypes.bool.isRequired,
-    isFetching: PropTypes.bool.isRequired
+    isFetching: PropTypes.bool.isRequired,
   }).isRequired,
   getCurrentUser: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
 }
 
-export default withRouter(connect(
-  state => ({
-    currentUser: state.currentUser,
-  }),
-  {
-    getCurrentUser: actions.getCurrentUser
-  }
-)(PrivateRoute))
+export default withRouter(
+  connect(
+    state => ({
+      currentUser: state.currentUser,
+    }),
+    {
+      getCurrentUser: actions.getCurrentUser,
+    },
+  )(PrivateRoute),
+)

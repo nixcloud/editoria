@@ -1,7 +1,7 @@
 import { keys, map } from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import Authorize from 'pubsweet-client/src/helpers/Authorize'
 import AlignmentTool from './AlignmentTool'
 import StateList from './StateList'
 import UploadButton from './UploadButton'
@@ -69,28 +69,31 @@ class ChapterSecondRow extends React.Component {
 
     return (
       <div className={styles.secondLineContainer}>
-        <UploadButton
-          accept=".doc,.docx"
-          chapter={chapter}
-          convertFile={convertFile}
-          isUploadInProgress={isUploadInProgress}
-          modalContainer={outerContainer}
-          title=" "
-          toggleUpload={toggleUpload}
-          type="file"
-          update={update}
-        />
-
+        <Authorize object={chapter} operation="can view uploadButton">
+          <UploadButton
+            accept=".doc,.docx"
+            chapter={chapter}
+            convertFile={convertFile}
+            isUploadInProgress={isUploadInProgress}
+            modalContainer={outerContainer}
+            title=" "
+            toggleUpload={toggleUpload}
+            type="file"
+            update={update}
+          />
+        </Authorize>
         <StateList
+          bookId={chapter.book}
           currentValues={chapter.progress}
           update={this.updateStateList}
           values={stateValues}
         />
-        <AlignmentTool
-          data={alignmentOptions}
-          onClickAlignmentBox={this.onClickAlignmentBox}
-        />
-
+        <Authorize object={chapter} operation="can view alignmentTool">
+          <AlignmentTool
+            data={alignmentOptions}
+            onClickAlignmentBox={this.onClickAlignmentBox}
+          />
+        </Authorize>
         <div className={styles.separator} />
       </div>
     )

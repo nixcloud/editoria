@@ -28,7 +28,6 @@ class BookList extends React.Component {
         edit={edit}
         key={book.id}
         remove={remove}
-        roles={roles}
       />
     ))
 

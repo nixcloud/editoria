@@ -1,5 +1,5 @@
 import config from 'config'
-import { each, filter, forEach, isEmpty, union } from 'lodash'
+import { each, filter, forEach, isEmpty, union, isEqual } from 'lodash'
 // TODO -- clean up this import
 import Actions from 'pubsweet-client/src/actions'
 import React from 'react'
@@ -19,10 +19,11 @@ export class Dashboard extends React.Component {
     this.createBook = this.createBook.bind(this)
     this.createTeamsForBook = this.createTeamsForBook.bind(this)
     this.editBook = this.editBook.bind(this)
-    this.findBooksWithNoTeams = this.findBooksWithNoTeams.bind(this)
+    // this.findBooksWithNoTeams = this.findBooksWithNoTeams.bind(this)
     this.removeBook = this.removeBook.bind(this)
     this.removeTeamsForBook = this.removeTeamsForBook.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
+    this.isProductionEditor = this.isProductionEditor.bind(this)
 
     this.state = {
       showModal: false,
@@ -38,8 +39,24 @@ export class Dashboard extends React.Component {
     const { getCollections, getTeams } = actions
 
     getCollections()
-      .then(() => getTeams())
-      .then(() => this.findBooksWithNoTeams())
+    getTeams()
+    // .then(() => this.findBooksWithNoTeams())
+  }
+  // This is due to the fact that user sse are not available.
+  // Refactor on pubsweet-server is needed
+  componentWillReceiveProps(nextProps) {
+    const { teams, books, user, actions } = this.props
+    const { getCollections, getTeams, getUser } = actions
+
+    if (
+      nextProps.books['-1'] ||
+      !isEqual(nextProps.teams, teams) ||
+      !isEqual(nextProps.books, books)
+    ) {
+      getUser(user)
+      getCollections()
+      getTeams()
+    }
   }
 
   /*
@@ -57,9 +74,11 @@ export class Dashboard extends React.Component {
   */
   createBook(newTitle) {
     const { createCollection } = this.props.actions
+    const { user } = this.props
 
     const book = {
       title: newTitle || 'Untitled',
+      productionEditor: this.isProductionEditor(user.id) ? [user] : [],
     }
 
     createCollection(book).then(res => {
@@ -79,34 +98,35 @@ export class Dashboard extends React.Component {
   /*
     Return an array of all the roles that the current user has
   */
-  getRoles() {
-    const { user } = this.props
+  // getRoles() {
+  // const { user } = this.props
+  // console.log('teams', this.state)
 
-    let roles = []
-    if (user.admin) roles.push('admin')
+  // let roles = []
+  // if (user.admin) roles.push('admin')
 
-    function addRole(role) {
-      roles = union(roles, [role])
-    }
+  // function addRole(role) {
+  //   roles = union(roles, [role])
+  // }
 
-    forEach(user.teams, t => {
-      switch (t.teamType.name) {
-        case 'Production Editor':
-          addRole('production-editor')
-          break
-        case 'Copy Editor':
-          addRole('copy-editor')
-          break
-        case 'Author':
-          addRole('author')
-          break
-        default:
-          break
-      }
-    })
+  // forEach(user.teams, t => {
+  //   switch (t.teamType.name) {
+  //     case 'Production Editor':
+  //       addRole('production-editor')
+  //       break
+  //     case 'Copy Editor':
+  //       addRole('copy-editor')
+  //       break
+  //     case 'Author':
+  //       addRole('author')
+  //       break
+  //     default:
+  //       break
+  //   }
+  // })
 
-    return roles
-  }
+  // return roles
+  // }
 
   /*
     Remove the given book.
@@ -126,16 +146,32 @@ export class Dashboard extends React.Component {
       # the command 'pubsweet setupdb'.
   */
   // TODO -- refactor so that less operations run most of the time
-  findBooksWithNoTeams() {
-    const { books, teams } = this.props
+  // findBooksWithNoTeams() {
+  //   const { books, teams } = this.props
 
-    each(books, book => {
-      const teamsForBook = filter(teams, t => t.object.id === book.id)
+  //   each(books, book => {
+  //     const teamsForBook = filter(teams, t => t.object.id === book.id)
 
-      if (isEmpty(teamsForBook)) {
-        this.createTeamsForBook(book)
-      }
-    })
+  //     if (isEmpty(teamsForBook)) {
+  //       this.createTeamsForBook(book)
+  //     }
+  //   })
+  // }
+
+  isProductionEditor(userId) {
+    const { teams, user } = this.props
+    if (!user.admin) {
+      const productionEditorTeams = filter(teams, {
+        teamType: 'productionEditor',
+      })
+
+      const membership = productionEditorTeams.map(team =>
+        team.members.includes(userId),
+      )
+
+      return membership.includes(true)
+    }
+    return false
   }
 
   /*
@@ -144,27 +180,67 @@ export class Dashboard extends React.Component {
     or when a book with no teams associated with it is found.
   */
   createTeamsForBook(book) {
-    const { createTeam } = this.props.actions
+    const { createTeam, getCurrentUser } = this.props.actions
+    const { user } = this.props
 
-    each(config.authsome.teams, teamType => {
-      // TODO -- Review the idea that the name needs to be plural for some teams
-      const name =
-        teamType.name === 'Production Editor'
-          ? teamType.name
-          : `${teamType.name}s`
+    const teamTypes = Object.keys(config.authsome.teams)
 
+    for (let i = 0; i < teamTypes.length; i += 1) {
+      const teamType = teamTypes[i]
+      const members = []
+      if (!user.admin) {
+        if (
+          this.isProductionEditor(user.id) &&
+          teamType === 'productionEditor'
+        ) {
+          members.push(user.id)
+        }
+      }
       const newTeam = {
-        members: [],
-        name,
+        members,
+        name: config.authsome.teams[teamType].name,
         object: {
           id: book.id,
           type: 'collection',
         },
         teamType,
       }
+      createTeam(newTeam).then(res => {
+        getCurrentUser()
+      })
+    }
+    // teamTypes.map(teamType => {
+    //   const newTeam = {
+    //     members: [],
+    //     name: config.authsome.teams[teamType].name,
+    //     object: {
+    //       id: book.id,
+    //       type: 'collection',
+    //     },
+    //     teamType,
+    //   }
+    //   createTeam(newTeam)
+    // })
+    // each(config.authsome.teams, teamType => {
+    //   console.log('teamType', teamType)
+    //   // TODO -- Review the idea that the name needs to be plural for some teams
+    //   const name =
+    //     teamType.name === 'Production Editor'
+    //       ? teamType.name
+    //       : `${teamType.name}s`
 
-      createTeam(newTeam)
-    })
+    //   const newTeam = {
+    //     members: [],
+    //     name,
+    //     object: {
+    //       id: book.id,
+    //       type: 'collection',
+    //     },
+    //     teamType,
+    //   }
+
+    //   createTeam(newTeam)
+    // })
   }
 
   /*
@@ -185,8 +261,8 @@ export class Dashboard extends React.Component {
   render() {
     const { books } = this.props
     const { showModal } = this.state
-
-    const roles = this.getRoles()
+    // if (teams.length === 0) return null
+    // const roles = this.getRoles()
 
     const className = `${
       styles.bookList
@@ -195,14 +271,13 @@ export class Dashboard extends React.Component {
     return (
       <div className={className}>
         <div className="container col-lg-offset-2 col-lg-8">
-          <DashboardHeader roles={roles} toggle={this.toggleModal} />
+          <DashboardHeader toggle={this.toggleModal} user={this.props.user} />
 
           <BookList
             books={books}
             container={this}
             edit={this.editBook}
             remove={this.removeBook}
-            roles={roles}
           />
         </div>
 

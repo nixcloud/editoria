@@ -3,13 +3,15 @@ const Joi = require('joi')
 module.exports = {
   collection: {
     created: Joi.date().required(),
-    productionEditor: Joi.object().allow(null),
-    title: Joi.string().required()
+    productionEditor: Joi.array().allow(null),
+    title: Joi.string().required(),
   },
   fragment: {
     alignment: Joi.object(),
     author: Joi.string().allow(''),
-    book: Joi.string().guid().required(),
+    book: Joi.string()
+      .guid()
+      .required(),
     comments: Joi.object(),
     division: Joi.string(),
     fragmentType: Joi.string(),
@@ -22,6 +24,6 @@ module.exports = {
     status: Joi.string(),
     subCategory: Joi.string(),
     title: Joi.string().allow(null),
-    trackChanges: Joi.boolean()
-  }
+    trackChanges: Joi.boolean(),
+  },
 }

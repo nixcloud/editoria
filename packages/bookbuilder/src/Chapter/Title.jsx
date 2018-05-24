@@ -17,6 +17,7 @@ class Title extends React.Component {
       title,
       showNumber,
       number,
+      isLocked,
     } = this.props
 
     const content = showNumber
@@ -32,11 +33,20 @@ class Title extends React.Component {
       />
     )
 
-    const plainTitle = (
+    let plainTitle = (
       <div className={styles.bodyTitle}>
-        <h3 onDoubleClick={goToEditor}>{content}</h3>
+        <h3 className={styles.cursorPointer} onDoubleClick={goToEditor}>
+          {content}
+        </h3>
       </div>
     )
+    if (isLocked) {
+      plainTitle = (
+        <div className={styles.bodyTitle}>
+          <h3>{content}</h3>
+        </div>
+      )
+    }
 
     if (isRenaming) return input
     return plainTitle

@@ -6,9 +6,17 @@ import TeamManager from './TeamManager'
 
 class TeamManagerModal extends React.Component {
   renderBody() {
-    const { teams, users, updateTeam } = this.props
+    const { teams, users, updateTeam, updateCollection, book } = this.props
 
-    return <TeamManager teams={teams} updateTeam={updateTeam} users={users} />
+    return (
+      <TeamManager
+        teams={teams}
+        updateCollection={updateCollection}
+        updateTeam={updateTeam}
+        users={users}
+        book={book}
+      />
+    )
   }
 
   render() {

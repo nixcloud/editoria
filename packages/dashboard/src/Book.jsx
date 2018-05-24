@@ -1,7 +1,8 @@
-import { includes, some } from 'lodash'
+// import { includes, some } from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
+import Authorize from 'pubsweet-client/src/helpers/Authorize'
 
 import RemoveBookModal from './RemoveBookModal'
 import styles from './dashboard.local.scss'
@@ -67,12 +68,12 @@ class Book extends React.Component {
   }
 
   // TODO -- refactor all roles based function into a util
-  canEditBook() {
-    const { roles } = this.props
-    const accepted = ['admin', 'production-editor']
-    const pass = some(accepted, role => includes(roles, role))
-    return pass
-  }
+  // canEditBook() {
+  //   const { roles } = this.props
+  //   const accepted = ['admin', 'production-editor']
+  //   const pass = some(accepted, role => includes(roles, role))
+  //   return pass
+  // }
 
   goToBookBuilder() {
     const { book, history } = this.props
@@ -125,40 +126,42 @@ class Book extends React.Component {
   }
 
   renderRename() {
-    const canRename = this.canEditBook()
-    if (!canRename) return null
-
     const { isRenaming } = this.state
+    const { book } = this.props
 
     if (isRenaming) {
       return (
-        <div className={styles.actionContainer}>
-          <a className={styles.editBook} href="#" onClick={this.onClickSave}>
-            Save
-          </a>
-        </div>
+        <Authorize operation="can rename books" object={book}>
+          <div className={styles.actionContainer}>
+            <a className={styles.editBook} href="#" onClick={this.onClickSave}>
+              Save
+            </a>
+          </div>
+        </Authorize>
       )
     }
 
     return (
-      <div className={styles.actionContainer}>
-        <a className={styles.editBook} href="#" onClick={this.onClickRename}>
-          Rename
-        </a>
-      </div>
+      <Authorize operation="can rename books" object={book}>
+        <div className={styles.actionContainer}>
+          <a className={styles.editBook} href="#" onClick={this.onClickRename}>
+            Rename
+          </a>
+        </div>
+      </Authorize>
     )
   }
 
   renderRemove() {
-    const canRemove = this.canEditBook()
-    if (!canRemove) return null
-
+    const { book } = this.props
     return (
-      <div className={styles.actionContainer}>
-        <a className={styles.editBook} href="#" onClick={this.toggleModal}>
-          Delete
-        </a>
-      </div>
+      <Authorize operation="can delete books" object={book}>
+        <div className={styles.actionContainer}>
+          <a className={styles.editBook} href="#" onClick={this.toggleModal}>
+            Delete
+          </a>
+        </div>
+      </Authorize>
     )
   }
 
@@ -194,7 +197,6 @@ class Book extends React.Component {
 
   render() {
     const { book } = this.props
-
     const title = this.renderTitle(book)
     const buttons = this.renderButtons(book)
     const removeModal = this.renderRemoveModal()

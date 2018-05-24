@@ -14,6 +14,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import Authorize from 'pubsweet-client/src/helpers/Authorize'
 
 import AddButton from './AddButton'
 import Chapter from './Chapter'
@@ -160,11 +161,12 @@ class Division extends React.Component {
       // chapters,
       ink,
       outerContainer,
-      roles,
+      user,
       title,
       type,
       update,
       uploadStatus,
+      reorderingAllowed,
     } = this.props
 
     const { chapters } = this.state
@@ -182,10 +184,11 @@ class Division extends React.Component {
         key={c.id}
         no={i}
         onEndDrag={onEndDrag}
+        canDrag={reorderingAllowed}
         onMove={onMove}
         outerContainer={outerContainer}
         remove={onRemove}
-        roles={roles}
+        user={user}
         title={c.title}
         type={c.subCategory}
         update={update}
@@ -196,13 +199,19 @@ class Division extends React.Component {
     let addButtons
     if (type === 'body') {
       addButtons = (
-        <span>
-          <AddButton add={onAddClick} group="chapter" />
-          <AddButton add={onAddClick} group="part" />
-        </span>
+        <Authorize object={book} operation="can view addComponent">
+          <span>
+            <AddButton add={onAddClick} group="chapter" />
+            <AddButton add={onAddClick} group="part" />
+          </span>
+        </Authorize>
       )
     } else {
-      addButtons = <AddButton add={onAddClick} group="component" />
+      addButtons = (
+        <Authorize object={book} operation="can view addComponent">
+          <AddButton add={onAddClick} group="component" />
+        </Authorize>
+      )
     }
 
     const list = (
@@ -277,10 +286,18 @@ Division.propTypes = {
   ink: PropTypes.func.isRequired,
   outerContainer: PropTypes.any.isRequired,
   remove: PropTypes.func.isRequired,
-  roles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.shape({
+    admin: PropTypes.bool,
+    email: PropTypes.string,
+    id: PropTypes.string,
+    rev: PropTypes.string,
+    type: PropTypes.string,
+    username: PropTypes.string,
+  }),
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
+  reorderingAllowed: PropTypes.bool.isRequired,
   uploadStatus: PropTypes.objectOf(PropTypes.bool),
 }
 

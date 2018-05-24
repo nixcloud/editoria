@@ -46,6 +46,7 @@ class ChapterTitle extends React.Component {
     return (
       <Title
         isRenaming={isRenaming}
+        isLocked={chapter.lock !== null}
         goToEditor={this.goToEditor}
         onSaveRename={onSaveRename}
         // ref={node => (this.title = node)}
@@ -79,13 +80,16 @@ class ChapterTitle extends React.Component {
 
   render() {
     const { chapter } = this.props
-    const title = this.renderTitle()
-    const renameEmptyError = this.renderError()
+    let title = this.renderTitle()
     const url = `/books/${chapter.book}/fragments/${chapter.id}`
+    if (chapter.lock === null) {
+      title = withLink(this.renderTitle(), url)
+    }
+    const renameEmptyError = this.renderError()
 
     return (
       <div className={styles.chapterTitle}>
-        {withLink(title, url)}
+        {title}
         {/* { this.props.chapter.index } */}
         {renameEmptyError}
         {/* <div className={styles.separator} /> */}

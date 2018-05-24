@@ -1,0 +1,33 @@
+{
+  "name": "pubsweet-editoria-authsome",
+  "version": "0.0.1",
+  "description": "Authsome mode for Editoria",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "docs": "jsdoc2md src/index.js > README.md"
+  },
+  "keywords": ["authsome", "authorization", "access", "control", "editoria"],
+  "author": "Coko Foundation",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^22.2.0",
+    "jsdoc": "^3.5.5",
+    "jsdoc-to-markdown": "^4.0.1",
+    "jest-environment-db": "^1.0.0",
+    "pubsweet-server": "^7.1.0",
+    "supertest": "^2.0.0"
+  },
+  "dependencies": {
+    "authsome": "^0.1.0"
+  },
+  "jest": {
+    "testEnvironment": "jest-environment-db",
+    "testRegex": "/test/.*.test.js$",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/test/helpers/jest-setup.js"
+  }
+}

@@ -18,6 +18,9 @@ const chapterSource = {
   isDragging(props, monitor) {
     return props.id === monitor.getItem().id
   },
+  canDrag(props, monitor) {
+    return props.canDrag
+  },
 }
 
 const chapterTarget = {

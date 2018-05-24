@@ -10,16 +10,16 @@ export class GroupList extends React.Component {
     super(props)
 
     this.options = {
-      'Production Editor': {
+      productionEditor: {
         color: 'blue',
         title: 'Production Editor',
       },
-      'Copy Editors': {
+      copyEditor: {
         color: 'purple',
         title: 'Copy Editors',
         addButtonText: 'add copy editor',
       },
-      Authors: {
+      author: {
         color: 'yellow',
         title: 'Authors',
         addButtonText: 'add author',
@@ -28,28 +28,26 @@ export class GroupList extends React.Component {
   }
 
   render() {
-    const { teams, users, update } = this.props
-    const options = this.options
+    const { teams, users, update, updateCollection, book } = this.props
+    const options  = this.options
 
     // TODO -- refactor
     // do it like this to guarantee order of groups
     const groups = keys(options).map((key, i) => {
-      let name
 
       // get team of this name
-      const team = find(teams, team => {
-        name = team.name.trim()
-        return name === key
-      })
+      const team = find(teams, team => team.teamType === key)
 
-      if (!team) return
+      if (!team) return null
 
       return (
         <div key={i}>
           <Group
-            options={options[name]}
+            options={options[team.teamType]}
             team={team}
+            book={book}
             update={update}
+            updateCollection={updateCollection}
             users={users}
           />
           <div className={styles.groupSeperator} />

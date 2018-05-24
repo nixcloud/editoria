@@ -6,17 +6,20 @@ import styles from '../styles/teamManager.local.scss'
 
 export class MemberList extends React.Component {
   render() {
-    const { members, color, team, update } = this.props
-    const remove = team.teamType.name !== 'Production Editor'
+    const { members, color, team, update, book, updateCollection, users } = this.props
+    // const remove = team.teamType.name !== 'Production Editor'
 
     const list = members.map((member, i) => (
       <Member
         color={color}
         key={i}
-        remove={remove}
+        // remove={remove}
         team={team}
         update={update}
+        book={book}
+        updateCollection={updateCollection}
         user={member}
+        users={users}
       />
     ))
 

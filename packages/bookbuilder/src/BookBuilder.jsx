@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
+import Authorize from 'pubsweet-client/src/helpers/Authorize'
 import { connect } from 'react-redux'
 
 // TODO -- clean up this import
@@ -23,11 +24,13 @@ export class BookBuilder extends React.Component {
 
     this.toggleTeamManager = this.toggleTeamManager.bind(this)
 
-    this.getRoles = this.getRoles.bind(this)
-    this.isProductionEditor = this.isProductionEditor.bind(this)
-    this.setProductionEditor = this.setProductionEditor.bind(this)
+    // this.getRoles = this.getRoles.bind(this)
+    // this.isProductionEditor = this.isProductionEditor.bind(this)
+    // this.setProductionEditor = this.setProductionEditor.bind(this)
     this.updateUploadStatus = this.updateUploadStatus.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
+    this.renderDivison = this.renderDivison.bind(this)
+    this.renderProductionEditors = this.renderProductionEditors.bind(this)
 
     this.state = {
       outerContainer: {},
@@ -51,7 +54,7 @@ export class BookBuilder extends React.Component {
       .then(() => {
         const { book } = this.props
 
-        this.setProductionEditor()
+        // this.setProductionEditor()
         getFragments(book)
       })
   }
@@ -63,47 +66,47 @@ export class BookBuilder extends React.Component {
     this.setState({ outerContainer: this.refs.outerContainer })
   }
 
-  setProductionEditor() {
-    const { actions, book, teams, users } = this.props
-    const { updateCollection } = actions
+  // setProductionEditor() {
+  //   const { actions, book, teams, users } = this.props
+  //   const { updateCollection } = actions
 
-    const productionEditorsTeam = _.find(
-      teams,
-      t => t.teamType.name === 'Production Editor' && t.object.id === book.id,
-    )
+  //   const productionEditorsTeam = _.find(
+  //     teams,
+  //     t => t.teamType.name === 'Production Editor' && t.object.id === book.id,
+  //   )
 
-    if (!productionEditorsTeam) return
+  //   if (!productionEditorsTeam) return
 
-    const productionEditors = _.filter(users, u =>
-      _.includes(productionEditorsTeam.members, u.id),
-    )
+  //   const productionEditors = _.filter(users, u =>
+  //     _.includes(productionEditorsTeam.members, u.id),
+  //   )
 
-    let patch
+  //   let patch
 
-    if (_.isEmpty(productionEditors)) {
-      // production editor is already set to null
-      if (book.productionEditor === null) return
+  //   if (_.isEmpty(productionEditors)) {
+  //     // production editor is already set to null
+  //     if (book.productionEditor === null) return
 
-      patch = {
-        id: book.id,
-        productionEditor: null,
-      }
+  //     patch = {
+  //       id: book.id,
+  //       productionEditor: null,
+  //     }
 
-      return updateCollection(patch)
-    }
+  //     return updateCollection(patch)
+  //   }
 
-    const currentEditor = book.productionEditor
-    const foundEditor = productionEditors[0] || null
+  //   const currentEditor = book.productionEditor
+  //   const foundEditor = productionEditors[0] || null
 
-    if (currentEditor === foundEditor) return
+  //   if (currentEditor === foundEditor) return
 
-    patch = {
-      id: book.id,
-      productionEditor: _.pick(foundEditor, ['id', 'username']),
-    }
+  //   patch = {
+  //     id: book.id,
+  //     productionEditor: _.pick(foundEditor, ['id', 'username']),
+  //   }
 
-    updateCollection(patch)
-  }
+  //   updateCollection(patch)
+  // }
 
   toggleModal() {
     this.setState({
@@ -115,82 +118,143 @@ export class BookBuilder extends React.Component {
     this.setState({ showTeamManager: !this.state.showTeamManager })
   }
 
-  getRoles() {
-    const { user, book } = this.props
+  // getRoles() {
+  //   const { user, book } = this.props
 
-    const teams = _.filter(user.teams, t => t.object.id === book.id)
+  //   const teams = _.filter(user.teams, t => t.object.id === book.id)
 
-    let roles = []
-    if (user.admin) roles.push('admin')
+  //   let roles = []
+  //   if (user.admin) roles.push('admin')
 
-    function addRole(role) {
-      roles = _.union(roles, [role])
-    }
+  //   function addRole(role) {
+  //     roles = _.union(roles, [role])
+  //   }
 
-    _.forEach(teams, t => {
-      switch (t.teamType.name) {
-        case 'Production Editor':
-          addRole('production-editor')
-          break
-        case 'Copy Editor':
-          addRole('copy-editor')
-          break
-        case 'Author':
-          addRole('author')
-          break
-        default:
-          break
-      }
-    })
+  //   _.forEach(teams, t => {
+  //     switch (t.teamType.name) {
+  //       case 'Production Editor':
+  //         addRole('production-editor')
+  //         break
+  //       case 'Copy Editor':
+  //         addRole('copy-editor')
+  //         break
+  //       case 'Author':
+  //         addRole('author')
+  //         break
+  //       default:
+  //         break
+  //     }
+  //   })
 
-    return roles
-  }
+  //   return roles
+  // }
 
-  isProductionEditor() {
-    const userRoles = this.getRoles()
-    const accepted = ['production-editor', 'admin']
-    const pass = _.some(accepted, role => _.includes(userRoles, role))
-    return pass
-  }
+  // isProductionEditor() {
+  //   const userRoles = this.getRoles()
+  //   const accepted = ['production-editor', 'admin']
+  //   const pass = _.some(accepted, role => _.includes(userRoles, role))
+  //   return pass
+  // }
 
   updateUploadStatus(status) {
     this.setState({ uploading: status })
   }
 
   renderTeamManagerModal() {
-    if (!this.isProductionEditor()) return null
-
     const { outerContainer, showTeamManager } = this.state
 
     if (!showTeamManager) return null
     if (_.isEmpty(outerContainer)) return null
 
-    const { actions, teams, users } = this.props
-    const { updateTeam } = actions
+    const { actions, teams, users, book } = this.props
+    const { updateTeam, updateCollection } = actions
 
     return (
       <TeamManagerModal
+        book={book}
         container={outerContainer}
         show={showTeamManager}
         teams={teams}
         toggle={this.toggleTeamManager}
+        updateCollection={updateCollection}
         updateTeam={updateTeam}
         users={users}
       />
     )
   }
 
+  renderProductionEditors() {
+    const { book } = this.props
+    const { productionEditor } = book
+    let names = ''
+    let label = 'Production Editor:'
+
+    if (productionEditor && productionEditor.length > 1) {
+      label = 'Production Editors:'
+      for (let i = 0; i < productionEditor.length; i += 1) {
+        if (i !== productionEditor.length - 1) {
+          names += `${productionEditor[i].username}, `
+        } else {
+          names += `${productionEditor[i].username}`
+        }
+      }
+    } else if (productionEditor && productionEditor.length !== 0) {
+      names = productionEditor[0].username
+    } else {
+      names = 'Unassigned'
+    }
+    return `${label} ${names}`
+  }
+
+  renderDivison(reorderingAllowed, chapters, title, type) {
+    const { book, user } = this.props
+    const {
+      createFragment,
+      deleteFragment,
+      ink,
+      updateFragment,
+    } = this.props.actions
+    const { outerContainer, uploading } = this.state
+    return (
+      <Division
+        add={createFragment}
+        book={book}
+        chapters={chapters}
+        ink={ink}
+        outerContainer={outerContainer}
+        remove={deleteFragment}
+        reorderingAllowed={reorderingAllowed}
+        title={title}
+        type={type}
+        update={updateFragment}
+        uploadStatus={uploading}
+        user={user}
+      />
+    )
+  }
+  // componentWillReceiveProps(nextProps) {
+  //   const { teams, user } = this.props
+  //   let membership
+  //   if (!user.admin) {
+  //     if (!_.isEqual(nextProps.teams, teams)) {
+  //       membership = nextProps.teams.map(team => team.members.includes(user.id))
+  //       if (!membership.includes(true)) {
+  //         this.props.history.replace('/books')
+  //       }
+  //     }
+  //   }
+  // }
+
   render() {
     const { book, chapters } = this.props
     const {
       createFragment,
-      deleteFragment,
       htmlToEpub,
       ink,
       updateFragment,
     } = this.props.actions
     const { outerContainer } = this.state
-    const roles = this.getRoles()
+    // const roles = this.getRoles()
 
     const frontChapters = []
     const bodyChapters = []
@@ -211,25 +275,7 @@ export class BookBuilder extends React.Component {
           break
       }
     })
-
-    const isProductionEditor = this.isProductionEditor()
-    let teamManagerButton = ''
-    if (isProductionEditor) {
-      teamManagerButton = (
-        <span onClick={this.toggleTeamManager}>
-          <div className={styles.teamManagerIcon} />
-          <div className={styles.teamManagerBtn}>
-            <a>team manager</a>
-          </div>
-        </span>
-      )
-    }
-
-    const productionEditor =
-      _.get(book, 'productionEditor.username') || 'unassigned'
     const teamManagerModal = this.renderTeamManagerModal()
-
-    // console.log('render bb')
 
     return (
       <div className="bootstrap modal pubsweet-component pubsweet-component-scroll">
@@ -239,27 +285,38 @@ export class BookBuilder extends React.Component {
             ref="outerContainer"
           >
             <div className={`${styles.productionEditorContainer} row`}>
-              <span>Production Editor: &nbsp; {productionEditor} </span>
-              {teamManagerButton}
+              <span>{this.renderProductionEditors()}</span>
+              <Authorize object={book} operation="can view teamManager">
+                <span onClick={this.toggleTeamManager}>
+                  <div className={styles.teamManagerIcon} />
+                  <div className={styles.teamManagerBtn}>
+                    <a>team manager</a>
+                  </div>
+                </span>
+              </Authorize>
               <div className={styles.separator} />
             </div>
-
             <h1 className={`${styles.bookTitle} row`}>
               {this.props.book.title}
             </h1>
             <div className={`${styles.btnContainer} row`}>
               <div className={`${styles.lineUploading} `} />
               <div className={styles.btnContainerButtons}>
-                <FileUploader
-                  backChapters={backChapters}
-                  bodyChapters={bodyChapters}
-                  book={book}
-                  convert={ink}
-                  create={createFragment}
-                  frontChapters={frontChapters}
-                  update={updateFragment}
-                  updateUploadStatus={this.updateUploadStatus}
-                />
+                <Authorize
+                  object={book}
+                  operation="can view multipleFilesUpload"
+                >
+                  <FileUploader
+                    backChapters={backChapters}
+                    bodyChapters={bodyChapters}
+                    book={book}
+                    convert={ink}
+                    create={createFragment}
+                    frontChapters={frontChapters}
+                    update={updateFragment}
+                    updateUploadStatus={this.updateUploadStatus}
+                  />
+                </Authorize>
                 <VivliostyleExporter
                   book={book}
                   htmlToEpub={htmlToEpub}
@@ -269,56 +326,51 @@ export class BookBuilder extends React.Component {
                 />
               </div>
             </div>
-
-            <Division
-              add={createFragment}
-              book={book}
-              chapters={frontChapters}
-              ink={ink}
-              outerContainer={outerContainer}
-              remove={deleteFragment}
-              roles={roles}
-              title="Frontmatter"
-              type="front"
-              update={updateFragment}
-              uploadStatus={this.state.uploading}
-            />
+            <Authorize
+              object={book}
+              operation="can reorder bookComponents"
+              unauthorized={this.renderDivison(
+                false,
+                frontChapters,
+                'Frontmatter',
+                'front',
+              )}
+            >
+              {this.renderDivison(true, frontChapters, 'Frontmatter', 'front')}
+            </Authorize>
+            <div className={styles.sectionDivider} />
+            <Authorize
+              object={book}
+              operation="can reorder bookComponents"
+              unauthorized={this.renderDivison(
+                false,
+                bodyChapters,
+                'Body',
+                'body',
+              )}
+            >
+              {this.renderDivison(true, bodyChapters, 'Body', 'body')}
+            </Authorize>
 
             <div className={styles.sectionDivider} />
 
-            <Division
-              add={createFragment}
-              book={book}
-              chapters={bodyChapters}
-              ink={ink}
-              outerContainer={outerContainer}
-              remove={deleteFragment}
-              roles={roles}
-              title="Body"
-              type="body"
-              update={updateFragment}
-              uploadStatus={this.state.uploading}
-            />
-
-            <div className={styles.sectionDivider} />
-
-            <Division
-              add={createFragment}
-              book={book}
-              chapters={backChapters}
-              ink={ink}
-              outerContainer={outerContainer}
-              remove={deleteFragment}
-              roles={roles}
-              title="Backmatter"
-              type="back"
-              update={updateFragment}
-              uploadStatus={this.state.uploading}
-            />
+            <Authorize
+              object={book}
+              operation="can reorder bookComponents"
+              unauthorized={this.renderDivison(
+                false,
+                backChapters,
+                'Backmatter',
+                'back',
+              )}
+            >
+              {this.renderDivison(true, backChapters, 'Backmatter', 'back')}
+            </Authorize>
           </div>
         </div>
-
-        {teamManagerModal}
+        <Authorize object={book} operation="can view teamManager">
+          {teamManagerModal}
+        </Authorize>
       </div>
     )
   }
@@ -413,24 +465,23 @@ BookBuilder.defaultProps = {
 
 function mapStateToProps(state, { match }) {
   const book = _.find(state.collections, c => c.id === match.params.id)
-
+  let teams
   const chapters = _.sortBy(
     _.filter(state.fragments, f => f.book === book.id && f.id && !f.deleted),
     'index',
   )
-
-  const { error, teams } = state
-  const users = state.users.users
-  const user = state.currentUser.user
+  if (book) {
+    teams = _.filter(state.teams, t => t.object.id === book.id)
+  }
+  const { error, currentUser: user, users } = state
 
   return {
     book: book || {},
     chapters,
     errorMessage: error,
     teams,
-    user,
-    // userRoles: state.auth.roles,
-    users,
+    user: user.user,
+    users: users.users,
   }
 }
 

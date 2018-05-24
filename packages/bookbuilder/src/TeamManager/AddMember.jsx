@@ -44,8 +44,19 @@ export class AddMember extends React.Component {
   }
 
   _save(team) {
-    const { update } = this.props
-    update(team)
+    const { update, updateCollection, book, users } = this.props
+    update(team).then(res => {
+      if (res.team.teamType === 'productionEditor') {
+        const productionEditors = []
+        for (let i = 0; i < res.team.members.length; i += 1) {
+          productionEditors.push(find(users, c => c.id === res.team.members[i]))
+        }
+        updateCollection({
+          id: book.id,
+          productionEditor: productionEditors,
+        })
+      }
+    })
   }
 
   _updateMessage(error, username) {
