@@ -240,16 +240,19 @@ class EditoriaMode {
     }
     const collection = await this.findCollectionByObject(current)
     const membership = []
-    if (collection.productionEditor) {
-      for (let i = 0; i < collection.productionEditor.length; i += 1) {
-        if (collection.productionEditor[i].id === this.user.id) {
-          membership.push(true)
-        } else {
-          membership.push(false)
+    if (collection) {
+      if (collection.productionEditor) {
+        for (let i = 0; i < collection.productionEditor.length; i += 1) {
+          if (collection.productionEditor[i].id === this.user.id) {
+            membership.push(true)
+          } else {
+            membership.push(false)
+          }
         }
       }
+      return membership.includes(true)
     }
-    return membership.includes(true)
+    return false
   }
   async canBroadcastEvent() {
     this.user = await this.context.models.User.find(this.userId)

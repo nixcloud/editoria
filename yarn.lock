@@ -10953,12 +10953,12 @@ pubsweet-component-users-manager@1.0.0:
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-pubsweet-component-wax@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/pubsweet-component-wax/-/pubsweet-component-wax-0.6.0.tgz#2ad1a9f2c6eceb57f5545b6e76ed90a380f5f2bf"
+pubsweet-component-wax@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/pubsweet-component-wax/-/pubsweet-component-wax-0.6.1.tgz#21f73436c0e60682a0e9cda99f8c0de3a42c8beb"
   dependencies:
     lodash "4.17.4"
-    pubsweet-client "^2.5.0"
+    pubsweet-client "^2.5.5"
     react "^16.2.0"
     react-dom "^16.2.0"
     react-redux "5.0.4"
