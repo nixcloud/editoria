@@ -95,7 +95,6 @@ class Chapter extends React.Component {
       uploading,
     } = this.props
 
-    console.log('chapter', chapter)
     const hasContent = this.renderHasContent()
     const { isUploadInProgress } = this.state
 
@@ -129,7 +128,10 @@ class Chapter extends React.Component {
       connectDropTarget(
         <li
           className={`${styles.chapterContainer} col-lg-12 bb-chapter ${
-            chapter.subCategory === 'chapter' || chapter.subCategory === 'un-numbered' ? styles.isChapter : styles.isPart
+            chapter.subCategory === 'chapter' ||
+            chapter.subCategory === 'un-numbered'
+              ? styles.isChapter
+              : styles.isPart
           }`}
           style={listItemStyle}
         >
