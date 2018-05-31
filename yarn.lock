@@ -2999,6 +2999,10 @@ codemirror@^5.36.0:
   version "5.37.0"
   resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.37.0.tgz#c349b584e158f590277f26d37c2469a6bc538036"
 
+codemirror@^5.38.0:
+  version "5.38.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.38.0.tgz#26a9551446e51dbdde36aabe60f72469724fd332"
+
 collapse-white-space@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/collapse-white-space/-/collapse-white-space-1.0.4.tgz#ce05cf49e54c3277ae573036a26851ba430a0091"
@@ -10953,9 +10957,9 @@ pubsweet-component-users-manager@1.0.0:
     react-redux "^5.0.6"
     redux "^3.7.2"
 
-pubsweet-component-wax@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/pubsweet-component-wax/-/pubsweet-component-wax-0.6.1.tgz#21f73436c0e60682a0e9cda99f8c0de3a42c8beb"
+pubsweet-component-wax@^0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/pubsweet-component-wax/-/pubsweet-component-wax-0.6.3.tgz#932de86e7cfc8ecdb0e0ab425ebe56e8d40bc895"
   dependencies:
     lodash "4.17.4"
     pubsweet-client "^2.5.5"
@@ -10963,7 +10967,7 @@ pubsweet-component-wax@^0.6.1:
     react-dom "^16.2.0"
     react-redux "5.0.4"
     redux "3.6.0"
-    wax-editor-react "^0.2.0"
+    wax-editor-react "^0.2.2"
 
 pubsweet-server@^7.0.1:
   version "7.0.1"
@@ -14643,23 +14647,24 @@ watchpack@^1.3.1, watchpack@^1.4.0:
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
 
-wax-editor-core@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/wax-editor-core/-/wax-editor-core-0.5.0.tgz#cfb3024b2112546882b32fae78f8ac5538c4f87d"
+wax-editor-core@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/wax-editor-core/-/wax-editor-core-0.6.1.tgz#297c38fba5abe97891481f58ca74cf6ab1c53564"
   dependencies:
+    codemirror "^5.38.0"
     font-awesome "^4.7.0"
     lodash "^4.17.4"
     substance "1.0.0-beta.6.5"
 
-wax-editor-react@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/wax-editor-react/-/wax-editor-react-0.2.0.tgz#aeb3136f9fc88fc930b84f3b4b368c7965005993"
+wax-editor-react@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/wax-editor-react/-/wax-editor-react-0.2.2.tgz#c33c3e06c206b8c9f601ce53d73638d6c010c51e"
   dependencies:
     lodash "^4.17.4"
     react "^16.2.0"
     react-dom "^16.2.0"
     react-router-dom "^4.2.2"
-    wax-editor-core "^0.5.0"
+    wax-editor-core "^0.6.1"
 
 wbuf@^1.1.0, wbuf@^1.7.2:
   version "1.7.3"
