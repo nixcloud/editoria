@@ -34,7 +34,8 @@ class Title extends React.Component {
     )
 
     let plainTitle = (
-      <div className={styles.bodyTitle}>
+      // <div className={styles.bodyTitle}>
+      <div>
         <h3 className={styles.cursorPointer} onDoubleClick={goToEditor}>
           {content}
         </h3>

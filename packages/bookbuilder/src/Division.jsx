@@ -203,6 +203,7 @@ class Division extends React.Component {
           <span>
             <AddButton add={onAddClick} group="chapter" />
             <AddButton add={onAddClick} group="part" />
+            <AddButton add={onAddClick} group="un-numbered" />
           </span>
         </Authorize>
       )

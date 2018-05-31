@@ -16,7 +16,7 @@ export default class AddButton extends React.Component {
 
   render() {
     const { group } = this.props
-    const margin = group === 'part' ? 20 : 0
+    const margin = group === 'un-numbered' ? 20 : 0
 
     return (
       <div
