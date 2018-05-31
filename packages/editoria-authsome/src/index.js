@@ -276,9 +276,6 @@ class EditoriaMode {
     const wasReviewingSate = current.progress.review === 1
     const diff = EditoriaMode.difference(update, current)
     const collection = await this.findCollectionByObject(current)
-    console.log('current', current)
-    console.log('update', update)
-    console.log('diff', diff)
 
     if (collection) {
       if (await this.isAssignedProductionEditor(collection)) {
