@@ -276,15 +276,22 @@ class EditoriaMode {
     const wasReviewingSate = current.progress.review === 1
     const diff = EditoriaMode.difference(update, current)
     const collection = await this.findCollectionByObject(current)
+    console.log('current', current)
+    console.log('update', update)
+    console.log('diff', diff)
 
     if (collection) {
       if (await this.isAssignedProductionEditor(collection)) {
+        if (current.lock !== null && diff.lock !== undefined) {
+          return false
+        }
         return true
       } else if (await this.isAssignedCopyEditor(collection)) {
         if (Object.keys(diff).length === 1) {
           if (
             (diff.lock !== undefined || update.lock !== undefined) &&
-            wasEditingSate
+            wasEditingSate &&
+            current.lock === null
           ) {
             return true
           }
@@ -316,7 +323,8 @@ class EditoriaMode {
         if (Object.keys(diff).length === 1) {
           if (
             (diff.lock !== undefined || update.lock !== undefined) &&
-            wasReviewingSate
+            wasReviewingSate &&
+            current.lock === null
           ) {
             return true
           }
@@ -451,6 +459,21 @@ class EditoriaMode {
 module.exports = {
   before: async (userId, operation, object, context) => {
     const user = await context.models.User.find(userId)
+    if (user.admin) {
+      if (operation && operation === 'PATCH') {
+        if (object.current.type === 'fragment') {
+          const diff = EditoriaMode.difference(object.update, object.current)
+          if (
+            object.current.lock !== null &&
+            diff.lock !== undefined &&
+            diff.lock !== null
+          ) {
+            return false
+          }
+        }
+      }
+    }
+
     return user && user.admin
   },
   GET: (userId, operation, object, context) => {
@@ -647,12 +670,11 @@ module.exports = {
   'team:create': (userId, operation, object, context) => true,
   'team:delete': (userId, operation, object, context) => true,
   'team:patch': (userId, operation, object, context) => true,
-  'can view add team memeber': (userId, operation, object, context) => {
+  'can view add team memeber': (userId, operation, object, context) =>
     // if (object === 'Production Editor') {
     //   return false
     // }
-    return true
-  },
+    true,
   'can interact with editor': (userId, operation, object, context) => {
     const mode = new EditoriaMode(userId, operation, object, context)
     return mode.canInteractWithEditor()
