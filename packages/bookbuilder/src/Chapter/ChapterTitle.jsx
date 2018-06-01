@@ -79,10 +79,10 @@ class ChapterTitle extends React.Component {
   }
 
   render() {
-    const { chapter } = this.props
+    const { chapter, isUploadInProgress } = this.props
     let title = this.renderTitle()
     const url = `/books/${chapter.book}/fragments/${chapter.id}`
-    if (chapter.lock === null) {
+    if (chapter.lock === null && !isUploadInProgress) {
       title = withLink(this.renderTitle(), url)
     }
     const renameEmptyError = this.renderError()
