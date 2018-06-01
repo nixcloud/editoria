@@ -13,12 +13,25 @@ The current features on our list are the following:
 
 |Module             |Description                                    |In progress    |Done     |Issue|
 |:---:              |---                                            |:---:          |:---:    |:---:|
-|System             |Switch to Postgres                             |               |&#x2714; |#80|
+|Current|
+|System| Edit Lock ||&#x2714;| #117|
 |System             |Use docker containers for deployments          |               |         |#89|
-|System             |Implement roles & authorization                |&#x2714;       |         |#57|
-|System             |Integrate with Manifold                        |               |         |#2|
+|System             |Logger          |    &#x2714;           |         |#106|
+|System             |Env variables          |    &#x2714;           |         |#104|
 |Book builder       |Redesign component state tool                  |               |         |#55|
-|Book builder       |Introduce unnumbered chapters                  |               |         |#50|
+|Book builder       |Export EPUB                  |               |         |#79|
+|Book builder       |Filenames for single uploads                  |               |         |#112|
+|Editor| Code Block ||&#x2714;| wax/wax#174|
+|Editor| Add ornament style |&#x2714;|| wax/wax#178|
+|Export|Fix links ||| #100|
+|Export|Fix image captions ||| #113|
+|Export|Notes at the end of the book ||| #78|
+| |
+|Previous |
+|System             |Switch to Postgres                             |               |&#x2714; |#80|
+|System             |Implement roles & authorization                |               |&#x2714; |#57|
+|System             |Integrate with Manifold                        |               |         |#2|
+|Book builder       |Introduce unnumbered chapters                  |               |&#x2714; |#50|
 |Editor             |Improve editor performance                     |               |&#x2714; |wax/wax#120|
 |Editor             |Image captions                                 |               |&#x2714; |wax/wax#127|
 |Editor             |Keyboard shortcuts to add diacritics           |               |&#x2714; |wax/wax#129|
@@ -28,7 +41,7 @@ The current features on our list are the following:
 |Editor             |Cutting and pasting with track changes         |               |&#x2714; |wax/wax#15|
 |Editor             |Track spaces                                   |               |&#x2714; |wax/wax#119|
 |Editor             |Full Screen Mode                               |               |&#x2714; |wax/wax#150|
-|Editor             |Track inline formatting (eg. italics)          |&#x2714;       |         |wax/wax#160|
+|Editor             |Track inline formatting (eg. italics)          |               |&#x2714;|wax/wax#160|
 |Editor             |Track block formatting (eg. headings)          |               |         |wax/wax#40|
 |Editor             |Expand set of special characters               |               |         |wax/wax#128|
 |Editor             |Text highlighter                               |               |&#x2714; |wax/wax#18|
@@ -43,10 +56,6 @@ The current features on our list are the following:
 |Document ingestion |Force punctuation to match formatting of preceding word|       |&#x2714; |XSweet/HTMLevator#3|
 |Document ingestion |Improve header promotion                       |&#x2714;       |         |XSweet/XSweet#123|
 
-<br/>
-You can also find more detailed (and more technical) lists of the current tasks at hand on these pages:
-* https://gitlab.coko.foundation/editoria/editoria/milestones/9
-* https://gitlab.coko.foundation/wax/wax/milestones/9
 
 ## Get up and running  
 
