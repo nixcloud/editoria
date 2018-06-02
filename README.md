@@ -12,7 +12,7 @@ For the editor that Editoria uses, see its related project [Wax](https://gitlab.
 The current features on our list are the following:
 
 |Module             |Description                                    |In progress    |Done     |Issue|
-|:---:              |---                                            |:---:          |:---:    |:---:|
+|:----              |---                                            |:---:          |:---:    |:---:|
 |Current|
 |System| Edit Lock ||&#x2714;| #117|
 |System             |Use docker containers for deployments          |               |         |#89|
@@ -26,8 +26,8 @@ The current features on our list are the following:
 |Export|Fix links ||| #100|
 |Export|Fix image captions ||| #113|
 |Export|Notes at the end of the book ||| #78|
-| |
-|Previous |
+||
+|**Previous**|
 |System             |Switch to Postgres                             |               |&#x2714; |#80|
 |System             |Implement roles & authorization                |               |&#x2714; |#57|
 |System             |Integrate with Manifold                        |               |         |#2|
