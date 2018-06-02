@@ -26,7 +26,6 @@ The current features on our list are the following:
 |Export|Fix links ||| #100|
 |Export|Fix image captions ||| #113|
 |Export|Notes at the end of the book ||| #78|
-||
 |**Previous**|
 |System             |Switch to Postgres                             |               |&#x2714; |#80|
 |System             |Implement roles & authorization                |               |&#x2714; |#57|
