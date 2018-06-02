@@ -13,7 +13,7 @@ The current features on our list are the following:
 
 |Module             |Description                                    |In progress    |Done     |Issue|
 |:----              |---                                            |:---:          |:---:    |:---:|
-|Current|
+|**Current**|
 |System| Edit Lock ||&#x2714;| #117|
 |System             |Use docker containers for deployments          |               |         |#89|
 |System             |Logger          |    &#x2714;           |         |#106|
