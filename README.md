@@ -65,8 +65,22 @@ git clone https://gitlab.coko.foundation/editoria/editoria.git
 cd editoria
 ```
 
-Make sure you use you use `node >= 8.3`. We provide `.envrc` and `.nvmrc` files for convenience.  
+Make sure you use you use `node >= 8.3`.
 
+### nvm
+To determine which version of Node you are running type `node -v`. 
+If the version is not 8.3 or greater you will need to use nvm to prescribe a specific node version. Installation of nvm is covered here https://github.com/creationix/nvm#installation
+
+Once nvm is installed use the command `nvm install 8.3`
+
+For further information on how to use nvm see https://www.sitepoint.com/quick-tip-multiple-versions-node-nvm/
+
+### Install yarn
+```sh
+npm install -g yarn
+```
+
+### Install Dependencies
 Install all dependencies and navigate to the editoria app folder.  
 ```sh
 yarn
