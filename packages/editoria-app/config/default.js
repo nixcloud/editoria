@@ -32,17 +32,16 @@ module.exports = {
     fontsPath: '/uploads/fonts',
   },
   'password-reset': {
-    url:
-      process.env.PASSWORD_RESET_URL || 'http://localhost:3000/password-reset',
-    sender: process.env.PASSWORD_RESET_SENDER || 'dev@example.com',
+    url: 'http://localhost:3000/password-reset',
+    sender: 'dev@example.com',
   },
   mailer: {
-    from: process.env.MAILER_SENDER || 'dev@example.com',
+    from: 'dev@example.com',
     transport: {
-      host: process.env.MAILER_HOSTNAME || 'smtp.mailgun.org',
+      host: 'smtp.mailgun.org',
       auth: {
-        user: process.env.MAILER_USER || 'dev@example.com',
-        pass: process.env.MAILER_PASSWORD || 'password',
+        user: 'dev@example.com',
+        pass: 'password',
       },
     },
   },
@@ -67,7 +66,7 @@ module.exports = {
     db: {},
     sse: true,
     logger,
-    port: process.env.SERVER_PORT || 3000,
+    port: 3000,
     uploads: 'uploads',
   },
   validations: path.join(__dirname, 'modules', 'validations'),
