@@ -2,7 +2,15 @@ const path = require('path')
 
 const components = require('./components')
 const bookBuilder = require('./modules/book-builder')
-const logger = require('winston')
+const winston = require('winston')
+
+const logger = new winston.Logger({
+  transports: [
+    new winston.transports.Console({
+      colorize: true,
+    }),
+  ],
+})
 
 module.exports = {
   authsome: {
