@@ -2,14 +2,15 @@ version: '3'
 
 services:
   postgres:
-      image: postgres:10
+      image: postgres:10-alpine
       restart: always
       ports:
-        - 5460:5432
+        - ${POSTGRES_PORT:-5432}:5432
       environment:
-        - POSTGRES_USER=dev
-        - POSTGRES_DB=editoria_dev 
-        - POSTGRES_PASSWORD=secretpassword
+        - POSTGRES_USER
+        - POSTGRES_DB
+        - POSTGRES_PASSWORD
+        - POSTGRES_PORT
       volumes:
         - ./data/postgres:/var/lib/postgresql/data
         - ./scripts/test.sql:/docker-entrypoint-initdb.d/test.sql

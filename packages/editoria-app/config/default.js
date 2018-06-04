@@ -32,18 +32,16 @@ module.exports = {
     fontsPath: '/uploads/fonts',
   },
   'password-reset': {
-    url:
-      process.env.PUBSWEET_PASSWORD_RESET_URL ||
-      'http://localhost:3000/password-reset',
-    sender: process.env.PUBSWEET_PASSWORD_RESET_SENDER || 'dev@example.com',
+    url: 'http://localhost:3000/password-reset',
+    sender: 'dev@example.com',
   },
   mailer: {
-    from: process.env.PUBSWEET_MAILER_SENDER || 'dev@example.com',
+    from: 'dev@example.com',
     transport: {
-      host: process.env.PUBSWEET_MAILER_HOSTNAME || 'smtp.mailgun.org',
+      host: 'smtp.mailgun.org',
       auth: {
-        user: process.env.PUBSWEET_MAILER_USERNAME,
-        pass: process.env.PUBSWEET_MAILER_PASSWORD,
+        user: 'dev@example.com',
+        pass: 'password',
       },
     },
   },
