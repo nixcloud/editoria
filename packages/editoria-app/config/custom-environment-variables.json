@@ -18,8 +18,14 @@
       "editoria-typescript": "1"
     }
   },
+  "password-reset": {
+    "url": "PASSWORD_RESET_URL",
+    "sender":"PASSWORD_RESET_SENDER"
+  },
   "mailer": {
+    "from": "MAILER_SENDER",
     "transport": {
+      "host": "MAILER_HOSTNAME",
       "auth": {
         "user": "MAILER_USER",
         "pass": "MAILER_PASSWORD"

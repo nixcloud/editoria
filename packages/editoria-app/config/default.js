@@ -33,17 +33,16 @@ module.exports = {
   },
   'password-reset': {
     url:
-      process.env.PUBSWEET_PASSWORD_RESET_URL ||
-      'http://localhost:3000/password-reset',
-    sender: process.env.PUBSWEET_PASSWORD_RESET_SENDER || 'dev@example.com',
+      process.env.PASSWORD_RESET_URL || 'http://localhost:3000/password-reset',
+    sender: process.env.PASSWORD_RESET_SENDER || 'dev@example.com',
   },
   mailer: {
-    from: process.env.PUBSWEET_MAILER_SENDER || 'dev@example.com',
+    from: process.env.MAILER_SENDER || 'dev@example.com',
     transport: {
-      host: process.env.PUBSWEET_MAILER_HOSTNAME || 'smtp.mailgun.org',
+      host: process.env.MAILER_HOSTNAME || 'smtp.mailgun.org',
       auth: {
-        user: process.env.PUBSWEET_MAILER_USERNAME,
-        pass: process.env.PUBSWEET_MAILER_PASSWORD,
+        user: process.env.MAILER_USER || 'dev@example.com',
+        pass: process.env.MAILER_PASSWORD || 'password',
       },
     },
   },
@@ -68,7 +67,7 @@ module.exports = {
     db: {},
     sse: true,
     logger,
-    port: process.env.SERVER_PORT || 3500,
+    port: process.env.SERVER_PORT || 3000,
     uploads: 'uploads',
   },
   validations: path.join(__dirname, 'modules', 'validations'),
