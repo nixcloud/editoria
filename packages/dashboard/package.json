@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "editoria-common": "^0.0.3",
+    "editoria-common": "file:../common",
     "lodash": "4.17.4",
     "pubsweet-client": "^2.5.0",
     "react": "^16.2.0",
